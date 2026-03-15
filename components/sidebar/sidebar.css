@@ -1,0 +1,36 @@
+/* Section: Post side (base) */
+
+.post-side {
+  position: sticky;
+  top: 50px;
+
+  margin: var(--space-xxl) 0;
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}
+
+/* Section: Post side (author card) */
+
+.post-side-author {
+  max-width: 300px;
+  padding: var(--space-sm);
+  background: var(--beige);
+}
+
+.post-side-author #about-author {
+  max-width: 720px;
+}
+
+@media (max-width: 768px) {
+  .post-side {
+    top: 0;
+    margin: var(--space-xs) 0;
+  }
+
+  .post-side-author {
+    max-width: 100%;
+  }
+}
+

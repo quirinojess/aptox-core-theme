@@ -1,0 +1,216 @@
+/* Section: Main menu (wrapper) */
+
+.menu {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: var(--z-menu);
+  background: var(--off-white);
+
+  transition:
+    background-color 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Section: Main menu (inner container) */
+
+.menu-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-md);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: padding 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Section: Main menu (left categories) */
+
+.categories {
+  display: flex;
+  align-items: center;
+}
+
+.categories a {
+  padding: 0 15px;
+  font-family: var(--font-base);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark);
+  text-decoration: none;
+  transition: opacity 0.3s ease, font-size 0.3s ease;
+}
+
+.categories a:hover {
+  opacity: 0.6;
+}
+
+.menu.is-scrolled .categories a {
+  font-size: var(--font-size-xxs);
+}
+
+/* Section: Logo */
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -80px;
+}
+
+.logo a {
+  display: inline-flex;
+}
+
+.logo img {
+  width: 80px;
+  height: auto;
+  display: block;
+  transition: width 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu.is-scrolled .logo img {
+  width: 48px;
+  margin-left: 10px;
+}
+
+/* Section: Main menu (right side: seasonal + search) */
+
+.sazonal-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0 8px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-base);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark);
+  transition: opacity 0.3s ease, font-size 0.3s ease;
+}
+
+.menu-button img {
+  width: 15px;
+  height: 15px;
+  display: block;
+  transition: width 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-button:hover {
+  opacity: 0.6;
+}
+
+.menu.is-scrolled .menu-button {
+  font-size: var(--font-size-xxs);
+}
+
+.menu.is-scrolled .menu-button img {
+  width: 13px;
+}
+
+/* Section: Main menu (scrolled state) */
+
+.menu.is-scrolled .menu-inner {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* Section: Bottom mobile menu */
+
+#menu-mob {
+  display: none;
+}
+
+/* Section: Main menu (tablet ≤ 1024px) */
+
+@media (max-width: 1024px) {
+  .menu-inner {
+    padding: var(--space-sm);
+    gap: 24px;
+  }
+
+  .categories a {
+    padding: 0 10px;
+    font-size: var(--font-size-xxs);
+  }
+
+  .logo img {
+    width: 64px;
+  }
+
+  .menu.is-scrolled .logo img {
+    margin-left: 0;
+  }
+
+  .sazonal-section {
+    gap: 12px;
+  }
+
+  .menu-button {
+    font-size: var(--font-size-xxs);
+  }
+
+  .menu-button img {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* Section: Main menu (mobile ≤ 768px) */
+
+@media (max-width: 768px) {
+  .categories {
+    display: none;
+  }
+
+  .menu-inner {
+    padding: var(--space-sm);
+  }
+
+  .logo {
+    margin-left: 10px;
+  }
+
+  .logo img {
+    width: 68px;
+  }
+
+  .menu.is-scrolled .logo img {
+    width: 48px;
+  }
+
+  #menu-mob {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-menu);
+    justify-content: center;
+    padding: var(--space-md);
+    background: var(--medium);
+  }
+
+  #menu-mob a {
+    font-family: var(--font-base);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dark);
+    padding: 0 20px;
+    text-decoration: none;
+  }
+}
+

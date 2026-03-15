@@ -1,0 +1,275 @@
+/* Section: Design tokens (colors, spacing, layout, typography) */
+
+:root {
+
+  /* Section: Colors */
+
+  --off-white:   #FBF7F2;
+  --beige:       #F4EFEA;
+  --medium:      #D6D1CE;
+  --medium-low:  #AEA8A6;
+  --medium-dark: #333333;
+  --dark:        #111111;
+  --black:       #050505;
+  --white:       #FEFCFA;
+
+  /* Section: Spacing scale */
+
+  --space-xxs: 3px;
+  --space-xs:  5px;
+  --space-sm:  10px;
+  --space-md:  20px;
+  --space-lg:  46px;
+  --space-xl:  86px;
+  --space-xxl: 116px;
+
+  /* Section: Container & layout tokens */
+
+  --container-sm:   90vw;
+  --container-md:   95vw;
+  --container-blog: 70vw;
+  --container-page: 1000px;
+  --container-lg:   1350px;
+  --container-xl:   1440px;
+
+  --container-padding: 25px;
+  --container-margin:  30px;
+
+  /* Section: Typography tokens */
+
+  --font-base:    "DM Sans", serif;
+  --font-display: "DM Serif Display", serif;
+  --font-hand:    "Meow Script", cursive;
+
+  --font-size-xxs: 10px;
+  --font-size-xs:  12px;
+  --font-size-sm:  14px;
+  --font-size-md:  16px;
+  --font-size-lg:  18px;
+  --font-size-xl:  25px;
+  --font-size-xxl: 40px;
+
+  /* Section: Motion & transitions */
+
+  --transition-fast: 0.3s ease;
+  --transition-base: 0.9s ease;
+
+  /* Section: Z-index layers */
+
+  --z-menu:    1000;
+  --z-modal:   2000;
+  --z-overlay: 3000;
+}
+
+/* Section: Global reset & document behavior */
+
+html {
+  scroll-behavior: smooth;
+  scroll-margin-top: 200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Section: Body & base text */
+
+body {
+  margin: 0;
+  padding: 0;
+  padding-top: var(--space-xxl);
+
+  background: var(--off-white);
+  color: var(--medium-dark);
+
+  font-family: var(--font-base);
+  font-size: 1em;
+  line-height: 28px;
+}
+
+/* Section: Basic element resets */
+
+button {
+  border: none;
+  background: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--black);
+  font-weight: 700;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Section: Headings (typographic hierarchy) */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+}
+
+h1 {
+  font-size: 42px;
+  line-height: 50px;
+}
+
+h2 {
+  font-size: 38px;
+  line-height: 40px;
+}
+
+h3 {
+  font-size: 32px;
+  line-height: 30px;
+}
+
+h4 {
+  font-size: 25px;
+  line-height: 28px;
+}
+
+h5,
+h6 {
+  font-family: var(--font-hand);
+  margin: 0;
+  padding: 0;
+}
+
+h5 {
+  font-size: 40px;
+  line-height: 30px;
+}
+
+h6 {
+  font-size: 20px;
+  line-height: 22px;
+}
+
+
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  h3 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  h4 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  h5 {
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  h6 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+}
+
+
+
+/* Section: Utility classes */
+
+.center {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+/* Section: Editorial ordered lists */
+
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 40px 0;
+
+  counter-reset: editorial;
+}
+
+ol li {
+  counter-increment: editorial;
+
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 24px;
+  align-items: center;
+
+  margin-bottom: 20px;
+
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--medium-dark);
+}
+
+/* Section: Editorial ordered list marker */
+
+ol li::before {
+  content: counter(editorial, decimal-leading-zero);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--medium-low);
+}
+
+/* Section: Links inside editorial lists */
+
+ol li a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ol li a:hover {
+  opacity: 0.8;
+}
+
+
+
+blockquote {
+ box-sizing: border-box;
+  max-width: 100%;
+  margin: 32px 0;
+  padding: 24px 32px;
+  background-color: var(--beige);
+}
+
+blockquote p {
+  margin: 0;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+blockquote i {
+  display: block;
+  margin-top: 12px;
+  font-style: normal;
+  font-size: 14px;
+  opacity: 0.7;
+}
+

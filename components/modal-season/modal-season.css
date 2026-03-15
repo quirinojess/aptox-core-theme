@@ -1,0 +1,114 @@
+/* Section: Season modal (layout) */
+
+.season-modal {
+  position: relative;
+  max-width: 860px;
+  padding: 0;
+  background: var(--beige);
+
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-template-rows: 1fr;
+}
+
+/* Section: Season modal (floating header) */
+
+.season-modal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  padding: var(--space-xs) var(--space-sm);
+  z-index: 10;
+}
+
+/* Section: Season modal (header close button) */
+
+.season-modal-header .close {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-sm);
+}
+
+/* Section: Season modal (image, desktop) */
+
+.season-modal-image {
+  grid-column: 1 / 2;
+  grid-row: 2 / -1;
+
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+.season-modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Section: Season modal (body) */
+
+.season-modal-body {
+  grid-column: 2 / 3;
+  grid-row: 2 / -1;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+/* Section: Season modal (typography) */
+
+.season-modal-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--dark);
+}
+
+.season-modal-description {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: var(--space-xs) 0 var(--space-sm);
+  color: var(--medium-dark);
+}
+
+/* Section: Season modal (mobile) */
+
+@media (max-width: 768px) {
+  .season-modal {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .season-modal-header {
+    grid-column: 1 / -1;
+  }
+
+  .season-modal-image {
+    grid-column: 1 / -1;
+    grid-row: 2 / 3;
+    height: 120px;
+  }
+
+  .season-modal-body {
+    grid-column: 1 / -1;
+    grid-row: 3 / 4;
+    padding: var(--space-md);
+  }
+
+  .season-modal-title {
+    font-size: 24px;
+  }
+
+  .season-modal-description {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+

@@ -1,0 +1,245 @@
+/* Section: Posts alignment (content + sidebar) */
+
+.align-posts {
+  width: var(--container-md);
+  max-width: var(--container-xl);
+  margin: 0 auto;
+
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Footer alignment below content */
+.content-footer {
+  margin: 30px 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .content-footer {
+    margin: 10px 0;
+  }
+}
+
+/* Section: Posts alignment (mobile) */
+
+@media (max-width: 768px) {
+  .align-posts {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 16px;
+  }
+}
+
+/* Section: Recipe sticky (base) */
+
+#recipe-sticky {
+  background: var(--beige);
+  overflow: hidden;
+  margin: 0 0 50px 0;
+}
+
+/* Section: Recipe sticky (header) */
+
+.recipe-sticky-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  padding: 20px 0;
+}
+
+.recipe-sticky-title {
+  display: block;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Section: Recipe sticky (toggle button) */
+
+.recipe-toggle {
+  position: relative;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Section: Recipe sticky (collapsible content) */
+
+#recipe-sticky-content {
+  max-height: 1000px;
+  opacity: 1;
+
+  transition:
+    max-height 0.6s ease,
+    opacity 0.4s ease;
+}
+
+#recipe-sticky:not(.is-open) #recipe-sticky-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Section: Icon base */
+
+.icon {
+  font-size: 18px;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.icon-open {
+  margin-top: -2px;
+}
+
+.icon-open,
+.icon-close {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Section: Icon toggle */
+
+.recipe-toggle .icon-open,
+.recipe-toggle .icon-close {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  color: #000;
+
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transition: opacity 0.8s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Section: Recipe sticky state control */
+
+#recipe-sticky:not(.is-open) .icon-close {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#recipe-sticky.is-open .icon-open {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Section: Safari / iOS fix */
+
+@supports (-webkit-touch-callout: none) {
+  .recipe-toggle {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .recipe-toggle:focus,
+  .recipe-toggle:active {
+    outline: none;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.85);
+  }
+}
+
+/* Section: Generic containers */
+
+.container {
+  width: var(--container-md);
+  max-width: var(--container-xl);
+  margin: 30px auto;
+  padding: 0 var(--container-padding);
+}
+
+.container-lg {
+  width: var(--container-md);
+  max-width: var(--container-xl);
+  margin: 0 auto;
+
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+.container-page {
+  width: var(--container-sm);
+  max-width: var(--container-page);
+  margin: var(--container-margin) auto;
+
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+.container-blog {
+  max-width: var(--container-blog);
+  margin: 10px 0;
+  padding: 10px 0;
+}
+
+.content-recipe {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.wp-block-columns.is-layout-flex {
+  align-items: stretch;
+}
+
+.wp-block-column:has(figure.wp-block-image) {
+  display: flex;
+}
+
+.wp-block-column:has(figure.wp-block-image) figure.wp-block-image {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.wp-block-column:has(figure.wp-block-image) figure.wp-block-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Section: Container blog (mobile) */
+
+@media (max-width: 1024px) {
+  .container-blog {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px;
+  }
+}
+

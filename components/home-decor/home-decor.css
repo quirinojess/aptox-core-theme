@@ -1,0 +1,108 @@
+/* Section: Home decoration section */
+
+.decoracao-section {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: var(--space-xl);
+
+  width: 90vw;
+  max-width: 1400px;
+  margin: var(--space-xl) auto;
+}
+
+/* Section: Decoration (left posts) */
+
+.decoracao-posts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.decoracao-card img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  display: block;
+}
+
+.decoracao-card h3 {
+  margin-top: var(--space-md);
+
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--dark);
+}
+
+/* Section: Decoration (right menu) */
+
+.decoracao-menu {
+  padding: var(--space-lg);
+  background: var(--beige);
+}
+
+.decoracao-menu h2 {
+  margin-bottom: var(--space-lg);
+
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+/* Section: Decoration (mini categories menu) */
+
+.decoracao-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.decoracao-categories a {
+  display: block;
+  padding: var(--space-xxs);
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  background: var(--off-white);
+  color: var(--dark);
+
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.decoracao-categories a:hover {
+  background-color: var(--medium);
+}
+
+/* Section: Decoration (responsive) */
+
+@media (max-width: 900px) {
+  .decoracao-section {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+
+    width: 80vw;
+    margin: 0 auto;
+  }
+
+  .decoracao-posts {
+    grid-template-columns: 1fr;
+  }
+
+  .decoracao-card img {
+    height: 360px;
+  }
+
+  .decoracao-categories {
+    display: block;
+  }
+
+  .decoracao-categories a {
+    margin: var(--space-sm) 0;
+  }
+}
+

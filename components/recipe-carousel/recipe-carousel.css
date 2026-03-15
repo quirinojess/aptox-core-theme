@@ -1,0 +1,109 @@
+/* Section: Recipe tags carousel */
+
+.recipe-tags-carousel {
+  position: relative;
+  width: 100vw;
+  margin: var(--space-md) 0 var(--space-sm);
+
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* Section: Recipe tags edge fade */
+
+.recipe-tags-carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(251, 247, 242, 0),
+    rgba(251, 247, 242, 1)
+  );
+}
+
+/* Section: Tags track (scroll container) */
+
+.tags-track {
+  display: flex;
+  gap: var(--space-md);
+  padding: 0 var(--space-lg) var(--space-xs);
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.tags-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Section: Tags track (desktop drag affordance) */
+
+@media (hover: hover) {
+  .tags-track {
+    cursor: grab;
+  }
+
+  .tags-track:active {
+    cursor: grabbing;
+  }
+}
+
+/* Section: Tag item */
+
+.tag-item {
+  flex: 0 0 auto;
+  width: 120px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--dark);
+  scroll-snap-align: start;
+}
+
+/* Section: Tag image */
+
+.tag-image {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto var(--space-sm);
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--beige);
+}
+
+.tag-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  transition: transform 0.6s ease;
+  transform-origin: center center;
+}
+
+.tag-image:hover img {
+  transform: rotate(-3deg) scale(1.02);
+}
+
+/* Section: Tag label */
+
+.tag-label {
+  font-size: 0.75em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+}
+

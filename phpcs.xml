@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ruleset name="Aptox Core Standards">
+	<description>WordPress coding standards for Aptox Core theme.</description>
+
+	<arg name="basepath" value="."/>
+	<arg name="extensions" value="php"/>
+	<arg value="sp"/>
+
+	<file>functions.php</file>
+	<file>inc</file>
+	<file>templates</file>
+	<file>components</file>
+	<file>archive.php</file>
+	<file>index.php</file>
+	<file>single.php</file>
+	<file>single-receitas.php</file>
+	<file>search.php</file>
+	<file>tag.php</file>
+	<file>taxonomy-casa.php</file>
+	<file>taxonomy-celebrar.php</file>
+	<file>taxonomy-receita.php</file>
+	<file>header.php</file>
+	<file>footer.php</file>
+	<file>404.php</file>
+
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>assets/build/*</exclude-pattern>
+
+	<rule ref="WordPress-Core"/>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress-Extra"/>
+</ruleset>

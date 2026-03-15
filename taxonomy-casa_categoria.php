@@ -1,0 +1,63 @@
+<?php
+/**
+ * Taxonomy template for Casa categories.
+ */
+
+get_header();
+
+$term = get_queried_object();
+?>
+
+<section class="hero-container">
+	<nav class="taxonomy-breadcrumb">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
+		<span>›</span>
+		<a href="<?php echo esc_url( home_url( '/casas' ) ); ?>">Casas</a>
+		<span>›</span>
+		<span><?php echo esc_html( $term->name ); ?></span>
+	</nav>
+
+	<h1 class="taxonomy-title">
+		<?php echo esc_html( $term->name ); ?>
+	</h1>
+
+	<?php if ( ! empty( $term->description ) ) : ?>
+		<div class="taxonomy-description">
+			<?php echo wpautop( $term->description ); ?>
+		</div>
+	<?php endif; ?>
+</section>
+
+<main class="container">
+	<?php if ( have_posts() ) : ?>
+		<section class="archive-grid">
+			<?php while ( have_posts() ) : the_post(); ?>
+				<article class="archive-card">
+					<a href="<?php the_permalink(); ?>" class="archive-thumb">
+						<?php if ( has_post_thumbnail() ) : ?>
+							<?php the_post_thumbnail( 'large' ); ?>
+						<?php endif; ?>
+					</a>
+
+					<h3 class="recipe-title">
+						<a href="<?php the_permalink(); ?>">
+							<?php the_title(); ?>
+						</a>
+					</h3>
+				</article>
+			<?php endwhile; ?>
+		</section>
+
+		<div id="navigation">
+			<?php if ( function_exists( 'load_more_button' ) ) : ?>
+				<?php load_more_button(); ?>
+			<?php endif; ?>
+		</div>
+	<?php else : ?>
+		<p>Nenhuma casa encontrada.</p>
+	<?php endif; ?>
+</main>
+
+<?php get_template_part( 'components/filter-nav/filter-nav-home' ); ?>
+
+<?php get_footer(); ?>

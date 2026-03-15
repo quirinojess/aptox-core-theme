@@ -1,0 +1,133 @@
+/* Section: Generic blocks */
+
+#navigation {
+  width: 100%;
+}
+
+.elm-button {
+  margin: 3vw 0;
+
+  background: none !important;
+  border: none;
+
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--black);
+}
+
+.block-title {
+  margin: 80px 0 40px 0;
+}
+
+/* Section: Manifest block */
+
+.block-manifest {
+  margin: 40px 0;
+  padding: 30px;
+
+  background: var(--beige);
+}
+
+.block-manifest ul {
+  margin: 20px 0;
+}
+
+.block-manifest li {
+  margin: 0 20px;
+
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.block-manifest h1 {
+  padding-top: 80px;
+}
+
+/* Section: Page block */
+
+.block-page {
+  margin: 20px 10px;
+  padding: 5% 20%;
+
+  background: var(--beige);
+}
+
+/* Section: Search term hero */
+
+.search-term {
+  display: block;
+  text-align: center;
+
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.search-term strong {
+  padding: 0 10px;
+
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  color: var(--dark);
+}
+
+/* Section: Skip recipe button */
+
+.btn-pular-receita {
+  position: fixed;
+  top: 70%;
+  right: -40px;
+  transform: translateY(-50%) rotate(-90deg);
+
+  padding: 6px 10px;
+  background: #000;
+  color: #fff;
+  font-size: 0.75em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-decoration: none;
+
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  animation: pulse-receita 3.5s ease-in-out infinite;
+}
+
+.btn-pular-receita:hover {
+  animation-play-state: paused;
+  background: #111;
+}
+
+@keyframes pulse-receita {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-pular-receita {
+    padding: 8px 12px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    right: -36px;
+    border-radius: 6px 6px 0 0;
+  }
+}
+

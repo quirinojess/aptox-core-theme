@@ -1,0 +1,6 @@
+/* Layout bundle: import global layout contexts */
+
+@import url("global/layout/containers.css");
+@import url("global/layout/menu.css");
+@import url("global/layout/footer.css");
+@import url("global/layout/blocks.css");

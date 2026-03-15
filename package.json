@@ -1,0 +1,14 @@
+{
+  "name": "aptox-core",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:js": "wp-scripts lint-js assets/src/js/**/*.js components/**/*.js",
+    "lint:css": "wp-scripts lint-style assets/src/css/**/*.css components/**/*.css"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  }
+}

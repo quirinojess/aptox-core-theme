@@ -1,0 +1,109 @@
+/* Section: About author (base) */
+
+.about-author {
+  width: 100%;
+  max-width: 450px;
+  margin: var(--space-xl) auto;
+  padding: 0 var(--space-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+/* Section: About author (avatar) */
+
+.about-author-avatar {
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.about-author-avatar img {
+  width: 90px;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Section: About author (content) */
+
+.about-author-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  font-size: 13px;
+  text-align: justify;
+}
+
+/* Section: About author (title) */
+
+.about-author-title {
+  margin: var(--space-xs) 0;
+  font-family: var(--font-hand);
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.about-author-label {
+  padding-right: var(--space-sm);
+
+  font-family: var(--font-base);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Section: About author (bio) */
+
+.about-author-bio {
+  margin-top: var(--space-xs);
+}
+
+.about-author-bio p {
+  margin: 0;
+}
+
+/* Section: About author (tablet) */
+
+@media (max-width: 1024px) {
+  .about-author {
+    padding: 0 30px;
+    gap: 20px;
+  }
+
+  .about-author-avatar img {
+    width: 72px;
+  }
+
+  .about-author-title {
+    font-size: 22px;
+  }
+
+  .about-author-content {
+    max-width: 100%;
+    font-size: 12px;
+  }
+}
+
+/* Section: About author (mobile) */
+
+@media (max-width: 768px) {
+  .about-author {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .about-author-content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-author-title {
+    font-size: 20px;
+  }
+}
+

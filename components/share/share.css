@@ -1,0 +1,169 @@
+/* Section: Share bar (base) */
+
+.share-bar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--medium);
+  z-index: 999;
+  display: none;
+}
+
+.share-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-md);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+/* Section: Share bar (like button) */
+
+.share-like {
+  display: flex;
+  align-items: center;
+}
+
+.like-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-family: var(--font-base);
+  font-size: 14px;
+  color: #1f1f1f;
+}
+
+.like-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform var(--transition-fast);
+}
+
+.like-btn:active .like-icon {
+  transform: scale(1.1);
+}
+
+.like-count {
+  font-size: 13px;
+  color: #1f1f1f;
+}
+
+/* Section: Share bar (text & icons) */
+
+.share-text {
+  font-size: 14px;
+  color: #1f1f1f;
+}
+
+.share-icons {
+  display: flex;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.share-icons ul {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+}
+
+.share-icons li {
+  list-style: none;
+}
+
+.share-icons a {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  transition: background-color var(--transition-fast);
+}
+
+.share-icons a:hover {
+  background-color: #f3eee7;
+}
+
+.share-icons img {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+/* Section: Share bar (desktop) */
+
+@media (min-width: 1024px) {
+  .share-bar {
+    display: block;
+  }
+}
+
+/* Section: Share bar (mobile) */
+
+@media (max-width: 1023px) {
+  .share-bar {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    background: var(--beige);
+  }
+
+  .share-bar-inner {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .like-btn {
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .like-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .like-count {
+    font-size: 11px;
+  }
+
+  .share-icons a {
+    width: 28px;
+    height: 28px;
+  }
+
+  .share-icons img {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .share-bar {
+    bottom: 60px;
+  }
+
+  .share-text {
+    display: none;
+  }
+}
+

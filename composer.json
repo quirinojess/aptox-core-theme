@@ -1,0 +1,14 @@
+{
+  "name": "aptox/core-theme",
+  "description": "Aptox Core WordPress theme",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Aptox\\": "inc/"
+    }
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.7",
+    "wp-coding-standards/wpcs": "^3.0"
+  }
+}

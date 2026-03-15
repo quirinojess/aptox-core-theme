@@ -1,0 +1,9 @@
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+const path = require('path');
+
+module.exports = {
+  ...defaultConfig,
+  entry: {
+    main: path.resolve(process.cwd(), 'assets/src/js/main.js'),
+  },
+};

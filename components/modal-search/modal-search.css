@@ -1,0 +1,192 @@
+/* Section: Search modal (base) */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  background: rgba(226, 222, 218, 0.6);
+}
+
+.modal.is-open {
+  display: flex;
+}
+
+/* Section: Search modal (content) */
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 490px;
+  margin: 0;
+
+  padding: var(--space-lg) var(--space-md) var(--space-sm);
+  border-radius: 8px;
+
+  background: var(--off-white);
+}
+
+.modal-content h5 {
+  margin-bottom: 16px;
+  font-size: 32px;
+}
+
+/* Section: Search modal (form layout) */
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Section: Search modal (input field) */
+
+.modal-content input {
+  width: 100%;
+  padding: var(--space-sm);
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-md);
+
+  background: var(--white);
+  border: none;
+  outline: none;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.035),
+    0 1px 2px rgba(0, 0, 0, 0.03);
+
+  transition: box-shadow 0.25s ease;
+}
+
+.modal-content input:focus {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.045);
+}
+
+.modal-content input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+  transition: opacity 0.2s ease;
+}
+
+.modal-content input:focus::placeholder {
+  opacity: 0;
+}
+
+/* Section: Search modal (radio filters) */
+
+.modal .search-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+  border: 0;
+}
+
+.search-filters-label {
+  font-size: 0.7rem;
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Section: Search modal (radio label container) */
+
+.modal .radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  cursor: pointer;
+
+  font-size: 0.75rem;
+  color: var(--dark);
+}
+
+/* Section: Search modal (native radio hidden) */
+
+.modal .radio input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Section: Search modal (custom radio mark) */
+
+.modal .radio-mark {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--dark);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+/* Section: Search modal (checked state) */
+
+.modal .radio input[type="radio"]:checked + .radio-mark {
+  background: var(--dark);
+}
+
+.modal .radio-text {
+  line-height: 1;
+}
+
+/* Section: Search modal (hide unused internal buttons) */
+
+.modal-content button:not(.close) {
+  display: none;
+}
+
+/* Section: Search modal (close button) */
+
+.close {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+
+  font-size: var(--font-size-lg);
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  color: var(--dark);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+/* Section: Search modal (overlay close indicator) */
+
+.modal::after {
+  content: "×";
+  position: fixed;
+  top: var(--space-sm);
+  right: var(--space-sm);
+
+  font-size: 24px;
+  color: var(--medium);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal:hover::after {
+  opacity: 0.6;
+}
+
+/* Section: Search modal (mobile) */
+
+@media (max-width: 768px) {
+  .modal .search-filters {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+}
+

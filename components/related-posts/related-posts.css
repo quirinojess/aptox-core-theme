@@ -1,0 +1,155 @@
+/* Section: Full-width blocks */
+
+.related-container {
+  width: 100%;
+  background: var(--beige);
+  margin: var(--space-xxs) 0 0;
+  padding: var(--space-md) 0;
+}
+
+.hero-container {
+  width: 100%;
+  background: var(--beige);
+  margin: 0 0 var(--space-lg);
+  padding: var(--space-lg) 0;
+}
+
+/* Section: Related posts (inner container) */
+
+.related-inner {
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+
+  display: flex;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+/* Section: Related posts (header) */
+
+.related-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 100px;
+}
+
+.related-leia {
+  font-family: var(--font-hand);
+  font-style: italic;
+  font-size: 40px;
+  color: var(--dark);
+}
+
+.related-mais {
+  margin-top: var(--space-xs);
+  font-family: var(--font-base);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Section: Related posts (grid) */
+
+.related-grid {
+  display: flex;
+  gap: var(--space-md) var(--space-lg);
+}
+
+/* Section: Related posts (card) */
+
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 180px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Section: Related posts (image) */
+
+.related-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.related-thumb img {
+  width: 100%;
+  display: block;
+}
+
+/* Section: Related posts (title) */
+
+.related-title {
+  margin: 0;
+  font-family: var(--font-base);
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.related-title a {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.related-title a:hover {
+  opacity: 0.7;
+}
+
+/* Section: Related posts (mobile) */
+
+@media (max-width: 1024px) {
+  .related-inner {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .related-inner {
+    padding: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .related-header {
+    text-align: center;
+  }
+
+  .related-grid {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    gap: 0;
+  }
+
+  .related-card {
+    width: 100%;
+    max-width: 500px;
+    margin: 15px 0;
+    text-align: center;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .related-thumb {
+    width: 100%;
+    height: 120px;
+    aspect-ratio: auto;
+    overflow: hidden;
+  }
+
+  .related-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
