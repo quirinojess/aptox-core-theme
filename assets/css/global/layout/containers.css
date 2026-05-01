@@ -4,9 +4,11 @@
   width: var(--container-md);
   max-width: var(--container-xl);
   margin: 0 auto;
+  padding: 0 var(--container-padding);
 
   display: flex;
   align-items: flex-start;
+  gap: 20px;
 }
 
 /* Footer alignment below content */
@@ -21,13 +23,27 @@
   }
 }
 
+/* Section: Posts alignment (tablet) */
+
+@media (max-width: 1024px) {
+  .align-posts {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 20px;
+    gap: 20px;
+  }
+}
+
 /* Section: Posts alignment (mobile) */
 
 @media (max-width: 768px) {
   .align-posts {
     flex-direction: column;
     width: 100%;
-    padding: 0 16px;
+    max-width: 100%;
+    /* Mesmo respiro horizontal do .container (ex.: single receitas). */
+    padding: 0 var(--container-padding);
+    gap: 20px;
   }
 }
 
@@ -202,7 +218,8 @@
 }
 
 .container-blog {
-  max-width: var(--container-blog);
+  flex: 1 1 0;
+  min-width: 0;
   margin: 10px 0;
   padding: 10px 0;
 }
@@ -235,11 +252,12 @@
 
 /* Section: Container blog (mobile) */
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .container-blog {
     width: 100%;
     max-width: 100%;
-    padding: 0 16px;
+    flex: 1 1 auto;
+    padding: 0;
   }
 }
 

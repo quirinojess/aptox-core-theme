@@ -162,6 +162,11 @@
     bottom: 60px;
   }
 
+  .share-bar-inner {
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
   .share-text {
     display: none;
   }
