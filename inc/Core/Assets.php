@@ -87,6 +87,8 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_scripts() {
+		$should_enqueue_global_archive_load_more = is_archive() || is_tax() || is_search();
+
 		$build_js_path = get_template_directory() . '/assets/build/main.js';
 		if ( file_exists( $build_js_path ) ) {
 			$asset_file = get_template_directory() . '/assets/build/main.asset.php';
@@ -103,6 +105,9 @@ class Assets {
 			);
 
 			$this->localize_like_script( 'aptox-main' );
+			if ( $should_enqueue_global_archive_load_more ) {
+				$this->enqueue_archive_load_more_script( array( 'aptox-main' ) );
+			}
 			return;
 		}
 
@@ -152,6 +157,10 @@ class Assets {
 			);
 			$this->localize_like_script( 'aptox-like' );
 		}
+
+		if ( $should_enqueue_global_archive_load_more ) {
+			$this->enqueue_archive_load_more_script( array() );
+		}
 	}
 
 	/**
@@ -170,6 +179,22 @@ class Assets {
 				'iconOutline' => get_template_directory_uri() . '/assets/icons/ui/favorite-outline.svg',
 				'iconFilled'  => get_template_directory_uri() . '/assets/icons/ui/favorite-filled.svg',
 			)
+		);
+	}
+
+	/**
+	 * Enqueue generic archive/search load more script.
+	 *
+	 * @param array<int, string> $deps Script dependencies.
+	 * @return void
+	 */
+	private function enqueue_archive_load_more_script( array $deps ) {
+		wp_enqueue_script(
+			'aptox-archive-load-more',
+			get_template_directory_uri() . '/components/archive-grid/archive-load-more.js',
+			$deps,
+			(string) filemtime( get_template_directory() . '/components/archive-grid/archive-load-more.js' ),
+			true
 		);
 	}
 }

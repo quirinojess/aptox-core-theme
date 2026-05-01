@@ -26,6 +26,10 @@ $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
 
 <main class="container">
 	<?php if ( have_posts() ) : ?>
+		<?php
+		$paged     = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+		$max_pages = (int) $wp_query->max_num_pages;
+		?>
 
 		<section class="archive-grid">
 			<?php while ( have_posts() ) : the_post(); ?>
@@ -47,11 +51,19 @@ $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
 			<?php endwhile; ?>
 		</section>
 
-		<div id="navigation">
-			<?php if ( function_exists( 'load_more_button' ) ) : ?>
-				<?php load_more_button(); ?>
-			<?php endif; ?>
-		</div>
+		<?php if ( $max_pages > $paged ) : ?>
+			<div class="archive-load-more">
+				<button
+					type="button"
+					class="next page-numbers"
+					data-load-more-global
+					data-grid-selector=".archive-grid"
+					data-next-url="<?php echo esc_url( get_pagenum_link( $paged + 1 ) ); ?>"
+				>
+					Leia mais
+				</button>
+			</div>
+		<?php endif; ?>
 
 	<?php else : ?>
 
