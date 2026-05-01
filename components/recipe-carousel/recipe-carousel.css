@@ -42,7 +42,13 @@
   scrollbar-width: none;
 
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+.tags-track.is-dragging {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  cursor: grabbing;
 }
 
 .tags-track::-webkit-scrollbar {

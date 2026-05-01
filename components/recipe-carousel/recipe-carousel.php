@@ -8,6 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
+/**
+ * Global cache for the recipe carousel.
+ *
+ */
 $cache_key   = 'aptox_recipe_carousel';
 $cached_html = get_transient( $cache_key );
 
@@ -16,12 +20,30 @@ if ( false !== $cached_html ) {
 	return;
 }
 
-$terms = get_terms(
+$resolved_recipe_taxonomy = 'receita_categoria';
+
+$recipe_terms = get_terms(
 	array(
 		'taxonomy'   => 'receita_categoria',
 		'hide_empty' => true,
 	)
 );
+
+if ( empty( $recipe_terms ) || is_wp_error( $recipe_terms ) ) {
+	$legacy_terms = get_terms(
+		array(
+			'taxonomy'   => 'receita',
+			'hide_empty' => true,
+		)
+	);
+
+	if ( ! empty( $legacy_terms ) && ! is_wp_error( $legacy_terms ) ) {
+		$resolved_recipe_taxonomy = 'receita';
+		$recipe_terms             = $legacy_terms;
+	}
+}
+
+$terms = $recipe_terms;
 
 if ( empty( $terms ) || is_wp_error( $terms ) ) {
   return;
@@ -53,7 +75,7 @@ ob_start();
         'no_found_rows'       => true,
         'tax_query'           => array(
           array(
-            'taxonomy' => 'receita_categoria',
+            'taxonomy' => $resolved_recipe_taxonomy,
             'field'    => 'term_id',
             'terms'    => $term->term_id,
           ),

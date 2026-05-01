@@ -1,35 +1,74 @@
 document.addEventListener('DOMContentLoaded', () => {
   const sliders = document.querySelectorAll('.tags-track');
+  const dragThresholdPx = 8;
 
-  sliders.forEach(slider => {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+  sliders.forEach((slider) => {
+    let activePointerId = null;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let suppressClick = false;
 
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true;
+    const endDrag = (e) => {
+      if (activePointerId === null) {
+        return;
+      }
+      if (e && e.pointerId !== activePointerId) {
+        return;
+      }
+
+      slider.classList.remove('is-dragging');
+      try {
+        slider.releasePointerCapture(activePointerId);
+      } catch (_) {
+      }
+      activePointerId = null;
+    };
+
+    slider.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) {
+        return;
+      }
+
+      suppressClick = false;
+      activePointerId = e.pointerId;
+      startX = e.clientX;
+      startScrollLeft = slider.scrollLeft;
+
       slider.classList.add('is-dragging');
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
+      try {
+        slider.setPointerCapture(e.pointerId);
+      } catch (_) {
+      }
     });
 
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-      slider.classList.remove('is-dragging');
+    slider.addEventListener('pointermove', (e) => {
+      if (activePointerId === null || e.pointerId !== activePointerId) {
+        return;
+      }
+
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > dragThresholdPx) {
+        suppressClick = true;
+      }
+
+      slider.scrollLeft = startScrollLeft - dx;
     });
 
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-      slider.classList.remove('is-dragging');
-    });
+    slider.addEventListener('pointerup', endDrag);
+    slider.addEventListener('pointercancel', endDrag);
 
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      slider.scrollLeft = scrollLeft - walk;
-    });
+    slider.addEventListener(
+      'click',
+      (e) => {
+        if (!suppressClick) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        suppressClick = false;
+      },
+      true
+    );
   });
 });
 
