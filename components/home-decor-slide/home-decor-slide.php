@@ -26,17 +26,44 @@ if ( false !== $cached_html ) {
 	return;
 }
 
-$list_args = [
-  'post_type'      => 'casas',
-  'posts_per_page' => 5,
-  'tax_query'      => [
-    [
-      'taxonomy' => 'post_tag',
-      'field'    => 'slug',
-      'terms'    => $tag_slug,
-    ],
-  ],
-];
+$list_args = array(
+	'post_type'      => 'casas',
+	'posts_per_page' => 5,
+	'tax_query'      => array(
+		array(
+			'taxonomy' => 'post_tag',
+			'field'    => 'slug',
+			'terms'    => $tag_slug,
+		),
+	),
+);
+
+if ( 'fim-de-ano' === $season_slug ) {
+	$celebration_taxonomies = array( 'celebracao_categoria', 'celebracao' );
+
+	foreach ( $celebration_taxonomies as $taxonomy ) {
+		if ( ! taxonomy_exists( $taxonomy ) ) {
+			continue;
+		}
+
+		$natal_term = get_term_by( 'slug', 'natal', $taxonomy );
+
+		if ( $natal_term && ! is_wp_error( $natal_term ) ) {
+			$list_args = array(
+				'post_type'      => 'celebracoes',
+				'posts_per_page' => 5,
+				'tax_query'      => array(
+					array(
+						'taxonomy' => $taxonomy,
+						'field'    => 'slug',
+						'terms'    => array( 'natal' ),
+					),
+				),
+			);
+			break;
+		}
+	}
+}
 
 $list = new WP_Query(
 	array_merge(
@@ -62,6 +89,10 @@ $initial = array(
   'image'   => get_the_post_thumbnail_url( $first_post_id, 'large' ),
   'link'    => get_permalink(),
 );
+
+$aside_title = 'fim-de-ano' === $season_slug
+  ? 'Celebre o Natal'
+  : 'Decore para o ' . aptox_get_season_label( $season['slug'] );
 ?>
 
 <?php ob_start(); ?>
@@ -121,7 +152,7 @@ $initial = array(
         id="decoracao-slide-aside-title"
         class="decoracao-slide-aside-title"
       >
-        Decore para o <?php echo esc_html( aptox_get_season_label( $season['slug'] ) ); ?>
+        <?php echo esc_html( $aside_title ); ?>
       </h3>
 
       <ul class="decoracao-slide-list">

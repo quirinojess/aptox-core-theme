@@ -79,12 +79,17 @@ if ( $query->have_posts() ) :
         id="season-highlight-title"
         class="season-title"
       >
-        Chegou o <?php echo esc_html( $season['label'] ); ?>!
+        <?php
+        if ( ! empty( $season['highlight_title'] ) ) {
+          echo esc_html( $season['highlight_title'] );
+        } else {
+          echo 'Chegou o ' . esc_html( $season['label'] ) . '!';
+        }
+        ?>
       </h2>
 
       <p class="season-description">
-        Ideias, inspirações e detalhes pensados para celebrar
-        os momentos mais especiais da estação.
+        <?php echo esc_html( $season['description'] ?? '' ); ?>
       </p>
 
     </header>
