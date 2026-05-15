@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Global cache for the recipe carousel.
  *
  */
-$cache_key   = 'aptox_recipe_carousel';
+$cache_key   = 'aptox_recipe_carousel_v4';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -64,7 +64,18 @@ ob_start();
     Categorias de Receitas
   </h2>
 
-  <div class="tags-track">
+  <div class="recipe-tags-carousel__viewport">
+
+    <button
+      type="button"
+      class="recipe-tags-nav recipe-tags-nav--prev"
+      aria-label="<?php echo esc_attr__( 'Ver categorias anteriores', 'aptox' ); ?>"
+      disabled
+    >
+      <span class="recipe-tags-nav__icon" aria-hidden="true">‹</span>
+    </button>
+
+    <div class="tags-track">
 
     <?php foreach ( $terms as $term ) :
 
@@ -88,12 +99,21 @@ ob_start();
       }
 
       $query->the_post();
+
+      $term_link = get_term_link( $term, $resolved_recipe_taxonomy );
+      if ( is_wp_error( $term_link ) ) {
+        $recipe_archive = get_post_type_archive_link( 'receitas' );
+        if ( ! $recipe_archive ) {
+          $recipe_archive = home_url( '/receitas/' );
+        }
+        $term_link = trailingslashit( untrailingslashit( $recipe_archive ) ) . 'categoria/' . $term->slug . '/';
+      }
     ?>
 
       <article class="tag-item-wrapper">
 
         <a
-          href="<?php echo esc_url( get_term_link( $term ) ); ?>"
+          href="<?php echo esc_url( $term_link ); ?>"
           class="tag-item"
           aria-label="<?php echo esc_attr( $term->name ); ?>"
         >
@@ -116,6 +136,16 @@ ob_start();
       wp_reset_postdata();
     endforeach;
     ?>
+
+    </div>
+
+    <button
+      type="button"
+      class="recipe-tags-nav recipe-tags-nav--next"
+      aria-label="<?php echo esc_attr__( 'Ver próximas categorias', 'aptox' ); ?>"
+    >
+      <span class="recipe-tags-nav__icon" aria-hidden="true">›</span>
+    </button>
 
   </div>
 
