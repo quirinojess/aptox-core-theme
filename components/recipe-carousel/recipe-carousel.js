@@ -1,85 +1,55 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const sliders = document.querySelectorAll('.tags-track');
-  const dragThresholdPx = 8;
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.recipe-tags-carousel').forEach((carousel) => {
+    const track = carousel.querySelector('.tags-track');
+    const prev = carousel.querySelector('.recipe-tags-nav--prev');
+    const next = carousel.querySelector('.recipe-tags-nav--next');
 
-  sliders.forEach((slider) => {
-    let activePointerId = null;
-    let startX = 0;
-    let startScrollLeft = 0;
-    let suppressClick = false;
+    if (!track || !prev || !next) {
+      return;
+    }
 
-    const endDrag = (e) => {
-      if (activePointerId === null) {
-        return;
-      }
-      if (e && e.pointerId !== activePointerId) {
-        return;
+    const getScrollStep = () => {
+      const item = track.querySelector('.tag-item');
+      if (!item) {
+        return Math.round(track.clientWidth * 0.75);
       }
 
-      slider.classList.remove('is-dragging');
-      try {
-        slider.releasePointerCapture(activePointerId);
-      } catch (_) {
-      }
-      activePointerId = null;
+      const trackStyles = window.getComputedStyle(track);
+      const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+
+      return item.offsetWidth + gap;
     };
 
-    slider.addEventListener('pointerdown', (e) => {
-      if (e.button !== 0) {
-        return;
-      }
+    const updateNavState = () => {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const atStart = track.scrollLeft <= 2;
+      const atEnd = track.scrollLeft >= maxScroll - 2;
 
-      suppressClick = false;
-      activePointerId = e.pointerId;
-      startX = e.clientX;
-      startScrollLeft = slider.scrollLeft;
+      prev.disabled = atStart;
+      next.disabled = atEnd || maxScroll <= 0;
+    };
 
-      slider.classList.add('is-dragging');
-      try {
-        slider.setPointerCapture(e.pointerId);
-      } catch (_) {
-      }
-    });
+    const scrollTrack = (direction) => {
+      track.scrollBy({
+        left: direction * getScrollStep() * 3,
+        behavior: 'smooth',
+      });
+    };
 
-    slider.addEventListener('pointermove', (e) => {
-      if (activePointerId === null || e.pointerId !== activePointerId) {
-        return;
-      }
+    prev.addEventListener('click', () => scrollTrack(-1));
+    next.addEventListener('click', () => scrollTrack(1));
 
-      const dx = e.clientX - startX;
-      if (Math.abs(dx) > dragThresholdPx) {
-        suppressClick = true;
-      }
-
-      slider.scrollLeft = startScrollLeft - dx;
-    });
-
-    slider.addEventListener('pointerup', endDrag);
-    slider.addEventListener('pointercancel', endDrag);
-
-    slider.addEventListener(
-      'click',
-      (e) => {
-        if (!suppressClick) {
-          return;
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        suppressClick = false;
-      },
-      true
-    );
+    track.addEventListener('scroll', updateNavState, { passive: true });
+    window.addEventListener('resize', updateNavState);
+    updateNavState();
   });
 });
-
-
 
 document.addEventListener('DOMContentLoaded', function () {
   const sticky = document.getElementById('recipe-sticky');
   const toggle = document.getElementById('recipe-toggle');
 
   if (!sticky || !toggle) {
-    console.warn('Recipe sticky: elementos não encontrados');
     return;
   }
 
@@ -89,20 +59,16 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-
 (function () {
-
   const map = {
-    'Prep Time':  'Preparo',
-    'Cook Time':  'Cozimento',
+    'Prep Time': 'Preparo',
+    'Cook Time': 'Cozimento',
     'Total Time': 'Tempo total',
-    'Servings':   'Porções'
+    Servings: 'Porções',
   };
 
   function translateWPRM() {
-    document.querySelectorAll(
-      '.wprm-recipe-details-label'
-    ).forEach(el => {
+    document.querySelectorAll('.wprm-recipe-details-label').forEach((el) => {
       const text = el.textContent.trim();
       if (map[text]) {
         el.textContent = map[text];
@@ -115,21 +81,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const observer = new MutationObserver(translateWPRM);
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
   });
-
 })();
 
-
 (function () {
-
   function scrollToRecipe() {
     const target = document.getElementById('receita');
     if (!target) return false;
 
     target.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'start',
     });
     return true;
   }
@@ -148,9 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     observer.observe(document.body, {
       childList: true,
-      subtree: true
+      subtree: true,
     });
   });
-
 })();
-
