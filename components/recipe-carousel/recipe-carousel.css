@@ -1,6 +1,8 @@
 /* Section: Recipe tags carousel */
 
 .recipe-tags-carousel {
+  --recipe-tag-image-size: 96px;
+
   position: relative;
   width: 100vw;
   margin: var(--space-md) 0 var(--space-sm);
@@ -11,6 +13,12 @@
   margin-right: -50vw;
 }
 
+/* Section: Carousel viewport (track + nav) */
+
+.recipe-tags-carousel__viewport {
+  position: relative;
+}
+
 /* Section: Recipe tags edge fade */
 
 .recipe-tags-carousel::after {
@@ -19,13 +27,116 @@
   top: 0;
   right: 0;
   width: 60px;
-  height: 100%;
+  height: calc(var(--recipe-tag-image-size) + var(--space-xs));
   pointer-events: none;
   background: linear-gradient(
     to right,
     rgba(251, 247, 242, 0),
     rgba(251, 247, 242, 1)
   );
+  z-index: 1;
+}
+
+/* Section: Carousel navigation (desktop only; hidden on touch via [hidden]) */
+
+.recipe-tags-nav {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--dark);
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(17, 17, 17, 0.08);
+
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  z-index: 2;
+}
+
+.recipe-tags-nav[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .recipe-tags-nav {
+    display: none !important;
+  }
+
+  .recipe-tags-carousel__viewport {
+    padding: 0;
+  }
+
+  .recipe-tags-carousel::after {
+    right: 0;
+  }
+}
+
+.recipe-tags-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1.75rem;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.recipe-tags-nav:hover:not(:disabled) {
+  box-shadow: 0 4px 16px rgba(17, 17, 17, 0.12);
+}
+
+.recipe-tags-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .recipe-tags-carousel__viewport {
+    padding: 0 52px;
+  }
+
+  .recipe-tags-nav:not([hidden]) {
+    display: flex;
+    position: absolute;
+    top: calc(var(--recipe-tag-image-size) / 2);
+    margin: 0;
+    transform: translateY(-50%);
+  }
+
+  .recipe-tags-nav--prev {
+    left: var(--space-sm);
+  }
+
+  .recipe-tags-nav--next {
+    right: var(--space-sm);
+  }
+
+  .recipe-tags-nav:hover:not(:disabled) {
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .recipe-tags-carousel__viewport .tags-track {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .recipe-tags-carousel::after {
+    right: 52px;
+  }
 }
 
 /* Section: Tags track (scroll container) */
@@ -40,31 +151,14 @@
 
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  touch-action: pan-x;
 
   scroll-snap-type: x mandatory;
-  scroll-behavior: auto;
-}
-
-.tags-track.is-dragging {
-  scroll-snap-type: none;
-  scroll-behavior: auto;
-  cursor: grabbing;
+  scroll-behavior: smooth;
 }
 
 .tags-track::-webkit-scrollbar {
   display: none;
-}
-
-/* Section: Tags track (desktop drag affordance) */
-
-@media (hover: hover) {
-  .tags-track {
-    cursor: grab;
-  }
-
-  .tags-track:active {
-    cursor: grabbing;
-  }
 }
 
 /* Section: Tag item */
@@ -76,13 +170,14 @@
   text-decoration: none;
   color: var(--dark);
   scroll-snap-align: start;
+  touch-action: manipulation;
 }
 
 /* Section: Tag image */
 
 .tag-image {
-  width: 96px;
-  height: 96px;
+  width: var(--recipe-tag-image-size);
+  height: var(--recipe-tag-image-size);
   margin: 0 auto var(--space-sm);
   border-radius: 50%;
   overflow: hidden;
@@ -112,4 +207,3 @@
   font-weight: 700;
   display: block;
 }
-

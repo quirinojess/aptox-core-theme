@@ -108,59 +108,81 @@ class Assets {
 			if ( $should_enqueue_global_archive_load_more ) {
 				$this->enqueue_archive_load_more_script( array( 'aptox-main' ) );
 			}
+		} else {
+			wp_enqueue_script(
+				'aptox-search-modal',
+				get_template_directory_uri() . '/components/modal-search/modal-search.js',
+				array(),
+				'1.0',
+				true
+			);
+
+			wp_enqueue_script(
+				'aptox-menu',
+				get_template_directory_uri() . '/components/menu/menu.js',
+				array(),
+				'1.0',
+				true
+			);
+
+			if ( is_singular() ) {
+				wp_enqueue_script(
+					'aptox-like',
+					get_template_directory_uri() . '/components/share/share.js',
+					array(),
+					'1.0',
+					true
+				);
+				$this->localize_like_script( 'aptox-like' );
+			}
+
+			if ( $should_enqueue_global_archive_load_more ) {
+				$this->enqueue_archive_load_more_script( array() );
+			}
+		}
+
+		$this->enqueue_recipe_carousel_script();
+		$this->enqueue_home_decor_slide_script();
+	}
+
+	/**
+	 * Enqueue recipe category carousel (loaded separately from main bundle).
+	 *
+	 * @return void
+	 */
+	private function enqueue_recipe_carousel_script() {
+		if ( ! is_front_page() && ! is_home() && ! is_tax( 'receita_categoria' ) && ! is_tax( 'receita' ) && ! is_post_type_archive( 'receitas' ) && ! is_page_template( 'templates/page-receitas.php' ) ) {
 			return;
 		}
 
+		$carousel_js_path = get_template_directory() . '/components/recipe-carousel/recipe-carousel.js';
 		wp_enqueue_script(
-			'aptox-search-modal',
-			get_template_directory_uri() . '/components/modal-search/modal-search.js',
+			'aptox-carousel',
+			get_template_directory_uri() . '/components/recipe-carousel/recipe-carousel.js',
 			array(),
-			'1.0',
+			file_exists( $carousel_js_path ) ? (string) filemtime( $carousel_js_path ) : '1.1',
 			true
 		);
+	}
 
+	/**
+	 * Enqueue home decor slide script (loaded separately from main bundle).
+	 *
+	 * @return void
+	 */
+	private function enqueue_home_decor_slide_script() {
+		if ( ! is_front_page() && ! is_post_type_archive( 'casas' ) && ! is_page_template( 'templates/page-casa.php' ) && ! is_tax( 'casa_categoria' ) ) {
+			return;
+		}
+
+		$slide_js_path = get_template_directory() . '/components/home-decor-slide/home-decor-slide.js';
 		wp_enqueue_script(
-			'aptox-menu',
-			get_template_directory_uri() . '/components/menu/menu.js',
+			'aptox-home-slide',
+			get_template_directory_uri() . '/components/home-decor-slide/home-decor-slide.js',
 			array(),
-			'1.0',
+			file_exists( $slide_js_path ) ? (string) filemtime( $slide_js_path ) : '1.0',
 			true
 		);
-
-		if ( is_front_page() || is_home() || is_tax( 'receita_categoria' ) || is_post_type_archive( 'receitas' ) || is_page_template( 'templates/page-receitas.php' ) ) {
-			wp_enqueue_script(
-				'aptox-carousel',
-				get_template_directory_uri() . '/components/recipe-carousel/recipe-carousel.js',
-				array(),
-				'1.0',
-				true
-			);
-		}
-
-		if ( is_front_page() || is_post_type_archive( 'casas' ) || is_page_template( 'templates/page-casa.php' ) || is_tax( 'casa_categoria' ) ) {
-			wp_enqueue_script(
-				'aptox-home-slide',
-				get_template_directory_uri() . '/components/home-decor-slide/home-decor-slide.js',
-				array(),
-				'1.0',
-				true
-			);
-		}
-
-		if ( is_singular() ) {
-			wp_enqueue_script(
-				'aptox-like',
-				get_template_directory_uri() . '/components/share/share.js',
-				array(),
-				'1.0',
-				true
-			);
-			$this->localize_like_script( 'aptox-like' );
-		}
-
-		if ( $should_enqueue_global_archive_load_more ) {
-			$this->enqueue_archive_load_more_script( array() );
-		}
 	}
 
 	/**
