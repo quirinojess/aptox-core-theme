@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const DESKTOP_NAV_MQ = '(min-width: 768px) and (hover: hover) and (pointer: fine)';
+
   document.querySelectorAll('.recipe-tags-carousel').forEach((carousel) => {
     const track = carousel.querySelector('.tags-track');
     const prev = carousel.querySelector('.recipe-tags-nav--prev');
@@ -7,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!track || !prev || !next) {
       return;
     }
+
+    const desktopNav = window.matchMedia(DESKTOP_NAV_MQ);
+    let navReady = false;
 
     const getScrollStep = () => {
       const item = track.querySelector('.tag-item');
@@ -21,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const updateNavState = () => {
+      if (!navReady) {
+        return;
+      }
+
       const maxScroll = track.scrollWidth - track.clientWidth;
       const atStart = track.scrollLeft <= 2;
       const atEnd = track.scrollLeft >= maxScroll - 2;
@@ -36,12 +45,43 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     };
 
-    prev.addEventListener('click', () => scrollTrack(-1));
-    next.addEventListener('click', () => scrollTrack(1));
+    const enableDesktopNav = () => {
+      if (navReady) {
+        updateNavState();
+        return;
+      }
+
+      prev.hidden = false;
+      next.hidden = false;
+      prev.addEventListener('click', onPrevClick);
+      next.addEventListener('click', onNextClick);
+      navReady = true;
+      updateNavState();
+    };
+
+    const disableDesktopNav = () => {
+      prev.hidden = true;
+      next.hidden = true;
+      prev.disabled = true;
+      next.disabled = true;
+      navReady = false;
+    };
+
+    const onPrevClick = () => scrollTrack(-1);
+    const onNextClick = () => scrollTrack(1);
+
+    const syncNavMode = () => {
+      if (desktopNav.matches) {
+        enableDesktopNav();
+      } else {
+        disableDesktopNav();
+      }
+    };
 
     track.addEventListener('scroll', updateNavState, { passive: true });
     window.addEventListener('resize', updateNavState);
-    updateNavState();
+    desktopNav.addEventListener('change', syncNavMode);
+    syncNavMode();
   });
 });
 

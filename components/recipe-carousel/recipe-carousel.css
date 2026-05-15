@@ -37,7 +37,7 @@
   z-index: 1;
 }
 
-/* Section: Carousel navigation */
+/* Section: Carousel navigation (desktop only; hidden on touch via [hidden]) */
 
 .recipe-tags-nav {
   display: none;
@@ -66,6 +66,24 @@
   z-index: 2;
 }
 
+.recipe-tags-nav[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .recipe-tags-nav {
+    display: none !important;
+  }
+
+  .recipe-tags-carousel__viewport {
+    padding: 0;
+  }
+
+  .recipe-tags-carousel::after {
+    right: 0;
+  }
+}
+
 .recipe-tags-nav__icon {
   display: flex;
   align-items: center;
@@ -86,12 +104,12 @@
   cursor: default;
 }
 
-@media (hover: hover) and (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   .recipe-tags-carousel__viewport {
     padding: 0 52px;
   }
 
-  .recipe-tags-nav {
+  .recipe-tags-nav:not([hidden]) {
     display: flex;
     position: absolute;
     top: calc(var(--recipe-tag-image-size) / 2);
