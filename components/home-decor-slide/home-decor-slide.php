@@ -13,7 +13,7 @@ $season = aptox_get_season_context();
 $season_slug = '';
 
 if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
-    $season_slug = sanitize_title( $season['slug'] );
+	$season_slug = sanitize_title( $season['slug'] );
 }
 
 $tag_slug = 'decoracao-de-' . $season_slug;
@@ -92,7 +92,7 @@ $initial = array(
 
 $aside_title = 'fim-de-ano' === $season_slug
   ? 'Celebre o Natal'
-  : 'Decore para o ' . aptox_get_season_label( $season['slug'] );
+  : 'Decore para o ' . aptox_get_season_label( $season_slug );
 ?>
 
 <?php ob_start(); ?>

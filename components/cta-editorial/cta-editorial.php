@@ -20,10 +20,12 @@ $cta = aptox_get_season_cta_data();
         id="cta-editorial-title"
         class="cta-title"
       >
-        <span class="cta-label">
-          <?php echo esc_html( $cta['label'] ); ?>
-        </span>
-        <br>
+        <?php if ( ! empty( $cta['label'] ) ) : ?>
+          <span class="cta-label">
+            <?php echo esc_html( $cta['label'] ); ?>
+          </span>
+          <br>
+        <?php endif; ?>
         <?php echo esc_html( $cta['title'] ); ?>
       </h2>
 
