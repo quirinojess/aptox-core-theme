@@ -77,6 +77,8 @@ $social_links = array(
 	</div>
 </footer>
 
+<?php get_template_part( 'components/edit-post/edit-post' ); ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>

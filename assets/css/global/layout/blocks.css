@@ -19,6 +19,48 @@
   margin: 80px 0 40px 0;
 }
 
+/* Section: Post "Leia também" callout */
+
+.post-leia-tambem {
+  margin: var(--space-sm) 0;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--beige);
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+.post-leia-tambem p {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+}
+
+.single #content .post-leia-tambem a,
+.single .content-recipe .post-leia-tambem a,
+.post-leia-tambem a {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 400;
+  text-transform: inherit;
+  text-decoration: none;
+  background-image: none;
+}
+
+.post-leia-tambem > a:only-of-type:first-child:last-child {
+  display: block;
+}
+
+.post-leia-tambem a:hover {
+  opacity: 0.7;
+}
+
 /* Section: Manifest block */
 
 .block-manifest {
@@ -92,6 +134,7 @@
   text-transform: uppercase;
   font-weight: 700;
   text-decoration: none;
+  background-image: none;
 
   border-radius: 8px 8px 0 0;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);

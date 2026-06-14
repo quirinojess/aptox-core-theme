@@ -13,6 +13,21 @@
   min-width: 0;
 }
 
+@media (min-width: 769px) {
+  .align-posts .post-side {
+    margin-top: 100px;
+    margin-left: var(--container-margin);
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .align-posts .post-side {
+    margin-top: var(--space-sm);
+    margin-left: 0;
+  }
+}
+
 /* Section: Post side (author card) */
 
 .post-side-author {
@@ -315,6 +330,6 @@
 
   .post-side-author {
     max-width: 100%;
-    margin-top: 0 !important;
+    margin-top: 0;
   }
 }

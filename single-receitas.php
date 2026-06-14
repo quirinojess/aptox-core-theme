@@ -18,17 +18,16 @@ get_header();
 
 				<div class="content-footer">
 					<h5>Com amor,</h5>
-					<div class="navigation">
-						<?php edit_post_link( 'Editar este artigo', '<p>', '</p>' ); ?>
-					</div>
 				</div>
 			</section>
 		<?php endwhile; ?>
 	<?php endif; ?>
 
 	<?php get_template_part( 'components/author/author' ); ?>
-	<?php get_template_part( 'components/share/share' ); ?>
+	<?php get_template_part( 'components/post-share-stack/post-share-stack' ); ?>
 	<?php get_template_part( 'components/related-posts/related-posts' ); ?>
+	<?php get_template_part( 'components/post-taxonomies/post-taxonomies' ); ?>
+	<?php get_template_part( 'components/post-nav/post-nav' ); ?>
 </main>
 
 <button class="btn-pular-receita" type="button" aria-label="Pular para a receita">

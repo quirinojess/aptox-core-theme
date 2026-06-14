@@ -110,7 +110,7 @@
   margin: 0;
   flex: 0 1 auto;
   font-family: var(--font-display);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   line-height: 1.15;
   text-align: left;
 }
@@ -155,7 +155,7 @@
   }
 
   .about-author--editorial .about-author-title {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-lg);
   }
 }
 

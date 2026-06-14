@@ -181,6 +181,26 @@ class Assets {
 					true
 				);
 				$this->localize_like_script( 'aptox-like' );
+
+				$back_to_top_path = get_template_directory() . '/components/back-to-top/back-to-top.js';
+
+				wp_enqueue_script(
+					'aptox-back-to-top',
+					get_template_directory_uri() . '/components/back-to-top/back-to-top.js',
+					array(),
+					file_exists( $back_to_top_path ) ? (string) filemtime( $back_to_top_path ) : '1.0',
+					true
+				);
+
+				$post_pin_it_path = get_template_directory() . '/components/post-pin-it/post-pin-it.js';
+
+				wp_enqueue_script(
+					'aptox-post-pin-it',
+					get_template_directory_uri() . '/components/post-pin-it/post-pin-it.js',
+					array(),
+					file_exists( $post_pin_it_path ) ? (string) filemtime( $post_pin_it_path ) : '1.0',
+					true
+				);
 			}
 
 			if ( $should_enqueue_global_archive_load_more ) {
@@ -195,7 +215,6 @@ class Assets {
 		$this->enqueue_casa_organizacao_script();
 		$this->enqueue_home_decor_slide_script();
 		$this->enqueue_home_lazy_sections_script();
-		$this->enqueue_post_sidebar_script();
 	}
 
 	/**
@@ -375,27 +394,6 @@ class Assets {
 			get_template_directory_uri() . '/components/home-decor-slide/home-decor-slide.js',
 			array(),
 			file_exists( $slide_js_path ) ? (string) filemtime( $slide_js_path ) : '1.0',
-			true
-		);
-	}
-
-	/**
-	 * Enqueue post sidebar alignment on Celebre / Decor singles.
-	 *
-	 * @return void
-	 */
-	private function enqueue_post_sidebar_script() {
-		if ( ! is_singular( array( 'casas', 'celebracoes' ) ) ) {
-			return;
-		}
-
-		$script_path = get_template_directory() . '/components/sidebar/sidebar.js';
-
-		wp_enqueue_script(
-			'aptox-post-sidebar',
-			get_template_directory_uri() . '/components/sidebar/sidebar.js',
-			array(),
-			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
 			true
 		);
 	}

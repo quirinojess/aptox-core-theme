@@ -1,0 +1,116 @@
+/* Section: Back to top (base) */
+
+.back-to-top {
+  --back-to-top-width: 100px;
+  --back-to-top-height: 84px;
+  --back-to-top-gap: 14px;
+
+  width: var(--back-to-top-width);
+  height: var(--back-to-top-height);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top__arc {
+  position: absolute;
+  bottom: 48px;
+  left: 0;
+  width: 100%;
+  height: 34px;
+  margin-bottom: -10px;
+}
+
+.back-to-top__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.back-to-top__text {
+  fill: var(--dark);
+  font-family: var(--font-base);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.back-to-top__icon-wrap {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+  margin-bottom: 0;
+}
+
+.back-to-top__icon {
+  width: 42px;
+  height: 42px;
+  display: block;
+  object-fit: contain;
+}
+
+.back-to-top:hover .back-to-top__icon {
+  transform: scale(1.06);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .back-to-top {
+    --back-to-top-gap: 10px;
+    --back-to-top-width: 92px;
+    --back-to-top-height: 78px;
+  }
+
+  .back-to-top__arc {
+    bottom: 44px;
+    height: 30px;
+    margin-bottom: -10px;
+  }
+
+  .back-to-top__text {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: none;
+  }
+
+  .back-to-top:hover .back-to-top__icon {
+    transform: none;
+    transition: none;
+  }
+}

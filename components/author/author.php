@@ -20,6 +20,10 @@ $section_class    = $is_editorial_bio ? 'about-author about-author--editorial' :
 >
 	<?php if ( $is_editorial_bio ) : ?>
 		<div class="about-author-intro">
+			<h4 id="about-author-title" class="about-author-title">
+				<?php esc_html_e( 'Olá, sou jess', 'aptox' ); ?>
+			</h4>
+
 			<figure class="about-author-avatar">
 				<?php
 				echo get_avatar(
@@ -30,10 +34,6 @@ $section_class    = $is_editorial_bio ? 'about-author about-author--editorial' :
 				);
 				?>
 			</figure>
-
-			<h4 id="about-author-title" class="about-author-title">
-				<?php esc_html_e( 'Olá, sou jess', 'aptox' ); ?>
-			</h4>
 		</div>
 
 		<div class="about-author-bio">

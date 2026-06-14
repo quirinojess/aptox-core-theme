@@ -22,6 +22,12 @@
 @import url("../../components/author/author.css");
 @import url("../../components/sidebar/sidebar.css");
 @import url("../../components/share/share.css");
+@import url("../../components/post-pin-it/post-pin-it.css");
+@import url("../../components/post-share-stack/post-share-stack.css");
+@import url("../../components/post-taxonomies/post-taxonomies.css");
+@import url("../../components/post-nav/post-nav.css");
+@import url("../../components/back-to-top/back-to-top.css");
+@import url("../../components/edit-post/edit-post.css");
 @import url("../../components/home-decor-slide/home-decor-slide.css");
 @import url("../../components/index-cta/index-cta.css");
 @import url("../../components/info-grid/info-grid.css");
@@ -29,4 +35,23 @@
 @import url("../../components/grid-festivity/grid-festivity.css");
 @import url("../../components/youtube-feed/youtube-feed.css");
 @import url("../../components/home-lazy-sections/home-lazy-sections.css");
+
+/* Section: Handwritten typography (mobile weight override) */
+
+@media (max-width: 768px) {
+  h5,
+  h6,
+  .about-author-title,
+  .cta-season-name,
+  .casa-cta-title-hand,
+  .casa-organizacao-title-hand,
+  .decoracao-slide-aside-title,
+  .grid-festivity-season,
+  .grid-recipe-season,
+  .index-cta-title-hand,
+  .post-side-newsletter__title-hand,
+  .youtube-feed-brand {
+    font-weight: var(--font-hand-weight, 600);
+  }
+}
 

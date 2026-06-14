@@ -1,0 +1,40 @@
+/* Section: Fixed edit post link */
+
+.post-edit-fixed {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  z-index: 998;
+  transform: translateY(-50%);
+}
+
+.post-edit-fixed__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 8px;
+  background: var(--black);
+  color: var(--white);
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.post-edit-fixed__link:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .post-edit-fixed__link {
+    padding: 12px 6px;
+    font-size: var(--font-size-2xs);
+  }
+}

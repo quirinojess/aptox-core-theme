@@ -20,9 +20,6 @@ get_header();
 
 					<div class="content-footer">
 						<h5>Com amor,</h5>
-						<div class="navigation">
-							<?php edit_post_link( 'Editar este artigo', '<p>', '</p>' ); ?>
-						</div>
 					</div>
 				</section>
 			<?php endwhile; ?>
@@ -31,8 +28,10 @@ get_header();
 		<?php get_template_part( 'components/sidebar/sidebar' ); ?>
 	</section>
 
-	<?php get_template_part( 'components/share/share' ); ?>
+	<?php get_template_part( 'components/post-share-stack/post-share-stack' ); ?>
 	<?php get_template_part( 'components/related-posts/related-posts' ); ?>
+	<?php get_template_part( 'components/post-taxonomies/post-taxonomies' ); ?>
+	<?php get_template_part( 'components/post-nav/post-nav' ); ?>
 </main>
 
 <?php get_footer(); ?>
