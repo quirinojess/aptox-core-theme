@@ -157,7 +157,7 @@
   align-items: start;
 
   padding: var(--space-md) 0;
-  border-bottom: 1px solid var(--dark);
+  border-bottom: 2px dotted var(--dark);
   cursor: pointer;
 
   transition: opacity var(--transition-fast);

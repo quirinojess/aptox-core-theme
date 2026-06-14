@@ -108,6 +108,8 @@ class Assets {
 			'aptox-casa-jardinagem'  => '/components/casa-jardinagem/casa-jardinagem.css',
 			'aptox-recipe-carousel'  => '/components/recipe-carousel/recipe-carousel.css',
 			'aptox-casa-rooms-carousel' => '/components/casa-rooms-carousel/casa-rooms-carousel.css',
+			'aptox-home-decor'          => '/components/home-decor/home-decor.css',
+			'aptox-casa-planejando-lar' => '/components/casa-planejando-lar/casa-planejando-lar.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {

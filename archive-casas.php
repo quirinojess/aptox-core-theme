@@ -27,7 +27,7 @@ get_header();
 <?php get_template_part( 'components/casa-jardinagem/casa-jardinagem' ); ?>
 
 <section class="container">
-	<?php get_template_part( 'components/home-decor/home-decor' ); ?>
+	<?php get_template_part( 'components/casa-planejando-lar/casa-planejando-lar' ); ?>
 </section>
 
 <?php get_footer(); ?>

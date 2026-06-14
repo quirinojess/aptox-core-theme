@@ -106,7 +106,7 @@
 
 .casa-reforma-item {
   padding: var(--space-md) 0;
-  border-bottom: 1px solid var(--dark);
+  border-bottom: 2px dotted var(--dark);
 }
 
 .casa-reforma-item:first-child {
