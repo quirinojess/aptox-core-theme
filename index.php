@@ -7,6 +7,10 @@ get_header();
 ?>
 
 <main>
+	<section class="index-cta-section">
+		<?php get_template_part( 'components/index-cta/index-cta' ); ?>
+	</section>
+
 	<section class="container-lg">
 		<?php get_template_part( 'components/grid-recipe/grid-recipe' ); ?>
 	</section>
