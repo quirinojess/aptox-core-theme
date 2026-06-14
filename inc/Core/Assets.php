@@ -146,7 +146,7 @@ class Assets {
 		$components = array(
 			'aptox-celebre-cta'    => '/components/celebre-cta/celebre-cta.css',
 			'aptox-archive-grid'   => '/components/archive-grid/archive-grid.css',
-			'aptox-grid-festivity' => '/components/grid-festivity/grid-festivity.css',
+			'aptox-celebre-block'  => '/components/celebre-block/celebre-block.css',
 			'aptox-filter-nav'     => '/components/filter-nav/filter-nav.css',
 		);
 
@@ -250,6 +250,7 @@ class Assets {
 		$this->enqueue_recipe_carousel_script();
 		$this->enqueue_grid_recipe_script();
 		$this->enqueue_grid_festivity_script();
+		$this->enqueue_celebre_block_script();
 		$this->enqueue_casa_organizacao_script();
 		$this->enqueue_home_decor_slide_script();
 		$this->enqueue_home_lazy_sections_script();
@@ -319,12 +320,16 @@ class Assets {
 	}
 
 	/**
-	 * Enqueue Material Symbols used on the home page.
+	 * Enqueue Material Symbols for carousel navigation icons.
 	 *
 	 * @return void
 	 */
 	private function enqueue_material_symbols() {
-		if ( ! $this->should_enqueue_season_carousels() ) {
+		if (
+			! $this->should_enqueue_season_carousels()
+			&& ! is_post_type_archive( 'celebracoes' )
+			&& ! is_page_template( 'templates/page-celebration.php' )
+		) {
 			return;
 		}
 
@@ -399,8 +404,6 @@ class Assets {
 			( function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home() )
 			|| is_post_type_archive( 'casas' )
 			|| is_page_template( 'templates/page-casa.php' )
-			|| is_post_type_archive( 'celebracoes' )
-			|| is_page_template( 'templates/page-celebration.php' )
 		) {
 			// Continue below.
 		} else {
@@ -412,6 +415,27 @@ class Assets {
 		wp_enqueue_script(
 			'aptox-grid-festivity',
 			get_template_directory_uri() . '/components/grid-festivity/grid-festivity.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
+			true
+		);
+	}
+
+	/**
+	 * Enqueue Celebre festivity block carousel on celebration pages.
+	 *
+	 * @return void
+	 */
+	private function enqueue_celebre_block_script() {
+		if ( ! is_post_type_archive( 'celebracoes' ) && ! is_page_template( 'templates/page-celebration.php' ) ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/celebre-block/celebre-block.js';
+
+		wp_enqueue_script(
+			'aptox-celebre-block',
+			get_template_directory_uri() . '/components/celebre-block/celebre-block.js',
 			array(),
 			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
 			true

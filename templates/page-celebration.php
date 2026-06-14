@@ -10,7 +10,7 @@ get_header();
 	<?php get_template_part( 'components/celebre-cta/celebre-cta' ); ?>
 </section>
 
-<?php get_template_part( 'components/grid-festivity/grid-festivity' ); ?>
+<?php get_template_part( 'components/celebre-season/celebre-season' ); ?>
 
 <?php get_template_part( 'components/filter-nav/filter-nav-celebration' ); ?>
 

@@ -12,7 +12,7 @@ $term = get_queried_object();
 	<nav class="taxonomy-breadcrumb">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
 		<span>›</span>
-		<a href="<?php echo esc_url( home_url( '/celebracoes' ) ); ?>">Celebrações</a>
+		<a href="<?php echo esc_url( home_url( '/celebracoes' ) ); ?>">Celebracoes</a>
 		<span>›</span>
 		<span><?php echo esc_html( $term->name ); ?></span>
 	</nav>
@@ -66,7 +66,7 @@ $term = get_queried_object();
 			</div>
 		<?php endif; ?>
 	<?php else : ?>
-		<p>Nenhuma celebração encontrada.</p>
+		<p>Nenhuma celebracao encontrada.</p>
 	<?php endif; ?>
 </main>
 
