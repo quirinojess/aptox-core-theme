@@ -15,6 +15,10 @@ get_header();
 		<?php get_template_part( 'components/info-grid/info-grid' ); ?>
 	</section>
 
+	<section>
+		<?php get_template_part( 'components/cta-season/cta-season' ); ?>
+	</section>
+
 	<section class="container-lg">
 		<?php get_template_part( 'components/grid-recipe/grid-recipe' ); ?>
 	</section>

@@ -52,6 +52,12 @@ if ( ! function_exists( 'aptox_get_season_label' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_season_home_cta_text' ) ) {
+	function aptox_get_season_home_cta_text( $season_slug = null ) {
+		return SeasonService::get_season_home_cta_text( $season_slug );
+	}
+}
+
 if ( ! function_exists( 'aptox_detect_post_taxonomy' ) ) {
 	function aptox_detect_post_taxonomy( $post_id = null ) {
 		return RelatedPostsService::detect_post_taxonomy( $post_id );

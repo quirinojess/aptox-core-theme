@@ -428,4 +428,35 @@ class SeasonService {
 
 		return $map[ $slug ] ?? ucfirst( $slug );
 	}
+
+	/**
+	 * Home CTA copy keyed by season slug.
+	 *
+	 * @return array<string, string>
+	 */
+	private static function get_season_home_cta_text_map() {
+		return array(
+			'primavera'  => 'Uma estação cheia de flores e novos começos. Perfeita para abrir as janelas, encher a casa de cores e aproveitar os dias mais leves. Venha conferir as nossas seleções para essa estação e se inspirar para curtir essa época em grande estilo.',
+			'verao'      => 'Uma estação cheia de sol e momentos ao ar livre. Perfeita para reunir quem você ama, preparar receitas refrescantes e aproveitar cada dia ao máximo. Venha conferir as nossas seleções para essa estação e se inspirar para curtir essa época em grande estilo.',
+			'inverno'    => 'Uma estação cheia de aconchego. Perfeita para colocar uma manta no sofá, acender uma velinha e saborear uma bebida bem quentinha. Venha conferir as nossas seleções para essa estação e se inspirar para curtir esses dias em grande estilo.',
+			'outono'     => 'Uma estação cheia de aconchego. Perfeita para acender aquela velinha e tomar um delicioso cafézinho. Venha conferir as nossas seleções para essa estação e se inspirar para curtir esses dias em grande estilo.',
+			'fim-de-ano' => 'Uma época cheia de encanto e tradição. Perfeita para decorar a casa, preparar receitas especiais e compartilhar momentos à mesa. Venha conferir as nossas seleções para o fim de ano e se inspirar para celebrar essa temporada em grande estilo.',
+		);
+	}
+
+	/**
+	 * Get personalized home CTA text for the current or given season.
+	 *
+	 * @param string|null $season_slug Optional season slug.
+	 * @return string
+	 */
+	public static function get_season_home_cta_text( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$map = self::get_season_home_cta_text_map();
+
+		return $map[ $season_slug ] ?? '';
+	}
 }
