@@ -28,6 +28,12 @@ if ( ! function_exists( 'aptox_season_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_recipe_season_icon' ) ) {
+	function aptox_recipe_season_icon( $season_slug = null ) {
+		return SeasonService::recipe_season_icon( $season_slug );
+	}
+}
+
 if ( ! function_exists( 'aptox_get_season_cta_data' ) ) {
 	function aptox_get_season_cta_data() {
 		return SeasonService::get_season_cta_data();

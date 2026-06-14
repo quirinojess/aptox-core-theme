@@ -250,6 +250,30 @@ class SeasonService {
 	}
 
 	/**
+	 * Resolve recipe section icon URL for a season slug.
+	 *
+	 * @param string|null $season_slug Season slug.
+	 * @return string
+	 */
+	public static function recipe_season_icon( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$map = array(
+			'verao'      => 'icon-recipe-summer.png',
+			'outono'     => 'icon-recipe-autumn.png',
+			'inverno'    => 'icon-recipe-winter.png',
+			'primavera'  => 'icon-recipe-spring.png',
+			'fim-de-ano' => 'icon-recipe-end-year.png',
+		);
+
+		$file = $map[ $season_slug ] ?? 'icon-recipe-summer.png';
+
+		return get_template_directory_uri() . '/assets/icons/ui/' . $file;
+	}
+
+	/**
 	 * Map CTA celebration keys to celebration category term slugs (URLs / taxonomia).
 	 *
 	 * @return array<string, string>

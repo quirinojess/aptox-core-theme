@@ -1,6 +1,7 @@
 /* Components bundle: import contextual component styles */
 
 @import url("../../components/archive-grid/archive-grid.css");
+@import url("../../components/grid-recipe/grid-recipe.css");
 @import url("../../components/recipe-carousel/recipe-carousel.css");
 @import url("../../components/modal-search/modal-search.css");
 @import url("../../components/modal-season/modal-season.css");

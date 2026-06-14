@@ -142,6 +142,7 @@ class Assets {
 		}
 
 		$this->enqueue_recipe_carousel_script();
+		$this->enqueue_grid_recipe_script();
 		$this->enqueue_home_decor_slide_script();
 	}
 
@@ -151,7 +152,11 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_recipe_carousel_script() {
-		if ( ! is_front_page() && ! is_home() && ! is_tax( 'receita_categoria' ) && ! is_tax( 'receita' ) && ! is_post_type_archive( 'receitas' ) && ! is_page_template( 'templates/page-receitas.php' ) ) {
+		if ( is_front_page() ) {
+			return;
+		}
+
+		if ( ! is_home() && ! is_tax( 'receita_categoria' ) && ! is_tax( 'receita' ) && ! is_post_type_archive( 'receitas' ) && ! is_page_template( 'templates/page-receitas.php' ) ) {
 			return;
 		}
 
@@ -161,6 +166,34 @@ class Assets {
 			get_template_directory_uri() . '/components/recipe-carousel/recipe-carousel.js',
 			array(),
 			file_exists( $carousel_js_path ) ? (string) filemtime( $carousel_js_path ) : '1.1',
+			true
+		);
+	}
+
+	/**
+	 * Enqueue seasonal recipe carousel on home.
+	 *
+	 * @return void
+	 */
+	private function enqueue_grid_recipe_script() {
+		if ( ! is_front_page() ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/grid-recipe/grid-recipe.js';
+
+		wp_enqueue_style(
+			'aptox-material-symbols',
+			'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=chevron_left,chevron_right',
+			array(),
+			null
+		);
+
+		wp_enqueue_script(
+			'aptox-grid-recipe',
+			get_template_directory_uri() . '/components/grid-recipe/grid-recipe.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
 			true
 		);
 	}
