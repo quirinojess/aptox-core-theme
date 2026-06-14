@@ -25,7 +25,7 @@ $cta_image = get_template_directory_uri() . '/assets/img/celebre-cta.png';
 			</h2>
 
 			<p class="celebre-cta-text">
-				<?php esc_html_e( 'Encontre inspiracoes para todas as celebracoes dessa estacao. Dicas de como planejar, ideias de decoracao e receitas tipicas para cada festividade.', 'aptox' ); ?>
+				<?php esc_html_e( 'Encontre inspirações para todas as celebrações dessa estação. Dicas de como planejar, ideias de decoração e receitas típicas para cada festividade.', 'aptox' ); ?>
 			</p>
 		</div>
 	</div>

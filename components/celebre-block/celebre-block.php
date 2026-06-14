@@ -103,7 +103,7 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 						<button
 							type="button"
 							class="celebre-block-nav celebre-block-nav--next"
-							aria-label="<?php esc_attr_e( 'Ver proximos posts', 'aptox' ); ?>"
+							aria-label="<?php esc_attr_e( 'Ver próximos posts', 'aptox' ); ?>"
 							hidden
 						>
 							<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>

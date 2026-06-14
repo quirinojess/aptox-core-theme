@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! is_singular() ) {
+if ( ! is_single() ) {
 	return;
 }
 

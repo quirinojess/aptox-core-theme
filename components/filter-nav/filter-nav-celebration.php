@@ -41,16 +41,16 @@ $natal_url       = $term_url( array( 'natal' ) );
 $ano_novo_url    = $term_url( array( 'ano-novo' ) );
 ?>
 
-<nav class="filter-nav" aria-label="Filtros da categoria Celebracoes">
+<nav class="filter-nav" aria-label="Filtros da categoria Celebrações">
   <ul class="filter-list">
 
     <li class="filter-item">
       <a href="<?php echo esc_url( $aniversario_url ); ?>">
         <img
           src="<?php echo esc_url( $icon_base . 'ico-birthday.png' ); ?>"
-          alt="Aniversario"
+          alt="Aniversário"
         >
-        <span>Aniversario</span>
+        <span>Aniversário</span>
       </a>
     </li>
 
@@ -78,9 +78,9 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
       <a href="<?php echo esc_url( $pascoa_url ); ?>">
         <img
           src="<?php echo esc_url( $icon_base . 'ico-easter.png' ); ?>"
-          alt="Pascoa"
+          alt="Páscoa"
         >
-        <span>Pascoa</span>
+        <span>Páscoa</span>
       </a>
     </li>
 
@@ -88,9 +88,9 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
       <a href="<?php echo esc_url( $maes_url ); ?>">
         <img
           src="<?php echo esc_url( $icon_base . 'ico-mother.png' ); ?>"
-          alt="Maes"
+          alt="Mães"
         >
-        <span>Maes</span>
+        <span>Mães</span>
       </a>
     </li>
 
