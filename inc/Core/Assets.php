@@ -36,7 +36,7 @@ class Assets {
 	private function enqueue_fonts() {
 		wp_enqueue_style(
 			'aptox-fonts',
-			'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Meow+Script&family=DM+Serif+Display:ital@0;1&display=swap',
+			'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap',
 			array(),
 			null
 		);

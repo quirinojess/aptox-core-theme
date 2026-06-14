@@ -1,3 +1,37 @@
+/* Section: Self-hosted fonts */
+
+@font-face {
+  font-family: "BTH Primary";
+  src: url("../../fonts/bth-primary-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BTH Primary";
+  src: url("../../fonts/bth-primary-regular-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BTH Sans Serif";
+  src: url("../../fonts/bth-sans-serif-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ariel Script";
+  src: url("../../fonts/Ariel Script.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Section: Design tokens (colors, spacing, layout, typography) */
 
 :root {
@@ -37,9 +71,9 @@
 
   /* Section: Typography tokens */
 
-  --font-base:    "DM Sans", serif;
-  --font-display: "DM Serif Display", serif;
-  --font-hand:    "Meow Script", cursive;
+  --font-base:    "BTH Sans Serif", sans-serif;
+  --font-display: "BTH Primary", serif;
+  --font-hand:    "Ariel Script", cursive;
 
   --font-size-xxs: 10px;
   --font-size-xs:  12px;
