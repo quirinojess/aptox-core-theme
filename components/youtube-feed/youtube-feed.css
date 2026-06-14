@@ -31,6 +31,13 @@
   height: 34px;
   display: block;
   object-fit: contain;
+  object-position: center center;
+  transform-origin: center center;
+  transition: transform var(--transition-fast);
+}
+
+.youtube-feed-header-inner:hover .youtube-feed-icon img {
+  transform: rotate(-4deg);
 }
 
 .youtube-feed-title {
@@ -223,5 +230,11 @@
 
   .youtube-feed-shorts-item a {
     font-size: 0.98rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .youtube-feed-header-inner:hover .youtube-feed-icon img {
+    transform: none;
   }
 }

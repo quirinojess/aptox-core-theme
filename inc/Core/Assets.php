@@ -146,6 +146,36 @@ class Assets {
 		$this->enqueue_grid_recipe_script();
 		$this->enqueue_grid_festivity_script();
 		$this->enqueue_home_decor_slide_script();
+		$this->enqueue_home_lazy_sections_script();
+	}
+
+	/**
+	 * Enqueue progressive home section loader.
+	 *
+	 * @return void
+	 */
+	private function enqueue_home_lazy_sections_script() {
+		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/home-lazy-sections/home-lazy-sections.js';
+
+		wp_enqueue_script(
+			'aptox-home-lazy-sections',
+			get_template_directory_uri() . '/components/home-lazy-sections/home-lazy-sections.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
+			true
+		);
+
+		wp_localize_script(
+			'aptox-home-lazy-sections',
+			'aptoxHomeLazy',
+			array(
+				'restUrl' => rest_url( 'aptox/v1/home-section/' ),
+			)
+		);
 	}
 
 	/**
@@ -154,7 +184,7 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_material_symbols() {
-		if ( ! is_front_page() ) {
+		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
 			return;
 		}
 
@@ -196,7 +226,7 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_grid_recipe_script() {
-		if ( ! is_front_page() ) {
+		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
 			return;
 		}
 
@@ -217,7 +247,7 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_grid_festivity_script() {
-		if ( ! is_front_page() ) {
+		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
 			return;
 		}
 
@@ -238,7 +268,7 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_home_decor_slide_script() {
-		if ( ! is_front_page() && ! is_post_type_archive( 'casas' ) && ! is_page_template( 'templates/page-casa.php' ) && ! is_tax( 'casa_categoria' ) ) {
+		if ( ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) && ! is_post_type_archive( 'casas' ) && ! is_page_template( 'templates/page-casa.php' ) && ! is_tax( 'casa_categoria' ) ) {
 			return;
 		}
 

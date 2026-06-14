@@ -143,6 +143,16 @@
   flex: 0 0 calc((100% - (3 * var(--space-lg))) / 4);
   min-width: 0;
   scroll-snap-align: start;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.grid-recipe-track .archive-thumb,
+.grid-recipe-track .archive-thumb img,
+.grid-recipe-track .archive-image,
+.grid-recipe-track .archive-image img {
+  opacity: 1;
 }
 
 @media (max-width: 1024px) {

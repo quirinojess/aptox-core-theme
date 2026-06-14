@@ -11,28 +11,34 @@ get_header();
 		<?php get_template_part( 'components/index-cta/index-cta' ); ?>
 	</section>
 
-	<section>
-		<?php get_template_part( 'components/info-grid/info-grid' ); ?>
+	<section class="home-lazy-section" data-home-section="info-grid">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section>
-		<?php get_template_part( 'components/cta-season/cta-season' ); ?>
+	<section class="home-lazy-section" data-home-section="cta-season">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section class="container-lg">
-		<?php get_template_part( 'components/grid-recipe/grid-recipe' ); ?>
+	<section class="home-lazy-section container-lg" data-home-section="grid-recipe">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section class="container">
-		<?php get_template_part( 'components/home-decor-slide/home-decor-slide' ); ?>
+	<section class="home-lazy-section container" data-home-section="home-decor-slide">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section>
-		<?php get_template_part( 'components/grid-festivity/grid-festivity' ); ?>
+	<section class="home-lazy-section" data-home-section="grid-festivity">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section class="container-lg">
-		<?php get_template_part( 'components/youtube-feed/youtube-feed' ); ?>
+	<section class="home-lazy-section container-lg" data-home-section="youtube-feed">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 </main>
 

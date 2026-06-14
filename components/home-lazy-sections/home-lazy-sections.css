@@ -1,0 +1,106 @@
+/* Section: Home lazy placeholders */
+
+.home-lazy-section {
+  position: relative;
+}
+
+.home-lazy-section:not(.home-lazy-section--loaded):not(.home-lazy-section--empty) {
+  min-height: var(--home-lazy-min-h, 20rem);
+}
+
+.home-lazy-section[data-home-section="info-grid"] {
+  --home-lazy-min-h: 18rem;
+}
+
+.home-lazy-section[data-home-section="cta-season"] {
+  --home-lazy-min-h: 22rem;
+}
+
+.home-lazy-section[data-home-section="grid-recipe"] {
+  --home-lazy-min-h: 24rem;
+}
+
+.home-lazy-section[data-home-section="home-decor-slide"] {
+  --home-lazy-min-h: 22rem;
+}
+
+.home-lazy-section[data-home-section="grid-festivity"] {
+  --home-lazy-min-h: 24rem;
+}
+
+.home-lazy-section[data-home-section="youtube-feed"] {
+  --home-lazy-min-h: 20rem;
+}
+
+.home-lazy-section--empty {
+  min-height: 0;
+}
+
+.home-lazy-section__placeholder {
+  min-height: inherit;
+  border-radius: 0.75rem;
+  background: linear-gradient(
+    110deg,
+    color-mix(in srgb, var(--color-surface, #f5f0ea) 92%, #fff) 8%,
+    color-mix(in srgb, var(--color-surface, #f5f0ea) 78%, #fff) 18%,
+    color-mix(in srgb, var(--color-surface, #f5f0ea) 92%, #fff) 33%
+  );
+  background-size: 200% 100%;
+  animation: home-lazy-shimmer 1.4s ease-in-out infinite;
+}
+
+.home-lazy-section--loaded .home-lazy-section__placeholder,
+.home-lazy-section--empty .home-lazy-section__placeholder {
+  display: none;
+}
+
+.home-lazy-section__content {
+  display: none;
+}
+
+.home-lazy-section--loaded .home-lazy-section__content {
+  display: block;
+  animation: home-lazy-section-in 0.65s ease both;
+}
+
+.home-lazy-section--loaded .archive-card,
+.home-lazy-section--loaded .archive-thumb,
+.home-lazy-section--loaded .archive-thumb img,
+.home-lazy-section--loaded .archive-image,
+.home-lazy-section--loaded .archive-image img {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@keyframes home-lazy-section-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-lazy-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-lazy-section__placeholder {
+    animation: none;
+  }
+
+  .home-lazy-section--loaded .home-lazy-section__content {
+    animation: none;
+  }
+}

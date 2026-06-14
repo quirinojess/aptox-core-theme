@@ -150,6 +150,9 @@
   flex: 0 0 calc((100% - (2 * var(--space-lg))) / 3);
   min-width: 0;
   scroll-snap-align: start;
+  opacity: 1;
+  transform: none;
+  animation: none;
 }
 
 @media (max-width: 1024px) {

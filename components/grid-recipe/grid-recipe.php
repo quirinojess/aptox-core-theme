@@ -33,7 +33,7 @@ $cache_context = implode(
 		$show_season_title ? 'home' : 'archive',
 	)
 );
-$cache_key   = 'aptox_grid_recipe_v7_' . md5( $cache_context );
+$cache_key   = 'aptox_grid_recipe_v8_' . md5( $cache_context );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -137,7 +137,7 @@ if ( $show_season_title ) :
 						>
 							<?php if ( has_post_thumbnail() ) : ?>
 								<figure class="archive-image">
-									<?php the_post_thumbnail( 'large' ); ?>
+									<?php the_post_thumbnail( 'large', array( 'loading' => 'eager' ) ); ?>
 								</figure>
 							<?php endif; ?>
 						</a>

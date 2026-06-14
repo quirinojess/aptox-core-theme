@@ -100,3 +100,14 @@ if ( ! function_exists( 'aptox_get_related_tax_context' ) ) {
 		return RelatedPostsService::get_related_tax_context();
 	}
 }
+
+if ( ! function_exists( 'aptox_is_lazy_home' ) ) {
+	/**
+	 * Whether the current view uses the lazy-loaded home layout.
+	 *
+	 * @return bool
+	 */
+	function aptox_is_lazy_home() {
+		return ( is_front_page() || is_home() ) && ! is_paged();
+	}
+}
