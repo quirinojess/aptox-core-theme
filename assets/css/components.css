@@ -4,6 +4,7 @@
 @import url("../../components/grid-casa-decor/grid-casa-decor.css");
 @import url("../../components/casa-reforma/casa-reforma.css");
 @import url("../../components/casa-cta/casa-cta.css");
+@import url("../../components/celebre-cta/celebre-cta.css");
 @import url("../../components/casa-diy-marquee/casa-diy-marquee.css");
 @import url("../../components/casa-organizacao/casa-organizacao.css");
 @import url("../../components/grid-festivity/grid-festivity.css");
@@ -43,8 +44,9 @@
   h6,
   .about-author-title,
   .cta-season-name,
-  .casa-cta-title-hand,
-  .casa-organizacao-title-hand,
+.casa-cta-title-hand,
+.casa-organizacao-title-hand,
+.celebre-cta-title-hand,
   .decoracao-slide-aside-title,
   .grid-festivity-season,
   .grid-recipe-season,

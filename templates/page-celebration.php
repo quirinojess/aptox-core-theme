@@ -6,6 +6,10 @@
 get_header();
 ?>
 
+<section class="celebre-cta-section">
+	<?php get_template_part( 'components/celebre-cta/celebre-cta' ); ?>
+</section>
+
 <?php get_template_part( 'components/cta-celebration/cta-celebration' ); ?>
 
 <section class="container">

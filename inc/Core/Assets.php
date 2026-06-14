@@ -80,6 +80,7 @@ class Assets {
 		}
 
 		$this->enqueue_casa_page_styles();
+		$this->enqueue_celebre_page_styles();
 	}
 
 	/**
@@ -110,6 +111,43 @@ class Assets {
 			'aptox-casa-rooms-carousel' => '/components/casa-rooms-carousel/casa-rooms-carousel.css',
 			'aptox-home-decor'          => '/components/home-decor/home-decor.css',
 			'aptox-casa-planejando-lar' => '/components/casa-planejando-lar/casa-planejando-lar.css',
+		);
+
+		foreach ( $components as $handle => $relative_path ) {
+			$file_path = get_template_directory() . $relative_path;
+
+			if ( ! file_exists( $file_path ) ) {
+				continue;
+			}
+
+			wp_enqueue_style(
+				$handle,
+				get_template_directory_uri() . $relative_path,
+				$deps,
+				(string) filemtime( $file_path )
+			);
+		}
+	}
+
+	/**
+	 * Enqueue Celebre page component styles (not always in stale build bundles).
+	 *
+	 * @return void
+	 */
+	private function enqueue_celebre_page_styles() {
+		if ( ! is_post_type_archive( 'celebracoes' ) && ! is_page_template( 'templates/page-celebration.php' ) ) {
+			return;
+		}
+
+		$deps = file_exists( get_template_directory() . '/assets/build/main.css' )
+			? array( 'aptox-main' )
+			: array( 'aptox-components' );
+
+		$components = array(
+			'aptox-celebre-cta'      => '/components/celebre-cta/celebre-cta.css',
+			'aptox-cta-celebration'  => '/components/cta-celebration/cta-celebration.css',
+			'aptox-grid-celebration' => '/components/grid-celebration/grid-celebration.css',
+			'aptox-filter-nav'       => '/components/filter-nav/filter-nav.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {
