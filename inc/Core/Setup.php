@@ -15,6 +15,7 @@ class Setup {
 	 */
 	public function register() {
 		add_action( 'after_setup_theme', array( $this, 'setup_theme' ) );
+		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 		add_filter( 'show_admin_bar', '__return_false' );
 	}
 
@@ -37,6 +38,25 @@ class Setup {
 				'caption',
 				'style',
 				'script',
+			)
+		);
+	}
+
+	/**
+	 * Register widget areas.
+	 *
+	 * @return void
+	 */
+	public function register_sidebars() {
+		register_sidebar(
+			array(
+				'name'          => __( 'Sidebar de posts', 'aptox' ),
+				'id'            => 'post-sidebar',
+				'description'   => __( 'Banners publicitários abaixo do autor em posts de Celebre e Decoração.', 'aptox' ),
+				'before_widget' => '<div id="%1$s" class="post-side-widget %2$s">',
+				'after_widget'  => '</div>',
+				'before_title'  => '<span class="screen-reader-text">',
+				'after_title'   => '</span>',
 			)
 		);
 	}

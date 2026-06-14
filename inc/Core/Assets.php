@@ -195,6 +195,7 @@ class Assets {
 		$this->enqueue_casa_organizacao_script();
 		$this->enqueue_home_decor_slide_script();
 		$this->enqueue_home_lazy_sections_script();
+		$this->enqueue_post_sidebar_script();
 	}
 
 	/**
@@ -374,6 +375,27 @@ class Assets {
 			get_template_directory_uri() . '/components/home-decor-slide/home-decor-slide.js',
 			array(),
 			file_exists( $slide_js_path ) ? (string) filemtime( $slide_js_path ) : '1.0',
+			true
+		);
+	}
+
+	/**
+	 * Enqueue post sidebar alignment on Celebre / Decor singles.
+	 *
+	 * @return void
+	 */
+	private function enqueue_post_sidebar_script() {
+		if ( ! is_singular( array( 'casas', 'celebracoes' ) ) ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/sidebar/sidebar.js';
+
+		wp_enqueue_script(
+			'aptox-post-sidebar',
+			get_template_directory_uri() . '/components/sidebar/sidebar.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
 			true
 		);
 	}

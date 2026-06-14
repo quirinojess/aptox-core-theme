@@ -46,6 +46,7 @@
   .archive-title {
     font-family: var(--font-display);
     font-size: var(--font-size-2xl);
+    font-weight: 400;
     line-height: 1.2;
     text-align: left;
     margin-top: var(--space-xs);
@@ -54,7 +55,7 @@
   .archive-title a {
     text-decoration: none;
     color: var(--dark);
-    font-weight: 400;
+    font-weight: inherit;
   }
   
   @keyframes archiveCardFadeUp {

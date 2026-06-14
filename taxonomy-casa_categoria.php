@@ -43,7 +43,7 @@ $term = get_queried_object();
 						<?php endif; ?>
 					</a>
 
-					<h3 class="recipe-title">
+					<h3 class="archive-title">
 						<a href="<?php the_permalink(); ?>">
 							<?php the_title(); ?>
 						</a>

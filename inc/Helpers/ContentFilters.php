@@ -34,8 +34,23 @@ class ContentFilters {
 	 */
 	public function register() {
 		add_filter( 'the_content', array( $this, 'inject_recipe_after_second_image' ), 20 );
+		add_filter( 'the_content', array( $this, 'add_h2_anchors' ), 15 );
 		add_action( 'wp_head', array( $this, 'render_favicon_links' ) );
 		add_action( 'pre_get_posts', array( $this, 'extend_tag_archive_post_types' ) );
+	}
+
+	/**
+	 * Add anchor ids to h2 headings in Casa / Celebre singles.
+	 *
+	 * @param string $content Post content.
+	 * @return string
+	 */
+	public function add_h2_anchors( $content ) {
+		if ( is_admin() || ! is_singular( array( 'casas', 'celebracoes' ) ) ) {
+			return $content;
+		}
+
+		return aptox_add_h2_anchors_to_content( $content );
 	}
 
 	/**
