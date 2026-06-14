@@ -9,7 +9,7 @@ $search_term = get_search_query();
 $post_type   = get_query_var( 'post_type' );
 
 $labels = array(
-	'casas'    => 'Casas',
+	'casas'    => 'Casa',
 	'receitas' => 'Receitas',
 	'celebracoes' => 'Celebre',
 );

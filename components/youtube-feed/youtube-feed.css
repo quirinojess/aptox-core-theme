@@ -43,7 +43,7 @@
 .youtube-feed-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: var(--font-size-section);
   line-height: 1.4;
   font-weight: 400;
   color: var(--dark);
@@ -51,7 +51,7 @@
 
 .youtube-feed-brand {
   font-family: var(--font-hand);
-  font-size: 2.2rem;
+  font-size: var(--font-size-hand-sm);
   line-height: 1;
   font-weight: 400;
   white-space: nowrap;
@@ -155,7 +155,7 @@
 .youtube-feed-featured-title {
   margin: var(--space-sm) 0 0;
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: var(--font-size-title);
   line-height: 1.35;
 }
 
@@ -191,7 +191,7 @@
 .youtube-feed-shorts-item a {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: var(--font-size-md);
   line-height: 1.45;
   text-decoration: none;
   color: var(--dark);
@@ -217,19 +217,19 @@
 
 @media (max-width: 768px) {
   .youtube-feed-title {
-    font-size: 1.3rem;
+    font-size: var(--font-size-h6);
   }
 
   .youtube-feed-brand {
-    font-size: 2rem;
+    font-size: var(--font-size-3xl);
   }
 
   .youtube-feed-featured-title {
-    font-size: 1.2rem;
+    font-size: var(--font-size-lg);
   }
 
   .youtube-feed-shorts-item a {
-    font-size: 0.98rem;
+    font-size: var(--font-size-md);
   }
 }
 

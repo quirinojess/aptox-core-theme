@@ -90,7 +90,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  font-size: 1.75rem;
+  font-size: var(--font-size-section);
   line-height: 1;
   font-weight: 400;
 }
@@ -201,7 +201,7 @@
 /* Section: Tag label */
 
 .tag-label {
-  font-size: 0.75em;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;

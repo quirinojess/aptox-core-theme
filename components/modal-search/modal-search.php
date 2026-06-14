@@ -83,7 +83,7 @@
             value="casas"
           >
           <span class="radio-mark"></span>
-          <span class="radio-text">Casas</span>
+          <span class="radio-text">Casa</span>
         </label>
 
         <label class="radio">

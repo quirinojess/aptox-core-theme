@@ -65,14 +65,14 @@
 
 .season-modal-title {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: var(--font-size-2xl);
   line-height: 1.15;
   margin: 0;
   color: var(--dark);
 }
 
 .season-modal-description {
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   line-height: 1.45;
   margin: var(--space-xs) 0 var(--space-sm);
   color: var(--dark);
@@ -103,11 +103,11 @@
   }
 
   .season-modal-title {
-    font-size: 24px;
+    font-size: var(--font-size-title);
   }
 
   .season-modal-description {
-    font-size: 13px;
+    font-size: var(--font-size-sm);
     line-height: 1.5;
   }
 }

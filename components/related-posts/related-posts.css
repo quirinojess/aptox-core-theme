@@ -39,14 +39,15 @@
 .related-leia {
   font-family: var(--font-hand);
   font-style: italic;
-  font-size: 40px;
+  font-size: var(--font-size-xxl);
+  font-weight: 400;
   color: var(--dark);
 }
 
 .related-mais {
   margin-top: var(--space-xs);
   font-family: var(--font-base);
-  font-size: 10px;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
@@ -66,7 +67,7 @@
   flex-direction: column;
   gap: var(--space-sm);
   max-width: 180px;
-  font-size: 10px;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
@@ -89,7 +90,7 @@
 .related-title {
   margin: 0;
   font-family: var(--font-base);
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   line-height: 1.35;
   text-align: center;
 }

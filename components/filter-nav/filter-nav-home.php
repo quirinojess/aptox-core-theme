@@ -50,7 +50,7 @@ if ( ! empty( $season['slug'] ) ) {
 
 
 
-<nav class="filter-nav" aria-label="Filtros da categoria Casas">
+<nav class="filter-nav" aria-label="Filtros da categoria Casa">
   <ul class="filter-list">
 
     <li class="filter-item">

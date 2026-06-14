@@ -42,7 +42,7 @@
 
 .season-editorial h2 {
   font-family: var(--font-display);
-  font-size: 48px;
+  font-size: var(--font-size-display);
   color: var(--dark);
   margin-bottom: var(--space-md);
 }
@@ -51,7 +51,7 @@
   max-width: 480px;
   margin-bottom: var(--space-lg);
 
-  font-size: 18px;
+  font-size: var(--font-size-lg);
   line-height: 1.6;
   color: var(--dark);
 }
@@ -70,7 +70,7 @@
   }
 
   .season-editorial h2 {
-    font-size: 36px;
+    font-size: var(--font-size-display-sm);
   }
 }
 

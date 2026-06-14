@@ -45,7 +45,7 @@
   
   .archive-title {
     font-family: var(--font-display);
-    font-size: 26px;
+    font-size: var(--font-size-2xl);
     line-height: 1.2;
     text-align: left;
     margin-top: var(--space-xs);
@@ -105,7 +105,7 @@
   .archive-load-more .page-numbers {
     cursor: pointer;
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: var(--font-size-subtitle);
     font-weight: 700;
     padding: 20px 10px;
   }

@@ -16,7 +16,7 @@ $season = aptox_get_season_context();
         class="categories"
         aria-label="Categorias principais"
       >
-        <a href="<?php echo esc_url( home_url( '/em-casa' ) ); ?>">Casas</a>
+        <a href="<?php echo esc_url( home_url( '/em-casa' ) ); ?>">Casa</a>
         <a href="<?php echo esc_url( home_url( '/na-cozinha' ) ); ?>">Receitas</a>
         <a href="<?php echo esc_url( home_url( '/celebrando' ) ); ?>">Celebre</a>
       </nav>
@@ -80,7 +80,7 @@ $season = aptox_get_season_context();
   class="menu-mobile"
   aria-label="Menu mobile"
 >
-  <a href="<?php echo esc_url( home_url( '/em-casa' ) ); ?>">Casas</a>
+  <a href="<?php echo esc_url( home_url( '/em-casa' ) ); ?>">Casa</a>
    <a href="<?php echo esc_url( home_url( '/na-cozinha' ) ); ?>">Receitas</a>
   <a href="<?php echo esc_url( home_url( '/celebrando' ) ); ?>">Celebre</a>
 </nav>

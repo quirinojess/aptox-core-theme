@@ -12,7 +12,7 @@ $term = get_queried_object();
 	<nav class="taxonomy-breadcrumb">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
 		<span>›</span>
-		<a href="<?php echo esc_url( home_url( '/casas' ) ); ?>">Casas</a>
+		<a href="<?php echo esc_url( home_url( '/casas' ) ); ?>">Casa</a>
 		<span>›</span>
 		<span><?php echo esc_html( $term->name ); ?></span>
 	</nav>

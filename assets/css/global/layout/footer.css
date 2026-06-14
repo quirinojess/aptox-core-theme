@@ -20,7 +20,7 @@
 .site-footer-midia h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -37,7 +37,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-base);
-  font-size: 10px;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
@@ -99,7 +99,7 @@
 
 .footer-simple-credits {
   font-family: var(--font-base);
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   line-height: 1.6;
   color: var(--dark);
   text-align: right;
@@ -123,7 +123,7 @@
   }
 
   .site-footer-midia a {
-    font-size: 10px;
+    font-size: var(--font-size-xxs);
   }
 
   .footer-simple-inner {
@@ -152,7 +152,7 @@
     width: 100%;
     margin-bottom: 20px;
     text-align: center;
-    font-size: 11px;
+    font-size: var(--font-size-xs);
     line-height: 1.5;
   }
 }

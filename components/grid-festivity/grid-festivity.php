@@ -19,7 +19,7 @@ if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
 	$season_label = ! empty( $season['label'] ) ? $season['label'] : aptox_get_season_label( $season_slug );
 }
 
-$cache_key   = 'aptox_grid_festivity_v5_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_grid_festivity_v6_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {

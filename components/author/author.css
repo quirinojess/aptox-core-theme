@@ -33,7 +33,7 @@
   flex-direction: column;
   align-items: flex-start;
 
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   text-align: justify;
 }
 
@@ -42,15 +42,16 @@
 .about-author-title {
   margin: var(--space-xs) 0;
   font-family: var(--font-hand);
-  font-size: 30px;
+  font-size: var(--font-size-author);
   line-height: 1.2;
+  font-weight: 400;
 }
 
 .about-author-label {
   padding-right: var(--space-sm);
 
   font-family: var(--font-base);
-  font-size: 10px;
+  font-size: var(--font-size-xxs);
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -79,12 +80,12 @@
   }
 
   .about-author-title {
-    font-size: 22px;
+    font-size: var(--font-size-subtitle);
   }
 
   .about-author-content {
     max-width: 100%;
-    font-size: 12px;
+    font-size: var(--font-size-xs);
   }
 }
 
@@ -103,7 +104,7 @@
   }
 
   .about-author-title {
-    font-size: 20px;
+    font-size: var(--font-size-h6);
   }
 }
 

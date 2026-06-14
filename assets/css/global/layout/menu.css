@@ -205,7 +205,7 @@
 
   #menu-mob a {
     font-family: var(--font-base);
-    font-size: 11px;
+    font-size: var(--font-size-xs);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--dark);

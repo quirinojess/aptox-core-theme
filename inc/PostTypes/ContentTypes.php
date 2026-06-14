@@ -31,7 +31,7 @@ class ContentTypes {
 			'casas',
 			array(
 				'singular'     => 'Casa',
-				'plural'       => 'Casas',
+				'plural'       => 'Casa',
 				'single_slug'  => 'casa',
 				'archive_slug' => 'casas',
 			)

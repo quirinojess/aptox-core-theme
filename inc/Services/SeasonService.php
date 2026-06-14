@@ -430,11 +430,17 @@ class SeasonService {
 			return null;
 		}
 
+		$term_link = get_term_link( $term_data['term'] );
+
+		if ( is_wp_error( $term_link ) ) {
+			return null;
+		}
+
 		return array(
 			'label' => ! empty( $term_data['term']->name )
 				? sanitize_text_field( $term_data['term']->name )
 				: sanitize_text_field( $label ),
-			'url'   => esc_url_raw( get_permalink( $post ) ),
+			'url'   => esc_url_raw( $term_link ),
 			'image' => esc_url_raw( $image ),
 		);
 	}

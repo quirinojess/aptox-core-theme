@@ -64,7 +64,7 @@
 .cta-season-title a {
   display: inline-block;
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: var(--font-size-section);
   line-height: 1.4;
   font-weight: 400;
   text-decoration: none;
@@ -79,7 +79,7 @@
 
 .cta-season-name {
   font-family: var(--font-hand);
-  font-size: 2.8rem;
+  font-size: var(--font-size-hand-md);
   line-height: 1;
   font-weight: 400;
   white-space: nowrap;
@@ -142,10 +142,10 @@
   }
 
   .cta-season-title a {
-    font-size: 1.3rem;
+    font-size: var(--font-size-h6);
   }
 
   .cta-season-name {
-    font-size: 2.55rem;
+    font-size: var(--font-size-xxl);
   }
 }

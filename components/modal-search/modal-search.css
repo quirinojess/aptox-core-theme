@@ -30,7 +30,7 @@
 
 .modal-content h5 {
   margin-bottom: 16px;
-  font-size: 32px;
+  font-size: var(--font-size-3xl);
 }
 
 /* Section: Search modal (form layout) */
@@ -87,7 +87,7 @@
 }
 
 .search-filters-label {
-  font-size: 0.7rem;
+  font-size: var(--font-size-xxs);
   color: var(--dark);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -101,7 +101,7 @@
   gap: var(--space-xxs);
   cursor: pointer;
 
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--dark);
 }
 
@@ -168,7 +168,7 @@
   top: var(--space-sm);
   right: var(--space-sm);
 
-  font-size: 24px;
+  font-size: var(--font-size-title);
   color: var(--beige);
 
   opacity: 0;
