@@ -20,6 +20,8 @@ get_header();
 
 <?php get_template_part( 'components/casa-diy-marquee/casa-diy-marquee' ); ?>
 
+<?php get_template_part( 'components/casa-jardinagem/casa-jardinagem' ); ?>
+
 <section class="container">
 	<?php get_template_part( 'components/home-decor/home-decor' ); ?>
 </section>

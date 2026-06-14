@@ -97,12 +97,14 @@ class Assets {
 			: array( 'aptox-components' );
 
 		$components = array(
-			'aptox-archive-grid'    => '/components/archive-grid/archive-grid.css',
-			'aptox-grid-recipe'     => '/components/grid-recipe/grid-recipe.css',
-			'aptox-grid-casa-decor' => '/components/grid-casa-decor/grid-casa-decor.css',
-			'aptox-casa-reforma'    => '/components/casa-reforma/casa-reforma.css',
-			'aptox-casa-cta'        => '/components/casa-cta/casa-cta.css',
+			'aptox-archive-grid'     => '/components/archive-grid/archive-grid.css',
+			'aptox-grid-recipe'      => '/components/grid-recipe/grid-recipe.css',
+			'aptox-grid-casa-decor'  => '/components/grid-casa-decor/grid-casa-decor.css',
+			'aptox-casa-reforma'     => '/components/casa-reforma/casa-reforma.css',
+			'aptox-casa-cta'         => '/components/casa-cta/casa-cta.css',
 			'aptox-casa-diy-marquee' => '/components/casa-diy-marquee/casa-diy-marquee.css',
+			'aptox-grid-festivity'   => '/components/grid-festivity/grid-festivity.css',
+			'aptox-casa-jardinagem'  => '/components/casa-jardinagem/casa-jardinagem.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {
@@ -300,7 +302,13 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_grid_festivity_script() {
-		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
+		if (
+			( function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home() )
+			|| is_post_type_archive( 'casas' )
+			|| is_page_template( 'templates/page-casa.php' )
+		) {
+			// Continue below.
+		} else {
 			return;
 		}
 
