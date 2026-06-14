@@ -1,20 +1,31 @@
-/* Section: Footer (social media, desktop) */
+/* Section: Footer (social media) */
 
 .site-footer-midia {
   width: 100%;
   background: var(--beige);
-  padding: 40px 0;
+  padding: 18px 0;
 }
 
-.site-footer-midia ul {
+.site-footer-midia__list {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
-
+  flex-wrap: wrap;
+  gap: 24px 32px;
   margin: 0;
-  padding: 0;
+  padding: 0 var(--container-padding);
   list-style: none;
+}
+
+.site-footer-midia h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dark);
+  white-space: nowrap;
 }
 
 .site-footer-midia img {
@@ -22,19 +33,16 @@
 }
 
 .site-footer-midia a {
-  padding: 8px 0 0 20px;
-
   display: flex;
   align-items: center;
-  gap: 5px;
-
+  gap: 6px;
   font-family: var(--font-base);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-
   color: var(--dark);
+  white-space: nowrap;
   transition: opacity var(--transition-fast);
 }
 
@@ -54,7 +62,6 @@
   max-width: var(--container-lg);
   margin: 0 auto;
   padding: 30px;
-
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -65,7 +72,6 @@
 .footer-simple-nav ul {
   margin: 0;
   padding: 0;
-
   display: flex;
   gap: 12px;
   list-style: none;
@@ -73,17 +79,14 @@
 
 .footer-simple-nav a {
   padding: 0 15px;
-
   display: flex;
   align-items: center;
   gap: 5px;
-
   font-family: var(--font-base);
   font-size: var(--font-size-xxs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-
   color: var(--dark);
   transition: opacity var(--transition-fast);
 }
@@ -98,7 +101,6 @@
   font-family: var(--font-base);
   font-size: 12px;
   line-height: 1.6;
-
   color: var(--dark);
   text-align: right;
 }
@@ -112,16 +114,15 @@
 
 @media (max-width: 768px) {
   .site-footer-midia {
-    padding: 24px 0;
+    padding: 14px 0;
   }
 
-  .site-footer-midia ul {
+  .site-footer-midia__list {
     flex-direction: column;
     gap: 12px;
   }
 
   .site-footer-midia a {
-    padding: 0;
     font-size: 10px;
   }
 
@@ -150,10 +151,8 @@
   .footer-simple-credits {
     width: 100%;
     margin-bottom: 20px;
-
     text-align: center;
     font-size: 11px;
     line-height: 1.5;
   }
 }
-
