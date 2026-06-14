@@ -10,6 +10,10 @@ get_header();
 	<?php get_template_part( 'components/celebre-cta/celebre-cta' ); ?>
 </section>
 
+<section class="container">
+	<?php get_template_part( 'components/celebre-season-slide/celebre-season-slide' ); ?>
+</section>
+
 <?php get_template_part( 'components/celebre-season/celebre-season' ); ?>
 
 <?php get_template_part( 'components/celebre-info-grid/celebre-info-grid' ); ?>

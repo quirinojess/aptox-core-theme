@@ -144,12 +144,14 @@ class Assets {
 			: array( 'aptox-components' );
 
 		$components = array(
-			'aptox-celebre-cta'       => '/components/celebre-cta/celebre-cta.css',
-			'aptox-info-grid'         => '/components/info-grid/info-grid.css',
-			'aptox-celebre-info-grid' => '/components/celebre-info-grid/celebre-info-grid.css',
-			'aptox-archive-grid'      => '/components/archive-grid/archive-grid.css',
-			'aptox-celebre-block'     => '/components/celebre-block/celebre-block.css',
-			'aptox-filter-nav'        => '/components/filter-nav/filter-nav.css',
+			'aptox-celebre-cta'         => '/components/celebre-cta/celebre-cta.css',
+			'aptox-home-decor-slide'    => '/components/home-decor-slide/home-decor-slide.css',
+			'aptox-celebre-season-slide' => '/components/celebre-season-slide/celebre-season-slide.css',
+			'aptox-info-grid'           => '/components/info-grid/info-grid.css',
+			'aptox-celebre-info-grid'   => '/components/celebre-info-grid/celebre-info-grid.css',
+			'aptox-archive-grid'        => '/components/archive-grid/archive-grid.css',
+			'aptox-celebre-block'       => '/components/celebre-block/celebre-block.css',
+			'aptox-filter-nav'          => '/components/filter-nav/filter-nav.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {
@@ -450,7 +452,15 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_home_decor_slide_script() {
-		if ( ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) && ! is_post_type_archive( 'casas' ) && ! is_page_template( 'templates/page-casa.php' ) && ! is_tax( 'casa_categoria' ) ) {
+		$is_celebre_page = is_post_type_archive( 'celebracoes' ) || is_page_template( 'templates/page-celebration.php' );
+
+		if (
+			( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() )
+			&& ! is_post_type_archive( 'casas' )
+			&& ! is_page_template( 'templates/page-casa.php' )
+			&& ! is_tax( 'casa_categoria' )
+			&& ! $is_celebre_page
+		) {
 			return;
 		}
 
