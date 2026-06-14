@@ -144,10 +144,12 @@ class Assets {
 			: array( 'aptox-components' );
 
 		$components = array(
-			'aptox-celebre-cta'    => '/components/celebre-cta/celebre-cta.css',
-			'aptox-archive-grid'   => '/components/archive-grid/archive-grid.css',
-			'aptox-celebre-block'  => '/components/celebre-block/celebre-block.css',
-			'aptox-filter-nav'     => '/components/filter-nav/filter-nav.css',
+			'aptox-celebre-cta'       => '/components/celebre-cta/celebre-cta.css',
+			'aptox-info-grid'         => '/components/info-grid/info-grid.css',
+			'aptox-celebre-info-grid' => '/components/celebre-info-grid/celebre-info-grid.css',
+			'aptox-archive-grid'      => '/components/archive-grid/archive-grid.css',
+			'aptox-celebre-block'     => '/components/celebre-block/celebre-block.css',
+			'aptox-filter-nav'        => '/components/filter-nav/filter-nav.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {

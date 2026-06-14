@@ -12,6 +12,8 @@ get_header();
 
 <?php get_template_part( 'components/celebre-season/celebre-season' ); ?>
 
+<?php get_template_part( 'components/celebre-info-grid/celebre-info-grid' ); ?>
+
 <?php get_template_part( 'components/filter-nav/filter-nav-celebration' ); ?>
 
 <?php get_footer(); ?>
