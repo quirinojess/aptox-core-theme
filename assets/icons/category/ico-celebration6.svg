@@ -1,7 +1,5 @@
-﻿
-
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="60px" height="60px" viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" aria-hidden="true">
+  <svg x="6" y="6" width="48" height="48" viewBox="-6 -6 72 72" preserveAspectRatio="xMidYMid meet">
 <g>
 	<path fill-rule="evenodd" clip-rule="evenodd" d="M49.485,35.082c-0.541-0.67-1.003-1.242-1.45-1.797
 		c3.744-8.173,3.247-15.917-2.992-22.599C39.006,4.223,31.509,3.105,23.23,6.024c-0.183-0.396-0.375-0.81-0.703-1.517
@@ -117,5 +115,5 @@
 	<path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M44.855,31.592c-0.735,0.459-1.471,0.459-2.089-0.162
 		c0.563-1.024,1.053-1.917,1.6-2.912"/>
 </g>
+  </svg>
 </svg>
-

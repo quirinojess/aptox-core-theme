@@ -51,7 +51,7 @@
 }
 
 .info-grid-item:hover .info-grid-icon img {
-  transform: rotate(-4deg);
+  transform: rotate(-10deg);
 }
 
 /* Section: Info Grid (text content) */

@@ -38,7 +38,7 @@
 }
 
 .grid-recipe-header-inner:hover .grid-recipe-icon img {
-  transform: rotate(-4deg);
+  transform: rotate(-10deg);
 }
 
 .grid-recipe-title {

@@ -27,9 +27,13 @@ $term_url = static function ( array $slugs ) use ( $celebration_taxonomy, $archi
 };
 
 $aniversario_url = $term_url( array( 'aniversario', 'aniversarios' ) );
+$casamento_url   = $term_url( array( 'casamento', 'casamentos' ) );
 $carnaval_url    = $term_url( array( 'carnaval' ) );
 $pascoa_url      = $term_url( array( 'pascoa' ) );
+$maes_url        = $term_url( array( 'dia-das-maes', 'dias-das-maes' ) );
 $junina_url      = $term_url( array( 'festa-junina' ) );
+$pais_url        = $term_url( array( 'dia-dos-pais' ) );
+$namorados_url   = $term_url( array( 'dia-dos-namorados', 'namorados' ) );
 $halloween_url   = $term_url( array( 'halloween' ) );
 $muertos_url     = $term_url( array( 'dia-de-los-muertos' ) );
 $natal_url       = $term_url( array( 'natal' ) );
@@ -46,6 +50,16 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
           alt="Aniversário"
         >
         <span>Aniversário</span>
+      </a>
+    </li>
+
+    <li class="filter-item">
+      <a href="<?php echo esc_url( $casamento_url ); ?>">
+        <img
+          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration11.svg' ); ?>"
+          alt="Casamento"
+        >
+        <span>Casamento</span>
       </a>
     </li>
 
@@ -70,12 +84,42 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     </li>
 
     <li class="filter-item">
+      <a href="<?php echo esc_url( $maes_url ); ?>">
+        <img
+          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration9.svg' ); ?>"
+          alt="Mães"
+        >
+        <span>Mães</span>
+      </a>
+    </li>
+
+    <li class="filter-item">
       <a href="<?php echo esc_url( $junina_url ); ?>">
         <img
           src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration3.svg' ); ?>"
           alt="Festa Junina"
         >
         <span>Festa Junina</span>
+      </a>
+    </li>
+
+    <li class="filter-item">
+      <a href="<?php echo esc_url( $pais_url ); ?>">
+        <img
+          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration10.svg' ); ?>"
+          alt="Pais"
+        >
+        <span>Pais</span>
+      </a>
+    </li>
+
+    <li class="filter-item">
+      <a href="<?php echo esc_url( $namorados_url ); ?>">
+        <img
+          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration4.svg' ); ?>"
+          alt="Namorados"
+        >
+        <span>Namorados</span>
       </a>
     </li>
 
@@ -93,9 +137,9 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
       <a href="<?php echo esc_url( $muertos_url ); ?>">
         <img
           src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration6.svg' ); ?>"
-          alt="Dia de los Muertos"
+          alt="Los Muertos"
         >
-        <span>Dia de los Muertos</span>
+        <span>Los Muertos</span>
       </a>
     </li>
 

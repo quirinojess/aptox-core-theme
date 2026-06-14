@@ -189,13 +189,12 @@
   height: 100%;
   object-fit: cover;
   display: block;
-
-  transition: transform 0.6s ease;
   transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.tag-image:hover img {
-  transform: rotate(-3deg) scale(1.02);
+.tag-item:hover .tag-image img {
+  transform: scale(1.06) rotate(10deg);
 }
 
 /* Section: Tag label */
@@ -206,4 +205,14 @@
   text-transform: uppercase;
   font-weight: 700;
   display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag-image img {
+    transition: none;
+  }
+
+  .tag-item:hover .tag-image img {
+    transform: none;
+  }
 }
