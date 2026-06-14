@@ -56,29 +56,67 @@ class Assets {
 				array(),
 				(string) filemtime( $build_css_path )
 			);
+		} else {
+			wp_enqueue_style(
+				'aptox-base',
+				get_template_directory_uri() . '/assets/css/global/base.css',
+				array(),
+				(string) filemtime( get_template_directory() . '/assets/css/global/base.css' )
+			);
+
+			wp_enqueue_style(
+				'aptox-layout',
+				get_template_directory_uri() . '/assets/css/layout.css',
+				array( 'aptox-base' ),
+				(string) filemtime( get_template_directory() . '/assets/css/layout.css' )
+			);
+
+			wp_enqueue_style(
+				'aptox-components',
+				get_template_directory_uri() . '/assets/css/components.css',
+				array( 'aptox-layout' ),
+				(string) filemtime( get_template_directory() . '/assets/css/components.css' )
+			);
+		}
+
+		$this->enqueue_casa_page_styles();
+	}
+
+	/**
+	 * Enqueue Casa page component styles (not always in stale build bundles).
+	 *
+	 * @return void
+	 */
+	private function enqueue_casa_page_styles() {
+		if ( ! is_post_type_archive( 'casas' ) && ! is_page_template( 'templates/page-casa.php' ) ) {
 			return;
 		}
 
-		wp_enqueue_style(
-			'aptox-base',
-			get_template_directory_uri() . '/assets/css/global/base.css',
-			array(),
-			(string) filemtime( get_template_directory() . '/assets/css/global/base.css' )
+		$deps = file_exists( get_template_directory() . '/assets/build/main.css' )
+			? array( 'aptox-main' )
+			: array( 'aptox-components' );
+
+		$components = array(
+			'aptox-archive-grid'    => '/components/archive-grid/archive-grid.css',
+			'aptox-grid-recipe'     => '/components/grid-recipe/grid-recipe.css',
+			'aptox-grid-casa-decor' => '/components/grid-casa-decor/grid-casa-decor.css',
+			'aptox-casa-reforma'    => '/components/casa-reforma/casa-reforma.css',
 		);
 
-		wp_enqueue_style(
-			'aptox-layout',
-			get_template_directory_uri() . '/assets/css/layout.css',
-			array( 'aptox-base' ),
-			(string) filemtime( get_template_directory() . '/assets/css/layout.css' )
-		);
+		foreach ( $components as $handle => $relative_path ) {
+			$file_path = get_template_directory() . $relative_path;
 
-		wp_enqueue_style(
-			'aptox-components',
-			get_template_directory_uri() . '/assets/css/components.css',
-			array( 'aptox-layout' ),
-			(string) filemtime( get_template_directory() . '/assets/css/components.css' )
-		);
+			if ( ! file_exists( $file_path ) ) {
+				continue;
+			}
+
+			wp_enqueue_style(
+				$handle,
+				get_template_directory_uri() . $relative_path,
+				$deps,
+				(string) filemtime( $file_path )
+			);
+		}
 	}
 
 	/**

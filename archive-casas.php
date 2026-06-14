@@ -11,6 +11,7 @@ get_header();
 </section>
 
 <section class="container">
+	<?php get_template_part( 'components/casa-reforma/casa-reforma' ); ?>
 	<?php get_template_part( 'components/home-decor/home-decor' ); ?>
 </section>
 
