@@ -103,6 +103,7 @@ class Assets {
 			'aptox-casa-reforma'     => '/components/casa-reforma/casa-reforma.css',
 			'aptox-casa-cta'         => '/components/casa-cta/casa-cta.css',
 			'aptox-casa-diy-marquee' => '/components/casa-diy-marquee/casa-diy-marquee.css',
+			'aptox-casa-organizacao' => '/components/casa-organizacao/casa-organizacao.css',
 			'aptox-grid-festivity'   => '/components/grid-festivity/grid-festivity.css',
 			'aptox-casa-jardinagem'  => '/components/casa-jardinagem/casa-jardinagem.css',
 		);
@@ -187,8 +188,30 @@ class Assets {
 		$this->enqueue_recipe_carousel_script();
 		$this->enqueue_grid_recipe_script();
 		$this->enqueue_grid_festivity_script();
+		$this->enqueue_casa_organizacao_script();
 		$this->enqueue_home_decor_slide_script();
 		$this->enqueue_home_lazy_sections_script();
+	}
+
+	/**
+	 * Enqueue Casa organização carousel on Casa pages.
+	 *
+	 * @return void
+	 */
+	private function enqueue_casa_organizacao_script() {
+		if ( ! is_post_type_archive( 'casas' ) && ! is_page_template( 'templates/page-casa.php' ) ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/casa-organizacao/casa-organizacao.js';
+
+		wp_enqueue_script(
+			'aptox-casa-organizacao',
+			get_template_directory_uri() . '/components/casa-organizacao/casa-organizacao.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
+			true
+		);
 	}
 
 	/**
