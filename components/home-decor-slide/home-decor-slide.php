@@ -18,7 +18,7 @@ if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
 
 $tag_slug = 'decoracao-de-' . $season_slug;
 
-$cache_key   = 'aptox_home_decor_slide_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_home_decor_slide_v3_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -28,7 +28,7 @@ if ( false !== $cached_html ) {
 
 $list_args = array(
 	'post_type'      => 'casas',
-	'posts_per_page' => 5,
+	'posts_per_page' => 4,
 	'tax_query'      => array(
 		array(
 			'taxonomy' => 'post_tag',
@@ -51,7 +51,7 @@ if ( 'fim-de-ano' === $season_slug ) {
 		if ( $natal_term && ! is_wp_error( $natal_term ) ) {
 			$list_args = array(
 				'post_type'      => 'celebracoes',
-				'posts_per_page' => 5,
+				'posts_per_page' => 4,
 				'tax_query'      => array(
 					array(
 						'taxonomy' => $taxonomy,
@@ -93,6 +93,17 @@ $initial = array(
 $aside_title = 'fim-de-ano' === $season_slug
   ? 'Celebre o Natal'
   : 'Decore para o ' . aptox_get_season_label( $season_slug );
+
+$season_label = '';
+
+if ( is_array( $season ) && ! empty( $season['label'] ) ) {
+	$season_label = $season['label'];
+} elseif ( $season_slug ) {
+	$season_label = aptox_get_season_label( $season_slug );
+}
+
+$badge_text   = mb_strtolower( $season_label, 'UTF-8' );
+$badge_repeat = trim( str_repeat( $badge_text . ' · ', 8 ) );
 ?>
 
 <?php ob_start(); ?>
@@ -116,6 +127,24 @@ $aside_title = 'fim-de-ano' === $season_slug
             alt="<?php echo esc_attr( $initial['title'] ); ?>"
             loading="lazy"
           >
+
+          <?php if ( $badge_repeat ) : ?>
+            <div class="decoracao-slide-badge" aria-hidden="true">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path
+                    id="decoracao-slide-badge-path"
+                    d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                  />
+                </defs>
+                <text>
+                  <textPath href="#decoracao-slide-badge-path" startOffset="0%">
+                    <?php echo esc_html( $badge_repeat ); ?>
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+          <?php endif; ?>
         </figure>
       <?php endif; ?>
 
@@ -157,23 +186,23 @@ $aside_title = 'fim-de-ano' === $season_slug
 
       <ul class="decoracao-slide-list">
 
-        <li
-          class="decoracao-slide-item is-active"
-          data-title="<?php echo esc_attr( $initial['title'] ); ?>"
-          data-excerpt="<?php echo esc_attr( $initial['excerpt'] ); ?>"
-          data-image="<?php echo esc_url( $initial['image'] ); ?>"
-          data-link="<?php echo esc_url( $initial['link'] ); ?>"
-        >
-          <span><?php echo esc_html( $initial['title'] ); ?></span>
-        </li>
-
         <?php
+        $list_count = 0;
+
         while ( $list->have_posts() ) :
           $list->the_post();
 
           if ( get_the_ID() === $first_post_id ) {
             continue;
           }
+
+          $list_count++;
+
+          if ( $list_count > 3 ) {
+            break;
+          }
+
+          $item_excerpt = wp_trim_words( get_the_excerpt(), 18 );
         ?>
           <li
             class="decoracao-slide-item"
@@ -182,7 +211,10 @@ $aside_title = 'fim-de-ano' === $season_slug
             data-image="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>"
             data-link="<?php the_permalink(); ?>"
           >
-            <span><?php the_title(); ?></span>
+            <div class="decoracao-slide-item-content">
+              <span class="decoracao-slide-item-title"><?php the_title(); ?></span>
+              <p class="decoracao-slide-item-excerpt"><?php echo esc_html( $item_excerpt ); ?></p>
+            </div>
           </li>
         <?php endwhile; ?>
 

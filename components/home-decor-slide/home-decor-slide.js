@@ -20,7 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
       featured.classList.add('is-transitioning');
 
       setTimeout(() => {
-        if (img)     img.src = this.dataset.image;
+        if (img) {
+          img.src = this.dataset.image;
+          img.alt = this.dataset.title;
+        }
         if (title)   title.textContent = this.dataset.title;
         if (excerpt) excerpt.textContent = this.dataset.excerpt;
         if (link)    link.href = this.dataset.link;
