@@ -144,10 +144,10 @@ class Assets {
 			: array( 'aptox-components' );
 
 		$components = array(
-			'aptox-celebre-cta'      => '/components/celebre-cta/celebre-cta.css',
-			'aptox-cta-celebration'  => '/components/cta-celebration/cta-celebration.css',
-			'aptox-grid-celebration' => '/components/grid-celebration/grid-celebration.css',
-			'aptox-filter-nav'       => '/components/filter-nav/filter-nav.css',
+			'aptox-celebre-cta'    => '/components/celebre-cta/celebre-cta.css',
+			'aptox-archive-grid'   => '/components/archive-grid/archive-grid.css',
+			'aptox-grid-festivity' => '/components/grid-festivity/grid-festivity.css',
+			'aptox-filter-nav'     => '/components/filter-nav/filter-nav.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {
@@ -399,6 +399,8 @@ class Assets {
 			( function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home() )
 			|| is_post_type_archive( 'casas' )
 			|| is_page_template( 'templates/page-casa.php' )
+			|| is_post_type_archive( 'celebracoes' )
+			|| is_page_template( 'templates/page-celebration.php' )
 		) {
 			// Continue below.
 		} else {

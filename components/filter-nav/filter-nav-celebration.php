@@ -9,6 +9,7 @@
 <?php
 $celebration_taxonomy = 'celebracao_categoria';
 $archive_url          = home_url( '/celebracoes/' );
+$icon_base            = get_template_directory_uri() . '/assets/icons/category/';
 
 $term_url = static function ( array $slugs ) use ( $celebration_taxonomy, $archive_url ) {
   foreach ( $slugs as $slug ) {
@@ -46,7 +47,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $aniversario_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration0.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-birthday.png' ); ?>"
           alt="Aniversário"
         >
         <span>Aniversário</span>
@@ -56,7 +57,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $casamento_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration11.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-wedding.png' ); ?>"
           alt="Casamento"
         >
         <span>Casamento</span>
@@ -66,7 +67,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $carnaval_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration1.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-carnival.png' ); ?>"
           alt="Carnaval"
         >
         <span>Carnaval</span>
@@ -76,7 +77,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $pascoa_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration2.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-easter.png' ); ?>"
           alt="Páscoa"
         >
         <span>Páscoa</span>
@@ -86,7 +87,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $maes_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration9.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-mother.png' ); ?>"
           alt="Mães"
         >
         <span>Mães</span>
@@ -96,7 +97,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $junina_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration3.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-junine.png' ); ?>"
           alt="Festa Junina"
         >
         <span>Festa Junina</span>
@@ -106,7 +107,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $pais_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration10.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-dad.png' ); ?>"
           alt="Pais"
         >
         <span>Pais</span>
@@ -116,7 +117,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $namorados_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration4.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-valentine.png' ); ?>"
           alt="Namorados"
         >
         <span>Namorados</span>
@@ -126,7 +127,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $halloween_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration5.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-halloween.png' ); ?>"
           alt="Halloween"
         >
         <span>Halloween</span>
@@ -136,7 +137,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $muertos_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration6.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-muertos.png' ); ?>"
           alt="Los Muertos"
         >
         <span>Los Muertos</span>
@@ -146,7 +147,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $natal_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration7.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-xmas.png' ); ?>"
           alt="Natal"
         >
         <span>Natal</span>
@@ -156,7 +157,7 @@ $ano_novo_url    = $term_url( array( 'ano-novo' ) );
     <li class="filter-item">
       <a href="<?php echo esc_url( $ano_novo_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-celebration8.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-new-year.png' ); ?>"
           alt="Ano Novo"
         >
         <span>Ano Novo</span>

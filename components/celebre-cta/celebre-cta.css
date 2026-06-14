@@ -5,11 +5,11 @@
 }
 
 .celebre-cta {
-  --celebre-cta-bg-position: right center;
+  --celebre-cta-bg-position: right 18%;
 
   position: relative;
   width: 100%;
-  min-height: 480px;
+  min-height: 336px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -30,9 +30,10 @@
   pointer-events: none;
   background: linear-gradient(
     to right,
-    rgba(251, 251, 251, 0.92) 0%,
-    rgba(251, 251, 251, 0.75) 45%,
-    rgba(251, 251, 251, 0) 75%
+    rgba(251, 251, 251, 0.97) 0%,
+    rgba(251, 251, 251, 0.86) 42%,
+    rgba(251, 251, 251, 0.35) 62%,
+    rgba(251, 251, 251, 0) 78%
   );
 }
 
@@ -59,7 +60,7 @@
   font-weight: 400;
   color: var(--dark);
   margin: 0 0 var(--space-md) 0;
-  padding-top: 80px;
+  padding-top: 56px;
   overflow-wrap: break-word;
 }
 
@@ -88,18 +89,19 @@
   }
 
   .celebre-cta {
-    --celebre-cta-bg-position: calc(100% + 120px) center;
+    --celebre-cta-bg-position: calc(100% + 120px) 12%;
 
-    min-height: 62vh;
+    min-height: 43.4vh;
     align-items: flex-end;
   }
 
   .celebre-cta::before {
     background: linear-gradient(
       to top,
-      rgba(251, 251, 251, 0.96) 0%,
-      rgba(251, 251, 251, 0.82) 42%,
-      rgba(251, 251, 251, 0) 72%
+      rgba(251, 251, 251, 0.98) 0%,
+      rgba(251, 251, 251, 0.9) 38%,
+      rgba(251, 251, 251, 0.4) 58%,
+      rgba(251, 251, 251, 0) 75%
     );
   }
 
@@ -114,7 +116,7 @@
 
   .celebre-cta-title {
     font-size: var(--font-size-h6);
-    padding-top: 300px;
+    padding-top: 210px;
   }
 
   .celebre-cta-title-hand {
