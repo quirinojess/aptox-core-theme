@@ -6,6 +6,10 @@
 get_header();
 ?>
 
+<section class="casa-cta-section">
+	<?php get_template_part( 'components/casa-cta/casa-cta' ); ?>
+</section>
+
 <section class="container container-casa-top">
 	<?php get_template_part( 'components/grid-casa-decor/grid-casa-decor' ); ?>
 </section>
