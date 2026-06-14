@@ -13,7 +13,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  margin-bottom: var(--space-xxl);
+  margin-bottom: 0;
 
   background-color: var(--off-white);
   background-image: var(--index-cta-image);
@@ -60,7 +60,7 @@
 
 .index-cta-title {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.75rem;
   line-height: 1.4;
   font-weight: 400;
   color: var(--dark);
@@ -71,10 +71,12 @@
 
 .index-cta-title-hand {
   font-family: var(--font-hand);
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   line-height: 1;
   font-weight: 400;
   white-space: nowrap;
+  vertical-align: -15px;
+  padding-left: 5px;
 }
 
 /* Section: Index CTA (description) */
@@ -141,16 +143,16 @@
 
   .index-cta-content {
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
 
   .index-cta-title {
-    font-size: 1.2rem;
-    padding-top: 200px;
+    font-size: 1.3rem;
+    padding-top: 300px;
   }
 
   .index-cta-title-hand {
-    font-size: 2.4rem;
+    font-size: 2.55rem;
   }
 
 }
