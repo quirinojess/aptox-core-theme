@@ -23,10 +23,6 @@ get_header();
 		<?php get_template_part( 'components/grid-recipe/grid-recipe' ); ?>
 	</section>
 
-	<section>
-		<?php get_template_part( 'components/cta-editorial/cta-editorial' ); ?>
-	</section>
-
 	<section class="container">
 		<?php get_template_part( 'components/home-decor-slide/home-decor-slide' ); ?>
 	</section>

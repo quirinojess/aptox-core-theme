@@ -34,12 +34,6 @@ if ( ! function_exists( 'aptox_recipe_season_icon' ) ) {
 	}
 }
 
-if ( ! function_exists( 'aptox_get_season_cta_data' ) ) {
-	function aptox_get_season_cta_data() {
-		return SeasonService::get_season_cta_data();
-	}
-}
-
 if ( ! function_exists( 'aptox_get_season_newsletter_data' ) ) {
 	function aptox_get_season_newsletter_data() {
 		return SeasonService::get_season_newsletter_data();
