@@ -11,6 +11,7 @@
 use Aptox\Services\LikesService;
 use Aptox\Services\RelatedPostsService;
 use Aptox\Services\SeasonService;
+use Aptox\Services\YouTubeService;
 
 if ( class_exists( LikesService::class ) && ! class_exists( 'Aptox_Likes_Service' ) ) {
 	class_alias( LikesService::class, 'Aptox_Likes_Service' );
@@ -55,6 +56,24 @@ if ( ! function_exists( 'aptox_get_season_label' ) ) {
 if ( ! function_exists( 'aptox_get_season_home_cta_text' ) ) {
 	function aptox_get_season_home_cta_text( $season_slug = null ) {
 		return SeasonService::get_season_home_cta_text( $season_slug );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_youtube_videos' ) ) {
+	function aptox_get_youtube_videos( $limit = 4 ) {
+		return YouTubeService::get_latest_videos( $limit );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_youtube_home_feed' ) ) {
+	function aptox_get_youtube_home_feed() {
+		return YouTubeService::get_home_feed();
+	}
+}
+
+if ( ! function_exists( 'aptox_get_youtube_channel_url' ) ) {
+	function aptox_get_youtube_channel_url() {
+		return YouTubeService::CHANNEL_URL;
 	}
 }
 

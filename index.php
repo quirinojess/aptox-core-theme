@@ -26,6 +26,10 @@ get_header();
 	<section class="container">
 		<?php get_template_part( 'components/home-decor-slide/home-decor-slide' ); ?>
 	</section>
+
+	<section class="container-lg">
+		<?php get_template_part( 'components/youtube-feed/youtube-feed' ); ?>
+	</section>
 </main>
 
 <?php get_footer(); ?>

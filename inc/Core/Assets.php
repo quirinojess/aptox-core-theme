@@ -141,9 +141,28 @@ class Assets {
 			}
 		}
 
+		$this->enqueue_material_symbols();
 		$this->enqueue_recipe_carousel_script();
 		$this->enqueue_grid_recipe_script();
 		$this->enqueue_home_decor_slide_script();
+	}
+
+	/**
+	 * Enqueue Material Symbols used on the home page.
+	 *
+	 * @return void
+	 */
+	private function enqueue_material_symbols() {
+		if ( ! is_front_page() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'aptox-material-symbols',
+			'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=chevron_left,chevron_right,play_arrow',
+			array(),
+			null
+		);
 	}
 
 	/**
@@ -181,13 +200,6 @@ class Assets {
 		}
 
 		$script_path = get_template_directory() . '/components/grid-recipe/grid-recipe.js';
-
-		wp_enqueue_style(
-			'aptox-material-symbols',
-			'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=chevron_left,chevron_right',
-			array(),
-			null
-		);
 
 		wp_enqueue_script(
 			'aptox-grid-recipe',
