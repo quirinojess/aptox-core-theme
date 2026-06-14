@@ -84,7 +84,7 @@
 .index-cta-text {
   font-size: var(--font-size-sm);
   line-height: 1.75;
-  color: var(--medium-dark);
+  color: var(--dark);
   margin: 0 0 var(--space-md) 0;
   overflow-wrap: break-word;
 }

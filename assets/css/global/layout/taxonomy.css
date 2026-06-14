@@ -8,7 +8,7 @@
   text-transform: uppercase;
   text-align: center;
 
-  color: var(--medium-dark);
+  color: var(--dark);
 }
 
 .taxonomy-breadcrumb a {
@@ -38,7 +38,7 @@
   line-height: 1.8;
   text-align: center;
 
-  color: var(--medium-dark);
+  color: var(--dark);
 }
 
 .taxonomy-description a {

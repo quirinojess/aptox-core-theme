@@ -5,7 +5,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background: var(--medium);
+  background: var(--beige);
   z-index: 999;
   display: none;
 }

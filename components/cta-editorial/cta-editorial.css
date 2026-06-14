@@ -40,7 +40,7 @@
   font-size: 1rem;
   line-height: 1.7;
   margin-bottom: var(--space-lg);
-  color: var(--medium-dark);
+  color: var(--dark);
 }
 
 .cta-content a {

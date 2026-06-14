@@ -200,7 +200,7 @@
     z-index: var(--z-menu);
     justify-content: center;
     padding: var(--space-md);
-    background: var(--medium);
+    background: var(--beige);
   }
 
   #menu-mob a {

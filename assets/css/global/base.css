@@ -39,10 +39,7 @@
   /* Section: Colors */
 
   --off-white:   #FBFBFB;
-  --beige:      #EDECE9;
-  --medium:      #F3F3EF;
-  --medium-low: #FEFEFE;
-  --medium-dark: #333333;
+  --beige:      #F3F1F0;
   --dark:        #111111;
   --black:       #050505;
   --white:       #FEFCFA;
@@ -116,7 +113,7 @@ body {
   padding-top: var(--space-xxl);
 
   background: var(--off-white);
-  color: var(--medium-dark);
+  color: var(--dark);
 
   font-family: var(--font-base);
   font-size: 1em;
@@ -251,7 +248,7 @@ ol li {
   margin-bottom: 25px;
   font-size: 1rem;
   line-height: 1.7;
-  color: var(--medium-dark);
+  color: var(--dark);
 }
 
 /* Section: Editorial ordered list marker */
@@ -260,11 +257,11 @@ ol li::before {
   content: counter(editorial, decimal-leading-zero);
   position: absolute;
   left: 0;
-  top: -8px; 
+  top: -8px;
   font-family: var(--font-display);
   font-size: 1.6rem;
   line-height: 1.7;
-  color: var(--medium-low);
+  color: var(--beige);
 }
 
 /* Section: Links inside editorial lists */
