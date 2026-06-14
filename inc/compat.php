@@ -35,6 +35,12 @@ if ( ! function_exists( 'aptox_recipe_season_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_party_season_icon' ) ) {
+	function aptox_party_season_icon( $season_slug = null ) {
+		return SeasonService::party_season_icon( $season_slug );
+	}
+}
+
 if ( ! function_exists( 'aptox_get_season_newsletter_data' ) ) {
 	function aptox_get_season_newsletter_data() {
 		return SeasonService::get_season_newsletter_data();
@@ -56,6 +62,12 @@ if ( ! function_exists( 'aptox_get_season_label' ) ) {
 if ( ! function_exists( 'aptox_get_season_home_cta_text' ) ) {
 	function aptox_get_season_home_cta_text( $season_slug = null ) {
 		return SeasonService::get_season_home_cta_text( $season_slug );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_season_festivities' ) ) {
+	function aptox_get_season_festivities( $season_slug = null ) {
+		return SeasonService::get_season_festivities( $season_slug );
 	}
 }
 

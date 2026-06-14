@@ -150,6 +150,30 @@ class SeasonService {
 	}
 
 	/**
+	 * Resolve festivities section icon URL for a season slug.
+	 *
+	 * @param string|null $season_slug Season slug.
+	 * @return string
+	 */
+	public static function party_season_icon( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$map = array(
+			'verao'      => 'icon-party-summer.png',
+			'outono'     => 'icon-party-autumn.png',
+			'inverno'    => 'icon-party-winter.png',
+			'primavera'  => 'icon-party-spring.png',
+			'fim-de-ano' => 'icon-party-end-year.png',
+		);
+
+		$file = $map[ $season_slug ] ?? 'ico-party.png';
+
+		return get_template_directory_uri() . '/assets/icons/ui/' . $file;
+	}
+
+	/**
 	 * Get seasonal newsletter data.
 	 *
 	 * @return array<string, string>
@@ -265,5 +289,224 @@ class SeasonService {
 		$map = self::get_season_home_cta_text_map();
 
 		return $map[ $season_slug ] ?? '';
+	}
+
+	/**
+	 * Seasonal festivity categories shown on the home page.
+	 *
+	 * @return array<string, array<int, array<string, mixed>>>
+	 */
+	public static function get_season_festivities_config() {
+		return array(
+			'verao'      => array(
+				array(
+					'slugs' => array( 'carnaval' ),
+					'label' => 'Carnaval',
+				),
+				array(
+					'slugs' => array( 'aniversario-verao', 'aniversario-de-verao' ),
+					'label' => 'Aniversário Verão',
+				),
+			),
+			'outono'     => array(
+				array(
+					'slugs' => array( 'pascoa' ),
+					'label' => 'Páscoa',
+				),
+				array(
+					'slugs' => array( 'dia-das-maes', 'dias-das-maes' ),
+					'label' => 'Dia das Mães',
+				),
+				array(
+					'slugs' => array( 'festa-junina' ),
+					'label' => 'Festa Junina',
+				),
+				array(
+					'slugs' => array( 'dia-dos-namorados' ),
+					'label' => 'Dia dos Namorados',
+				),
+				array(
+					'slugs' => array( 'aniversario-outono', 'aniversario-de-outono' ),
+					'label' => 'Aniversário Outono',
+				),
+			),
+			'inverno'    => array(
+				array(
+					'slugs' => array( 'aniversario-inverno', 'aniversario-de-inverno' ),
+					'label' => 'Aniversário de Inverno',
+				),
+				array(
+					'slugs' => array( 'dia-dos-pais' ),
+					'label' => 'Dia dos Pais',
+				),
+			),
+			'primavera'  => array(
+				array(
+					'slugs' => array( 'dia-de-los-muertos' ),
+					'label' => 'Dia de los Muertos',
+				),
+				array(
+					'slugs' => array( 'halloween' ),
+					'label' => 'Halloween',
+				),
+				array(
+					'slugs' => array( 'aniversario-primavera', 'aniversario-de-primavera' ),
+					'label' => 'Aniversário Primavera',
+				),
+			),
+			'fim-de-ano' => array(
+				array(
+					'slugs' => array( 'natal' ),
+					'label' => 'Natal',
+				),
+				array(
+					'slugs' => array( 'ano-novo' ),
+					'label' => 'Ano Novo',
+				),
+			),
+		);
+	}
+
+	/**
+	 * Get resolved home festivity cards for the current or given season.
+	 *
+	 * @param string|null $season_slug Optional season slug.
+	 * @return array<int, array<string, string>>
+	 */
+	public static function get_season_festivities( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$config = self::get_season_festivities_config();
+
+		if ( empty( $config[ $season_slug ] ) || ! post_type_exists( 'celebracoes' ) ) {
+			return array();
+		}
+
+		$items = array();
+
+		foreach ( $config[ $season_slug ] as $festivity ) {
+			$item = self::resolve_festivity_item( $festivity );
+
+			if ( null !== $item ) {
+				$items[] = $item;
+			}
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Resolve a festivity config entry into a renderable card.
+	 *
+	 * @param array<string, mixed> $festivity Festivity config.
+	 * @return array<string, string>|null
+	 */
+	private static function resolve_festivity_item( array $festivity ) {
+		$slugs = isset( $festivity['slugs'] ) && is_array( $festivity['slugs'] )
+			? $festivity['slugs']
+			: array();
+		$label = isset( $festivity['label'] ) ? (string) $festivity['label'] : '';
+
+		$term_data = self::resolve_celebration_term( $slugs );
+
+		if ( null === $term_data ) {
+			return null;
+		}
+
+		$post = self::get_latest_celebration_for_term(
+			$term_data['term']->term_id,
+			$term_data['taxonomy']
+		);
+
+		if ( null === $post ) {
+			return null;
+		}
+
+		$image = get_the_post_thumbnail_url( $post->ID, 'large' );
+
+		if ( ! $image ) {
+			return null;
+		}
+
+		return array(
+			'label' => ! empty( $term_data['term']->name )
+				? sanitize_text_field( $term_data['term']->name )
+				: sanitize_text_field( $label ),
+			'url'   => esc_url_raw( get_permalink( $post ) ),
+			'image' => esc_url_raw( $image ),
+		);
+	}
+
+	/**
+	 * Resolve a celebration taxonomy term from slug candidates.
+	 *
+	 * @param array<int, string> $slugs Term slug candidates.
+	 * @return array{term: \WP_Term, taxonomy: string}|null
+	 */
+	private static function resolve_celebration_term( array $slugs ) {
+		$taxonomies = array( 'celebracao_categoria', 'celebracao' );
+
+		foreach ( $taxonomies as $taxonomy ) {
+			if ( ! taxonomy_exists( $taxonomy ) ) {
+				continue;
+			}
+
+			foreach ( $slugs as $slug ) {
+				$term = get_term_by( 'slug', sanitize_title( $slug ), $taxonomy );
+
+				if ( $term && ! is_wp_error( $term ) ) {
+					return array(
+						'term'     => $term,
+						'taxonomy' => $taxonomy,
+					);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the latest published celebration post for a taxonomy term.
+	 *
+	 * @param int    $term_id  Term ID.
+	 * @param string $taxonomy Taxonomy slug.
+	 * @return \WP_Post|null
+	 */
+	private static function get_latest_celebration_for_term( $term_id, $taxonomy ) {
+		$query = new \WP_Query(
+			array(
+				'post_type'              => 'celebracoes',
+				'posts_per_page'         => 1,
+				'post_status'            => 'publish',
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => true,
+				'orderby'                => array(
+					'date' => 'DESC',
+					'ID'   => 'DESC',
+				),
+				'tax_query'              => array(
+					array(
+						'taxonomy' => $taxonomy,
+						'field'    => 'term_id',
+						'terms'    => array( (int) $term_id ),
+					),
+				),
+			)
+		);
+
+		if ( ! $query->have_posts() ) {
+			return null;
+		}
+
+		$post = $query->posts[0];
+
+		wp_reset_postdata();
+
+		return $post instanceof \WP_Post ? $post : null;
 	}
 }

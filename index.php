@@ -27,6 +27,10 @@ get_header();
 		<?php get_template_part( 'components/home-decor-slide/home-decor-slide' ); ?>
 	</section>
 
+	<section>
+		<?php get_template_part( 'components/grid-festivity/grid-festivity' ); ?>
+	</section>
+
 	<section class="container-lg">
 		<?php get_template_part( 'components/youtube-feed/youtube-feed' ); ?>
 	</section>

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_youtube_feed_v8';
+$cache_key   = 'aptox_youtube_feed_v9';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -74,9 +74,7 @@ ob_start();
 						>
 					</figure>
 
-					<span class="youtube-feed-play material-symbols-outlined" aria-hidden="true">
-						play_arrow
-					</span>
+					<span class="youtube-feed-play" aria-hidden="true"></span>
 				</a>
 
 				<h3 class="youtube-feed-featured-title">

@@ -144,6 +144,7 @@ class Assets {
 		$this->enqueue_material_symbols();
 		$this->enqueue_recipe_carousel_script();
 		$this->enqueue_grid_recipe_script();
+		$this->enqueue_grid_festivity_script();
 		$this->enqueue_home_decor_slide_script();
 	}
 
@@ -204,6 +205,27 @@ class Assets {
 		wp_enqueue_script(
 			'aptox-grid-recipe',
 			get_template_directory_uri() . '/components/grid-recipe/grid-recipe.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
+			true
+		);
+	}
+
+	/**
+	 * Enqueue seasonal festivities carousel on home.
+	 *
+	 * @return void
+	 */
+	private function enqueue_grid_festivity_script() {
+		if ( ! is_front_page() ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/grid-festivity/grid-festivity.js';
+
+		wp_enqueue_script(
+			'aptox-grid-festivity',
+			get_template_directory_uri() . '/components/grid-festivity/grid-festivity.js',
 			array(),
 			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
 			true

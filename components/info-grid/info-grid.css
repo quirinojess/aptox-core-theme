@@ -127,7 +127,27 @@
 
   .info-grid-item {
     flex: 0 0 88%;
+    flex-direction: column;
+    align-items: center;
     scroll-snap-align: start;
     gap: var(--space-sm);
+    text-align: center;
+  }
+
+  .info-grid-icon {
+    align-self: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .info-grid-icon img {
+    height: auto;
+    max-height: 72px;
+    margin: 0 auto;
+    object-position: center center;
+  }
+
+  .info-grid-content {
+    width: 100%;
   }
 }
