@@ -179,12 +179,25 @@ class Assets {
 	}
 
 	/**
+	 * Whether seasonal carousels (recipe/decor grids) should load assets.
+	 *
+	 * @return bool
+	 */
+	private function should_enqueue_season_carousels() {
+		if ( function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home() ) {
+			return true;
+		}
+
+		return is_post_type_archive( 'casas' ) || is_page_template( 'templates/page-casa.php' );
+	}
+
+	/**
 	 * Enqueue Material Symbols used on the home page.
 	 *
 	 * @return void
 	 */
 	private function enqueue_material_symbols() {
-		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
+		if ( ! $this->should_enqueue_season_carousels() ) {
 			return;
 		}
 
@@ -226,7 +239,7 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_grid_recipe_script() {
-		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
+		if ( ! $this->should_enqueue_season_carousels() ) {
 			return;
 		}
 

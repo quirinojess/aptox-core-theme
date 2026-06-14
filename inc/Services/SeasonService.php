@@ -174,6 +174,30 @@ class SeasonService {
 	}
 
 	/**
+	 * Resolve decoration section icon URL for a season slug.
+	 *
+	 * @param string|null $season_slug Season slug.
+	 * @return string
+	 */
+	public static function decor_season_icon( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$map = array(
+			'verao'      => 'icon-decor-summer.png',
+			'outono'     => 'icon-decor-autumn.png',
+			'inverno'    => 'icon-decor-winter.png',
+			'primavera'  => 'icon-decor-spring.png',
+			'fim-de-ano' => 'icon-decor-end-year.png',
+		);
+
+		$file = $map[ $season_slug ] ?? 'ico-decor.png';
+
+		return get_template_directory_uri() . '/assets/icons/ui/' . $file;
+	}
+
+	/**
 	 * Get seasonal newsletter data.
 	 *
 	 * @return array<string, string>
