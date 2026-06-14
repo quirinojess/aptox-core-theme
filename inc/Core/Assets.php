@@ -106,6 +106,8 @@ class Assets {
 			'aptox-casa-organizacao' => '/components/casa-organizacao/casa-organizacao.css',
 			'aptox-grid-festivity'   => '/components/grid-festivity/grid-festivity.css',
 			'aptox-casa-jardinagem'  => '/components/casa-jardinagem/casa-jardinagem.css',
+			'aptox-recipe-carousel'  => '/components/recipe-carousel/recipe-carousel.css',
+			'aptox-casa-rooms-carousel' => '/components/casa-rooms-carousel/casa-rooms-carousel.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {
@@ -284,7 +286,15 @@ class Assets {
 			return;
 		}
 
-		if ( ! is_home() && ! is_tax( 'receita_categoria' ) && ! is_tax( 'receita' ) && ! is_post_type_archive( 'receitas' ) && ! is_page_template( 'templates/page-receitas.php' ) ) {
+		if (
+			! is_home()
+			&& ! is_tax( 'receita_categoria' )
+			&& ! is_tax( 'receita' )
+			&& ! is_post_type_archive( 'receitas' )
+			&& ! is_page_template( 'templates/page-receitas.php' )
+			&& ! is_post_type_archive( 'casas' )
+			&& ! is_page_template( 'templates/page-casa.php' )
+		) {
 			return;
 		}
 

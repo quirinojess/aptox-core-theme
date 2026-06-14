@@ -18,6 +18,8 @@ get_header();
 	<?php get_template_part( 'components/casa-reforma/casa-reforma' ); ?>
 </section>
 
+<?php get_template_part( 'components/casa-rooms-carousel/casa-rooms-carousel' ); ?>
+
 <?php get_template_part( 'components/casa-diy-marquee/casa-diy-marquee' ); ?>
 
 <?php get_template_part( 'components/casa-organizacao/casa-organizacao' ); ?>

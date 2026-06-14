@@ -1,0 +1,57 @@
+/* Section: Casa room tags carousel */
+
+.casa-rooms-carousel {
+  width: 100%;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.casa-rooms-carousel__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.casa-rooms-carousel__title {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1.35;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+.casa-rooms-carousel__carousel.recipe-tags-carousel {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  margin: 0;
+
+  left: auto;
+  right: auto;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (max-width: 768px) {
+  .casa-rooms-carousel__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .casa-rooms-carousel__title {
+    width: auto;
+    max-width: none;
+  }
+
+  .casa-rooms-carousel__carousel.recipe-tags-carousel {
+    width: 100%;
+  }
+}

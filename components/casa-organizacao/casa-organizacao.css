@@ -162,30 +162,58 @@
 
 @media (max-width: 768px) {
   .casa-organizacao-top {
-    grid-template-columns: 1fr auto;
-    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: var(--space-sm) var(--space-md);
   }
 
   .casa-organizacao-header {
-    grid-column: 1 / -1;
-  }
-
-  .casa-organizacao-filter {
     grid-column: 1;
-    justify-content: flex-start;
+    grid-row: 1;
+    align-self: center;
   }
 
   .casa-organizacao-carousel__controls {
     grid-column: 2;
+    grid-row: 1;
+    align-self: center;
   }
 
-  .casa-organizacao-title {
-    font-size: var(--font-size-h6);
-    white-space: normal;
+  .casa-organizacao-filter {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
   }
 
   .casa-organizacao-header-inner {
+    align-items: center;
     gap: var(--space-sm);
+  }
+
+  .casa-organizacao-icon {
+    margin: 0;
+    align-self: center;
+  }
+
+  .casa-organizacao-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    font-size: var(--font-size-h6);
+    line-height: 1.15;
+    white-space: normal;
+  }
+
+  .casa-organizacao-title-hand {
+    display: block;
+    padding-right: 0;
+    vertical-align: unset;
+  }
+
+  .casa-organizacao-title-display {
+    display: block;
   }
 }
 
