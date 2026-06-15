@@ -415,7 +415,7 @@ class ContentFilters {
 				$image_count++;
 
 				if ( 2 === $image_count ) {
-					$output   .= '<center><h5 id="receita">Vamos a receita?</h5></center>';
+					$output   .= $this->render_recipe_section_heading();
 					$output   .= do_shortcode( '[wprm-recipe id="' . esc_attr( $recipe_id ) . '"]' );
 					$injected = true;
 				}
@@ -457,6 +457,36 @@ class ContentFilters {
 	}
 
 	/**
+	 * Render recipe section heading markup.
+	 *
+	 * @return string
+	 */
+	private function render_recipe_section_heading() {
+		$icon_url = get_template_directory_uri() . '/assets/img/ico-recipe.png';
+
+		ob_start();
+		?>
+		<header class="recipe-section-heading">
+			<div class="recipe-section-heading__inner">
+				<figure class="recipe-section-heading__icon" aria-hidden="true">
+					<img
+						src="<?php echo esc_url( $icon_url ); ?>"
+						alt=""
+						loading="lazy"
+					>
+				</figure>
+
+				<h5 id="receita" class="recipe-section-heading__title">
+					Vamos a
+					<span class="recipe-section-heading__hand"><?php echo esc_html( aptox_hand_text( 'receita' ) ); ?></span>?
+				</h5>
+			</div>
+		</header>
+		<?php
+		return (string) ob_get_clean();
+	}
+
+	/**
 	 * Inject recipe fallback for classic HTML content.
 	 *
 	 * @param string $content Content.
@@ -475,7 +505,7 @@ class ContentFilters {
 				$count++;
 
 				if ( 2 === $count ) {
-					$output .= '<center><h5 id="receita">Vamos à receita?</h5></center>';
+					$output .= $this->render_recipe_section_heading();
 					$output .= do_shortcode( '[wprm-recipe id="' . esc_attr( $recipe_id ) . '"]' );
 				}
 			}

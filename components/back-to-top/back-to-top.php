@@ -12,14 +12,22 @@ if ( ! is_singular() ) {
 	return;
 }
 
-$icon_url = get_template_directory_uri() . '/assets/icons/ui/ico-top.png';
-$label    = __( 'Voltar ao topo', 'aptox' );
-$arc_text = __( 'voltar ao TOPO', 'aptox' );
+$is_recipe = 'receitas' === get_post_type();
+$icon_url  = $is_recipe
+	? get_template_directory_uri() . '/assets/img/ico-recipe.png'
+	: get_template_directory_uri() . '/assets/icons/ui/ico-top.png';
+$label     = $is_recipe
+	? __( 'Ir para a receita', 'aptox' )
+	: __( 'Voltar ao topo', 'aptox' );
+$arc_text  = $is_recipe
+	? __( 'ir para a RECEITA', 'aptox' )
+	: __( 'voltar ao TOPO', 'aptox' );
+$classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 ?>
 
 <button
 	type="button"
-	class="back-to-top"
+	class="<?php echo esc_attr( $classes ); ?>"
 	aria-label="<?php echo esc_attr( $label ); ?>"
 >
 	<span class="back-to-top__arc" aria-hidden="true">

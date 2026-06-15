@@ -68,27 +68,21 @@
   margin: 0;
 }
 
-/* Section: About author (editorial — Celebre & Decor) */
+/* Section: About author (editorial — Celebre, Decor & Receitas) */
 
 .about-author--editorial {
   max-width: 100%;
   margin: 0;
   padding: 0;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--space-sm);
-}
-
-.about-author--editorial .about-author-intro {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  width: 100%;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-md);
 }
 
 .about-author--editorial .about-author-avatar {
   flex-shrink: 0;
+  width: auto;
   margin: 0;
   padding: 6px 6px 10px;
   background: var(--white);
@@ -103,12 +97,19 @@
   border-radius: 0;
   object-fit: cover;
   display: block;
-  transform: none;
+  transform: rotate(-6deg);
+}
+
+.about-author--editorial .about-author-body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
 }
 
 .about-author--editorial .about-author-title {
   margin: 0;
-  flex: 0 1 auto;
   font-family: var(--font-display);
   font-size: var(--font-size-xl);
   line-height: 1.15;
@@ -126,7 +127,13 @@
   font-family: var(--font-base);
   font-size: var(--font-size-sm);
   line-height: 1.75;
-  text-align: center;
+  text-align: left;
+}
+
+.single-receitas .about-author--editorial {
+  max-width: 720px;
+  margin: var(--space-xl) auto;
+  padding: 0 var(--container-padding);
 }
 
 /* Section: About author (tablet) */
@@ -157,6 +164,10 @@
   .about-author--editorial .about-author-title {
     font-size: var(--font-size-lg);
   }
+
+  .single-receitas .about-author--editorial {
+    padding: 0 var(--container-padding);
+  }
 }
 
 /* Section: About author (mobile) */
@@ -178,11 +189,18 @@
   }
 
   .about-author--editorial {
-    align-items: stretch;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .about-author--editorial .about-author-intro {
-    justify-content: center;
+  .about-author--editorial .about-author-body {
+    width: 100%;
+    align-items: center;
+  }
+
+  .about-author--editorial .about-author-title,
+  .about-author--editorial .about-author-bio p {
+    text-align: center;
   }
 
   .about-author--editorial .about-author-bio {

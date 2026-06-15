@@ -124,34 +124,3 @@ document.addEventListener('DOMContentLoaded', function () {
     subtree: true,
   });
 })();
-
-(function () {
-  function scrollToRecipe() {
-    const target = document.getElementById('receita');
-    if (!target) return false;
-
-    target.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-    return true;
-  }
-
-  document.addEventListener('click', function (e) {
-    const btn = e.target.closest('.btn-pular-receita');
-    if (!btn) return;
-
-    if (scrollToRecipe()) return;
-
-    const observer = new MutationObserver(() => {
-      if (scrollToRecipe()) {
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-  });
-})();

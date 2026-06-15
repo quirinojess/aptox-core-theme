@@ -21,6 +21,10 @@
   z-index: 2;
 }
 
+.post-share-stack .back-to-top--recipe {
+  right: 12px;
+}
+
 @media (max-width: 1023px) {
   .post-share-stack {
     position: fixed;
@@ -36,5 +40,9 @@
 
   .post-share-stack .back-to-top {
     right: var(--container-padding);
+  }
+
+  .post-share-stack .back-to-top--recipe {
+    right: 12px;
   }
 }

@@ -30,8 +30,4 @@ get_header();
 	<?php get_template_part( 'components/post-nav/post-nav' ); ?>
 </main>
 
-<button class="btn-pular-receita" type="button" aria-label="Pular para a receita">
-	VER RECEITA
-</button>
-
 <?php get_footer(); ?>

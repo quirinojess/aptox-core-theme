@@ -44,6 +44,10 @@
   margin-bottom: -10px;
 }
 
+.back-to-top:not(.back-to-top--recipe) .back-to-top__arc {
+  bottom: 38px;
+}
+
 .back-to-top__svg {
   width: 100%;
   height: 100%;
@@ -85,11 +89,39 @@
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.back-to-top--recipe {
+  --back-to-top-width: 118px;
+}
+
+.back-to-top--recipe .back-to-top__arc {
+  bottom: 38px;
+  margin-bottom: -10px;
+}
+
+.back-to-top--recipe .back-to-top__text {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.back-to-top--recipe .back-to-top__icon {
+  width: 46px;
+  height: 46px;
+}
+
 @media (max-width: 768px) {
   .back-to-top {
     --back-to-top-gap: 10px;
-    --back-to-top-width: 92px;
-    --back-to-top-height: 78px;
+    --back-to-top-size: 90px;
+    width: var(--back-to-top-size);
+    height: var(--back-to-top-size);
+
+    background: var(--white);
+    border-radius: 50%;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  }
+
+  .back-to-top--recipe {
+    --back-to-top-size: 98px;
   }
 
   .back-to-top__arc {
@@ -98,9 +130,17 @@
     margin-bottom: -10px;
   }
 
+  .back-to-top:not(.back-to-top--recipe) .back-to-top__arc {
+    bottom: 34px;
+  }
+
   .back-to-top__text {
     font-size: 10px;
     letter-spacing: 0.12em;
+  }
+
+  .back-to-top--recipe .back-to-top__arc {
+    bottom: 34px;
   }
 }
 

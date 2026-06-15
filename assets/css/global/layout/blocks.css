@@ -118,6 +118,64 @@
   color: var(--dark);
 }
 
+/* Section: Recipe section heading (single receitas) */
+
+.recipe-section-heading {
+  margin-top: 20px;
+  margin-bottom: var(--space-md);
+  padding-left: 60px;
+  text-align: left;
+}
+
+.recipe-section-heading__inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-sm);
+  max-width: 100%;
+}
+
+.recipe-section-heading__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.recipe-section-heading__icon img {
+  width: auto;
+  height: 36px;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.recipe-section-heading__title {
+  margin: 0;
+  scroll-margin-top: 20px;
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--dark);
+}
+
+.recipe-section-heading__hand {
+  font-family: var(--font-hand);
+  font-size: var(--font-size-hand-sm);
+  line-height: 1;
+  font-weight: 400;
+  white-space: nowrap;
+  vertical-align: -12px;
+  padding-left: 5px;
+}
+
+@media (max-width: 768px) {
+  .recipe-section-heading {
+    padding-left: 20px;
+  }
+}
+
 /* Section: Skip recipe button */
 
 .btn-pular-receita {
