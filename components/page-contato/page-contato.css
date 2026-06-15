@@ -1,0 +1,241 @@
+/* Section: Page Contato */
+
+.page-contato-page {
+  width: 100%;
+}
+
+.page-contato {
+  width: 100%;
+}
+
+.page-contato-header {
+  width: 100%;
+  margin: 0;
+  padding: var(--space-lg) var(--container-padding);
+  background: var(--beige);
+  text-align: center;
+}
+
+.page-contato-title {
+  margin: 0;
+  max-width: var(--container-page);
+  margin-inline: auto;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-hand-lg);
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--dark);
+}
+
+.page-contato-body {
+  width: 100%;
+  background: var(--off-white);
+  padding: var(--space-xl) var(--container-padding) var(--space-xxl);
+}
+
+.page-contato-inner {
+  width: 100%;
+  max-width: var(--container-page);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.page-contato-intro {
+  margin: 0 auto var(--space-lg);
+  max-width: 720px;
+  text-align: center;
+
+  font-family: var(--font-base);
+  font-size: 1em;
+  line-height: var(--line-height-prose);
+  color: var(--dark);
+}
+
+.page-contato-intro a {
+  color: inherit;
+  text-decoration: underline dotted 2px;
+  text-underline-offset: 0.15em;
+  transition: text-decoration-color 0.35s ease;
+}
+
+.page-contato-intro a:hover,
+.page-contato-intro a:focus-visible {
+  text-decoration-color: transparent;
+}
+
+/* Section: Page Contato (form layout) */
+
+.page-contato-form {
+  width: 100%;
+}
+
+.page-contato-form .forminator-ui,
+.page-contato-form .forminator-custom-form {
+  margin: 0;
+}
+
+.page-contato-form .forminator-custom-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-sm) var(--space-md);
+  align-items: start;
+}
+
+.page-contato-form .forminator-row {
+  margin: 0;
+}
+
+.page-contato-form .forminator-row:not(:has(textarea)):not(:has(.forminator-button-submit)) {
+  grid-column: 1;
+}
+
+.page-contato-form .forminator-row:has(textarea) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.page-contato-form .forminator-row:has(.forminator-button-submit) {
+  grid-column: 2;
+  grid-row: 3;
+  width: 100%;
+}
+
+.page-contato-form .forminator-col {
+  padding: 0;
+}
+
+.page-contato-form .forminator-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: var(--space-md);
+  background: var(--white);
+  box-sizing: border-box;
+}
+
+.page-contato-form .forminator-row:has(textarea) .forminator-field {
+  flex: 1;
+  min-height: 100%;
+}
+
+.page-contato-form .forminator-label {
+  display: block;
+  margin: 0;
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.42);
+}
+
+.page-contato-form .forminator-input,
+.page-contato-form .forminator-textarea,
+.page-contato-form .forminator-select,
+.page-contato-form .forminator-input input,
+.page-contato-form .forminator-input select,
+.page-contato-form input[type="email"],
+.page-contato-form input[type="text"],
+.page-contato-form input[type="tel"],
+.page-contato-form input[type="url"],
+.page-contato-form textarea,
+.page-contato-form select {
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--dark);
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+.page-contato-form .forminator-textarea,
+.page-contato-form textarea {
+  flex: 1;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.page-contato-form .forminator-input::placeholder,
+.page-contato-form .forminator-textarea::placeholder,
+.page-contato-form input::placeholder,
+.page-contato-form textarea::placeholder {
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.42);
+  opacity: 1;
+}
+
+.page-contato-form .forminator-select .forminator-select-dropdown,
+.page-contato-form .forminator-select {
+  appearance: none;
+}
+
+.page-contato-form .forminator-button.forminator-button-submit {
+  width: 100%;
+  margin-inline: 0;
+  background: var(--white) !important;
+  background-image: none !important;
+  color: var(--dark) !important;
+  border-color: var(--dark) !important;
+  box-shadow: none !important;
+}
+
+.page-contato-form .forminator-description,
+.page-contato-form .forminator-response-message {
+  grid-column: 1 / -1;
+  font-family: var(--font-base);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  color: var(--dark);
+}
+
+@media (max-width: 768px) {
+  .page-contato-header {
+    padding: var(--space-md) var(--container-padding);
+  }
+
+  .page-contato-title {
+    font-size: var(--font-size-display);
+  }
+
+  .page-contato-body {
+    padding: var(--space-lg) var(--container-padding) var(--space-xl);
+  }
+
+  .page-contato-form .forminator-custom-form {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .page-contato-form .forminator-row:has(textarea) {
+    grid-column: 1;
+    grid-row: auto;
+    align-self: auto;
+  }
+
+  .page-contato-form .forminator-row:has(.forminator-button-submit) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .page-contato-form .forminator-textarea,
+  .page-contato-form textarea {
+    min-height: 180px;
+  }
+}
