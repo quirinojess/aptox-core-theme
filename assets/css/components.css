@@ -34,6 +34,8 @@
 @import url("../../components/home-decor-slide/home-decor-slide.css");
 @import url("../../components/index-cta/index-cta.css");
 @import url("../../components/page-sobre/page-sobre.css");
+@import url("../../components/page-contato/page-contato.css");
+@import url("../../components/page-not-found/page-not-found.css");
 @import url("../../components/page-sobre-timeline/page-sobre-timeline.css");
 @import url("../../components/page-sobre-clipping/page-sobre-clipping.css");
 @import url("../../components/info-grid/info-grid.css");
@@ -52,7 +54,6 @@
 .casa-cta-title-hand,
 .casa-organizacao-title-hand,
 .celebre-cta-title-hand,
-.celebre-block-title-hand,
   .decoracao-slide-aside-title,
   .grid-festivity-season,
   .grid-recipe-season,

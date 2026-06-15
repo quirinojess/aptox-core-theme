@@ -7,7 +7,7 @@
 
 .casa-organizacao-top {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-lg);
   margin-bottom: var(--space-lg);
@@ -66,19 +66,31 @@
   font-weight: 400;
 }
 
-.casa-organizacao-filter {
+.casa-organizacao-toolbar {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  justify-content: flex-end;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.casa-organizacao-filter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
   flex-wrap: wrap;
   justify-content: flex-end;
+  min-width: 0;
 }
 
 .casa-organizacao-filter-label {
+  margin: 0;
+
   font-family: var(--font-base);
   font-size: var(--font-size-xxs);
   font-weight: 700;
   letter-spacing: 0.12em;
+  line-height: 1.35;
   text-transform: uppercase;
   color: var(--dark);
   white-space: nowrap;
@@ -86,40 +98,57 @@
 
 .casa-organizacao-tags {
   display: flex;
-  align-items: center;
-  gap: var(--space-xs);
+  align-items: baseline;
   flex-wrap: wrap;
+  gap: 0;
+  min-width: 0;
+}
+
+.casa-organizacao-tag-sep {
+  margin: 0 0.35em;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  color: var(--dark);
+  opacity: 0.45;
+  user-select: none;
 }
 
 .casa-organizacao-tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 7px 12px;
-  border: 1px solid var(--dark);
+  margin: 0;
+  padding: 0 8px;
+  border: none;
   background: transparent;
-  font-family: var(--font-base);
-  font-size: var(--font-size-xxs);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--dark);
   cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: none;
+  text-decoration: none;
+  color: var(--dark);
+  opacity: 0.55;
+  white-space: nowrap;
+
   appearance: none;
   -webkit-appearance: none;
-  transition:
-    background-color var(--transition-fast),
-    color var(--transition-fast),
-    opacity var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+
+  transition: opacity var(--transition-fast);
 }
 
-.casa-organizacao-tag:hover {
-  opacity: 0.75;
+.casa-organizacao-tag:hover,
+.casa-organizacao-tag:focus-visible {
+  opacity: 0.85;
 }
 
 .casa-organizacao-tag.is-active {
-  background: var(--dark);
-  color: var(--white);
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .casa-organizacao-carousel__controls {
@@ -127,6 +156,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: var(--space-xs);
+  flex-shrink: 0;
 }
 
 .casa-organizacao-carousel {
@@ -162,28 +192,21 @@
 
 @media (max-width: 768px) {
   .casa-organizacao-top {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    align-items: center;
-    gap: var(--space-sm) var(--space-md);
+    align-items: stretch;
+    gap: var(--space-sm);
   }
 
   .casa-organizacao-header {
-    grid-column: 1;
     grid-row: 1;
-    align-self: center;
   }
 
-  .casa-organizacao-carousel__controls {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: center;
-  }
-
-  .casa-organizacao-filter {
-    grid-column: 1 / -1;
+  .casa-organizacao-toolbar {
     grid-row: 2;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-xs);
   }
 
   .casa-organizacao-header-inner {
@@ -193,27 +216,60 @@
 
   .casa-organizacao-icon {
     margin: 0;
-    align-self: center;
   }
 
   .casa-organizacao-title {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
     font-size: var(--font-size-h6);
-    line-height: 1.15;
+    line-height: 1.2;
     white-space: normal;
   }
 
   .casa-organizacao-title-hand {
-    display: block;
-    padding-right: 0;
-    vertical-align: unset;
+    display: inline;
+    padding-right: 5px;
+    vertical-align: -8px;
   }
 
   .casa-organizacao-title-display {
-    display: block;
+    display: inline;
+  }
+
+  .casa-organizacao-filter {
+    flex: 1;
+    min-width: 0;
+    gap: 0.2em;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .casa-organizacao-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .casa-organizacao-tags {
+    flex-wrap: nowrap;
+  }
+
+  .casa-organizacao-tag-sep {
+    margin: 0 0.12em;
+  }
+
+  .casa-organizacao-tag {
+    padding: 0 4px;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.04em;
+  }
+
+  .casa-organizacao-filter-label {
+    letter-spacing: 0.08em;
+  }
+
+  .casa-organizacao-carousel__controls {
+    gap: 0;
   }
 }
 

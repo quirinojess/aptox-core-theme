@@ -5,7 +5,7 @@
 }
 
 .index-cta {
-  --index-cta-bg-position: right center;
+  --index-cta-bg-position: right calc(50% + 40px);
 
   position: relative;
   width: 100%;
@@ -75,7 +75,7 @@
   line-height: 1;
   font-weight: 400;
   white-space: nowrap;
-  vertical-align: -17px;
+  vertical-align: -20px;
   padding-left: 5px;
 }
 
@@ -99,7 +99,7 @@
   }
 
   .index-cta {
-    --index-cta-bg-position: calc(100% + 200px) center;
+    --index-cta-bg-position: calc(100% + 200px) calc(50% + 40px);
 
     min-height: 62vh;
     align-items: flex-end;

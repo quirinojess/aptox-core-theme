@@ -3,7 +3,7 @@
 .celebre-season {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-md);
   width: 100%;
   max-width: 100%;
   margin-top: var(--space-lg);
@@ -13,12 +13,107 @@
   overflow-x: clip;
 }
 
+/* Section: Celebre season filter */
+
+.celebre-season-filter-bar {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.celebre-season-filter-nav {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0;
+  min-width: 0;
+}
+
+.celebre-season-filter {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+  min-width: 0;
+}
+
+.celebre-season-filter__tab {
+  margin: 0;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: none;
+  text-decoration: none;
+  color: var(--dark);
+  opacity: 0.55;
+  white-space: nowrap;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: opacity var(--transition-fast);
+}
+
+.celebre-season-filter__tab:hover,
+.celebre-season-filter__tab:focus-visible {
+  opacity: 0.85;
+}
+
+.celebre-season-filter__tab.is-active {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.celebre-season-filter__sep {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  color: var(--dark);
+  opacity: 0.45;
+  user-select: none;
+}
+
+.celebre-season > .celebre-season-filter-bar {
+  display: none;
+}
+
+.celebre-season-panels {
+  width: 100%;
+}
+
+.celebre-block--hidden {
+  display: none;
+}
+
 .celebre-block {
   width: 100%;
   max-width: 100%;
   margin: 0;
   padding: 0;
   overflow-x: clip;
+  opacity: 1;
+  transition: opacity 0.36s ease;
+}
+
+.celebre-block.is-leaving,
+.celebre-block.is-entering {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celebre-block {
+    transition: none;
+  }
 }
 
 .celebre-block-inner {
@@ -40,20 +135,16 @@
   grid-column: 1;
 }
 
-.celebre-block-layout--flat .archive-card:nth-child(2) {
-  grid-column: 2;
+.celebre-block-layout--flat .celebre-block-content--flat {
+  grid-column: 2 / 6;
+  min-width: 0;
+  align-self: center;
 }
 
-.celebre-block-layout--flat .archive-card:nth-child(3) {
-  grid-column: 3;
-}
-
-.celebre-block-layout--flat .archive-card:nth-child(4) {
-  grid-column: 4;
-}
-
-.celebre-block-layout--flat .archive-card:nth-child(5) {
-  grid-column: 5;
+.celebre-block-flat-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-md);
 }
 
 .celebre-block-layout--carousel .celebre-block-header {
@@ -104,11 +195,15 @@
 
 .celebre-block-title-hand {
   display: block;
+  align-self: center;
+  width: fit-content;
+  max-width: 100%;
   margin-top: var(--space-xs);
   font-family: var(--font-hand);
   font-size: var(--font-size-hand-md);
-  line-height: 1;
+  line-height: 1.1;
   font-weight: 400;
+  font-synthesis: none;
 }
 
 .celebre-block-link {
@@ -139,17 +234,33 @@
   line-height: 1.25;
 }
 
+.celebre-block-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.celebre-block-carousel__controls .celebre-season-filter-bar,
+.celebre-block-carousel__controls .celebre-season-filter-nav {
+  flex: 0 1 auto;
+}
+
+.celebre-block-carousel__controls .celebre-season-filter-nav {
+  flex-wrap: nowrap;
+}
+
+.celebre-block-carousel__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
 .celebre-block-carousel {
   position: relative;
   min-width: 0;
-}
-
-.celebre-block-carousel__controls {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
 }
 
 .celebre-block-nav {
@@ -226,14 +337,14 @@
 
   .celebre-block-layout--flat .celebre-block-header,
   .celebre-block-layout--carousel .celebre-block-header,
-  .celebre-block-layout--flat .archive-card,
+  .celebre-block-layout--flat .celebre-block-content--flat,
   .celebre-block-layout--carousel .celebre-block-content {
     grid-column: 1;
     grid-row: auto;
   }
 
-  .celebre-block-layout--flat .archive-card:nth-child(n) {
-    grid-column: auto;
+  .celebre-block-flat-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .celebre-block-layout--flat {
@@ -259,12 +370,21 @@
 }
 
 @media (max-width: 768px) {
+  .celebre-block-carousel__controls {
+    justify-content: flex-end;
+  }
+
+  .celebre-block-carousel__controls .celebre-season-filter-nav {
+    justify-content: flex-end;
+  }
+
   .celebre-block-title {
     font-size: var(--font-size-title);
   }
 
   .celebre-block-title-hand {
     font-size: var(--font-size-hand-md);
+    font-weight: 400;
   }
 
   .celebre-block-icon img {
@@ -275,11 +395,11 @@
     grid-template-columns: 1fr;
   }
 
-  .celebre-block-layout--flat .archive-card:nth-child(n) {
-    grid-column: 1;
+  .celebre-block-flat-cards {
+    grid-template-columns: 1fr;
   }
 
-  .celebre-block-carousel__controls {
+  .celebre-block-carousel__nav {
     display: none;
   }
 

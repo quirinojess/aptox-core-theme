@@ -15,12 +15,17 @@ if ( empty( $block['posts'] ) || empty( $block['label'] ) ) {
 	return;
 }
 
+$festivity_key = ! empty( $args['festivity_key'] )
+	? sanitize_key( $args['festivity_key'] )
+	: ( ! empty( $block['key'] ) ? sanitize_key( $block['key'] ) : '' );
+$is_active     = ! empty( $args['is_active'] );
+$has_filter    = ! empty( $args['has_filter'] );
 $label        = aptox_hand_text( sanitize_text_field( $block['label'] ) );
 $icon         = ! empty( $block['icon'] ) ? sanitize_file_name( $block['icon'] ) : '';
 $term_url     = ! empty( $block['term_url'] ) ? esc_url( $block['term_url'] ) : '';
 $posts        = $block['posts'];
 $post_count   = count( $posts );
-$use_carousel = $post_count > 1;
+$use_carousel = $post_count > 1 || $has_filter;
 $section_id   = 'celebre-block-' . sanitize_title( $label );
 $layout_class = $use_carousel ? 'celebre-block-layout--carousel' : 'celebre-block-layout--flat';
 $icon_base    = get_template_directory_uri() . '/assets/icons/category/';
@@ -82,8 +87,10 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 ?>
 
 <section
-	class="celebre-block<?php echo $use_carousel ? ' celebre-block--carousel' : ''; ?>"
+	class="celebre-block<?php echo $use_carousel ? ' celebre-block--carousel' : ''; ?><?php echo $is_active ? '' : ' celebre-block--hidden'; ?>"
+	data-festivity-key="<?php echo esc_attr( $festivity_key ); ?>"
 	aria-labelledby="<?php echo esc_attr( $section_id ); ?>"
+	<?php echo $is_active ? '' : ' hidden'; ?>
 >
 	<div class="celebre-block-inner">
 		<?php if ( $use_carousel ) : ?>
@@ -92,24 +99,29 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 
 			<div class="celebre-block-content">
 				<div class="celebre-block-carousel">
-					<div class="celebre-block-carousel__controls">
-						<button
-							type="button"
-							class="celebre-block-nav celebre-block-nav--prev"
-							aria-label="<?php esc_attr_e( 'Ver posts anteriores', 'aptox' ); ?>"
-							disabled
-							hidden
-						>
-							<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
-						</button>
-						<button
-							type="button"
-							class="celebre-block-nav celebre-block-nav--next"
-							aria-label="<?php esc_attr_e( 'Ver próximos posts', 'aptox' ); ?>"
-							hidden
-						>
-							<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-						</button>
+					<div
+						class="celebre-block-carousel__controls"
+						<?php echo $has_filter ? ' data-celebre-filter-slot' : ''; ?>
+					>
+						<div class="celebre-block-carousel__nav">
+							<button
+								type="button"
+								class="celebre-block-nav celebre-block-nav--prev"
+								aria-label="<?php esc_attr_e( 'Ver posts anteriores', 'aptox' ); ?>"
+								disabled
+								hidden
+							>
+								<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+							</button>
+							<button
+								type="button"
+								class="celebre-block-nav celebre-block-nav--next"
+								aria-label="<?php esc_attr_e( 'Ver próximos posts', 'aptox' ); ?>"
+								hidden
+							>
+								<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+							</button>
+						</div>
 					</div>
 
 					<div class="celebre-block-track">
@@ -123,9 +135,14 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 		<?php else : ?>
 		<div class="celebre-block-layout <?php echo esc_attr( $layout_class ); ?>">
 			<?php $render_title(); ?>
-			<?php foreach ( $posts as $post ) : ?>
-				<?php $render_card( $post ); ?>
-			<?php endforeach; ?>
+
+			<div class="celebre-block-content celebre-block-content--flat">
+				<div class="celebre-block-flat-cards">
+					<?php foreach ( $posts as $post ) : ?>
+						<?php $render_card( $post ); ?>
+					<?php endforeach; ?>
+				</div>
+			</div>
 		</div>
 		<?php endif; ?>
 	</div>

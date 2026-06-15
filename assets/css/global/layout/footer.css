@@ -112,6 +112,16 @@
   color: var(--dark);
 }
 
+.footer-simple-credits a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity var(--transition-fast);
+}
+
+.footer-simple-credits a:hover {
+  opacity: 0.6;
+}
+
 /* Section: Footer (mobile ≤ 768px) */
 
 @media (max-width: 768px) {

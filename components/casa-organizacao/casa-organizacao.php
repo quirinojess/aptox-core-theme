@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_casa_organizacao_v3';
+$cache_key   = 'aptox_casa_organizacao_v5';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -188,48 +188,61 @@ ob_start();
 				</div>
 			</header>
 
-			<div class="casa-organizacao-filter" role="tablist" aria-label="<?php esc_attr_e( 'Filtrar organização', 'aptox' ); ?>">
-				<span class="casa-organizacao-filter-label">
-					<?php esc_html_e( 'filtre por', 'aptox' ); ?>
-				</span>
+			<div class="casa-organizacao-toolbar">
+				<div class="casa-organizacao-filter" role="tablist" aria-label="<?php esc_attr_e( 'Filtrar organização', 'aptox' ); ?>">
+					<span class="casa-organizacao-filter-label">
+						<?php esc_html_e( 'filtre por', 'aptox' ); ?>
+					</span>
 
-				<div class="casa-organizacao-tags">
-					<?php foreach ( $filter_tags as $tag_slug => $label ) : ?>
-						<?php if ( empty( $posts_by_filter[ $tag_slug ] ) ) : ?>
-							<?php continue; ?>
-						<?php endif; ?>
-						<button
-							type="button"
-							class="casa-organizacao-tag"
-							role="tab"
-							aria-selected="false"
-							data-filter-target="<?php echo esc_attr( $tag_slug ); ?>"
-						>
-							<?php echo esc_html( $label ); ?>
-						</button>
-					<?php endforeach; ?>
+					<div class="casa-organizacao-tags">
+						<?php
+						$visible_tags = array_filter(
+							$filter_tags,
+							static function ( $label, $tag_slug ) use ( $posts_by_filter ) {
+								return ! empty( $posts_by_filter[ $tag_slug ] );
+							},
+							ARRAY_FILTER_USE_BOTH
+						);
+						$tag_index = 0;
+						?>
+						<?php foreach ( $visible_tags as $tag_slug => $label ) : ?>
+							<?php if ( $tag_index > 0 ) : ?>
+								<span class="casa-organizacao-tag-sep" aria-hidden="true">·</span>
+							<?php endif; ?>
+							<button
+								type="button"
+								class="casa-organizacao-tag"
+								role="tab"
+								aria-selected="false"
+								data-filter-target="<?php echo esc_attr( $tag_slug ); ?>"
+							>
+								<?php echo esc_html( $label ); ?>
+							</button>
+							<?php ++$tag_index; ?>
+						<?php endforeach; ?>
+					</div>
 				</div>
-			</div>
 
-			<div class="casa-organizacao-carousel__controls">
-				<button
-					type="button"
-					class="grid-recipe-nav grid-recipe-nav--prev"
-					aria-label="<?php echo esc_attr__( 'Ver posts anteriores', 'aptox' ); ?>"
-					disabled
-					hidden
-				>
-					<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
-				</button>
+				<div class="casa-organizacao-carousel__controls">
+					<button
+						type="button"
+						class="grid-recipe-nav grid-recipe-nav--prev"
+						aria-label="<?php echo esc_attr__( 'Ver posts anteriores', 'aptox' ); ?>"
+						disabled
+						hidden
+					>
+						<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+					</button>
 
-				<button
-					type="button"
-					class="grid-recipe-nav grid-recipe-nav--next"
-					aria-label="<?php echo esc_attr__( 'Ver próximos posts', 'aptox' ); ?>"
-					hidden
-				>
-					<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-				</button>
+					<button
+						type="button"
+						class="grid-recipe-nav grid-recipe-nav--next"
+						aria-label="<?php echo esc_attr__( 'Ver próximos posts', 'aptox' ); ?>"
+						hidden
+					>
+						<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+					</button>
+				</div>
 			</div>
 		</div>
 

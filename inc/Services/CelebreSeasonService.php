@@ -22,12 +22,12 @@ class CelebreSeasonService {
 			),
 			'pascoa'    => array(
 				'slugs' => array( 'pascoa' ),
-				'label' => 'Pascoa',
+				'label' => 'Páscoa',
 				'icon'  => 'ico-easter.png',
 			),
 			'maes'      => array(
 				'slugs' => array( 'dia-das-maes', 'dias-das-maes' ),
-				'label' => 'Maes',
+				'label' => 'Dia das Mães',
 				'icon'  => 'ico-mother.png',
 			),
 			'junina'    => array(
@@ -64,24 +64,77 @@ class CelebreSeasonService {
 	}
 
 	/**
-	 * Active festivity keys for the Celebre page calendar.
+	 * Current season slug for the Celebre page calendar.
+	 *
+	 * @param \DateTimeImmutable|null $now Optional reference datetime.
+	 * @return string
+	 */
+	public static function get_current_season_slug( $now = null ) {
+		$override = SeasonService::get_override_season_slug();
+
+		if ( null !== $override ) {
+			return sanitize_key( $override );
+		}
+
+		$now = $now instanceof \DateTimeImmutable ? $now : self::get_site_datetime();
+
+		if ( 12 === (int) $now->format( 'n' ) ) {
+			return 'fim-de-ano';
+		}
+
+		return self::detect_astronomical_season_slug( $now );
+	}
+
+	/**
+	 * Default festivity key for the current calendar window.
+	 *
+	 * @param \DateTimeImmutable|null $now Optional reference datetime.
+	 * @return string
+	 */
+	public static function get_default_festivity_key( $now = null ) {
+		$now   = $now instanceof \DateTimeImmutable ? $now : self::get_site_datetime();
+		$month = (int) $now->format( 'n' );
+		$day   = (int) $now->format( 'j' );
+
+		if ( 12 === $month ) {
+			return $day <= 24 ? 'natal' : 'ano-novo';
+		}
+
+		$season = self::detect_astronomical_season_slug( $now );
+
+		switch ( $season ) {
+			case 'verao':
+				return 'carnaval';
+			case 'outono':
+				$keys = self::get_outono_festivity_keys( $month, $day );
+				return ! empty( $keys ) ? $keys[0] : 'pascoa';
+			case 'inverno':
+				return 'pais';
+			case 'primavera':
+				$keys = self::get_primavera_festivity_keys( $month, $day );
+				return ! empty( $keys ) ? $keys[0] : 'halloween';
+		}
+
+		return '';
+	}
+
+	/**
+	 * All festivity keys for the current season (filter options).
 	 *
 	 * @param \DateTimeImmutable|null $now Optional reference datetime.
 	 * @return array<int, string>
 	 */
-	public static function get_active_festivity_keys( $now = null ) {
+	public static function get_season_festivity_keys( $now = null ) {
 		$override = SeasonService::get_override_season_slug();
 
 		if ( null !== $override ) {
 			return self::get_festivity_keys_for_season_slug( $override );
 		}
 
-		$now   = $now instanceof \DateTimeImmutable ? $now : self::get_site_datetime();
-		$month = (int) $now->format( 'n' );
-		$day   = (int) $now->format( 'j' );
+		$now = $now instanceof \DateTimeImmutable ? $now : self::get_site_datetime();
 
-		if ( 12 === $month ) {
-			return $day <= 24 ? array( 'natal' ) : array( 'ano-novo' );
+		if ( 12 === (int) $now->format( 'n' ) ) {
+			return array( 'natal', 'ano-novo' );
 		}
 
 		$season = self::detect_astronomical_season_slug( $now );
@@ -90,14 +143,26 @@ class CelebreSeasonService {
 			case 'verao':
 				return array( 'carnaval' );
 			case 'outono':
-				return self::get_outono_festivity_keys( $month, $day );
+				return array( 'pascoa', 'maes', 'junina' );
 			case 'inverno':
 				return array( 'pais' );
 			case 'primavera':
-				return self::get_primavera_festivity_keys( $month, $day );
+				return array( 'halloween', 'muertos' );
 		}
 
 		return array();
+	}
+
+	/**
+	 * Active festivity keys for the Celebre page calendar.
+	 *
+	 * @param \DateTimeImmutable|null $now Optional reference datetime.
+	 * @return array<int, string>
+	 */
+	public static function get_active_festivity_keys( $now = null ) {
+		$key = self::get_default_festivity_key( $now );
+
+		return '' !== $key ? array( $key ) : array();
 	}
 
 	/**
@@ -106,16 +171,15 @@ class CelebreSeasonService {
 	 * @return string
 	 */
 	public static function get_cache_suffix() {
-		$override = SeasonService::get_override_season_slug();
+		$override    = SeasonService::get_override_season_slug();
+		$now         = self::get_site_datetime();
+		$season_keys = self::get_season_festivity_keys( $now );
+		$default_key = self::get_default_festivity_key( $now );
+		$scope       = null !== $override ? 'override_' . sanitize_key( $override ) : 'auto';
 
-		if ( null !== $override ) {
-			return sanitize_key( 'override_' . $override );
-		}
-
-		$now  = self::get_site_datetime();
-		$keys = self::get_active_festivity_keys( $now );
-
-		return sanitize_key( implode( '-', $keys ) . '_' . $now->format( 'Ymd' ) );
+		return sanitize_key(
+			$scope . '_' . implode( '-', $season_keys ) . '_d' . $default_key . '_' . $now->format( 'Ymd' )
+		);
 	}
 
 	/**
@@ -134,7 +198,7 @@ class CelebreSeasonService {
 		$catalog = self::get_festivity_catalog();
 		$blocks  = array();
 
-		foreach ( self::get_active_festivity_keys() as $festivity_key ) {
+		foreach ( self::get_season_festivity_keys() as $festivity_key ) {
 			if ( empty( $catalog[ $festivity_key ] ) ) {
 				continue;
 			}
@@ -163,11 +227,13 @@ class CelebreSeasonService {
 			}
 
 			$blocks[] = array(
-				'label'    => $festivity['label'],
-				'icon'     => $festivity['icon'],
-				'term_url' => esc_url_raw( $term_link ),
-				'posts'    => $posts,
-				'carousel' => count( $posts ) > 4,
+				'key'          => $festivity_key,
+				'label'        => $festivity['label'],
+				'filter_label' => ! empty( $festivity['filter_label'] ) ? $festivity['filter_label'] : $festivity['label'],
+				'icon'         => $festivity['icon'],
+				'term_url'     => esc_url_raw( $term_link ),
+				'posts'        => $posts,
+				'carousel'     => count( $posts ) > 4,
 			);
 		}
 

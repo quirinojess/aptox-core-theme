@@ -70,7 +70,9 @@ $social_links = array(
 		<div class="footer-simple-credits">
 			<p>
 				Desenvolvido por
-				<strong>QRNO</strong>
+				<a href="https://www.qrno.com.br/" target="_blank" rel="noopener noreferrer">
+					<strong>QRNO</strong>
+				</a>
 			</p>
 		</div>
 	</div>

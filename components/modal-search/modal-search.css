@@ -184,6 +184,10 @@
 /* Section: Search modal (mobile) */
 
 @media (max-width: 768px) {
+  .modal-content h5 {
+    font-size: var(--font-size-title);
+  }
+
   .modal .search-filters {
     flex-direction: column;
     align-items: flex-start;

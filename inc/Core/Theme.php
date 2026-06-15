@@ -59,6 +59,7 @@ class Theme {
 			$base . '/Core/Assets.php',
 			$base . '/Services/SeasonService.php',
 			$base . '/Services/CelebreSeasonService.php',
+			$base . '/Services/NotFoundService.php',
 			$base . '/Services/YouTubeService.php',
 			$base . '/Services/RelatedPostsService.php',
 			$base . '/Services/LikesService.php',

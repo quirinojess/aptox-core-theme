@@ -60,14 +60,14 @@ $render_track = static function ( array $logos_list, bool $hidden = false ) {
 
 <section
 	class="page-sobre-clipping"
-	aria-label="<?php esc_attr_e( 'Onde já fomos destaque', 'aptox' ); ?>"
+	aria-label="<?php esc_attr_e( 'Onde o blog já foi destaque', 'aptox' ); ?>"
 >
 	<div class="page-sobre-clipping__heading">
 		<span class="page-sobre-clipping__title-main">
-			<?php esc_html_e( 'Onde já fomos', 'aptox' ); ?>
+			<?php esc_html_e( 'Onde o blog', 'aptox' ); ?>
 		</span>
 		<span class="page-sobre-clipping__title-sub">
-			<?php esc_html_e( 'destaque', 'aptox' ); ?>
+			<?php esc_html_e( 'já foi destaque', 'aptox' ); ?>
 		</span>
 	</div>
 

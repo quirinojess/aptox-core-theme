@@ -79,8 +79,49 @@ class Assets {
 			);
 		}
 
+		$this->enqueue_filter_nav_styles();
 		$this->enqueue_casa_page_styles();
 		$this->enqueue_celebre_page_styles();
+	}
+
+	/**
+	 * Enqueue filter nav styles with cache busting (PNG icons need explicit sizing).
+	 *
+	 * @return void
+	 */
+	private function enqueue_filter_nav_styles() {
+		if (
+			! is_post_type_archive( 'casas' )
+			&& ! is_tax( 'casa_categoria' )
+			&& ! is_tax( 'casa' )
+			&& ! is_page_template( 'templates/page-casa.php' )
+			&& ! is_post_type_archive( 'celebracoes' )
+			&& ! is_tax( 'celebracao_categoria' )
+			&& ! is_tax( 'celebracao' )
+			&& ! is_page_template( 'templates/page-celebration.php' )
+		) {
+			return;
+		}
+
+		$file_path = get_template_directory() . '/components/filter-nav/filter-nav.css';
+
+		if ( ! file_exists( $file_path ) ) {
+			return;
+		}
+
+		$deps = array();
+		if ( wp_style_is( 'aptox-main', 'registered' ) || wp_style_is( 'aptox-main', 'enqueued' ) ) {
+			$deps[] = 'aptox-main';
+		} elseif ( wp_style_is( 'aptox-components', 'registered' ) || wp_style_is( 'aptox-components', 'enqueued' ) ) {
+			$deps[] = 'aptox-components';
+		}
+
+		wp_enqueue_style(
+			'aptox-filter-nav',
+			get_template_directory_uri() . '/components/filter-nav/filter-nav.css',
+			$deps,
+			(string) filemtime( $file_path )
+		);
 	}
 
 	/**
@@ -151,7 +192,6 @@ class Assets {
 			'aptox-celebre-info-grid'   => '/components/celebre-info-grid/celebre-info-grid.css',
 			'aptox-archive-grid'        => '/components/archive-grid/archive-grid.css',
 			'aptox-celebre-block'       => '/components/celebre-block/celebre-block.css',
-			'aptox-filter-nav'          => '/components/filter-nav/filter-nav.css',
 		);
 
 		foreach ( $components as $handle => $relative_path ) {

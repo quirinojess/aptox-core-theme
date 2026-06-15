@@ -29,6 +29,7 @@
   font-size: var(--font-size-hand-lg);
   line-height: 1.1;
   text-align: center;
+  text-transform: capitalize;
 
   color: var(--dark);
 }
@@ -54,7 +55,7 @@
   }
 
   .taxonomy-title {
-    font-size: var(--font-size-display);
+    font-size: var(--font-size-display-sm);
   }
 
   .taxonomy-description {

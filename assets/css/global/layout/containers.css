@@ -336,5 +336,17 @@
     flex: 1 1 auto;
     padding: 0;
   }
+
+  .page main > .hero-container {
+    margin-bottom: var(--space-md);
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .page main > section.container {
+    width: 100%;
+    max-width: 100%;
+    margin: var(--space-md) auto var(--space-lg);
+    padding-inline: var(--space-sm);
+  }
 }
 

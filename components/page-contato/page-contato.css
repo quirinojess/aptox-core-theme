@@ -211,7 +211,7 @@
   }
 
   .page-contato-title {
-    font-size: var(--font-size-display);
+    font-size: var(--font-size-display-sm);
   }
 
   .page-contato-body {

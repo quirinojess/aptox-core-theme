@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const desktopNav = window.matchMedia(DESKTOP_NAV_MQ);
     let navReady = false;
 
+    const getMaxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
+
+    const hasOverflow = () => getMaxScroll() > 2;
+
     const getScrollStep = () => {
       const item = track.querySelector('.tag-item');
       if (!item) {
@@ -30,12 +34,58 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      const maxScroll = track.scrollWidth - track.clientWidth;
+      const maxScroll = getMaxScroll();
+      const overflow = hasOverflow();
       const atStart = track.scrollLeft <= 2;
       const atEnd = track.scrollLeft >= maxScroll - 2;
 
-      prev.disabled = atStart;
-      next.disabled = atEnd || maxScroll <= 0;
+      prev.disabled = !overflow || atStart;
+      next.disabled = !overflow || atEnd;
+    };
+
+    const scheduleNavUpdate = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(updateNavState);
+      });
+    };
+
+    const whenTrackReady = (callback) => {
+      const images = track.querySelectorAll('img');
+      let pending = 0;
+
+      images.forEach((image) => {
+        if (!image.complete) {
+          pending += 1;
+        }
+      });
+
+      const finish = () => {
+        scheduleNavUpdate();
+        if (typeof callback === 'function') {
+          callback();
+        }
+      };
+
+      if (!pending) {
+        finish();
+        return;
+      }
+
+      const done = () => {
+        pending -= 1;
+        if (pending <= 0) {
+          finish();
+        }
+      };
+
+      images.forEach((image) => {
+        if (image.complete) {
+          return;
+        }
+
+        image.addEventListener('load', done, { once: true });
+        image.addEventListener('error', done, { once: true });
+      });
     };
 
     const scrollTrack = (direction) => {
@@ -47,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const enableDesktopNav = () => {
       if (navReady) {
-        updateNavState();
+        scheduleNavUpdate();
         return;
       }
 
@@ -56,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
       prev.addEventListener('click', onPrevClick);
       next.addEventListener('click', onNextClick);
       navReady = true;
-      updateNavState();
+      scheduleNavUpdate();
     };
 
     const disableDesktopNav = () => {
@@ -79,9 +129,33 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     track.addEventListener('scroll', updateNavState, { passive: true });
-    window.addEventListener('resize', updateNavState);
+    window.addEventListener('resize', scheduleNavUpdate);
     desktopNav.addEventListener('change', syncNavMode);
+
+    if ('ResizeObserver' in window) {
+      const resizeObserver = new ResizeObserver(scheduleNavUpdate);
+      resizeObserver.observe(track);
+
+      const stickyContent = carousel.closest('#recipe-sticky-content');
+      if (stickyContent) {
+        resizeObserver.observe(stickyContent);
+      }
+    }
+
+    const sticky = carousel.closest('#recipe-sticky');
+    if (sticky) {
+      const toggle = sticky.querySelector('#recipe-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', scheduleNavUpdate);
+      }
+
+      sticky.querySelectorAll('[data-recipe-tab]').forEach((tab) => {
+        tab.addEventListener('click', scheduleNavUpdate);
+      });
+    }
+
     syncNavMode();
+    whenTrackReady();
   });
 
   document.querySelectorAll('.recipe-tag-filter__tags').forEach((track) => {

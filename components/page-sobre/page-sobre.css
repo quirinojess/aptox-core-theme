@@ -82,10 +82,14 @@
   margin-top: var(--space-md);
 }
 
+.page-sobre-page .page-sobre-body {
+  padding-bottom: var(--space-lg);
+}
+
 .page-sobre-page .info-grid {
   margin-top: 0;
-  margin-bottom: 0;
-  padding: var(--space-md) 0;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-sm) 0;
   background: var(--off-white);
 }
 
@@ -95,7 +99,7 @@
   }
 
   .page-sobre-title {
-    font-size: var(--font-size-display);
+    font-size: var(--font-size-display-sm);
   }
 
   .page-sobre-body {
