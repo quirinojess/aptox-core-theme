@@ -78,7 +78,7 @@
     padding: var(--space-sm) 0;
 
     width: 100%;
-    background: var(--beige);
+    background: var(--off-white);
 
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     z-index: var(--z-menu);

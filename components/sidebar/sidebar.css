@@ -270,10 +270,6 @@
 
 .post-side-newsletter__form .forminator-button {
   width: 100%;
-  font-family: var(--font-base);
-  font-size: var(--font-size-xxs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
 /* Section: Post side (widgets / ads) */

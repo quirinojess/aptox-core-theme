@@ -295,7 +295,7 @@
     z-index: var(--z-menu);
     justify-content: center;
     padding: var(--space-md);
-    background: var(--beige);
+    background: var(--off-white);
   }
 
   #menu-mob a {

@@ -6,13 +6,6 @@
 
 .elm-button {
   margin: 3vw 0;
-
-  background: none !important;
-  border: none;
-
-  font-family: var(--font-display);
-  font-size: var(--font-size-title);
-  color: var(--black);
 }
 
 .block-title {

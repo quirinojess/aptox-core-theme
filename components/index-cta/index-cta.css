@@ -89,29 +89,6 @@
   overflow-wrap: break-word;
 }
 
-/* Section: Index CTA (button) */
-
-.index-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  max-width: 100%;
-  padding: 7px 14px;
-  border: 1px solid var(--dark);
-  font-family: var(--font-base);
-  font-size: var(--font-size-xxs);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--dark);
-  text-decoration: none;
-  transition: background var(--transition-fast), color var(--transition-fast);
-}
-
-.index-cta-btn:hover {
-  background: var(--dark);
-  color: var(--white);
-}
-
 /* Section: Index CTA (mobile) */
 
 @media (max-width: 768px) {
