@@ -118,7 +118,6 @@
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    touch-action: pan-x;
   }
 
   .info-grid-inner::-webkit-scrollbar {

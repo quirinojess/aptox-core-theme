@@ -7,6 +7,7 @@
 
 namespace Aptox\Core;
 
+use Aptox\Api\CelebreSectionsEndpoint;
 use Aptox\Api\HomeSectionsEndpoint;
 use Aptox\Api\LikesEndpoint;
 use Aptox\Helpers\ContentFilters;
@@ -41,6 +42,7 @@ class Theme {
 		( new ContentFilters( $likes_service ) )->register();
 		( new LikesEndpoint( $likes_service ) )->register();
 		( new HomeSectionsEndpoint() )->register();
+		( new CelebreSectionsEndpoint() )->register();
 		( new ContentTypes() )->register();
 	}
 
@@ -61,6 +63,7 @@ class Theme {
 			$base . '/Services/RelatedPostsService.php',
 			$base . '/Services/LikesService.php',
 			$base . '/Api/HomeSectionsEndpoint.php',
+			$base . '/Api/CelebreSectionsEndpoint.php',
 			$base . '/Api/LikesEndpoint.php',
 			$base . '/Helpers/ContentFilters.php',
 			$base . '/PostTypes/ContentTypes.php',

@@ -95,7 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      if (event.pointerType === 'mouse' && event.button !== 0) {
+      // Touch uses native overflow scroll so vertical page scroll is not blocked.
+      if (event.pointerType !== 'mouse' || event.button !== 0) {
         return;
       }
 

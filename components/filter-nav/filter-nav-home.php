@@ -2,7 +2,7 @@
 /**
  * Home Filter Navigation
  *
- * @context Archive Home 
+ * @context Archive Home
  */
 ?>
 
@@ -16,6 +16,7 @@ $season = function_exists( 'aptox_get_season_context' )
 
 $house_taxonomy = taxonomy_exists( 'casa_categoria' ) ? 'casa_categoria' : 'casa';
 $home_archive   = home_url( '/casas/' );
+$icon_base      = get_template_directory_uri() . '/assets/icons/category/';
 
 $term_url = static function ( $slug ) use ( $house_taxonomy, $home_archive ) {
   $term = get_term_by( 'slug', $slug, $house_taxonomy );
@@ -43,7 +44,9 @@ $planejar_url    = $term_url( 'planejando-um-lar' );
 
 $season_slug  = sanitize_title( $season['slug'] ?? 'verao' );
 $season_label = $season['label'] ?? 'Verão';
-$season_icon  = 'ico-home-' . $season_slug . '.svg';
+$season_icon  = function_exists( 'aptox_filter_home_season_icon' )
+  ? aptox_filter_home_season_icon( $season_slug )
+  : $icon_base . 'sun-home-decor.png';
 $season_url   = add_query_arg(
   'tag',
   'decoracao-de-' . $season_slug,
@@ -59,7 +62,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $season_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/' . $season_icon ); ?>"
+          src="<?php echo esc_url( $season_icon ); ?>"
           alt="<?php echo esc_attr( $season_label ); ?>"
         >
         <span><?php echo esc_html( $season_label ); ?></span>
@@ -68,7 +71,7 @@ $season_url   = add_query_arg(
 
     <li class="filter-item">
       <a href="<?php echo esc_url( $decoracao_url ); ?>">
-        <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-home3.svg' ); ?>" alt="Decoração">
+        <img src="<?php echo esc_url( $icon_base . 'decor.png' ); ?>" alt="Decoração">
         <span>Decoração</span>
       </a>
     </li>
@@ -76,7 +79,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $reforma_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-home2.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'reforma.png' ); ?>"
           alt="Reforma"
         >
         <span>Reforma</span>
@@ -86,7 +89,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $diy_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-home6.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'ico-diy.png' ); ?>"
           alt="Faça você mesmo"
         >
         <span>Faça você mesmo</span>
@@ -96,7 +99,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $organizacao_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-home5.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'organize.png' ); ?>"
           alt="Organização"
         >
         <span>Organização</span>
@@ -106,7 +109,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $jardinagem_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-home4.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'garden.png' ); ?>"
           alt="Jardinagem"
         >
         <span>Jardinagem</span>
@@ -116,7 +119,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $planejar_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-home7.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'planner-home.png' ); ?>"
           alt="Planejamento"
         >
         <span>Planejando um lar</span>
@@ -126,7 +129,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $lares_url ); ?>">
         <img
-          src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/category/ico-home1.svg' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'home-loved.png' ); ?>"
           alt="Lares"
         >
         <span>Lares</span>

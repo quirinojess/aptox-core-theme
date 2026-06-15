@@ -32,6 +32,18 @@
   --home-lazy-min-h: 20rem;
 }
 
+.home-lazy-section[data-celebre-section="season-slide"] {
+  --home-lazy-min-h: 22rem;
+}
+
+.home-lazy-section[data-celebre-section="celebre-season"] {
+  --home-lazy-min-h: 28rem;
+}
+
+.home-lazy-section[data-celebre-section="info-grid"] {
+  --home-lazy-min-h: 18rem;
+}
+
 .home-lazy-section--empty {
   min-height: 0;
 }

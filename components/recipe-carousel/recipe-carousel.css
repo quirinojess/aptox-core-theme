@@ -151,7 +151,6 @@
 
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  touch-action: pan-x;
 
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -170,7 +169,6 @@
   text-decoration: none;
   color: var(--dark);
   scroll-snap-align: start;
-  touch-action: manipulation;
 }
 
 /* Section: Tag image */

@@ -5,16 +5,20 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
+  max-width: 100%;
   margin-top: var(--space-lg);
   margin-bottom: var(--space-lg);
   padding: var(--space-lg) 0;
   background: var(--beige);
+  overflow-x: clip;
 }
 
 .celebre-block {
   width: 100%;
+  max-width: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: clip;
 }
 
 .celebre-block-inner {
@@ -22,6 +26,7 @@
   max-width: 100%;
   padding-inline: var(--container-padding);
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .celebre-block-layout {
@@ -53,11 +58,14 @@
 
 .celebre-block-layout--carousel .celebre-block-header {
   grid-column: 1;
+  grid-row: 1;
 }
 
 .celebre-block-layout--carousel .celebre-block-content {
   grid-column: 2 / 6;
+  grid-row: 1;
   min-width: 0;
+  align-self: center;
 }
 
 .celebre-block-header {
@@ -122,6 +130,7 @@
   opacity: 1;
   transform: none;
   animation: none;
+  min-width: 0;
 }
 
 .celebre-block-layout--flat .archive-title,
@@ -194,7 +203,6 @@
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  touch-action: pan-x;
 }
 
 .celebre-block-track::-webkit-scrollbar {
@@ -224,6 +232,10 @@
     grid-row: auto;
   }
 
+  .celebre-block-layout--flat .archive-card:nth-child(n) {
+    grid-column: auto;
+  }
+
   .celebre-block-layout--flat {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -231,6 +243,14 @@
   .celebre-block-layout--flat .celebre-block-header {
     grid-column: 1 / -1;
     order: -1;
+  }
+
+  .celebre-block-layout--carousel .celebre-block-header {
+    order: -1;
+  }
+
+  .celebre-block-layout--carousel .celebre-block-content {
+    align-self: auto;
   }
 
   .celebre-block-track .archive-card {
@@ -255,9 +275,18 @@
     grid-template-columns: 1fr;
   }
 
+  .celebre-block-layout--flat .archive-card:nth-child(n) {
+    grid-column: 1;
+  }
+
+  .celebre-block-carousel__controls {
+    display: none;
+  }
+
   .celebre-block-layout--flat .archive-title,
   .celebre-block-track .archive-title {
     font-size: var(--font-size-2xl);
+    overflow-wrap: anywhere;
   }
 
   .celebre-block-track .archive-card {

@@ -287,7 +287,10 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_home_lazy_sections_script() {
-		if ( ! function_exists( 'aptox_is_lazy_home' ) || ! aptox_is_lazy_home() ) {
+		$is_home    = function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home();
+		$is_celebre = function_exists( 'aptox_is_lazy_celebre' ) && aptox_is_lazy_celebre();
+
+		if ( ! $is_home && ! $is_celebre ) {
 			return;
 		}
 
@@ -301,14 +304,27 @@ class Assets {
 			true
 		);
 
-		wp_localize_script(
-			'aptox-home-lazy-sections',
-			'aptoxHomeLazy',
-			array(
-				'restUrl'    => rest_url( 'aptox/v1/home-section/' ),
-				'seasonSlug' => sanitize_title( (string) ( aptox_get_season_context()['slug'] ?? '' ) ),
-			)
-		);
+		if ( $is_home ) {
+			wp_localize_script(
+				'aptox-home-lazy-sections',
+				'aptoxHomeLazy',
+				array(
+					'restUrl'    => rest_url( 'aptox/v1/home-section/' ),
+					'seasonSlug' => sanitize_title( (string) ( aptox_get_season_context()['slug'] ?? '' ) ),
+				)
+			);
+		}
+
+		if ( $is_celebre ) {
+			wp_localize_script(
+				'aptox-home-lazy-sections',
+				'aptoxCelebreLazy',
+				array(
+					'restUrl'    => rest_url( 'aptox/v1/celebre-section/' ),
+					'seasonSlug' => sanitize_title( (string) ( aptox_get_season_context()['slug'] ?? '' ) ),
+				)
+			);
+		}
 	}
 
 	/**

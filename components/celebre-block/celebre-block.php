@@ -18,9 +18,11 @@ if ( empty( $block['posts'] ) || empty( $block['label'] ) ) {
 $label        = aptox_hand_text( sanitize_text_field( $block['label'] ) );
 $icon         = ! empty( $block['icon'] ) ? sanitize_file_name( $block['icon'] ) : '';
 $term_url     = ! empty( $block['term_url'] ) ? esc_url( $block['term_url'] ) : '';
-$use_carousel = ! empty( $block['carousel'] );
 $posts        = $block['posts'];
+$post_count   = count( $posts );
+$use_carousel = $post_count > 1;
 $section_id   = 'celebre-block-' . sanitize_title( $label );
+$layout_class = $use_carousel ? 'celebre-block-layout--carousel' : 'celebre-block-layout--flat';
 $icon_base    = get_template_directory_uri() . '/assets/icons/category/';
 
 $render_card = static function ( $post ) {
@@ -85,7 +87,7 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 >
 	<div class="celebre-block-inner">
 		<?php if ( $use_carousel ) : ?>
-		<div class="celebre-block-layout celebre-block-layout--carousel">
+		<div class="celebre-block-layout <?php echo esc_attr( $layout_class ); ?>">
 			<?php $render_title(); ?>
 
 			<div class="celebre-block-content">
@@ -119,7 +121,7 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 			</div>
 		</div>
 		<?php else : ?>
-		<div class="celebre-block-layout celebre-block-layout--flat">
+		<div class="celebre-block-layout <?php echo esc_attr( $layout_class ); ?>">
 			<?php $render_title(); ?>
 			<?php foreach ( $posts as $post ) : ?>
 				<?php $render_card( $post ); ?>

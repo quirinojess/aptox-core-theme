@@ -11,6 +11,8 @@
   background: var(--beige);
 
   z-index: 2;
+
+  --filter-nav-icon-size: 32px;
 }
 
 .filter-list {
@@ -55,9 +57,12 @@
 }
 
 .filter-item img {
-  max-width: 33px;
-  height: auto;
+  width: var(--filter-nav-icon-size);
+  height: var(--filter-nav-icon-size);
+  flex-shrink: 0;
   display: block;
+  object-fit: contain;
+  object-position: center;
   transform-origin: center center;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -71,22 +76,24 @@
 @media (max-width: 768px) {
   .filter-nav {
     position: fixed;
-    bottom: 65px;
+    bottom: 60px;
     left: 0;
 
     margin: 0;
     padding: var(--space-sm) 0;
 
     width: 100%;
-    background: var(--off-white);
+    background: var(--beige);
 
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     z-index: var(--z-menu);
+
+    --filter-nav-icon-size: 28px;
   }
 
   .filter-list {
     grid-auto-columns: max-content;
-    column-gap: var(--space-sm);
+    column-gap: 0;
     padding: 0 var(--space-md);
 
     overflow-x: auto;
@@ -105,18 +112,12 @@
 
   .filter-item {
     width: max-content;
+    margin-inline: var(--space-md);
     scroll-snap-align: center;
   }
 
   .filter-item a {
     width: auto;
-  }
-
-  .filter-item img {
-    max-width: 28px;
-  }
-
-  .filter-item a {
     font-size: var(--font-size-2xs);
     letter-spacing: 0.08em;
     line-height: 1.3;

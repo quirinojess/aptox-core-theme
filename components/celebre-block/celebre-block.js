@@ -132,4 +132,10 @@
   document.addEventListener('DOMContentLoaded', function () {
     initAllCelebreBlockCarousels(document);
   });
+
+  document.addEventListener('aptox:section-loaded', function (event) {
+    if (event.detail?.root) {
+      initAllCelebreBlockCarousels(event.detail.root);
+    }
+  });
 })();

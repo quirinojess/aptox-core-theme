@@ -222,6 +222,12 @@ if ( ! function_exists( 'aptox_decor_season_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_filter_home_season_icon' ) ) {
+	function aptox_filter_home_season_icon( $season_slug = null ) {
+		return SeasonService::filter_home_season_icon( $season_slug );
+	}
+}
+
 if ( ! function_exists( 'aptox_get_season_newsletter_data' ) ) {
 	function aptox_get_season_newsletter_data() {
 		return SeasonService::get_season_newsletter_data();
@@ -290,6 +296,20 @@ if ( ! function_exists( 'aptox_is_lazy_home' ) ) {
 	 */
 	function aptox_is_lazy_home() {
 		return ( is_front_page() || is_home() ) && ! is_paged();
+	}
+}
+
+if ( ! function_exists( 'aptox_is_lazy_celebre' ) ) {
+	/**
+	 * Whether the current view uses the lazy-loaded Celebre layout.
+	 *
+	 * @return bool
+	 */
+	function aptox_is_lazy_celebre() {
+		return (
+			is_post_type_archive( 'celebracoes' )
+			|| is_page_template( 'templates/page-celebration.php' )
+		) && ! is_paged();
 	}
 }
 

@@ -1,14 +1,19 @@
 /* Section: Standard button tokens */
 
 :root {
-  --btn-frame-gap: 4px;
-  --btn-border-width: 2px;
   --btn-padding-y: var(--space-sm);
   --btn-padding-x: var(--space-md);
+  --btn-margin-inline: 5px;
   --btn-border-color: var(--dark);
+  --btn-border-width: 2px;
+  --btn-border-width-hover: 1px;
+  --btn-shadow: 0 2px 10px rgba(17, 17, 17, 0.04);
+  --btn-shadow-hover: 0 1px 6px rgba(17, 17, 17, 0.025);
+  --btn-shadow-focus: 0 1px 6px rgba(17, 17, 17, 0.035);
+  --btn-transition: 235ms ease-in-out;
 }
 
-/* Section: Standard button (base) */
+/* Section: Standard button selectors */
 
 .aptox-btn,
 .elm-button,
@@ -21,19 +26,25 @@ button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):no
 input[type="submit"],
 input[type="button"],
 input[type="reset"] {
-  position: relative;
-  isolation: isolate;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-xs);
   max-width: 100%;
+  box-sizing: border-box;
 
-  margin: 0;
+  margin-block: 0;
+  margin-inline: var(--btn-margin-inline);
   padding: var(--btn-padding-y) var(--btn-padding-x);
-  border: none;
+  border: var(--btn-border-width) solid var(--btn-border-color);
+  border-radius: 15px 225px 255px 15px / 15px 255px 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  border-bottom-right-radius: 225px 15px;
+  border-bottom-left-radius: 15px 255px;
   background: var(--white);
+  background-image: none;
+  box-shadow: var(--btn-shadow);
   color: var(--btn-border-color);
 
   font-family: var(--font-base);
@@ -46,28 +57,20 @@ input[type="reset"] {
   text-align: center;
 
   cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
   appearance: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-}
 
-.aptox-btn::before,
-.elm-button::before,
-.index-cta-btn::before,
-.cta-season-btn::before,
-.archive-load-more .page-numbers::before,
-.post-side-newsletter__form .forminator-button::before,
-.newsletter-form-wrapper .forminator-button::before,
-button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not([class*="-nav"])::before,
-input[type="submit"]::before,
-input[type="button"]::before,
-input[type="reset"]::before {
-  content: "";
-  position: absolute;
-  inset: calc(-1 * var(--btn-frame-gap));
-  border: var(--btn-border-width) dotted var(--btn-border-color);
-  pointer-events: none;
-  transition: border-style 0.35s ease;
+  transition:
+    box-shadow var(--btn-transition),
+    border-width var(--btn-transition),
+    transform var(--btn-transition),
+    background-color var(--btn-transition),
+    color var(--btn-transition);
 }
 
 .aptox-btn:hover,
@@ -80,7 +83,14 @@ input[type="reset"]::before {
 button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not([class*="-nav"]):hover,
 input[type="submit"]:hover,
 input[type="button"]:hover,
-input[type="reset"]:hover,
+input[type="reset"]:hover {
+  background: var(--white);
+  color: var(--btn-border-color);
+  border-width: var(--btn-border-width-hover);
+  box-shadow: var(--btn-shadow-hover);
+  transform: translate3d(0, 1px, 0);
+}
+
 .aptox-btn:focus-visible,
 .elm-button:focus-visible,
 .index-cta-btn:focus-visible,
@@ -94,31 +104,8 @@ input[type="button"]:focus-visible,
 input[type="reset"]:focus-visible {
   background: var(--white);
   color: var(--btn-border-color);
-}
-
-.aptox-btn:hover::before,
-.elm-button:hover::before,
-.index-cta-btn:hover::before,
-.cta-season-btn:hover::before,
-.archive-load-more .page-numbers:hover::before,
-.post-side-newsletter__form .forminator-button:hover::before,
-.newsletter-form-wrapper .forminator-button:hover::before,
-button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not([class*="-nav"]):hover::before,
-input[type="submit"]:hover::before,
-input[type="button"]:hover::before,
-input[type="reset"]:hover::before,
-.aptox-btn:focus-visible::before,
-.elm-button:focus-visible::before,
-.index-cta-btn:focus-visible::before,
-.cta-season-btn:focus-visible::before,
-.archive-load-more .page-numbers:focus-visible::before,
-.post-side-newsletter__form .forminator-button:focus-visible::before,
-.newsletter-form-wrapper .forminator-button:focus-visible::before,
-button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not([class*="-nav"]):focus-visible::before,
-input[type="submit"]:focus-visible::before,
-input[type="button"]:focus-visible::before,
-input[type="reset"]:focus-visible::before {
-  border-style: solid;
+  border-width: var(--btn-border-width-hover);
+  box-shadow: var(--btn-shadow-focus);
 }
 
 .aptox-btn:disabled,
@@ -128,20 +115,36 @@ input[type="button"]:disabled,
 input[type="reset"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aptox-btn::before,
-  .elm-button::before,
-  .index-cta-btn::before,
-  .cta-season-btn::before,
-  .archive-load-more .page-numbers::before,
-  .post-side-newsletter__form .forminator-button::before,
-  .newsletter-form-wrapper .forminator-button::before,
-  button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not([class*="-nav"])::before,
-  input[type="submit"]::before,
-  input[type="button"]::before,
-  input[type="reset"]::before {
+  .aptox-btn,
+  .elm-button,
+  .index-cta-btn,
+  .cta-season-btn,
+  .archive-load-more .page-numbers,
+  .post-side-newsletter__form .forminator-button,
+  .newsletter-form-wrapper .forminator-button,
+  button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not([class*="-nav"]),
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"] {
     transition: none;
+  }
+
+  .aptox-btn:hover,
+  .elm-button:hover,
+  .index-cta-btn:hover,
+  .cta-season-btn:hover,
+  .archive-load-more .page-numbers:hover,
+  .post-side-newsletter__form .forminator-button:hover,
+  .newsletter-form-wrapper .forminator-button:hover,
+  button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not([class*="-nav"]):hover,
+  input[type="submit"]:hover,
+  input[type="button"]:hover,
+  input[type="reset"]:hover {
+    transform: none;
   }
 }

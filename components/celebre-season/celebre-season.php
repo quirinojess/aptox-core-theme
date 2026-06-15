@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Aptox\Services\CelebreSeasonService;
 
-$cache_key   = 'aptox_celebre_season_v10_' . CelebreSeasonService::get_cache_suffix();
+$cache_key   = 'aptox_celebre_season_v14_' . CelebreSeasonService::get_cache_suffix();
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
