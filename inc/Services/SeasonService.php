@@ -8,15 +8,188 @@
 namespace Aptox\Services;
 
 class SeasonService {
+	public const SEASON_COOKIE_NAME = 'aptox_season';
+	public const SEASON_QUERY_PARAM = 'estacao';
+
 	/**
 	 * Get current season context.
 	 *
 	 * @return array<string, string>
 	 */
 	public static function get_season_context() {
-		$season_slug = self::detect_current_season_slug();
+		return self::get_season_context_by_slug( self::detect_current_season_slug() );
+	}
 
-		$map = array(
+	/**
+	 * All selectable season slugs.
+	 *
+	 * @return array<int, string>
+	 */
+	public static function get_available_season_slugs() {
+		return array( 'verao', 'outono', 'inverno', 'primavera', 'fim-de-ano' );
+	}
+
+	/**
+	 * Resolve and validate a season slug.
+	 *
+	 * @param string $slug Raw slug.
+	 * @return string|null
+	 */
+	public static function resolve_season_slug( $slug ) {
+		$slug = sanitize_title( (string) $slug );
+
+		return in_array( $slug, self::get_available_season_slugs(), true ) ? $slug : null;
+	}
+
+	/**
+	 * User-selected season from query string or cookie.
+	 *
+	 * @return string|null
+	 */
+	public static function get_override_season_slug() {
+		if ( isset( $_GET[ self::SEASON_QUERY_PARAM ] ) ) {
+			$slug = self::resolve_season_slug( wp_unslash( $_GET[ self::SEASON_QUERY_PARAM ] ) );
+
+			if ( null !== $slug ) {
+				return $slug;
+			}
+		}
+
+		if ( isset( $_COOKIE[ self::SEASON_COOKIE_NAME ] ) ) {
+			$slug = self::resolve_season_slug( wp_unslash( $_COOKIE[ self::SEASON_COOKIE_NAME ] ) );
+
+			if ( null !== $slug ) {
+				return $slug;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Whether the visitor chose a season manually.
+	 *
+	 * @return bool
+	 */
+	public static function has_season_override() {
+		return null !== self::get_override_season_slug();
+	}
+
+	/**
+	 * Apply season switch from query string: clear caches, persist cookie, reload.
+	 *
+	 * @return void
+	 */
+	public static function handle_season_switch() {
+		if ( ! isset( $_GET[ self::SEASON_QUERY_PARAM ] ) ) {
+			return;
+		}
+
+		if ( wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+			return;
+		}
+
+		$slug = self::resolve_season_slug( wp_unslash( $_GET[ self::SEASON_QUERY_PARAM ] ) );
+
+		if ( null === $slug ) {
+			return;
+		}
+
+		$previous = isset( $_COOKIE[ self::SEASON_COOKIE_NAME ] )
+			? self::resolve_season_slug( wp_unslash( $_COOKIE[ self::SEASON_COOKIE_NAME ] ) )
+			: null;
+
+		if ( $previous !== $slug ) {
+			self::clear_season_caches();
+		}
+
+		if ( ! headers_sent() ) {
+			setcookie(
+				self::SEASON_COOKIE_NAME,
+				$slug,
+				array(
+					'expires'  => time() + MONTH_IN_SECONDS,
+					'path'     => COOKIEPATH ? COOKIEPATH : '/',
+					'domain'   => COOKIE_DOMAIN,
+					'secure'   => is_ssl(),
+					'httponly' => false,
+					'samesite' => 'Lax',
+				)
+			);
+
+			$_COOKIE[ self::SEASON_COOKIE_NAME ] = $slug;
+
+			nocache_headers();
+			wp_safe_redirect( remove_query_arg( self::SEASON_QUERY_PARAM ) );
+			exit;
+		}
+	}
+
+	/**
+	 * Delete theme transients so seasonal sections rebuild on next load.
+	 *
+	 * @return void
+	 */
+	public static function clear_season_caches() {
+		global $wpdb;
+
+		if ( ! isset( $wpdb->options ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->query(
+			"DELETE FROM {$wpdb->options}
+			WHERE option_name LIKE '_transient_aptox_%'
+			OR option_name LIKE '_transient_timeout_aptox_%'"
+		);
+	}
+
+	/**
+	 * Persist season preference from ?estacao= query param.
+	 *
+	 * @return void
+	 * @deprecated Use handle_season_switch().
+	 */
+	public static function persist_season_from_request() {
+		self::handle_season_switch();
+	}
+
+	/**
+	 * Season options for the header switcher.
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public static function get_all_seasons() {
+		$current = self::detect_current_season_slug();
+		$items   = array();
+
+		foreach ( self::get_available_season_slugs() as $slug ) {
+			$item             = self::get_season_context_by_slug( $slug );
+			$item['is_active'] = ( $slug === $current );
+			$items[]          = $item;
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Build season context for a slug.
+	 *
+	 * @param string $season_slug Season slug.
+	 * @return array<string, string>
+	 */
+	public static function get_season_context_by_slug( $season_slug ) {
+		$map = self::get_season_map();
+
+		return $map[ $season_slug ] ?? $map['verao'];
+	}
+
+	/**
+	 * @return array<string, array<string, string>>
+	 */
+	private static function get_season_map() {
+		return array(
 			'verao'      => array(
 				'icon'        => 'verao',
 				'label'       => 'Verão',
@@ -49,16 +222,10 @@ class SeasonService {
 				'description'     => 'Ideias, inspirações e detalhes pensados para celebrar os momentos mais especiais do natal e ano novo',
 			),
 		);
-
-		return $map[ $season_slug ] ?? $map['verao'];
 	}
 
 	/**
-	 * Detect season slug for southern hemisphere based on current date.
-	 *
-	 * December is always treated as year-end context, regardless of the solstice.
-	 *
-	 * @return string
+	 * @return \DateTimeImmutable
 	 */
 	private static function get_site_datetime() {
 		$timezone = function_exists( 'wp_timezone' )
@@ -99,13 +266,28 @@ class SeasonService {
 	}
 
 	/**
+	 * Active season slug (override or natural calendar).
+	 *
+	 * @return string
+	 */
+	private static function detect_current_season_slug() {
+		$override = self::get_override_season_slug();
+
+		if ( null !== $override ) {
+			return $override;
+		}
+
+		return self::detect_natural_season_slug();
+	}
+
+	/**
 	 * Detect season slug for southern hemisphere based on current date.
 	 *
 	 * December is always treated as year-end context, regardless of the solstice.
 	 *
 	 * @return string
 	 */
-	private static function detect_current_season_slug() {
+	private static function detect_natural_season_slug() {
 		$now = self::get_site_datetime();
 
 		if ( 12 === (int) $now->format( 'n' ) ) {

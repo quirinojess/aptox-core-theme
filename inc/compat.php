@@ -23,6 +23,72 @@ if ( ! function_exists( 'aptox_get_season_context' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_all_seasons' ) ) {
+	function aptox_get_all_seasons() {
+		return SeasonService::get_all_seasons();
+	}
+}
+
+if ( ! function_exists( 'aptox_hand_text' ) ) {
+	/**
+	 * Normalize copy rendered with the handwriting font (no accents).
+	 *
+	 * @param string $text      Text to normalize.
+	 * @param bool   $lowercase Whether to lowercase after removing accents.
+	 * @return string
+	 */
+	function aptox_hand_text( $text, $lowercase = true ) {
+		$text = (string) $text;
+
+		if ( function_exists( 'remove_accents' ) ) {
+			$text = remove_accents( $text );
+		}
+
+		if ( $lowercase ) {
+			$text = mb_strtolower( $text, 'UTF-8' );
+		}
+
+		return $text;
+	}
+}
+
+if ( ! function_exists( 'aptox_get_season_badge_data' ) ) {
+	/**
+	 * Build circular badge marquee data for decor/celebre slides.
+	 *
+	 * @param string $label Season label.
+	 * @return array{text: string, font_size: string}
+	 */
+	function aptox_get_season_badge_data( $label ) {
+		$text = aptox_hand_text( $label );
+
+		if ( '' === $text ) {
+			return array(
+				'text'      => '',
+				'font_size' => 'var(--font-size-xxs)',
+			);
+		}
+
+		$unit     = $text . ' · ';
+		$unit_len = max( 1, mb_strlen( $unit ) );
+		$repeats  = max( 4, min( 10, (int) round( 40 / $unit_len ) ) );
+		$char_len = mb_strlen( $text );
+
+		if ( $char_len >= 11 ) {
+			$font_size = '7.5px';
+		} elseif ( $char_len >= 8 ) {
+			$font_size = '9px';
+		} else {
+			$font_size = 'var(--font-size-xxs)';
+		}
+
+		return array(
+			'text'      => trim( str_repeat( $unit, $repeats ) ),
+			'font_size' => $font_size,
+		);
+	}
+}
+
 if ( ! function_exists( 'aptox_season_icon' ) ) {
 	function aptox_season_icon( $icon ) {
 		return SeasonService::season_icon( $icon );

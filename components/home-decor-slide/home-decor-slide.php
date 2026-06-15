@@ -18,7 +18,7 @@ if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
 
 $tag_slug = 'decoracao-de-' . $season_slug;
 
-$cache_key   = 'aptox_home_decor_slide_v3_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_home_decor_slide_v5_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -37,33 +37,6 @@ $list_args = array(
 		),
 	),
 );
-
-if ( 'fim-de-ano' === $season_slug ) {
-	$celebration_taxonomies = array( 'celebracao_categoria', 'celebracao' );
-
-	foreach ( $celebration_taxonomies as $taxonomy ) {
-		if ( ! taxonomy_exists( $taxonomy ) ) {
-			continue;
-		}
-
-		$natal_term = get_term_by( 'slug', 'natal', $taxonomy );
-
-		if ( $natal_term && ! is_wp_error( $natal_term ) ) {
-			$list_args = array(
-				'post_type'      => 'celebracoes',
-				'posts_per_page' => 4,
-				'tax_query'      => array(
-					array(
-						'taxonomy' => $taxonomy,
-						'field'    => 'slug',
-						'terms'    => array( 'natal' ),
-					),
-				),
-			);
-			break;
-		}
-	}
-}
 
 $list = new WP_Query(
 	array_merge(
@@ -90,9 +63,7 @@ $initial = array(
   'link'    => get_permalink(),
 );
 
-$aside_title = 'fim-de-ano' === $season_slug
-  ? 'Celebre o Natal'
-  : 'Decore para o ' . aptox_get_season_label( $season_slug );
+$aside_title = 'Decore para o ' . aptox_get_season_label( $season_slug );
 
 $season_label = '';
 
@@ -102,8 +73,7 @@ if ( is_array( $season ) && ! empty( $season['label'] ) ) {
 	$season_label = aptox_get_season_label( $season_slug );
 }
 
-$badge_text   = mb_strtolower( $season_label, 'UTF-8' );
-$badge_repeat = trim( str_repeat( $badge_text . ' · ', 8 ) );
+$badge = aptox_get_season_badge_data( $season_label );
 ?>
 
 <?php ob_start(); ?>
@@ -128,18 +98,22 @@ $badge_repeat = trim( str_repeat( $badge_text . ' · ', 8 ) );
             loading="lazy"
           >
 
-          <?php if ( $badge_repeat ) : ?>
-            <div class="decoracao-slide-badge" aria-hidden="true">
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <?php if ( ! empty( $badge['text'] ) ) : ?>
+            <div
+              class="decoracao-slide-badge"
+              style="--decoracao-badge-font-size: <?php echo esc_attr( $badge['font_size'] ); ?>;"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
                   <path
                     id="decoracao-slide-badge-path"
                     d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
                   />
                 </defs>
-                <text>
+                <text textLength="232" lengthAdjust="spacing">
                   <textPath href="#decoracao-slide-badge-path" startOffset="0%">
-                    <?php echo esc_html( $badge_repeat ); ?>
+                    <?php echo esc_html( $badge['text'] ); ?>
                   </textPath>
                 </text>
               </svg>
@@ -181,7 +155,7 @@ $badge_repeat = trim( str_repeat( $badge_text . ' · ', 8 ) );
         id="decoracao-slide-aside-title"
         class="decoracao-slide-aside-title"
       >
-        <?php echo esc_html( $aside_title ); ?>
+        <?php echo esc_html( aptox_hand_text( $aside_title, false ) ); ?>
       </h3>
 
       <ul class="decoracao-slide-list">

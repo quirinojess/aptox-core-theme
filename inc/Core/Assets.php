@@ -305,7 +305,8 @@ class Assets {
 			'aptox-home-lazy-sections',
 			'aptoxHomeLazy',
 			array(
-				'restUrl' => rest_url( 'aptox/v1/home-section/' ),
+				'restUrl'    => rest_url( 'aptox/v1/home-section/' ),
+				'seasonSlug' => sanitize_title( (string) ( aptox_get_season_context()['slug'] ?? '' ) ),
 			)
 		);
 	}

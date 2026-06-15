@@ -95,7 +95,7 @@ ob_start();
 					<h2 id="grid-casa-decor-title" class="grid-recipe-title">
 						Decore sua casa para
 						<span class="grid-recipe-season">
-							<?php echo esc_html( $season_label ); ?>
+							<?php echo esc_html( aptox_hand_text( $season_label ) ); ?>
 						</span>
 					</h2>
 				</div>

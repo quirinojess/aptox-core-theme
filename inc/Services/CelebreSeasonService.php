@@ -70,6 +70,12 @@ class CelebreSeasonService {
 	 * @return array<int, string>
 	 */
 	public static function get_active_festivity_keys( $now = null ) {
+		$override = SeasonService::get_override_season_slug();
+
+		if ( null !== $override ) {
+			return self::get_festivity_keys_for_season_slug( $override );
+		}
+
 		$now   = $now instanceof \DateTimeImmutable ? $now : self::get_site_datetime();
 		$month = (int) $now->format( 'n' );
 		$day   = (int) $now->format( 'j' );
@@ -100,6 +106,12 @@ class CelebreSeasonService {
 	 * @return string
 	 */
 	public static function get_cache_suffix() {
+		$override = SeasonService::get_override_season_slug();
+
+		if ( null !== $override ) {
+			return sanitize_key( 'override_' . $override );
+		}
+
 		$now  = self::get_site_datetime();
 		$keys = self::get_active_festivity_keys( $now );
 
@@ -160,6 +172,43 @@ class CelebreSeasonService {
 		}
 
 		return $blocks;
+	}
+
+	/**
+	 * Festivity block keys for a selected season slug.
+	 *
+	 * @param string $season_slug Season slug.
+	 * @return array<int, string>
+	 */
+	private static function get_festivity_keys_for_season_slug( $season_slug ) {
+		$config  = SeasonService::get_season_festivities_config();
+		$catalog = self::get_festivity_catalog();
+
+		if ( empty( $config[ $season_slug ] ) ) {
+			return array();
+		}
+
+		$keys = array();
+
+		foreach ( $config[ $season_slug ] as $festivity ) {
+			if ( empty( $festivity['slugs'] ) || ! is_array( $festivity['slugs'] ) ) {
+				continue;
+			}
+
+			foreach ( $festivity['slugs'] as $slug ) {
+				foreach ( $catalog as $key => $entry ) {
+					if ( empty( $entry['slugs'] ) || ! is_array( $entry['slugs'] ) ) {
+						continue;
+					}
+
+					if ( in_array( $slug, $entry['slugs'], true ) && ! in_array( $key, $keys, true ) ) {
+						$keys[] = $key;
+					}
+				}
+			}
+		}
+
+		return $keys;
 	}
 
 	/**

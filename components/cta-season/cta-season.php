@@ -23,7 +23,7 @@ if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
 	$season_text  = aptox_get_season_home_cta_text( $season_slug );
 }
 
-$cache_key   = 'aptox_cta_season_v11_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_cta_season_v12_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -36,7 +36,19 @@ $featured_image = '';
 $featured_link  = home_url( '/celebrando/' );
 
 if ( ! empty( $season_slug ) && post_type_exists( 'celebracoes' ) ) {
-	if ( 'fim-de-ano' === $season_slug ) {
+	$category_taxonomies = array( 'celebracao_categoria', 'celebracao' );
+
+	foreach ( $category_taxonomies as $taxonomy ) {
+		if ( ! taxonomy_exists( $taxonomy ) ) {
+			continue;
+		}
+
+		$term = get_term_by( 'slug', $season_slug, $taxonomy );
+
+		if ( ! $term || is_wp_error( $term ) ) {
+			continue;
+		}
+
 		$query = new WP_Query(
 			array(
 				'post_type'              => 'celebracoes',
@@ -52,9 +64,9 @@ if ( ! empty( $season_slug ) && post_type_exists( 'celebracoes' ) ) {
 				),
 				'tax_query'              => array(
 					array(
-						'taxonomy' => 'post_tag',
+						'taxonomy' => $taxonomy,
 						'field'    => 'slug',
-						'terms'    => array( 'celebrando-o-fim-de-ano' ),
+						'terms'    => array( $season_slug ),
 					),
 				),
 			)
@@ -66,52 +78,7 @@ if ( ! empty( $season_slug ) && post_type_exists( 'celebracoes' ) ) {
 			$featured_image = get_the_post_thumbnail_url( get_the_ID(), 'large' );
 			$featured_link  = get_permalink();
 			wp_reset_postdata();
-		}
-	} else {
-		$category_taxonomies = array( 'celebracao_categoria', 'celebracao' );
-
-		foreach ( $category_taxonomies as $taxonomy ) {
-			if ( ! taxonomy_exists( $taxonomy ) ) {
-				continue;
-			}
-
-			$term = get_term_by( 'slug', $season_slug, $taxonomy );
-
-			if ( ! $term || is_wp_error( $term ) ) {
-				continue;
-			}
-
-			$query = new WP_Query(
-				array(
-					'post_type'              => 'celebracoes',
-					'posts_per_page'         => 1,
-					'post_status'            => 'publish',
-					'ignore_sticky_posts'    => true,
-					'no_found_rows'          => true,
-					'update_post_term_cache' => false,
-					'update_post_meta_cache' => true,
-					'orderby'                => array(
-						'date' => 'DESC',
-						'ID'   => 'DESC',
-					),
-					'tax_query'              => array(
-						array(
-							'taxonomy' => $taxonomy,
-							'field'    => 'slug',
-							'terms'    => array( $season_slug ),
-						),
-					),
-				)
-			);
-
-			if ( $query->have_posts() ) {
-				$query->the_post();
-				$featured_post  = get_post();
-				$featured_image = get_the_post_thumbnail_url( get_the_ID(), 'large' );
-				$featured_link  = get_permalink();
-				wp_reset_postdata();
-				break;
-			}
+			break;
 		}
 	}
 }
@@ -154,7 +121,7 @@ $inner_class = $featured_image
 				<a href="<?php echo esc_url( home_url( '/celebrando/' ) ); ?>">
 					estamos no
 					<span class="cta-season-name">
-						<?php echo esc_html( $season_label ); ?>
+						<?php echo esc_html( aptox_hand_text( $season_label ) ); ?>
 					</span>
 				</a>
 			</h2>

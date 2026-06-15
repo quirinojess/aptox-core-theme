@@ -91,7 +91,7 @@ if ( $show_season_title ) :
 					<h2 id="recipes-grid-title" class="grid-recipe-title">
 						Receitas de
 						<span class="grid-recipe-season">
-							<?php echo esc_html( $season_label ); ?>
+							<?php echo esc_html( aptox_hand_text( $season_label ) ); ?>
 						</span>
 					</h2>
 				</div>

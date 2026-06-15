@@ -15,8 +15,18 @@ class Setup {
 	 */
 	public function register() {
 		add_action( 'after_setup_theme', array( $this, 'setup_theme' ) );
+		add_action( 'init', array( $this, 'handle_season_preference' ), 1 );
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 		add_filter( 'show_admin_bar', '__return_false' );
+	}
+
+	/**
+	 * Persist season preference from query string.
+	 *
+	 * @return void
+	 */
+	public function handle_season_preference() {
+		\Aptox\Services\SeasonService::handle_season_switch();
 	}
 
 	/**

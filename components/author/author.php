@@ -21,7 +21,7 @@ $section_class    = $is_editorial_bio ? 'about-author about-author--editorial' :
 	<?php if ( $is_editorial_bio ) : ?>
 		<div class="about-author-intro">
 			<h4 id="about-author-title" class="about-author-title">
-				<?php esc_html_e( 'Olá, sou jess', 'aptox' ); ?>
+				<?php echo esc_html( aptox_hand_text( __( 'Olá, sou jess', 'aptox' ), false ) ); ?>
 			</h4>
 
 			<figure class="about-author-avatar">

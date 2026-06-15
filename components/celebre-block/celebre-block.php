@@ -15,7 +15,7 @@ if ( empty( $block['posts'] ) || empty( $block['label'] ) ) {
 	return;
 }
 
-$label        = remove_accents( sanitize_text_field( $block['label'] ) );
+$label        = aptox_hand_text( sanitize_text_field( $block['label'] ) );
 $icon         = ! empty( $block['icon'] ) ? sanitize_file_name( $block['icon'] ) : '';
 $term_url     = ! empty( $block['term_url'] ) ? esc_url( $block['term_url'] ) : '';
 $use_carousel = ! empty( $block['carousel'] );
@@ -66,7 +66,7 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 
 		<h2 id="<?php echo esc_attr( $section_id ); ?>" class="celebre-block-title">
 			<span class="celebre-block-title-display"><?php esc_html_e( 'celebre', 'aptox' ); ?></span>
-			<span class="celebre-block-title-hand"><?php echo esc_html( mb_strtolower( $label, 'UTF-8' ) ); ?></span>
+			<span class="celebre-block-title-hand"><?php echo esc_html( $label ); ?></span>
 		</h2>
 
 		<?php if ( $term_url ) : ?>

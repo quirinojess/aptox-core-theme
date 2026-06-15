@@ -6,8 +6,25 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const seasonSlug = window.aptoxHomeLazy?.seasonSlug || '';
   const htmlCache = new Map();
   const fetchPromises = new Map();
+
+  const getSectionCacheKey = (sectionName) =>
+    seasonSlug ? `${sectionName}:${seasonSlug}` : sectionName;
+
+  const getSectionRequestUrl = (sectionName) => {
+    const baseUrl = `${window.aptoxHomeLazy.restUrl}${sectionName}`;
+
+    if (!seasonSlug) {
+      return baseUrl;
+    }
+
+    const params = new URLSearchParams();
+    params.set('estacao', seasonSlug);
+
+    return `${baseUrl}?${params.toString()}`;
+  };
 
   const ensureContentNode = (section) => {
     let content = section.querySelector('.home-lazy-section__content');
@@ -22,16 +39,19 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   const fetchSectionHtml = async (sectionName) => {
-    if (htmlCache.has(sectionName)) {
-      return htmlCache.get(sectionName);
+    const cacheKey = getSectionCacheKey(sectionName);
+
+    if (htmlCache.has(cacheKey)) {
+      return htmlCache.get(cacheKey);
     }
 
-    if (fetchPromises.has(sectionName)) {
-      return fetchPromises.get(sectionName);
+    if (fetchPromises.has(cacheKey)) {
+      return fetchPromises.get(cacheKey);
     }
 
-    const request = fetch(`${window.aptoxHomeLazy.restUrl}${sectionName}`, {
+    const request = fetch(getSectionRequestUrl(sectionName), {
       method: 'GET',
+      cache: 'no-store',
       headers: {
         Accept: 'application/json',
       },
@@ -46,14 +66,14 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .catch(() => '')
       .finally(() => {
-        fetchPromises.delete(sectionName);
+        fetchPromises.delete(cacheKey);
       });
 
-    fetchPromises.set(sectionName, request);
+    fetchPromises.set(cacheKey, request);
     const html = await request;
 
     if (html) {
-      htmlCache.set(sectionName, html);
+      htmlCache.set(cacheKey, html);
     }
 
     return html;

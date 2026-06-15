@@ -4,7 +4,8 @@
  * Theme: Aptox
  */
 
-$season = aptox_get_season_context();
+$season  = aptox_get_season_context();
+$seasons = aptox_get_all_seasons();
 ?>
 
 <header class="site-header">
@@ -35,20 +36,47 @@ $season = aptox_get_season_context();
 
       <div class="sazonal-section">
 
-        <button
-          class="menu-button"
-          id="openSeason"
-          type="button"
-          aria-haspopup="dialog"
-          aria-controls="modal-season"
-        >
-          <img
-            src="<?php echo esc_url( aptox_season_icon( $season['icon'] ) ); ?>"
-            alt=""
-            aria-hidden="true"
+        <div class="season-switcher">
+          <button
+            class="menu-button season-switcher__trigger"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="season-switcher-menu"
           >
-          <span><?php echo esc_html( $season['label'] ); ?></span>
-        </button>
+            <img
+              src="<?php echo esc_url( aptox_season_icon( $season['icon'] ) ); ?>"
+              alt=""
+              aria-hidden="true"
+            >
+            <span class="season-switcher__label"><?php echo esc_html( $season['label'] ); ?></span>
+          </button>
+
+          <ul
+            id="season-switcher-menu"
+            class="season-switcher__menu"
+            role="menu"
+            hidden
+          >
+            <?php foreach ( $seasons as $season_option ) : ?>
+              <li role="none">
+                <button
+                  type="button"
+                  class="season-switcher__option<?php echo ! empty( $season_option['is_active'] ) ? ' is-active' : ''; ?>"
+                  role="menuitem"
+                  data-season="<?php echo esc_attr( $season_option['slug'] ); ?>"
+                >
+                  <img
+                    src="<?php echo esc_url( aptox_season_icon( $season_option['icon'] ) ); ?>"
+                    alt=""
+                    aria-hidden="true"
+                  >
+                  <span><?php echo esc_html( $season_option['label'] ); ?></span>
+                </button>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
 
         <button
           class="menu-button"
@@ -73,7 +101,6 @@ $season = aptox_get_season_context();
 </header>
 
 <?php get_template_part( 'components/modal-search/modal-search' ); ?>
-<?php get_template_part( 'components/modal-season/modal-season' ); ?>
 
 <nav
   id="menu-mob"
