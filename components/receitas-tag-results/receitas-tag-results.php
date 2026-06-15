@@ -78,17 +78,15 @@ $tag_label = ( $tag_term && ! is_wp_error( $tag_term ) ) ? $tag_term->name : $ta
 		</section>
 
 		<?php if ( $max_pages > $paged ) : ?>
-			<div class="archive-load-more">
-				<button
-					type="button"
-					class="next page-numbers"
-					data-load-more-global
-					data-grid-selector=".archive-grid"
-					data-next-url="<?php echo esc_url( add_query_arg( 'tag', $tag_slug, get_pagenum_link( $paged + 1 ) ) ); ?>"
-				>
-					<?php esc_html_e( 'Leia mais', 'aptox' ); ?>
-				</button>
-			</div>
+			<?php
+			aptox_render_archive_load_more(
+				array(
+					'paged'     => $paged,
+					'max_pages' => $max_pages,
+					'next_url'  => add_query_arg( 'tag', $tag_slug, get_pagenum_link( $paged + 1 ) ),
+				)
+			);
+			?>
 		<?php endif; ?>
 	<?php else : ?>
 		<p><?php esc_html_e( 'Nenhuma receita encontrada.', 'aptox' ); ?></p>

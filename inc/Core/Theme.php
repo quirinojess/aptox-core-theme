@@ -13,6 +13,7 @@ use Aptox\Api\LikesEndpoint;
 use Aptox\Helpers\ContentFilters;
 use Aptox\PostTypes\ContentTypes;
 use Aptox\Services\LikesService;
+use Aptox\Services\SeoService;
 
 class Theme {
 	/**
@@ -44,6 +45,7 @@ class Theme {
 		( new HomeSectionsEndpoint() )->register();
 		( new CelebreSectionsEndpoint() )->register();
 		( new ContentTypes() )->register();
+		( new SeoService() )->register();
 	}
 
 	/**
@@ -63,6 +65,7 @@ class Theme {
 			$base . '/Services/YouTubeService.php',
 			$base . '/Services/RelatedPostsService.php',
 			$base . '/Services/LikesService.php',
+			$base . '/Services/SeoService.php',
 			$base . '/Api/HomeSectionsEndpoint.php',
 			$base . '/Api/CelebreSectionsEndpoint.php',
 			$base . '/Api/LikesEndpoint.php',

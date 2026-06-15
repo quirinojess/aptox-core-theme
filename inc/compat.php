@@ -470,3 +470,15 @@ if ( ! function_exists( 'aptox_add_h2_anchors_to_content' ) ) {
 		);
 	}
 }
+
+if ( ! function_exists( 'aptox_render_archive_load_more' ) ) {
+	/**
+	 * Render archive pagination with a crawlable next-page link.
+	 *
+	 * @param array<string, mixed> $args Pagination args.
+	 * @return void
+	 */
+	function aptox_render_archive_load_more( array $args = array() ) {
+		get_template_part( 'components/archive-grid/archive-load-more', null, $args );
+	}
+}

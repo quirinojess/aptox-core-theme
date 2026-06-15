@@ -11,6 +11,7 @@ get_header();
 		<?php while ( have_posts() ) : the_post(); ?>
 			<section class="container">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<h1 class="screen-reader-text"><?php the_title(); ?></h1>
 					<div class="content-recipe">
 						<?php the_content(); ?>
 					</div>

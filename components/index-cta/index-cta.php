@@ -25,12 +25,12 @@ $cta_image = get_template_directory_uri() . '/assets/img/index-cta.png';
 
 		<div class="index-cta-content">
 
-			<h2
+			<h1
 				id="index-cta-title"
 				class="index-cta-title"
 			>
 				a vida feita com mais <span class="index-cta-title-hand">amor</span>
-			</h2>
+			</h1>
 
 			<p class="index-cta-text">
 				Esse é um espaço para quem ama viver as estações, cozinhar experiências, celebrar momentos e cuidar da casa de forma intencional e afetiva.

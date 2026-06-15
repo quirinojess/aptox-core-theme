@@ -53,17 +53,15 @@ $term = get_queried_object();
 		</section>
 
 		<?php if ( $max_pages > $paged ) : ?>
-			<div class="archive-load-more">
-				<button
-					type="button"
-					class="next page-numbers"
-					data-load-more-global
-					data-grid-selector=".archive-grid"
-					data-next-url="<?php echo esc_url( get_pagenum_link( $paged + 1 ) ); ?>"
-				>
-					Leia mais
-				</button>
-			</div>
+			<?php
+			aptox_render_archive_load_more(
+				array(
+					'paged'     => $paged,
+					'max_pages' => $max_pages,
+					'next_url'  => get_pagenum_link( $paged + 1 ),
+				)
+			);
+			?>
 		<?php endif; ?>
 	<?php else : ?>
 		<p>Nenhuma celebração encontrada.</p>
