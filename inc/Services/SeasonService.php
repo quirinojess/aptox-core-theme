@@ -8,7 +8,8 @@
 namespace Aptox\Services;
 
 class SeasonService {
-	public const SEASON_COOKIE_NAME = 'aptox_season';
+	public const SEASON_COOKIE_NAME = 'aptox_season_session';
+	public const LEGACY_SEASON_COOKIE_NAME = 'aptox_season';
 	public const SEASON_QUERY_PARAM = 'estacao';
 
 	/**
@@ -42,7 +43,7 @@ class SeasonService {
 	}
 
 	/**
-	 * User-selected season from query string or cookie.
+	 * User-selected season from query string or session cookie.
 	 *
 	 * @return string|null
 	 */
@@ -76,7 +77,16 @@ class SeasonService {
 	}
 
 	/**
-	 * Apply season switch from query string: clear caches, persist cookie, reload.
+	 * Remove legacy persistent cookie and keep season override session-scoped.
+	 *
+	 * @return void
+	 */
+	public static function bootstrap_season_cookies() {
+		self::expire_season_cookie( self::LEGACY_SEASON_COOKIE_NAME );
+	}
+
+	/**
+	 * Apply season switch from query string: clear caches, persist session cookie, reload.
 	 *
 	 * @return void
 	 */
@@ -104,25 +114,65 @@ class SeasonService {
 		}
 
 		if ( ! headers_sent() ) {
-			setcookie(
-				self::SEASON_COOKIE_NAME,
-				$slug,
-				array(
-					'expires'  => time() + MONTH_IN_SECONDS,
-					'path'     => COOKIEPATH ? COOKIEPATH : '/',
-					'domain'   => COOKIE_DOMAIN,
-					'secure'   => is_ssl(),
-					'httponly' => false,
-					'samesite' => 'Lax',
-				)
-			);
-
-			$_COOKIE[ self::SEASON_COOKIE_NAME ] = $slug;
+			self::set_season_session_cookie( $slug );
 
 			nocache_headers();
 			wp_safe_redirect( remove_query_arg( self::SEASON_QUERY_PARAM ) );
 			exit;
 		}
+	}
+
+	/**
+	 * Persist the selected season for the current browser session only.
+	 *
+	 * @param string $slug Season slug.
+	 * @return void
+	 */
+	private static function set_season_session_cookie( $slug ) {
+		setcookie(
+			self::SEASON_COOKIE_NAME,
+			$slug,
+			self::get_session_cookie_options()
+		);
+
+		$_COOKIE[ self::SEASON_COOKIE_NAME ] = $slug;
+	}
+
+	/**
+	 * @return array<string, mixed>
+	 */
+	private static function get_session_cookie_options() {
+		return array(
+			'expires'  => 0,
+			'path'     => COOKIEPATH ? COOKIEPATH : '/',
+			'domain'   => COOKIE_DOMAIN,
+			'secure'   => is_ssl(),
+			'httponly' => false,
+			'samesite' => 'Lax',
+		);
+	}
+
+	/**
+	 * @param string $cookie_name Cookie name.
+	 * @return void
+	 */
+	private static function expire_season_cookie( $cookie_name ) {
+		if ( ! isset( $_COOKIE[ $cookie_name ] ) || headers_sent() ) {
+			return;
+		}
+
+		setcookie(
+			$cookie_name,
+			'',
+			array_merge(
+				self::get_session_cookie_options(),
+				array(
+					'expires' => time() - YEAR_IN_SECONDS,
+				)
+			)
+		);
+
+		unset( $_COOKIE[ $cookie_name ] );
 	}
 
 	/**

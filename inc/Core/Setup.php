@@ -26,6 +26,7 @@ class Setup {
 	 * @return void
 	 */
 	public function handle_season_preference() {
+		\Aptox\Services\SeasonService::bootstrap_season_cookies();
 		\Aptox\Services\SeasonService::handle_season_switch();
 	}
 
