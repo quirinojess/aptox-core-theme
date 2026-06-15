@@ -62,7 +62,6 @@ $social_links = array(
 		<nav class="footer-simple-nav">
 			<ul>
 				<li><a href="/sobre">Sobre</a></li>
-				<li><a href="/na-midia">Onde aparecemos</a></li>
 				<li><a href="/termos-de-uso">Termos de uso</a></li>
 				<li><a href="/contato">Contato</a></li>
 			</ul>

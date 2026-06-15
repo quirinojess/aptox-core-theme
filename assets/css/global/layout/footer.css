@@ -148,6 +148,7 @@
   }
 
   .site-footer-midia a {
+    padding-inline: 5px;
     font-size: var(--font-size-xxs);
   }
 
