@@ -101,6 +101,115 @@ if ( ! function_exists( 'aptox_recipe_season_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_receitas_archive_url' ) ) {
+	/**
+	 * Resolve the public Receitas landing URL.
+	 *
+	 * @return string
+	 */
+	function aptox_get_receitas_archive_url() {
+		$pages = get_pages(
+			array(
+				'meta_key'   => '_wp_page_template',
+				'meta_value' => 'templates/page-receitas.php',
+				'number'     => 1,
+			)
+		);
+
+		if ( ! empty( $pages ) ) {
+			return get_permalink( $pages[0] );
+		}
+
+		$archive = get_post_type_archive_link( 'receitas' );
+
+		if ( $archive ) {
+			return $archive;
+		}
+
+		return home_url( '/receitas/' );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_receita_tag_query_slug' ) ) {
+	/**
+	 * Read the active receita tag filter from the query string.
+	 *
+	 * @return string
+	 */
+	function aptox_get_receita_tag_query_slug() {
+		$query_slug = get_query_var( 'tag' );
+
+		if ( is_string( $query_slug ) && '' !== $query_slug ) {
+			return sanitize_title( $query_slug );
+		}
+
+		if ( ! isset( $_GET['tag'] ) ) {
+			return '';
+		}
+
+		return sanitize_title( wp_unslash( (string) $_GET['tag'] ) );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_receita_tag_link' ) ) {
+	/**
+	 * Build a receita tag filter URL using ?tag=slug on the receitas archive.
+	 *
+	 * @param array<int, string> $slugs Tag slug candidates.
+	 * @return string
+	 */
+	function aptox_get_receita_tag_link( array $slugs ) {
+		$resolved_slug = '';
+
+		foreach ( $slugs as $slug ) {
+			$candidate = sanitize_title( (string) $slug );
+
+			if ( '' === $candidate ) {
+				continue;
+			}
+
+			$term = get_term_by( 'slug', $candidate, 'post_tag' );
+
+			if ( $term && ! is_wp_error( $term ) ) {
+				$resolved_slug = $term->slug;
+				break;
+			}
+
+			if ( '' === $resolved_slug ) {
+				$resolved_slug = $candidate;
+			}
+		}
+
+		if ( '' === $resolved_slug ) {
+			return '';
+		}
+
+		$base_url = aptox_get_receitas_archive_url();
+
+		if ( is_tax( array( 'receita_categoria', 'receita' ) ) ) {
+			$term_link = get_term_link( get_queried_object() );
+
+			if ( ! is_wp_error( $term_link ) ) {
+				$base_url = $term_link;
+			}
+		}
+
+		return add_query_arg( 'tag', $resolved_slug, $base_url );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_post_tag_link' ) ) {
+	/**
+	 * @deprecated Use aptox_get_receita_tag_link().
+	 *
+	 * @param array<int, string> $slugs Tag slug candidates.
+	 * @return string
+	 */
+	function aptox_get_post_tag_link( array $slugs ) {
+		return aptox_get_receita_tag_link( $slugs );
+	}
+}
+
 if ( ! function_exists( 'aptox_party_season_icon' ) ) {
 	function aptox_party_season_icon( $season_slug = null ) {
 		return SeasonService::party_season_icon( $season_slug );

@@ -58,13 +58,77 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 25px;
-  padding: 20px 0;
+  gap: var(--space-sm);
+  padding: 20px var(--container-padding);
+  flex-wrap: wrap;
+}
+
+.recipe-sticky-nav {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  max-width: calc(100% - 52px);
+}
+
+.recipe-sticky-tabs {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.recipe-sticky-tab {
+  margin: 0;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: none;
+  text-decoration: none;
+  color: var(--dark);
+  opacity: 0.55;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: opacity var(--transition-fast);
+}
+
+.recipe-sticky-tab:hover,
+.recipe-sticky-tab:focus-visible {
+  opacity: 0.85;
+}
+
+.recipe-sticky-tab.is-active,
+.recipe-sticky-tab[aria-selected="true"] {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.recipe-sticky-tabs__sep {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  color: var(--dark);
+  opacity: 0.45;
+  user-select: none;
 }
 
 .recipe-sticky-title {
-  display: block;
-  font-size: var(--font-size-xs);
+  display: inline;
+  margin-right: 0.35em;
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -107,6 +171,10 @@
   max-height: 0;
   opacity: 0;
   overflow: hidden;
+}
+
+.recipe-sticky-panel[hidden] {
+  display: none !important;
 }
 
 /* Section: Icon base */
@@ -170,6 +238,18 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+/* Section: Recipe sticky section titles */
+
+.recipe-sticky-section-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1.35;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--dark);
 }
 
 /* Section: Safari / iOS fix */

@@ -1,7 +1,7 @@
 /* Section: Recipe tags carousel */
 
 .recipe-tags-carousel {
-  --recipe-tag-image-size: 96px;
+  --recipe-tag-image-size: 72px;
 
   position: relative;
   width: 100vw;
@@ -165,7 +165,7 @@
 
 .tag-item {
   flex: 0 0 auto;
-  width: 120px;
+  width: 96px;
   text-align: center;
   text-decoration: none;
   color: var(--dark);
@@ -178,7 +178,7 @@
 .tag-image {
   width: var(--recipe-tag-image-size);
   height: var(--recipe-tag-image-size);
-  margin: 0 auto var(--space-sm);
+  margin: 0 auto var(--space-xs);
   border-radius: 50%;
   overflow: hidden;
   background: var(--beige);

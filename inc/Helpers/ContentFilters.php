@@ -40,6 +40,7 @@ class ContentFilters {
 		add_filter( 'the_content', array( $this, 'add_post_image_pin_buttons' ), 999 );
 		add_action( 'wp_head', array( $this, 'render_favicon_links' ) );
 		add_action( 'pre_get_posts', array( $this, 'extend_tag_archive_post_types' ) );
+		add_action( 'pre_get_posts', array( $this, 'filter_archives_by_tag_query_param' ) );
 	}
 
 	/**
@@ -547,6 +548,74 @@ class ContentFilters {
 				'celebracoes',
 			)
 		);
+	}
+
+	/**
+	 * Filter archive queries when ?tag=slug is present.
+	 *
+	 * @param \WP_Query $query Query object.
+	 * @return void
+	 */
+	public function filter_archives_by_tag_query_param( $query ) {
+		if ( is_admin() || ! $query->is_main_query() ) {
+			return;
+		}
+
+		$tag_slug = $this->resolve_tag_query_slug( $query );
+
+		if ( '' === $tag_slug ) {
+			return;
+		}
+
+		$is_receitas_archive = $query->is_post_type_archive( 'receitas' );
+		$is_receita_tax      = $query->is_tax( array( 'receita_categoria', 'receita' ) );
+		$is_casa_tax         = $query->is_tax( array( 'casa_categoria', 'casa' ) );
+
+		if ( ! $is_receitas_archive && ! $is_receita_tax && ! $is_casa_tax ) {
+			return;
+		}
+
+		$tax_query = $query->get( 'tax_query' );
+
+		if ( ! is_array( $tax_query ) ) {
+			$tax_query = array();
+		}
+
+		if ( ! empty( $tax_query ) && ! isset( $tax_query['relation'] ) ) {
+			$tax_query['relation'] = 'AND';
+		}
+
+		$tax_query[] = array(
+			'taxonomy' => 'post_tag',
+			'field'    => 'slug',
+			'terms'    => $tag_slug,
+		);
+
+		$query->set( 'tax_query', $tax_query );
+
+		if ( $is_receitas_archive ) {
+			$query->set( 'post_type', 'receitas' );
+		}
+	}
+
+	/**
+	 * Resolve tag slug from query vars or query string.
+	 *
+	 * @param \WP_Query $query Query object.
+	 * @return string
+	 */
+	private function resolve_tag_query_slug( $query ) {
+		$tag = $query->get( 'tag' );
+
+		if ( is_string( $tag ) && '' !== $tag ) {
+			return sanitize_title( $tag );
+		}
+
+		if ( ! isset( $_GET['tag'] ) ) {
+			return '';
+		}
+
+		return sanitize_title( wp_unslash( (string) $_GET['tag'] ) );
 	}
 
 	/**

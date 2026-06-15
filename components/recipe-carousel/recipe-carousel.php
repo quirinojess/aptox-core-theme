@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Global cache for the recipe carousel.
  *
  */
-$cache_key   = 'aptox_recipe_carousel_v4';
+$cache_key   = 'aptox_recipe_carousel_v6';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -53,17 +53,10 @@ ob_start();
 ?>
 
 <section
-  class="recipe-tags-carousel"
-  aria-labelledby="recipe-tags-carousel-title"
+  class="recipe-sticky-categories"
+  aria-label="<?php esc_attr_e( 'Categorias de receitas', 'aptox' ); ?>"
 >
-
-  <h2
-    id="recipe-tags-carousel-title"
-    class="screen-reader-text"
-  >
-    Categorias de Receitas
-  </h2>
-
+  <div class="recipe-tags-carousel">
   <div class="recipe-tags-carousel__viewport">
 
     <button
@@ -149,6 +142,7 @@ ob_start();
 
   </div>
 
+  </div>
 </section>
 <?php
 $html = ob_get_clean();

@@ -6,22 +6,22 @@
 get_header();
 ?>
 
-<section class="container">
-	<?php
-	get_template_part(
-		'components/grid-recipe/grid-recipe',
-		null,
-		array(
-			'posts_per_page' => 8,
-		)
-	);
-	?>
-</section>
+<?php get_template_part( 'components/recipe-sticky/recipe-sticky' ); ?>
 
-<section class="container">
-	<h5 class="center">busque por tipo</h5>
-</section>
-
-<?php get_template_part( 'components/recipe-carousel/recipe-carousel' ); ?>
+<?php if ( aptox_get_receita_tag_query_slug() ) : ?>
+	<?php get_template_part( 'components/receitas-tag-results/receitas-tag-results' ); ?>
+<?php else : ?>
+	<section class="container">
+		<?php
+		get_template_part(
+			'components/grid-recipe/grid-recipe',
+			null,
+			array(
+				'posts_per_page' => 8,
+			)
+		);
+		?>
+	</section>
+<?php endif; ?>
 
 <?php get_footer(); ?>

@@ -83,6 +83,16 @@ class ContentTypes {
 			)
 		);
 		$this->register_taxonomy_if_missing(
+			'receita_tag',
+			array( 'receitas' ),
+			'Tag de Receita',
+			'Tags de Receita',
+			array(
+				'slug'         => 'receitas/tag',
+				'hierarchical' => false,
+			)
+		);
+		$this->register_taxonomy_if_missing(
 			'celebracao_categoria',
 			array( 'celebracoes' ),
 			'Categoria de Celebração',
@@ -210,7 +220,7 @@ class ContentTypes {
 	 * @param string[] $post_types Post types.
 	 * @param string   $singular Singular label.
 	 * @param string   $plural Plural label.
-	 * @param array<string,string> $config Optional taxonomy config.
+	 * @param array<string,mixed> $config Optional taxonomy config.
 	 * @return void
 	 */
 	private function register_taxonomy_if_missing( $taxonomy, array $post_types, $singular, $plural, array $config = array() ) {
@@ -218,22 +228,26 @@ class ContentTypes {
 			return;
 		}
 
+		$hierarchical = array_key_exists( 'hierarchical', $config )
+			? (bool) $config['hierarchical']
+			: true;
+
 		register_taxonomy(
 			$taxonomy,
 			$post_types,
 			array(
-				'labels'       => array(
+				'labels'            => array(
 					'name'          => $plural,
 					'singular_name' => $singular,
 				),
-				'public'       => true,
-				'show_in_rest' => true,
+				'public'            => true,
+				'show_in_rest'      => true,
 				'show_admin_column' => true,
-				'rewrite'      => array(
+				'rewrite'           => array(
 					'slug'       => isset( $config['slug'] ) ? $config['slug'] : $taxonomy,
 					'with_front' => false,
 				),
-				'hierarchical' => true,
+				'hierarchical'      => $hierarchical,
 			)
 		);
 	}

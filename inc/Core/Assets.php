@@ -359,6 +359,7 @@ class Assets {
 		if (
 			! is_home()
 			&& ! is_tax( 'receita_categoria' )
+			&& ! is_tax( 'receita_tag' )
 			&& ! is_tax( 'receita' )
 			&& ! is_post_type_archive( 'receitas' )
 			&& ! is_page_template( 'templates/page-receitas.php' )
