@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   z-index: var(--z-modal);
-  background: rgba(226, 222, 218, 0.6);
+  background: color-mix(in srgb, var(--beige) 60%, transparent);
 }
 
 .modal.is-open {
@@ -25,11 +25,12 @@
   padding: var(--space-lg) var(--space-md) var(--space-sm);
   border-radius: 8px;
 
-  background: var(--off-white);
+  background: var(--white);
 }
 
 .modal-content h5 {
   margin-bottom: 16px;
+  font-family: var(--font-display);
   font-size: var(--font-size-3xl);
 }
 

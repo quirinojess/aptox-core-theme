@@ -42,7 +42,7 @@
       <div class="search-field">
 
         <label for="search-input">
-          <h5>Digite aqui o que procura</h5>
+          <h5 id="search-modal-title">Digite aqui o que procura</h5>
         </label>
 
         <input
