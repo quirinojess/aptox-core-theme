@@ -14,6 +14,10 @@ class ContentTypes {
 	 * @return void
 	 */
 	public function register() {
+		add_filter( 'register_post_type_args', array( $this, 'filter_post_type_admin_menu' ), 10, 2 );
+		add_filter( 'custom_menu_order', '__return_true' );
+		add_filter( 'menu_order', array( $this, 'reorder_admin_menu' ) );
+		add_action( 'admin_menu', array( $this, 'remove_default_posts_menu' ), 999 );
 		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array( $this, 'register_global_tags' ), 11 );
@@ -39,6 +43,7 @@ class ContentTypes {
 				'plural'       => 'Casa',
 				'single_slug'  => 'casa',
 				'archive_slug' => 'casas',
+				'menu_icon'    => $this->get_post_type_menu_icon( 'casas' ),
 			)
 		);
 
@@ -49,6 +54,7 @@ class ContentTypes {
 				'plural'       => 'Receitas',
 				'single_slug'  => 'receita',
 				'archive_slug' => 'receitas',
+				'menu_icon'    => $this->get_post_type_menu_icon( 'receitas' ),
 			)
 		);
 
@@ -59,6 +65,7 @@ class ContentTypes {
 				'plural'       => 'Celebrações',
 				'single_slug'  => 'celebre',
 				'archive_slug' => 'celebracoes',
+				'menu_icon'    => $this->get_post_type_menu_icon( 'celebracoes' ),
 			)
 		);
 
@@ -69,7 +76,7 @@ class ContentTypes {
 				'plural'       => 'Loja',
 				'single_slug'  => 'produto',
 				'archive_slug' => 'loja',
-				'menu_icon'    => 'dashicons-cart',
+				'menu_icon'    => $this->get_post_type_menu_icon( 'loja' ),
 			)
 		);
 	}
@@ -161,14 +168,16 @@ class ContentTypes {
 		);
 
 		register_post_meta(
-			'',
+			'receitas',
 			'codigo_receita',
 			array(
 				'type'              => 'integer',
 				'single'            => true,
 				'default'           => 0,
 				'sanitize_callback' => 'absint',
-				'auth_callback'     => '__return_true',
+				'auth_callback'     => static function () {
+					return current_user_can( 'edit_posts' );
+				},
 				'show_in_rest'      => true,
 			)
 		);
@@ -253,7 +262,116 @@ class ContentTypes {
 			$args['menu_icon'] = $config['menu_icon'];
 		}
 
+		$menu_position = $this->get_post_type_menu_position( $post_type );
+
+		if ( null !== $menu_position ) {
+			$args['menu_position'] = $menu_position;
+		}
+
 		register_post_type( $post_type, $args );
+	}
+
+	/**
+	 * Ensure section icons and menu order in the admin for theme post types.
+	 *
+	 * @param array<string,mixed> $args Post type registration args.
+	 * @param string              $post_type Post type key.
+	 * @return array<string,mixed>
+	 */
+	public function filter_post_type_admin_menu( $args, $post_type ) {
+		$icon = $this->get_post_type_menu_icon( $post_type );
+
+		if ( '' !== $icon ) {
+			$args['menu_icon'] = $icon;
+		}
+
+		$menu_position = $this->get_post_type_menu_position( $post_type );
+
+		if ( null !== $menu_position ) {
+			$args['menu_position'] = $menu_position;
+		}
+
+		return $args;
+	}
+
+	/**
+	 * Hide the default WordPress Posts menu when the site uses custom post types only.
+	 *
+	 * @return void
+	 */
+	public function remove_default_posts_menu() {
+		remove_menu_page( 'edit.php' );
+	}
+
+	/**
+	 * Keep theme content menus above default Posts in wp-admin.
+	 *
+	 * @param array<int,string> $menu_order Current menu order.
+	 * @return array<int,string>
+	 */
+	public function reorder_admin_menu( $menu_order ) {
+		if ( ! is_array( $menu_order ) ) {
+			return $menu_order;
+		}
+
+		$theme_menus = array(
+			'edit.php?post_type=casas',
+			'edit.php?post_type=receitas',
+			'edit.php?post_type=celebracoes',
+			'edit.php?post_type=loja',
+		);
+
+		$menu_order = array_values(
+			array_diff( $menu_order, $theme_menus )
+		);
+
+		$posts_index = array_search( 'edit.php', $menu_order, true );
+
+		if ( false === $posts_index ) {
+			return array_merge( $theme_menus, $menu_order );
+		}
+
+		return array_merge(
+			array_slice( $menu_order, 0, $posts_index ),
+			$theme_menus,
+			array_slice( $menu_order, $posts_index )
+		);
+	}
+
+	/**
+	 * Resolve admin menu position for a theme post type.
+	 *
+	 * Posts uses position 5 in wp-admin.
+	 *
+	 * @param string $post_type Post type key.
+	 * @return float|null
+	 */
+	private function get_post_type_menu_position( $post_type ) {
+		$positions = array(
+			'casas'       => 4,
+			'receitas'    => 4.1,
+			'celebracoes' => 4.2,
+			'loja'        => 4.3,
+		);
+
+		return $positions[ $post_type ] ?? null;
+	}
+
+	/**
+	 * Resolve dashicon for a theme post type admin menu.
+	 *
+	 * @param string $post_type Post type key.
+	 * @return string
+	 */
+	private function get_post_type_menu_icon( $post_type ) {
+		$icons = array(
+			'casas'       => 'dashicons-admin-home',
+			'receitas'    => 'dashicons-carrot',
+			'celebracoes' => 'dashicons-calendar-alt',
+			'loja'        => 'dashicons-cart',
+		);
+
+		return $icons[ $post_type ] ?? '';
 	}
 
 	/**

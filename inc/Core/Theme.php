@@ -13,6 +13,7 @@ use Aptox\Api\LikesEndpoint;
 use Aptox\Helpers\ContentFilters;
 use Aptox\PostTypes\ContentTypes;
 use Aptox\PostTypes\LojaMetaBox;
+use Aptox\PostTypes\ReceitaMetaBox;
 use Aptox\Services\LikesService;
 use Aptox\Services\SeoService;
 
@@ -41,6 +42,7 @@ class Theme {
 
 		( new Setup() )->register();
 		( new Assets() )->register();
+		( new Admin() )->register();
 		( new CacheHeaders() )->register();
 		( new ContentFilters( $likes_service ) )->register();
 		( new LikesEndpoint( $likes_service ) )->register();
@@ -48,6 +50,7 @@ class Theme {
 		( new CelebreSectionsEndpoint() )->register();
 		( new ContentTypes() )->register();
 		( new LojaMetaBox() )->register();
+		( new ReceitaMetaBox() )->register();
 		( new SeoService() )->register();
 	}
 
@@ -62,6 +65,7 @@ class Theme {
 		$files = array(
 			$base . '/Core/Setup.php',
 			$base . '/Core/Assets.php',
+			$base . '/Core/Admin.php',
 			$base . '/Core/CacheHeaders.php',
 			$base . '/Services/SeasonService.php',
 			$base . '/Services/CelebreSeasonService.php',
@@ -76,6 +80,7 @@ class Theme {
 			$base . '/Helpers/ContentFilters.php',
 			$base . '/PostTypes/ContentTypes.php',
 			$base . '/PostTypes/LojaMetaBox.php',
+			$base . '/PostTypes/ReceitaMetaBox.php',
 			$base . '/compat.php',
 		);
 
