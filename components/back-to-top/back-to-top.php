@@ -22,6 +22,7 @@ $label     = $is_recipe
 $arc_text  = $is_recipe
 	? __( 'ir para a RECEITA', 'aptox' )
 	: __( 'voltar ao TOPO', 'aptox' );
+$circle_text_length = $is_recipe ? 124 : 108;
 $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 ?>
 
@@ -38,7 +39,7 @@ $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 					d="M 20,30 A 40,40 0 0,1 100,30"
 				/>
 			</defs>
-			<text class="back-to-top__text" text-anchor="start">
+			<text class="back-to-top__text" text-anchor="start" textLength="126" lengthAdjust="spacing">
 				<textPath class="back-to-top__text-path" href="#back-to-top-arc" startOffset="0%">
 					<?php echo esc_html( $arc_text ); ?>
 				</textPath>
@@ -52,7 +53,12 @@ $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 					d="M 30,7 A 23,23 0 1,1 29.99,7"
 				/>
 			</defs>
-			<text class="back-to-top__text back-to-top__text--circle" text-anchor="start">
+			<text
+				class="back-to-top__text back-to-top__text--circle"
+				text-anchor="start"
+				textLength="<?php echo esc_attr( (string) $circle_text_length ); ?>"
+				lengthAdjust="spacing"
+			>
 				<textPath
 					class="back-to-top__text-path back-to-top__text-path--circle"
 					href="#back-to-top-circle"

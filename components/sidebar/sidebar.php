@@ -24,6 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php get_template_part( 'components/sidebar/post-summary' ); ?>
 
+	<?php get_template_part( 'components/sidebar/post-published-date' ); ?>
+
 	<?php get_template_part( 'components/sidebar/post-newsletter' ); ?>
 
 	<?php if ( is_active_sidebar( 'post-sidebar' ) ) : ?>

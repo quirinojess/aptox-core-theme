@@ -60,12 +60,14 @@
   --container-sm:   90vw;
   --container-md:   95vw;
   --container-blog: 70vw;
+  --container-blog-width: 800px;
   --container-page: 1000px;
   --container-lg:   var(--site-max-width);
   --container-xl:   var(--site-max-width);
 
   --container-padding: 25px;
   --container-margin:  30px;
+  --sidebar-gap:       50px;
 
   /* Full-bleed breakout (svw avoids horizontal scroll from scrollbar width). */
   --viewport-width: 100vw;
@@ -192,9 +194,9 @@ body {
 
 .single #content a:not(.post-image-pin__button),
 .single .content-recipe a:not(.post-image-pin__button) {
-  padding-bottom: 3px;
+  padding-bottom: 2px;
   text-decoration: underline dotted 2px;
-  text-underline-offset: 0.15em;
+  text-underline-offset: calc(0.15em + 2px);
   text-decoration-color: currentColor;
   transition: text-decoration-color 0.35s ease;
 }
@@ -412,7 +414,7 @@ h6 {
 .single .content-recipe ol li a:not(.post-image-pin__button),
 .page main > section.container ol li a:not(.post-image-pin__button) {
   display: inline;
-  padding-bottom: 0;
+  padding-bottom: 2px;
   font-family: inherit;
   font-size: inherit;
   font-weight: 700;

@@ -554,7 +554,7 @@ class ContentFilters {
 
 		ob_start();
 		?>
-		<header class="recipe-section-heading">
+		<header class="recipe-section-heading" id="receita">
 			<div class="recipe-section-heading__inner">
 				<figure class="recipe-section-heading__icon" aria-hidden="true">
 					<img
@@ -564,7 +564,7 @@ class ContentFilters {
 					>
 				</figure>
 
-				<h5 id="receita" class="recipe-section-heading__title">
+				<h5 class="recipe-section-heading__title">
 					Vamos a
 					<span class="recipe-section-heading__hand"><?php echo esc_html( aptox_hand_text( 'receita' ) ); ?></span>?
 				</h5>

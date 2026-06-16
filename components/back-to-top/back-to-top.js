@@ -15,19 +15,41 @@
     button.classList.toggle('is-visible', window.scrollY > revealOffset);
   }
 
+  function findRecipeTarget() {
+    var byId = document.getElementById('receita');
+
+    if (byId) {
+      return byId;
+    }
+
+    return (
+      document.querySelector('.recipe-section-heading') ||
+      document.querySelector('.wprm-recipe-container') ||
+      document.querySelector('.wprm-recipe')
+    );
+  }
+
   function scrollToRecipe() {
-    var target = document.getElementById('receita');
-    var offset = 20;
+    var target = findRecipeTarget();
+    var offset = 24;
 
     if (!target) {
       return false;
     }
 
-    var top =
-      target.getBoundingClientRect().top + window.pageYOffset - offset;
+    if (typeof target.scrollIntoView === 'function') {
+      target.scrollIntoView({
+        behavior: reducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+
+      return true;
+    }
+
+    var top = target.getBoundingClientRect().top + window.scrollY - offset;
 
     window.scrollTo({
-      top: top,
+      top: Math.max(0, top),
       behavior: reducedMotion ? 'auto' : 'smooth',
     });
 
@@ -41,7 +63,11 @@
     });
   }
 
-  function handleClick() {
+  function handleClick(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
     if (!isRecipe) {
       scrollToTop();
       return;
@@ -61,35 +87,13 @@
       childList: true,
       subtree: true,
     });
+
+    window.setTimeout(function () {
+      observer.disconnect();
+    }, 10000);
   }
 
   window.addEventListener('scroll', toggleVisibility, { passive: true });
   toggleVisibility();
   button.addEventListener('click', handleClick);
-
-  function animateTextPath(textPath, durationMs) {
-    if (!textPath || reducedMotion) {
-      return;
-    }
-
-    var duration = durationMs || 14000;
-    var startTime = null;
-
-    function frame(timestamp) {
-      if (!startTime) {
-        startTime = timestamp;
-      }
-
-      var progress = ((timestamp - startTime) % duration) / duration;
-      textPath.setAttribute('startOffset', (progress * 100) + '%');
-      requestAnimationFrame(frame);
-    }
-
-    requestAnimationFrame(frame);
-  }
-
-  button.querySelectorAll('.back-to-top__text-path').forEach(function (textPath) {
-    var isCircle = textPath.classList.contains('back-to-top__text-path--circle');
-    animateTextPath(textPath, isCircle ? 16000 : 14000);
-  });
 })();

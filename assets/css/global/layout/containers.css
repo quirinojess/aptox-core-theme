@@ -301,6 +301,17 @@
   padding: 10px 0;
 }
 
+@media (min-width: 769px) {
+  .single .align-posts {
+    justify-content: center;
+  }
+
+  .single .align-posts .container-blog {
+    flex: 0 1 var(--container-blog-width);
+    max-width: var(--container-blog-width);
+  }
+}
+
 .content-recipe {
   max-width: 1100px;
   margin: 0 auto;
