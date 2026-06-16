@@ -41,7 +41,7 @@ $natal_url       = $term_url( array( 'natal' ) );
 $ano_novo_url    = $term_url( array( 'ano-novo' ) );
 ?>
 
-<nav class="filter-nav" aria-label="Filtros da categoria Celebrações">
+<nav class="filter-nav filter-nav--celebre" aria-label="Filtros da categoria Celebrações">
   <ul class="filter-list">
 
     <li class="filter-item">

@@ -31,7 +31,7 @@ $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 	aria-label="<?php echo esc_attr( $label ); ?>"
 >
 	<span class="back-to-top__arc" aria-hidden="true">
-		<svg class="back-to-top__svg" viewBox="0 0 120 36" role="presentation">
+		<svg class="back-to-top__svg back-to-top__svg--arc" viewBox="0 0 120 36" role="presentation">
 			<defs>
 				<path
 					id="back-to-top-arc"
@@ -40,6 +40,25 @@ $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 			</defs>
 			<text class="back-to-top__text" text-anchor="middle">
 				<textPath href="#back-to-top-arc" startOffset="50%">
+					<?php echo esc_html( $arc_text ); ?>
+				</textPath>
+			</text>
+		</svg>
+
+		<svg class="back-to-top__svg back-to-top__svg--circle" viewBox="0 0 60 60" role="presentation">
+			<defs>
+				<path
+					id="back-to-top-circle"
+					d="M 30,7 A 23,23 0 1,1 29.99,7"
+				/>
+			</defs>
+			<text class="back-to-top__text back-to-top__text--circle" text-anchor="middle">
+				<textPath
+					href="#back-to-top-circle"
+					startOffset="50%"
+					lengthAdjust="spacingAndGlyphs"
+					textLength="132"
+				>
 					<?php echo esc_html( $arc_text ); ?>
 				</textPath>
 			</text>

@@ -89,6 +89,11 @@
     --filter-nav-icon-size: 22.4px;
   }
 
+  .filter-nav--casa,
+  .filter-nav--celebre {
+    bottom: 45px;
+  }
+
   .filter-list {
     grid-auto-columns: max-content;
     column-gap: 0;

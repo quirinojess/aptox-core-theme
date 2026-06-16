@@ -56,7 +56,7 @@ $season_url   = add_query_arg(
 
 
 
-<nav class="filter-nav" aria-label="Filtros da categoria Casa">
+<nav class="filter-nav filter-nav--casa" aria-label="Filtros da categoria Casa">
   <ul class="filter-list">
 
     <li class="filter-item">
