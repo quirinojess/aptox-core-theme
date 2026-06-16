@@ -106,6 +106,16 @@
           <span class="radio-text">Celebre</span>
         </label>
 
+        <label class="radio">
+          <input
+            type="radio"
+            name="post_type"
+            value="loja"
+          >
+          <span class="radio-mark"></span>
+          <span class="radio-text">Loja</span>
+        </label>
+
       </fieldset>
 
     </form>

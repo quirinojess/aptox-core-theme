@@ -32,6 +32,7 @@ class RelatedPostsService {
 			'casas'       => 'casa_categoria',
 			'receitas'    => 'receita_categoria',
 			'celebracoes' => 'celebracao_categoria',
+			'loja'        => 'loja_categoria',
 			'post'        => 'category',
 		);
 

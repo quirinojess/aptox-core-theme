@@ -55,12 +55,17 @@ class NotFoundService {
 				'post_type' => 'receitas',
 				'taxonomy'  => 'receita_categoria',
 			),
+			'loja'        => array(
+				'post_type' => 'loja',
+				'taxonomy'  => 'loja_categoria',
+			),
 		);
 
 		$single_sections = array(
 			'celebre' => 'celebracoes',
 			'casa'    => 'casas',
 			'receita' => 'receitas',
+			'produto' => 'loja',
 		);
 
 		if ( isset( $archive_sections[ $first ] ) ) {
@@ -186,7 +191,7 @@ class NotFoundService {
 	 * @return array<int, \WP_Post>
 	 */
 	private static function get_mixed_posts() {
-		$post_types = array( 'receitas', 'casas', 'celebracoes' );
+		$post_types = array( 'receitas', 'casas', 'celebracoes', 'loja' );
 		$posts      = array();
 
 		foreach ( $post_types as $post_type ) {

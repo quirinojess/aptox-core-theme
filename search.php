@@ -9,9 +9,10 @@ $search_term = get_search_query();
 $post_type   = get_query_var( 'post_type' );
 
 $labels = array(
-	'casas'    => 'Casa',
-	'receitas' => 'Receitas',
+	'casas'       => 'Casa',
+	'receitas'    => 'Receitas',
 	'celebracoes' => 'Celebre',
+	'loja'        => 'Loja',
 );
 
 $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';

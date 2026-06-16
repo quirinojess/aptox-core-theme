@@ -18,6 +18,7 @@ class ContentTypes {
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array( $this, 'register_global_tags' ), 11 );
 		add_action( 'init', array( $this, 'register_meta' ) );
+		add_action( 'template_redirect', array( $this, 'redirect_legacy_loja_single_urls' ), 1 );
 		add_action( 'after_switch_theme', array( $this, 'flush_rewrites_on_switch' ) );
 	}
 
@@ -54,6 +55,17 @@ class ContentTypes {
 				'plural'       => 'Celebrações',
 				'single_slug'  => 'celebre',
 				'archive_slug' => 'celebracoes',
+			)
+		);
+
+		$this->register_post_type_if_missing(
+			'loja',
+			array(
+				'singular'     => 'Produto',
+				'plural'       => 'Loja',
+				'single_slug'  => 'produto',
+				'archive_slug' => 'loja',
+				'menu_icon'    => 'dashicons-cart',
 			)
 		);
 	}
@@ -101,6 +113,15 @@ class ContentTypes {
 				'slug' => 'celebracoes',
 			)
 		);
+		$this->register_taxonomy_if_missing(
+			'loja_categoria',
+			array( 'loja' ),
+			'Categoria de Loja',
+			'Categorias de Loja',
+			array(
+				'slug' => 'loja',
+			)
+		);
 	}
 
 	/**
@@ -109,7 +130,7 @@ class ContentTypes {
 	 * @return void
 	 */
 	public function register_global_tags() {
-		$post_types = array( 'casas', 'receitas', 'celebracoes' );
+		$post_types = array( 'casas', 'receitas', 'celebracoes', 'loja' );
 
 		foreach ( $post_types as $post_type ) {
 			register_taxonomy_for_object_type( 'post_tag', $post_type );
@@ -144,6 +165,21 @@ class ContentTypes {
 				'default'           => 0,
 				'sanitize_callback' => 'absint',
 				'auth_callback'     => '__return_true',
+				'show_in_rest'      => true,
+			)
+		);
+
+		register_post_meta(
+			'loja',
+			'link_compra',
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'default'           => '',
+				'sanitize_callback' => 'esc_url_raw',
+				'auth_callback'     => static function () {
+					return current_user_can( 'edit_posts' );
+				},
 				'show_in_rest'      => true,
 			)
 		);
@@ -188,29 +224,32 @@ class ContentTypes {
 			return;
 		}
 
-		register_post_type(
-			$post_type,
-			array(
-				'labels'       => array(
-					'name'          => $config['plural'],
-					'singular_name' => $config['singular'],
-				),
-				'public'       => true,
-				'has_archive'  => $config['archive_slug'],
-				'show_in_rest' => true,
-				'rewrite'      => array(
-					'slug'       => $config['single_slug'],
-					'with_front' => false,
-				),
-				'taxonomies'   => array( 'post_tag' ),
-				'supports'     => array(
-					'title',
-					'editor',
-					'thumbnail',
-					'excerpt',
-				),
-			)
+		$args = array(
+			'labels'       => array(
+				'name'          => $config['plural'],
+				'singular_name' => $config['singular'],
+			),
+			'public'       => true,
+			'has_archive'  => $config['archive_slug'],
+			'show_in_rest' => true,
+			'rewrite'      => array(
+				'slug'       => $config['single_slug'],
+				'with_front' => false,
+			),
+			'taxonomies'   => array( 'post_tag' ),
+			'supports'     => array(
+				'title',
+				'editor',
+				'thumbnail',
+				'excerpt',
+			),
 		);
+
+		if ( ! empty( $config['menu_icon'] ) ) {
+			$args['menu_icon'] = $config['menu_icon'];
+		}
+
+		register_post_type( $post_type, $args );
 	}
 
 	/**
@@ -250,6 +289,60 @@ class ContentTypes {
 				'hierarchical'      => $hierarchical,
 			)
 		);
+	}
+
+	/**
+	 * Redirect legacy single product URLs that used the archive slug.
+	 *
+	 * @return void
+	 */
+	public function redirect_legacy_loja_single_urls() {
+		if ( is_admin() ) {
+			return;
+		}
+
+		$path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH );
+
+		if ( ! is_string( $path ) ) {
+			return;
+		}
+
+		$home_path = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
+
+		if ( is_string( $home_path ) && '/' !== $home_path && 0 === strpos( $path, $home_path ) ) {
+			$path = substr( $path, strlen( $home_path ) );
+		}
+
+		$path = trim( $path, '/' );
+
+		if ( ! preg_match( '#^loja/([^/]+)/?$#', $path, $matches ) ) {
+			return;
+		}
+
+		$slug = sanitize_title( $matches[1] );
+
+		if ( '' === $slug ) {
+			return;
+		}
+
+		$posts = get_posts(
+			array(
+				'name'                   => $slug,
+				'post_type'              => 'loja',
+				'post_status'            => 'publish',
+				'posts_per_page'         => 1,
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+			)
+		);
+
+		if ( empty( $posts ) ) {
+			return;
+		}
+
+		wp_safe_redirect( get_permalink( $posts[0] ), 301 );
+		exit;
 	}
 
 	/**

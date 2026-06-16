@@ -33,6 +33,7 @@ class ContentFilters {
 	 * @return void
 	 */
 	public function register() {
+		add_filter( 'the_content', array( $this, 'append_termos_afiliados_disclaimer' ), 10 );
 		add_filter( 'the_content', array( $this, 'inject_recipe_after_second_image' ), 20 );
 		add_filter( 'the_content', array( $this, 'add_h2_anchors' ), 15 );
 		add_filter( 'the_content', array( $this, 'wrap_leia_tambem_blocks' ), 25 );
@@ -41,6 +42,52 @@ class ContentFilters {
 		add_action( 'wp_head', array( $this, 'render_favicon_links' ) );
 		add_action( 'pre_get_posts', array( $this, 'extend_tag_archive_post_types' ) );
 		add_action( 'pre_get_posts', array( $this, 'filter_archives_by_tag_query_param' ) );
+	}
+
+	/**
+	 * Append affiliate products disclaimer on the terms of use page.
+	 *
+	 * @param string $content Post content.
+	 * @return string
+	 */
+	public function append_termos_afiliados_disclaimer( $content ) {
+		if ( is_admin() || ! is_page( 'termos-de-uso' ) || '' === trim( $content ) ) {
+			return $content;
+		}
+
+		$marker = 'O site reserva o direito de veicular anúncios e campanhas de publicidade, sempre sinalizadas para manter a transparência junto ao leitor.';
+
+		if ( false === strpos( wp_strip_all_tags( $content ), wp_strip_all_tags( $marker ) ) ) {
+			return $content;
+		}
+
+		if ( false !== strpos( $content, 'aptox-termos-afiliados' ) ) {
+			return $content;
+		}
+
+		$paragraph = '<p class="aptox-termos-afiliados">Os produtos recomendados no site são links de afiliados. Não nos responsabilizamos pela entrega e envio dos mesmos. A plataforma de compra parceira gerencia, legal e juridicamente, todos os aspectos da transação.</p>';
+
+		$pattern = '/(<p[^>]*>\s*' . preg_quote( $marker, '/' ) . '\s*<\/p>)/iu';
+
+		if ( preg_match( $pattern, $content ) ) {
+			return preg_replace( $pattern, '$1' . $paragraph, $content, 1 );
+		}
+
+		$marker_pos = strpos( $content, $marker );
+
+		if ( false === $marker_pos ) {
+			return $content;
+		}
+
+		$close_pos = strpos( $content, '</p>', $marker_pos );
+
+		if ( false === $close_pos ) {
+			return $content;
+		}
+
+		$insert_at = $close_pos + 4;
+
+		return substr( $content, 0, $insert_at ) . $paragraph . substr( $content, $insert_at );
 	}
 
 	/**
@@ -546,6 +593,7 @@ class ContentFilters {
 				'casas',
 				'receitas',
 				'celebracoes',
+				'loja',
 			)
 		);
 	}

@@ -343,6 +343,12 @@ class SeoService {
 					'name' => __( 'Celebrações', 'aptox' ),
 					'url'  => home_url( '/celebracoes/' ),
 				);
+
+			case 'loja_categoria':
+				return array(
+					'name' => __( 'Loja', 'aptox' ),
+					'url'  => home_url( '/loja/' ),
+				);
 		}
 
 		return null;
@@ -372,6 +378,12 @@ class SeoService {
 				return array(
 					'name' => __( 'Celebrações', 'aptox' ),
 					'url'  => get_post_type_archive_link( 'celebracoes' ) ?: home_url( '/celebracoes/' ),
+				);
+
+			case 'loja':
+				return array(
+					'name' => __( 'Loja', 'aptox' ),
+					'url'  => get_post_type_archive_link( 'loja' ) ?: home_url( '/loja/' ),
 				);
 		}
 

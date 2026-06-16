@@ -12,6 +12,7 @@ use Aptox\Api\HomeSectionsEndpoint;
 use Aptox\Api\LikesEndpoint;
 use Aptox\Helpers\ContentFilters;
 use Aptox\PostTypes\ContentTypes;
+use Aptox\PostTypes\LojaMetaBox;
 use Aptox\Services\LikesService;
 use Aptox\Services\SeoService;
 
@@ -45,6 +46,7 @@ class Theme {
 		( new HomeSectionsEndpoint() )->register();
 		( new CelebreSectionsEndpoint() )->register();
 		( new ContentTypes() )->register();
+		( new LojaMetaBox() )->register();
 		( new SeoService() )->register();
 	}
 
@@ -71,6 +73,7 @@ class Theme {
 			$base . '/Api/LikesEndpoint.php',
 			$base . '/Helpers/ContentFilters.php',
 			$base . '/PostTypes/ContentTypes.php',
+			$base . '/PostTypes/LojaMetaBox.php',
 			$base . '/compat.php',
 		);
 
