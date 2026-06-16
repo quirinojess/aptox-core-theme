@@ -169,6 +169,16 @@ body {
   line-height: var(--line-height-body);
 }
 
+::selection {
+  background: var(--dark);
+  color: var(--white);
+}
+
+::-moz-selection {
+  background: var(--dark);
+  color: var(--white);
+}
+
 /* Section: Single posts & pages (long-form reading) */
 
 .single #content,
@@ -307,7 +317,11 @@ h6 {
   }
 
   body {
-    padding-top: calc(var(--space-xxl) - 20px);
+    padding-top: calc(var(--space-xxl) - 30px);
+  }
+
+  body.single {
+    padding-top: calc(var(--space-xxl) - 44px);
   }
 
 }

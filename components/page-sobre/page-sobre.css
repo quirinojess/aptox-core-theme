@@ -103,7 +103,7 @@
   }
 
   .page-sobre-body {
-    padding: var(--space-xl) var(--container-padding);
+    padding: var(--space-md) var(--container-padding) var(--space-lg);
   }
 
   .page-sobre-inner {

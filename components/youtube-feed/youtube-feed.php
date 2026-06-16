@@ -43,7 +43,7 @@ ob_start();
 			</figure>
 
 			<h2 id="youtube-feed-title" class="youtube-feed-title">
-				<?php esc_html_e( 'conheça nosso canal no', 'aptox' ); ?>
+				<?php esc_html_e( 'Conheça nosso canal no', 'aptox' ); ?>
 				<a
 					class="youtube-feed-brand"
 					href="<?php echo esc_url( aptox_get_youtube_channel_url() ); ?>"

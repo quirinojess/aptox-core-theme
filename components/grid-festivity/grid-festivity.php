@@ -74,7 +74,7 @@ $render_festivity_title = static function () use ( $season_slug, $season_label )
 			</figure>
 
 			<h2 id="grid-festivity-title" class="grid-festivity-heading">
-				<?php esc_html_e( 'festividades de', 'aptox' ); ?>
+				<?php esc_html_e( 'Festividades de', 'aptox' ); ?>
 				<span class="grid-festivity-season">
 					<?php echo esc_html( aptox_hand_text( $season_label ) ); ?>
 				</span>

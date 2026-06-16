@@ -38,8 +38,8 @@ $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 					d="M 20,30 A 40,40 0 0,1 100,30"
 				/>
 			</defs>
-			<text class="back-to-top__text" text-anchor="middle">
-				<textPath href="#back-to-top-arc" startOffset="50%">
+			<text class="back-to-top__text" text-anchor="start">
+				<textPath class="back-to-top__text-path" href="#back-to-top-arc" startOffset="0%">
 					<?php echo esc_html( $arc_text ); ?>
 				</textPath>
 			</text>
@@ -54,8 +54,9 @@ $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 			</defs>
 			<text class="back-to-top__text back-to-top__text--circle" text-anchor="start">
 				<textPath
+					class="back-to-top__text-path back-to-top__text-path--circle"
 					href="#back-to-top-circle"
-					startOffset="2%"
+					startOffset="0%"
 				>
 					<?php echo esc_html( $arc_text ); ?>
 				</textPath>

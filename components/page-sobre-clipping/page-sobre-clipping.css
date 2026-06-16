@@ -82,6 +82,12 @@
   max-width: 180px;
 }
 
+@media (min-width: 769px) {
+  .page-sobre-clipping {
+    margin: 10px 0;
+  }
+}
+
 @keyframes page-sobre-clipping-scroll {
   from {
     transform: translateX(0);

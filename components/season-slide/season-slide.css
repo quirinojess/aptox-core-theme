@@ -310,6 +310,11 @@
   .season-slide-aside-title-season {
     font-weight: var(--font-hand-weight, 600);
   }
+
+  .season-slide-title,
+  .season-slide-item-title {
+    font-size: var(--font-size-lg);
+  }
 }
 
 /* Section: Decoration slide (reduced motion) */

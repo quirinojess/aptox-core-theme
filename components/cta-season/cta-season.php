@@ -119,7 +119,7 @@ $inner_class = $featured_image
 				class="cta-season-title"
 			>
 				<a href="<?php echo esc_url( home_url( '/celebrando/' ) ); ?>">
-					estamos no
+					Estamos no
 					<span class="cta-season-name">
 						<?php echo esc_html( aptox_hand_text( $season_label ) ); ?>
 					</span>

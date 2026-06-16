@@ -66,4 +66,30 @@
   window.addEventListener('scroll', toggleVisibility, { passive: true });
   toggleVisibility();
   button.addEventListener('click', handleClick);
+
+  function animateTextPath(textPath, durationMs) {
+    if (!textPath || reducedMotion) {
+      return;
+    }
+
+    var duration = durationMs || 14000;
+    var startTime = null;
+
+    function frame(timestamp) {
+      if (!startTime) {
+        startTime = timestamp;
+      }
+
+      var progress = ((timestamp - startTime) % duration) / duration;
+      textPath.setAttribute('startOffset', (progress * 100) + '%');
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  button.querySelectorAll('.back-to-top__text-path').forEach(function (textPath) {
+    var isCircle = textPath.classList.contains('back-to-top__text-path--circle');
+    animateTextPath(textPath, isCircle ? 16000 : 14000);
+  });
 })();

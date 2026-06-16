@@ -40,7 +40,7 @@ $cta_meta  = aptox_theme_image_meta( 'index-cta' );
 				id="index-cta-title"
 				class="index-cta-title"
 			>
-				a vida feita com mais <span class="index-cta-title-hand">amor</span>
+				A vida feita com mais <span class="index-cta-title-hand">amor</span>
 			</h1>
 
 			<p class="index-cta-text">
