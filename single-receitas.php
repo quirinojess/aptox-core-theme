@@ -24,7 +24,15 @@ get_header();
 		<?php endwhile; ?>
 	<?php endif; ?>
 
-	<?php get_template_part( 'components/author/author' ); ?>
+	<?php
+	get_template_part(
+		'components/author/author',
+		null,
+		array(
+			'layout' => 'horizontal',
+		)
+	);
+	?>
 	<?php get_template_part( 'components/post-share-stack/post-share-stack' ); ?>
 	<?php get_template_part( 'components/related-posts/related-posts' ); ?>
 	<?php get_template_part( 'components/post-taxonomies/post-taxonomies' ); ?>

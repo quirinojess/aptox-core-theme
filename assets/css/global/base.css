@@ -275,7 +275,7 @@ h6 {
 .casa-organizacao-title-hand,
 .celebre-cta-title-hand,
 .celebre-block-title-hand,
-.decoracao-slide-aside-title,
+.season-slide-aside-title,
 .grid-festivity-season,
 .grid-recipe-season,
 .recipe-section-heading__hand,
@@ -459,6 +459,7 @@ h6 {
   .page main > section.container blockquote {
     margin: var(--space-md) 0;
     padding: var(--space-md) var(--space-sm);
+    background-color: var(--beige);
   }
 }
 

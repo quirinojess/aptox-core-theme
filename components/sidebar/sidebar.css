@@ -37,7 +37,7 @@
   background: transparent;
 }
 
-.post-side-author:has(.about-author--editorial) {
+.post-side-author:has(.about-author--vertical) {
   max-width: 100%;
 }
 

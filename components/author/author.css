@@ -5,84 +5,10 @@
   max-width: 450px;
   margin: var(--space-xl) auto;
   padding: 0 var(--space-xs);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--space-md);
 }
-
-/* Section: About author (avatar) */
 
 .about-author-avatar {
-  width: 100px;
   flex-shrink: 0;
-  margin: 0;
-}
-
-.about-author-avatar img {
-  width: 90px;
-  height: auto;
-  border-radius: 50%;
-  display: block;
-}
-
-/* Section: About author (content) */
-
-.about-author-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  font-size: var(--font-size-sm);
-  text-align: justify;
-}
-
-/* Section: About author (title) */
-
-.about-author-title {
-  margin: var(--space-xs) 0;
-  font-family: var(--font-hand);
-  font-size: var(--font-size-author);
-  line-height: 1.2;
-  font-weight: 400;
-}
-
-.about-author-label {
-  padding-right: var(--space-sm);
-
-  font-family: var(--font-base);
-  font-size: var(--font-size-xxs);
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-/* Section: About author (bio) */
-
-.about-author-bio {
-  margin-top: var(--space-xs);
-}
-
-.about-author-bio p {
-  margin: 0;
-}
-
-/* Section: About author (editorial — Celebre, Decor & Receitas) */
-
-.about-author--editorial {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: var(--space-md);
-}
-
-.about-author--editorial .about-author-avatar {
-  flex-shrink: 0;
-  width: auto;
   margin: 0;
   padding: 6px 6px 10px;
   background: var(--white);
@@ -91,7 +17,7 @@
   line-height: 0;
 }
 
-.about-author--editorial .about-author-avatar img {
+.about-author-avatar img {
   width: 80px;
   height: 80px;
   border-radius: 0;
@@ -100,7 +26,42 @@
   transform: rotate(-6deg);
 }
 
-.about-author--editorial .about-author-body {
+.about-author-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  line-height: 1.15;
+  font-weight: 400;
+  text-align: left;
+}
+
+.about-author-bio {
+  width: 100%;
+  padding: var(--space-md);
+  background: var(--beige);
+}
+
+.about-author-bio p {
+  margin: 0;
+  font-family: var(--font-base);
+  font-size: var(--font-size-sm);
+  line-height: 1.75;
+  text-align: left;
+}
+
+/* Section: About author (horizontal — receitas) */
+
+.about-author--horizontal {
+  max-width: 720px;
+  margin: var(--space-xl) auto;
+  padding: 0 var(--container-padding);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.about-author--horizontal .about-author-body {
   flex: 1 1 0;
   min-width: 0;
   display: flex;
@@ -108,102 +69,60 @@
   gap: var(--space-sm);
 }
 
-.about-author--editorial .about-author-title {
+/* Section: About author (vertical — sidebar) */
+
+.about-author--vertical {
+  max-width: 100%;
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--font-size-xl);
-  line-height: 1.15;
-  text-align: left;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
 }
 
-.about-author--editorial .about-author-bio {
-  margin-top: 0;
-  width: 100%;
-  padding: var(--space-md);
-  background: var(--beige);
+.about-author--vertical .about-author-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-md);
 }
 
-.about-author--editorial .about-author-bio p {
-  font-family: var(--font-base);
-  font-size: var(--font-size-sm);
-  line-height: 1.75;
-  text-align: left;
-}
-
-.single-receitas .about-author--editorial {
-  max-width: 720px;
-  margin: var(--space-xl) auto;
-  padding: 0 var(--container-padding);
+.about-author--vertical .about-author-title {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 /* Section: About author (tablet) */
 
 @media (max-width: 1024px) {
-  .about-author {
-    padding: 0 30px;
-    gap: 20px;
-  }
-
-  .about-author-avatar img {
-    width: 72px;
+  .about-author--horizontal {
+    padding: 0 var(--container-padding);
   }
 
   .about-author-title {
-    font-size: var(--font-size-subtitle);
-  }
-
-  .about-author-content {
-    max-width: 100%;
-    font-size: var(--font-size-xs);
-  }
-
-  .about-author--editorial {
-    padding: 0;
-  }
-
-  .about-author--editorial .about-author-title {
     font-size: var(--font-size-lg);
-  }
-
-  .single-receitas .about-author--editorial {
-    padding: 0 var(--container-padding);
   }
 }
 
 /* Section: About author (mobile) */
 
 @media (max-width: 768px) {
-  .about-author {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-  }
-
-  .about-author-content {
-    align-items: center;
-    text-align: center;
-  }
-
-  .about-author-title {
-    font-size: var(--font-size-h6);
-  }
-
-  .about-author--editorial {
+  .about-author--horizontal {
     flex-direction: column;
     align-items: center;
   }
 
-  .about-author--editorial .about-author-body {
+  .about-author--horizontal .about-author-body {
     width: 100%;
     align-items: center;
   }
 
-  .about-author--editorial .about-author-title,
-  .about-author--editorial .about-author-bio p {
+  .about-author--horizontal .about-author-title,
+  .about-author--horizontal .about-author-bio p {
     text-align: center;
   }
 
-  .about-author--editorial .about-author-bio {
-    width: 100%;
+  .about-author--vertical .about-author-head {
+    align-items: center;
   }
 }

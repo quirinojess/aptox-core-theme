@@ -20,7 +20,7 @@
   --home-lazy-min-h: 24rem;
 }
 
-.home-lazy-section[data-home-section="home-decor-slide"] {
+.home-lazy-section[data-home-section="season-slide"] {
   --home-lazy-min-h: 22rem;
 }
 

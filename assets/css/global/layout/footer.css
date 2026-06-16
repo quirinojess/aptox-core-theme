@@ -56,7 +56,7 @@
 
 .site-footer-simple {
   width: 100%;
-  padding-bottom: 60px;
+  padding-bottom: 0;
   text-align: center;
 }
 
@@ -180,7 +180,7 @@
 
   .footer-simple-credits {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     text-align: center;
     font-size: var(--font-size-xs);
     line-height: 1.5;

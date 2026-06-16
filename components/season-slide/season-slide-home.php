@@ -1,7 +1,8 @@
 <?php
 /**
- * Component: Season Decoration Slide
- * @Context Index
+ * Component: Season slide (home decor variant)
+ *
+ * @context Index
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +19,7 @@ if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
 
 $tag_slug = 'decoracao-de-' . $season_slug;
 
-$cache_key   = 'aptox_home_decor_slide_v5_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_season_slide_home_v2_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -63,7 +64,13 @@ $initial = array(
   'link'    => get_permalink(),
 );
 
-$aside_title = 'Decore para o ' . aptox_get_season_label( $season_slug );
+$season_prep       = 'primavera' === $season_slug ? __( 'a', 'aptox' ) : __( 'o', 'aptox' );
+$season_title_main = sprintf(
+	/* translators: %s: article (a/o) */
+	__( 'Decore para %s', 'aptox' ),
+	$season_prep
+);
+$season_title_name = aptox_get_season_label( $season_slug );
 
 $season_label = '';
 
@@ -79,19 +86,19 @@ $badge = aptox_get_season_badge_data( $season_label );
 <?php ob_start(); ?>
 
 <section
-  class="decoracao-slide"
-  aria-labelledby="decoracao-slide-title"
+  class="season-slide"
+  aria-labelledby="season-slide-title"
 >
 
-  <div class="decoracao-slide-wrapper">
+  <div class="season-slide-wrapper">
 
     <article
-      class="decoracao-slide-post"
-      id="decoracao-slide-post"
+      class="season-slide-post"
+      id="season-slide-post"
     >
 
       <?php if ( $initial['image'] ) : ?>
-        <figure class="decoracao-slide-image">
+        <figure class="season-slide-image">
           <img
             src="<?php echo esc_url( $initial['image'] ); ?>"
             alt="<?php echo esc_attr( $initial['title'] ); ?>"
@@ -100,19 +107,19 @@ $badge = aptox_get_season_badge_data( $season_label );
 
           <?php if ( ! empty( $badge['text'] ) ) : ?>
             <div
-              class="decoracao-slide-badge"
-              style="--decoracao-badge-font-size: <?php echo esc_attr( $badge['font_size'] ); ?>;"
+              class="season-slide-badge"
+              style="--season-slide-badge-font-size: <?php echo esc_attr( $badge['font_size'] ); ?>;"
               aria-hidden="true"
             >
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
                   <path
-                    id="decoracao-slide-badge-path"
+                    id="season-slide-badge-path"
                     d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
                   />
                 </defs>
                 <text textLength="232" lengthAdjust="spacing">
-                  <textPath href="#decoracao-slide-badge-path" startOffset="0%">
+                  <textPath href="#season-slide-badge-path" startOffset="0%">
                     <?php echo esc_html( $badge['text'] ); ?>
                   </textPath>
                 </text>
@@ -122,22 +129,22 @@ $badge = aptox_get_season_badge_data( $season_label );
         </figure>
       <?php endif; ?>
 
-      <div class="decoracao-slide-content">
+      <div class="season-slide-content">
 
         <h2
-          id="decoracao-slide-title"
-          class="decoracao-slide-title"
+          id="season-slide-title"
+          class="season-slide-title"
         >
           <?php echo esc_html( $initial['title'] ); ?>
         </h2>
 
-        <p class="decoracao-slide-excerpt">
+        <p class="season-slide-excerpt">
           <?php echo esc_html( $initial['excerpt'] ); ?>
         </p>
 
         <a
           href="<?php echo esc_url( $initial['link'] ); ?>"
-          class="decoracao-slide-cta"
+          class="season-slide-cta"
         >
           Ler mais →
         </a>
@@ -147,18 +154,19 @@ $badge = aptox_get_season_badge_data( $season_label );
     </article>
 
     <aside
-      class="decoracao-slide-aside"
-      aria-labelledby="decoracao-slide-aside-title"
+      class="season-slide-aside"
+      aria-labelledby="season-slide-aside-title"
     >
 
       <h3
-        id="decoracao-slide-aside-title"
-        class="decoracao-slide-aside-title"
+        id="season-slide-aside-title"
+        class="season-slide-aside-title"
       >
-        <?php echo esc_html( aptox_hand_text( $aside_title, false ) ); ?>
+        <span class="season-slide-aside-title-main"><?php echo esc_html( $season_title_main ); ?></span>
+        <span class="season-slide-aside-title-season"><?php echo esc_html( aptox_hand_text( $season_title_name, false ) ); ?></span>
       </h3>
 
-      <ul class="decoracao-slide-list">
+      <ul class="season-slide-list">
 
         <?php
         $list_count = 0;
@@ -179,15 +187,15 @@ $badge = aptox_get_season_badge_data( $season_label );
           $item_excerpt = wp_trim_words( get_the_excerpt(), 18 );
         ?>
           <li
-            class="decoracao-slide-item"
+            class="season-slide-item"
             data-title="<?php echo esc_attr( get_the_title() ); ?>"
             data-excerpt="<?php echo esc_attr( wp_trim_words( get_the_excerpt(), 26 ) ); ?>"
             data-image="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>"
             data-link="<?php the_permalink(); ?>"
           >
-            <div class="decoracao-slide-item-content">
-              <span class="decoracao-slide-item-title"><?php the_title(); ?></span>
-              <p class="decoracao-slide-item-excerpt"><?php echo esc_html( $item_excerpt ); ?></p>
+            <div class="season-slide-item-content">
+              <span class="season-slide-item-title"><?php the_title(); ?></span>
+              <p class="season-slide-item-excerpt"><?php echo esc_html( $item_excerpt ); ?></p>
             </div>
           </li>
         <?php endwhile; ?>

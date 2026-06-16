@@ -191,7 +191,7 @@ class Assets {
 
 		$components = array(
 			'aptox-celebre-cta'         => '/components/celebre-cta/celebre-cta.css',
-			'aptox-home-decor-slide'    => '/components/home-decor-slide/home-decor-slide.css',
+			'aptox-season-slide'         => '/components/season-slide/season-slide.css',
 			'aptox-celebre-season-slide' => '/components/celebre-season-slide/celebre-season-slide.css',
 			'aptox-info-grid'           => '/components/info-grid/info-grid.css',
 			'aptox-celebre-info-grid'   => '/components/celebre-info-grid/celebre-info-grid.css',
@@ -414,7 +414,7 @@ class Assets {
 		$this->enqueue_grid_festivity_script();
 		$this->enqueue_celebre_block_script();
 		$this->enqueue_casa_organizacao_script();
-		$this->enqueue_home_decor_slide_script();
+		$this->enqueue_season_slide_script();
 		$this->enqueue_home_lazy_sections_script();
 	}
 
@@ -627,7 +627,7 @@ class Assets {
 	 *
 	 * @return void
 	 */
-	private function enqueue_home_decor_slide_script() {
+	private function enqueue_season_slide_script() {
 		$is_celebre_page = is_post_type_archive( 'celebracoes' ) || is_page_template( 'templates/page-celebration.php' );
 
 		if (
@@ -640,10 +640,10 @@ class Assets {
 			return;
 		}
 
-		$slide_js_path = get_template_directory() . '/components/home-decor-slide/home-decor-slide.js';
+		$slide_js_path = get_template_directory() . '/components/season-slide/season-slide.js';
 		wp_enqueue_script(
-			'aptox-home-slide',
-			get_template_directory_uri() . '/components/home-decor-slide/home-decor-slide.js',
+			'aptox-season-slide',
+			get_template_directory_uri() . '/components/season-slide/season-slide.js',
 			array(),
 			file_exists( $slide_js_path ) ? (string) filemtime( $slide_js_path ) : '1.0',
 			true

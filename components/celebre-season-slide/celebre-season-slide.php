@@ -2,7 +2,7 @@
 /**
  * Component: Celebre season slide
  *
- * Same layout as home decor slide; posts from celebracoes/{season}/ category.
+ * Season slide variant for Celebre; posts from celebracoes/{season}/ category.
  *
  * @context Archive Celebracoes / Page Celebration
  */
@@ -61,7 +61,7 @@ if ( is_wp_error( $season_category_url ) ) {
 	$season_category_url = esc_url_raw( $season_category_url );
 }
 
-$cache_key   = 'aptox_celebre_season_slide_v4_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_celebre_season_slide_v7_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -102,13 +102,24 @@ $initial = array(
 	'link'    => get_permalink(),
 );
 
-$aside_title = 'fim-de-ano' === $season_slug
-	? __( 'Celebre o fim de ano', 'aptox' )
-	: sprintf(
-		/* translators: %s: season name, e.g. outono */
-		__( 'Celebre no %s', 'aptox' ),
-		aptox_get_season_label( $season_slug )
+$season_label_for_title = aptox_get_season_label( $season_slug );
+
+if ( 'fim-de-ano' === $season_slug ) {
+	$title_main   = sprintf(
+		/* translators: %s: article "o" */
+		__( 'Celebre %s', 'aptox' ),
+		__( 'o', 'aptox' )
 	);
+	$title_season = __( 'fim de ano', 'aptox' );
+} else {
+	$season_prep = 'primavera' === $season_slug ? __( 'na', 'aptox' ) : __( 'no', 'aptox' );
+	$title_main  = sprintf(
+		/* translators: %s: season preposition (na/no) */
+		__( 'Celebre %s', 'aptox' ),
+		$season_prep
+	);
+	$title_season = $season_label_for_title;
+}
 
 $season_label = '';
 
@@ -124,13 +135,13 @@ $badge = aptox_get_season_badge_data( $season_label );
 <?php ob_start(); ?>
 
 <section
-	class="decoracao-slide celebre-season-slide"
+	class="season-slide celebre-season-slide"
 	aria-labelledby="celebre-season-slide-title"
 >
-	<div class="decoracao-slide-wrapper">
-		<article class="decoracao-slide-post">
+	<div class="season-slide-wrapper">
+		<article class="season-slide-post">
 			<?php if ( $initial['image'] ) : ?>
-				<figure class="decoracao-slide-image">
+				<figure class="season-slide-image">
 					<img
 						src="<?php echo esc_url( $initial['image'] ); ?>"
 						alt="<?php echo esc_attr( $initial['title'] ); ?>"
@@ -139,8 +150,8 @@ $badge = aptox_get_season_badge_data( $season_label );
 
 					<?php if ( ! empty( $badge['text'] ) ) : ?>
 						<div
-							class="decoracao-slide-badge"
-							style="--decoracao-badge-font-size: <?php echo esc_attr( $badge['font_size'] ); ?>;"
+							class="season-slide-badge"
+							style="--season-slide-badge-font-size: <?php echo esc_attr( $badge['font_size'] ); ?>;"
 							aria-hidden="true"
 						>
 							<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -161,21 +172,21 @@ $badge = aptox_get_season_badge_data( $season_label );
 				</figure>
 			<?php endif; ?>
 
-			<div class="decoracao-slide-content">
+			<div class="season-slide-content">
 				<h2
 					id="celebre-season-slide-title"
-					class="decoracao-slide-title"
+					class="season-slide-title"
 				>
 					<?php echo esc_html( $initial['title'] ); ?>
 				</h2>
 
-				<p class="decoracao-slide-excerpt">
+				<p class="season-slide-excerpt">
 					<?php echo esc_html( $initial['excerpt'] ); ?>
 				</p>
 
 				<a
 					href="<?php echo esc_url( $initial['link'] ); ?>"
-					class="decoracao-slide-cta"
+					class="season-slide-cta"
 				>
 					<?php esc_html_e( 'Ler mais →', 'aptox' ); ?>
 				</a>
@@ -183,19 +194,22 @@ $badge = aptox_get_season_badge_data( $season_label );
 		</article>
 
 		<aside
-			class="decoracao-slide-aside"
+			class="season-slide-aside"
 			aria-labelledby="celebre-season-slide-aside-title"
 		>
 			<h3
 				id="celebre-season-slide-aside-title"
-				class="decoracao-slide-aside-title"
+				class="season-slide-aside-title"
 			>
 				<a href="<?php echo esc_url( $season_category_url ); ?>">
-					<?php echo esc_html( aptox_hand_text( $aside_title, false ) ); ?>
+					<span class="celebre-season-slide-title-main"><?php echo esc_html( $title_main ); ?></span>
+					<span class="celebre-season-slide-title-season">
+						<?php echo esc_html( aptox_hand_text( $title_season, false ) ); ?>
+					</span>
 				</a>
 			</h3>
 
-			<ul class="decoracao-slide-list">
+			<ul class="season-slide-list">
 				<?php
 				$list->rewind_posts();
 
@@ -205,15 +219,15 @@ $badge = aptox_get_season_badge_data( $season_label );
 					$item_excerpt = wp_trim_words( get_the_excerpt(), 18 );
 					?>
 					<li
-						class="decoracao-slide-item"
+						class="season-slide-item"
 						data-title="<?php echo esc_attr( get_the_title() ); ?>"
 						data-excerpt="<?php echo esc_attr( wp_trim_words( get_the_excerpt(), 26 ) ); ?>"
 						data-image="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>"
 						data-link="<?php the_permalink(); ?>"
 					>
-						<div class="decoracao-slide-item-content">
-							<span class="decoracao-slide-item-title"><?php the_title(); ?></span>
-							<p class="decoracao-slide-item-excerpt"><?php echo esc_html( $item_excerpt ); ?></p>
+						<div class="season-slide-item-content">
+							<span class="season-slide-item-title"><?php the_title(); ?></span>
+							<p class="season-slide-item-excerpt"><?php echo esc_html( $item_excerpt ); ?></p>
 						</div>
 					</li>
 				<?php endwhile; ?>

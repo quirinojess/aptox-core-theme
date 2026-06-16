@@ -39,8 +39,8 @@ class HomeSectionsEndpoint {
 					'show_season_title' => true,
 				),
 			),
-			'home-decor-slide' => array(
-				'slug' => 'components/home-decor-slide/home-decor-slide',
+			'season-slide' => array(
+				'slug' => 'components/season-slide/season-slide-home',
 			),
 			'grid-festivity'   => array(
 				'slug' => 'components/grid-festivity/grid-festivity',

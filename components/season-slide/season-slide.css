@@ -1,6 +1,6 @@
-/* Section: Decoration slide (main grid) */
+/* Section: Season slide (shared layout) */
 
-.decoracao-slide-wrapper {
+.season-slide-wrapper {
   display: grid;
   grid-template-columns: 70% 30%;
   grid-template-areas: "post slide";
@@ -8,7 +8,7 @@
 
 /* Section: Decoration slide (featured post card) */
 
-.decoracao-slide-post {
+.season-slide-post {
   display: grid;
   grid-template-columns: 40% 60%;
   align-items: stretch;
@@ -24,14 +24,14 @@
 
 /* Section: Decoration slide (image area) */
 
-.decoracao-slide-image {
+.season-slide-image {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-.decoracao-slide-image img {
+.season-slide-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -40,33 +40,33 @@
 
 /* Section: Decoration slide (season badge) */
 
-.decoracao-slide-badge {
+.season-slide-badge {
   position: absolute;
-  top: -22px;
-  left: -22px;
+  top: -37px;
+  left: -37px;
   z-index: 2;
   width: 132px;
   height: 132px;
   pointer-events: none;
 }
 
-.decoracao-slide-badge svg {
+.season-slide-badge svg {
   width: 100%;
   height: 100%;
   overflow: visible;
-  animation: decoracao-slide-badge-spin 18s linear infinite;
+  animation: season-slide-badge-spin 18s linear infinite;
   transform-origin: center;
 }
 
-.decoracao-slide-badge text {
+.season-slide-badge text {
   fill: var(--black);
   font-family: var(--font-display);
-  font-size: var(--decoracao-badge-font-size, var(--font-size-xxs));
+  font-size: var(--season-slide-badge-font-size, var(--font-size-xxs));
   letter-spacing: 0.12em;
   text-transform: lowercase;
 }
 
-@keyframes decoracao-slide-badge-spin {
+@keyframes season-slide-badge-spin {
   from {
     transform: rotate(0deg);
   }
@@ -78,7 +78,7 @@
 
 /* Section: Decoration slide (content area) */
 
-.decoracao-slide-content {
+.season-slide-content {
   padding: var(--space-xl) var(--space-lg);
 
   display: flex;
@@ -88,7 +88,7 @@
 
 /* Section: Decoration slide (typography) */
 
-.decoracao-slide-title {
+.season-slide-title {
   margin-bottom: var(--space-md);
 
   font-family: var(--font-display);
@@ -97,7 +97,7 @@
   color: var(--dark);
 }
 
-.decoracao-slide-excerpt {
+.season-slide-excerpt {
   margin-bottom: var(--space-lg);
 
   font-size: var(--font-size-md);
@@ -107,7 +107,7 @@
 
 /* Section: Decoration slide (CTA) */
 
-.decoracao-slide-cta {
+.season-slide-cta {
   align-self: flex-start;
 
   font-family: var(--font-base);
@@ -121,14 +121,14 @@
 
 /* Section: Decoration slide (aside numbered list) */
 
-.decoracao-slide-aside {
+.season-slide-aside {
   grid-area: slide;
 
   padding-left: var(--space-lg);
   border-left: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.decoracao-slide-aside-title {
+.season-slide-aside-title {
   margin-bottom: var(--space-lg);
 
   font-family: var(--font-hand);
@@ -137,20 +137,34 @@
   color: var(--dark);
 }
 
+.season-slide-aside-title-main {
+  font-family: var(--font-display);
+  font-size: 0.72em;
+  font-weight: normal;
+}
+
+.season-slide-aside-title-season {
+  display: inline-block;
+ vertical-align: -10px;
+  padding-left: 8px;
+  font-family: var(--font-hand);
+  font-weight: normal;
+}
+
 /* Section: Decoration slide (list layout) */
 
-.decoracao-slide-list {
+.season-slide-list {
   margin: 0;
   padding: 0;
   list-style: none;
 
-  counter-reset: decoracao;
+  counter-reset: season-slide;
 }
 
 /* Section: Decoration slide (list item) */
 
-.decoracao-slide-item {
-  counter-increment: decoracao;
+.season-slide-item {
+  counter-increment: season-slide;
 
   display: grid;
   grid-template-columns: auto 1fr;
@@ -164,19 +178,19 @@
   transition: opacity var(--transition-fast);
 }
 
-.decoracao-slide-item:first-child {
+.season-slide-item:first-child {
   padding-top: 0;
 }
 
-.decoracao-slide-item:last-child {
+.season-slide-item:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
 
 /* Section: Decoration slide (list number) */
 
-.decoracao-slide-item::before {
-  content: counter(decoracao, decimal-leading-zero);
+.season-slide-item::before {
+  content: counter(season-slide, decimal-leading-zero);
 
   font-family: var(--font-display);
   font-size: clamp(var(--font-size-3xl), 5vw, calc(var(--font-size-display) + 24px));
@@ -187,14 +201,14 @@
 
 /* Section: Decoration slide (list text) */
 
-.decoracao-slide-item-content {
+.season-slide-item-content {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   padding-top: 0.15em;
 }
 
-.decoracao-slide-item-title {
+.season-slide-item-title {
   display: block;
 
   font-family: var(--font-display);
@@ -204,7 +218,7 @@
   color: var(--dark);
 }
 
-.decoracao-slide-item-excerpt {
+.season-slide-item-excerpt {
   margin: 0;
 
   font-family: var(--font-base);
@@ -220,18 +234,18 @@
 
 /* Section: Decoration slide (active / hover state) */
 
-.decoracao-slide-list:has(.is-active) .decoracao-slide-item:not(.is-active) {
+.season-slide-list:has(.is-active) .season-slide-item:not(.is-active) {
   opacity: 0.35;
 }
 
-.decoracao-slide-item.is-active,
-.decoracao-slide-item:hover {
+.season-slide-item.is-active,
+.season-slide-item:hover {
   opacity: 1;
 }
 
 /* Section: Decoration slide (post transition) */
 
-.decoracao-slide-post.is-transitioning {
+.season-slide-post.is-transitioning {
   opacity: 0;
   transform: translateY(12px);
 }
@@ -239,43 +253,43 @@
 /* Section: Decoration slide (responsive) */
 
 @media (max-width: 1024px) {
-  .decoracao-slide-wrapper {
+  .season-slide-wrapper {
     grid-template-columns: 70% 30%;
     grid-template-areas: "post slide";
     gap: var(--space-md);
   }
 
-  .decoracao-slide-post {
+  .season-slide-post {
     grid-template-columns: 42% 58%;
   }
 
-  .decoracao-slide-aside {
+  .season-slide-aside {
     padding-left: var(--space-md);
   }
 
-  .decoracao-slide-content {
+  .season-slide-content {
     padding: var(--space-lg) var(--space-md);
   }
 
-  .decoracao-slide-title {
+  .season-slide-title {
     font-size: var(--font-size-2xl);
   }
 
-  .decoracao-slide-badge {
-    top: -16px;
-    left: -16px;
+  .season-slide-badge {
+    top: -31px;
+    left: -31px;
     width: 108px;
     height: 108px;
   }
 
-  .decoracao-slide-excerpt {
+  .season-slide-excerpt {
     font-size: var(--font-size-md);
     line-height: 1.6;
   }
 }
 
 @media (max-width: 768px) {
-  .decoracao-slide-wrapper {
+  .season-slide-wrapper {
     grid-template-columns: 1fr;
     grid-template-areas:
       "slide"
@@ -284,21 +298,29 @@
     gap: var(--space-lg);
   }
 
-  .decoracao-slide-aside {
+  .season-slide-aside {
     padding-left: 0;
     border-left: none;
+  }
+
+  .season-slide-aside-title-main {
+    font-weight: normal;
+  }
+
+  .season-slide-aside-title-season {
+    font-weight: var(--font-hand-weight, 600);
   }
 }
 
 /* Section: Decoration slide (reduced motion) */
 
 @media (prefers-reduced-motion: reduce) {
-  .decoracao-slide-post,
-  .decoracao-slide-item {
+  .season-slide-post,
+  .season-slide-item {
     transition: none;
   }
 
-  .decoracao-slide-badge svg {
+  .season-slide-badge svg {
     animation: none;
   }
 }

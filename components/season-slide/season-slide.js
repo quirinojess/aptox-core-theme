@@ -3,20 +3,20 @@
   const TRANSITION_MS = 300;
 
   function getSlideSections(root) {
-    if (root instanceof Element && root.classList.contains('decoracao-slide')) {
+    if (root instanceof Element && root.classList.contains('season-slide')) {
       return [root];
     }
 
     if (root === document) {
-      return Array.from(document.querySelectorAll('.decoracao-slide'));
+      return Array.from(document.querySelectorAll('.season-slide'));
     }
 
-    return Array.from(root.querySelectorAll('.decoracao-slide'));
+    return Array.from(root.querySelectorAll('.season-slide'));
   }
 
-  function initDecorSlide(section) {
-    const featured = section.querySelector('.decoracao-slide-post');
-    const items = Array.from(section.querySelectorAll('.decoracao-slide-item'));
+  function initSeasonSlide(section) {
+    const featured = section.querySelector('.season-slide-post');
+    const items = Array.from(section.querySelectorAll('.season-slide-item'));
 
     if (!featured || !items.length || featured.dataset.slideInit === 'true') {
       return;
@@ -25,9 +25,9 @@
     featured.dataset.slideInit = 'true';
 
     const img = featured.querySelector('img');
-    const title = featured.querySelector('.decoracao-slide-title');
-    const excerpt = featured.querySelector('.decoracao-slide-excerpt');
-    const link = featured.querySelector('.decoracao-slide-cta');
+    const title = featured.querySelector('.season-slide-title');
+    const excerpt = featured.querySelector('.season-slide-excerpt');
+    const link = featured.querySelector('.season-slide-cta');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let autoplayTimer = null;
@@ -150,17 +150,17 @@
     });
   }
 
-  function initHomeDecorSlide(root) {
-    getSlideSections(root || document).forEach(initDecorSlide);
+  function initSeasonSlides(root) {
+    getSlideSections(root || document).forEach(initSeasonSlide);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    initHomeDecorSlide(document);
+    initSeasonSlides(document);
   });
 
   document.addEventListener('aptox:section-loaded', function (event) {
     if (event.detail?.root) {
-      initHomeDecorSlide(event.detail.root);
+      initSeasonSlides(event.detail.root);
     }
   });
 })();

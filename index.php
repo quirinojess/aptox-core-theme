@@ -26,7 +26,7 @@ get_header();
 		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section class="home-lazy-section container" data-home-section="home-decor-slide">
+	<section class="home-lazy-section container" data-home-section="season-slide">
 		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
 		<div class="home-lazy-section__content"></div>
 	</section>
