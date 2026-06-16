@@ -11,21 +11,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$icon_ui = get_template_directory_uri() . '/assets/icons/ui/';
+$icon_ui = get_template_directory_uri() . '/assets/icons/ui/sections/';
 
 $items = array(
 	array(
-		'icon'  => $icon_ui . 'ico-cook.png',
+		'icon'  => $icon_ui . 'ui-section-receitas.png',
 		'title' => 'Cozinhar é',
 		'text'  => 'Um ato de amor e cuidado consigo e com o próximo. Por isso fazemos com atenção e presença para garantir o respeito com o alimento que nos nutre e a melhor utilização dos recursos que a natureza nos dá.',
 	),
 	array(
-		'icon'  => $icon_ui . 'ico-decor.png',
+		'icon'  => $icon_ui . 'ui-section-decoracao.png',
 		'title' => 'Decorar é',
 		'text'  => 'Uma forma de cultivar valor nas coisas que conquistamos. Por isso cuidamos com carinho e sempre buscando melhorias para fazer crescer e multiplicar aquilo que conquistamos em nossas vidas.',
 	),
 	array(
-		'icon'  => $icon_ui . 'ico-party.png',
+		'icon'  => $icon_ui . 'ui-section-festas.png',
 		'title' => 'Celebrar é',
 		'text'  => 'O meio pelo qual expressamos gratidão por estarmos vivos. Por isso fazemos sempre que possível, exaltando as culturas e honrando nossos valores, tornando datas especiais em momentos de fazer valer os nossos dias.',
 	),

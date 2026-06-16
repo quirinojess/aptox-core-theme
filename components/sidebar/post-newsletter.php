@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="post-side-newsletter__header-inner">
 			<figure class="post-side-newsletter__icon" aria-hidden="true">
 				<img
-					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-mailing.png' ); ?>"
+					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-mailing.png' ); ?>"
 					alt=""
 					loading="lazy"
 					width="36"

@@ -354,7 +354,7 @@ class SeasonService {
 	 * @return string
 	 */
 	public static function season_icon( $icon ) {
-		return get_template_directory_uri() . '/assets/icons/seasons/' . $icon . '.svg';
+		return get_template_directory_uri() . '/assets/icons/estacoes/estacao-' . $icon . '.svg';
 	}
 
 	/**
@@ -369,16 +369,16 @@ class SeasonService {
 		}
 
 		$map = array(
-			'verao'      => 'icon-recipe-summer.png',
-			'outono'     => 'icon-recipe-autumn.png',
-			'inverno'    => 'icon-recipe-winter.png',
-			'primavera'  => 'icon-recipe-spring.png',
-			'fim-de-ano' => 'icon-recipe-end-year.png',
+			'verao'      => 'ui-section-receitas-verao.png',
+			'outono'     => 'ui-section-receitas-outono.png',
+			'inverno'    => 'ui-section-receitas-inverno.png',
+			'primavera'  => 'ui-section-receitas-primavera.png',
+			'fim-de-ano' => 'ui-section-receitas-fim-de-ano.png',
 		);
 
-		$file = $map[ $season_slug ] ?? 'icon-recipe-summer.png';
+		$file = $map[ $season_slug ] ?? 'ui-section-receitas-verao.png';
 
-		return get_template_directory_uri() . '/assets/icons/ui/' . $file;
+		return get_template_directory_uri() . '/assets/icons/ui/sections/' . $file;
 	}
 
 	/**
@@ -393,16 +393,16 @@ class SeasonService {
 		}
 
 		$map = array(
-			'verao'      => 'icon-party-summer.png',
-			'outono'     => 'icon-party-autumn.png',
-			'inverno'    => 'icon-party-winter.png',
-			'primavera'  => 'icon-party-spring.png',
-			'fim-de-ano' => 'icon-party-end-year.png',
+			'verao'      => 'ui-section-festas-verao.png',
+			'outono'     => 'ui-section-festas-outono.png',
+			'inverno'    => 'ui-section-festas-inverno.png',
+			'primavera'  => 'ui-section-festas-primavera.png',
+			'fim-de-ano' => 'ui-section-festas-fim-de-ano.png',
 		);
 
-		$file = $map[ $season_slug ] ?? 'ico-party.png';
+		$file = $map[ $season_slug ] ?? 'ui-section-festas.png';
 
-		return get_template_directory_uri() . '/assets/icons/ui/' . $file;
+		return get_template_directory_uri() . '/assets/icons/ui/sections/' . $file;
 	}
 
 	/**
@@ -417,16 +417,16 @@ class SeasonService {
 		}
 
 		$map = array(
-			'verao'      => 'icon-decor-summer.png',
-			'outono'     => 'icon-decor-autumn.png',
-			'inverno'    => 'icon-decor-winter.png',
-			'primavera'  => 'icon-decor-spring.png',
-			'fim-de-ano' => 'icon-decor-end-year.png',
+			'verao'      => 'ui-section-decoracao-verao.png',
+			'outono'     => 'ui-section-decoracao-outono.png',
+			'inverno'    => 'ui-section-decoracao-inverno.png',
+			'primavera'  => 'ui-section-decoracao-primavera.png',
+			'fim-de-ano' => 'ui-section-decoracao-fim-de-ano.png',
 		);
 
-		$file = $map[ $season_slug ] ?? 'ico-decor.png';
+		$file = $map[ $season_slug ] ?? 'ui-section-decoracao.png';
 
-		return get_template_directory_uri() . '/assets/icons/ui/' . $file;
+		return get_template_directory_uri() . '/assets/icons/ui/sections/' . $file;
 	}
 
 	/**
@@ -441,16 +441,16 @@ class SeasonService {
 		}
 
 		$map = array(
-			'verao'      => 'sun-home-decor.png',
-			'outono'     => 'autumn-decor.png',
-			'inverno'    => 'winter-decor.png',
-			'primavera'  => 'spring-decor.png',
-			'fim-de-ano' => 'end-year-decor.png',
+			'verao'      => 'casa-sazonal-verao.png',
+			'outono'     => 'casa-sazonal-outono.png',
+			'inverno'    => 'casa-sazonal-inverno.png',
+			'primavera'  => 'casa-sazonal-primavera.png',
+			'fim-de-ano' => 'casa-sazonal-fim-de-ano.png',
 		);
 
-		$file = $map[ $season_slug ] ?? 'sun-home-decor.png';
+		$file = $map[ $season_slug ] ?? 'casa-sazonal-verao.png';
 
-		return get_template_directory_uri() . '/assets/icons/category/' . $file;
+		return get_template_directory_uri() . '/assets/icons/casa/sazonal/' . $file;
 	}
 
 	/**

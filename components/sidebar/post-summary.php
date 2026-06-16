@@ -31,7 +31,7 @@ if ( '' === $excerpt && empty( $topics ) ) {
 		<div class="post-side-summary__header-inner">
 			<figure class="post-side-summary__icon" aria-hidden="true">
 				<img
-					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/info/ico-scroll.svg' ); ?>"
+					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-scroll.svg' ); ?>"
 					alt=""
 					loading="lazy"
 					width="36"

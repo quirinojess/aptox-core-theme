@@ -507,13 +507,13 @@ h6 {
 .single #content ul li::before,
 .single .content-recipe ul li::before,
 .page main > section.container ul li::before {
-  background: url("../../icons/ui/ico-bullet-outline.svg") center / contain no-repeat;
+  background: url("../../icons/ui/actions/ui-action-bullet-outline.svg") center / contain no-repeat;
 }
 
 .single #content ul li::after,
 .single .content-recipe ul li::after,
 .page main > section.container ul li::after {
-  background: url("../../icons/ui/ico-bullet-filled.svg") center / contain no-repeat;
+  background: url("../../icons/ui/actions/ui-action-bullet-filled.svg") center / contain no-repeat;
   transform: translateY(-50%) scale(0);
   transform-origin: center;
   transition: transform 0.35s cubic-bezier(0.34, 1.25, 0.64, 1);

@@ -18,47 +18,47 @@ class CelebreSeasonService {
 			'carnaval'  => array(
 				'slugs' => array( 'carnaval' ),
 				'label' => 'Carnaval',
-				'icon'  => 'ico-carnival.png',
+				'icon'  => 'celebre-ocasiao-carnaval.png',
 			),
 			'pascoa'    => array(
 				'slugs' => array( 'pascoa' ),
 				'label' => 'Páscoa',
-				'icon'  => 'ico-easter.png',
+				'icon'  => 'celebre-ocasiao-pascoa.png',
 			),
 			'maes'      => array(
 				'slugs' => array( 'dia-das-maes', 'dias-das-maes' ),
 				'label' => 'Dia das Mães',
-				'icon'  => 'ico-mother.png',
+				'icon'  => 'celebre-ocasiao-dia-das-maes.png',
 			),
 			'junina'    => array(
 				'slugs' => array( 'festa-junina' ),
 				'label' => 'Festa Junina',
-				'icon'  => 'ico-junine.png',
+				'icon'  => 'celebre-ocasiao-festa-junina.png',
 			),
 			'pais'      => array(
 				'slugs' => array( 'dia-dos-pais' ),
 				'label' => 'Pais',
-				'icon'  => 'ico-dad.png',
+				'icon'  => 'celebre-ocasiao-dia-dos-pais.png',
 			),
 			'halloween' => array(
 				'slugs' => array( 'halloween' ),
 				'label' => 'Halloween',
-				'icon'  => 'ico-halloween.png',
+				'icon'  => 'celebre-ocasiao-halloween.png',
 			),
 			'muertos'   => array(
 				'slugs' => array( 'dia-de-los-muertos' ),
 				'label' => 'Dia de los Muertos',
-				'icon'  => 'ico-muertos.png',
+				'icon'  => 'celebre-ocasiao-dia-de-los-muertos.png',
 			),
 			'natal'     => array(
 				'slugs' => array( 'natal' ),
 				'label' => 'Natal',
-				'icon'  => 'ico-xmas.png',
+				'icon'  => 'celebre-ocasiao-natal.png',
 			),
 			'ano-novo'  => array(
 				'slugs' => array( 'ano-novo' ),
 				'label' => 'Ano Novo',
-				'icon'  => 'ico-new-year.png',
+				'icon'  => 'celebre-ocasiao-ano-novo.png',
 			),
 		);
 	}

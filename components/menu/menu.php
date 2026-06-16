@@ -28,7 +28,7 @@ $seasons = aptox_get_all_seasons();
           aria-label="Página inicial Aptox"
         >
           <img
-            src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/logo.svg' ); ?>"
+            src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/brand/ui-brand-logo.svg' ); ?>"
             alt="Aptox"
           >
         </a>
@@ -86,7 +86,7 @@ $seasons = aptox_get_all_seasons();
           aria-controls="modal-search"
         >
           <img
-            src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/search.svg' ); ?>"
+            src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-search.svg' ); ?>"
             alt=""
             aria-hidden="true"
           >
@@ -104,7 +104,7 @@ $seasons = aptox_get_all_seasons();
           href="<?php echo esc_url( $loja_url ); ?>"
         >
           <img
-            src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-loja.svg' ); ?>"
+            src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-loja.svg' ); ?>"
             alt=""
             aria-hidden="true"
           >

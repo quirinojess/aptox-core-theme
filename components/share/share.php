@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			>
 				<img
 					class="like-icon"
-					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/favorite-outline.svg' ); ?>"
+					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-favorite-outline.svg' ); ?>"
 					alt=""
 					aria-hidden="true"
 				>
@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							aria-label="<?php esc_attr_e( 'Compartilhar no Facebook', 'aptox' ); ?>"
 						>
 							<img
-								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-facebook.svg' ); ?>"
+								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/social/ui-social-facebook.svg' ); ?>"
 								alt=""
 								aria-hidden="true"
 							>
@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							aria-label="<?php esc_attr_e( 'Salvar no Pinterest', 'aptox' ); ?>"
 						>
 							<img
-								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-pinterest.svg' ); ?>"
+								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/social/ui-social-pinterest.svg' ); ?>"
 								alt=""
 								aria-hidden="true"
 							>
@@ -83,7 +83,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							aria-label="<?php esc_attr_e( 'Compartilhar no WhatsApp', 'aptox' ); ?>"
 						>
 							<img
-								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-whats.svg' ); ?>"
+								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/social/ui-social-whatsapp.svg' ); ?>"
 								alt=""
 								aria-hidden="true"
 							>
@@ -98,7 +98,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							aria-label="<?php esc_attr_e( 'Copiar link do post', 'aptox' ); ?>"
 						>
 							<img
-								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-link.svg' ); ?>"
+								src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-link.svg' ); ?>"
 								alt=""
 								aria-hidden="true"
 							>

@@ -15,7 +15,7 @@ if ( ! is_singular() ) {
 $is_recipe = 'receitas' === get_post_type();
 $icon_url  = $is_recipe
 	? get_template_directory_uri() . '/assets/img/ico-recipe.png'
-	: get_template_directory_uri() . '/assets/icons/ui/ico-top.png';
+	: get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-topo.png';
 $label     = $is_recipe
 	? __( 'Ir para a receita', 'aptox' )
 	: __( 'Voltar ao topo', 'aptox' );

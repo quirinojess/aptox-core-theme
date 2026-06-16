@@ -69,7 +69,7 @@ if ( empty( $posts ) ) {
 	return;
 }
 
-$garden_icon   = get_template_directory_uri() . '/assets/icons/ui/icon-decor-garden.png';
+$garden_icon   = get_template_directory_uri() . '/assets/icons/ui/sections/ui-section-decoracao-jardim.png';
 $use_carousel  = count( $posts ) > 3;
 
 $render_post_card = static function ( $post ) {

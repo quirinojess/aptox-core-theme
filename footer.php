@@ -6,27 +6,27 @@
 $social_links = array(
 	array(
 		'url'   => 'https://www.instagram.com/aptox/',
-		'icon'  => 'ico-instagram.svg',
+		'icon'  => 'ui-social-instagram.svg',
 		'label' => 'Instagram',
 	),
 	array(
 		'url'   => 'https://br.pinterest.com/aptoxblog/',
-		'icon'  => 'ico-pinterest.svg',
+		'icon'  => 'ui-social-pinterest.svg',
 		'label' => 'Pinterest',
 	),
 	array(
 		'url'   => 'https://www.youtube.com/@aptoxblog',
-		'icon'  => 'ico-youtube.svg',
+		'icon'  => 'ui-social-youtube.svg',
 		'label' => 'YouTube',
 	),
 	array(
 		'url'   => 'https://www.tiktok.com/@aptoxblog',
-		'icon'  => 'ico-tiktok.svg',
+		'icon'  => 'ui-social-tiktok.svg',
 		'label' => 'TikTok',
 	),
 	array(
 		'url'   => 'https://www.facebook.com/aptox',
-		'icon'  => 'ico-facebook.svg',
+		'icon'  => 'ui-social-facebook.svg',
 		'label' => 'Facebook',
 	),
 );
@@ -55,7 +55,7 @@ $social_links = array(
 			<li>
 				<a href="<?php echo esc_url( $social_link['url'] ); ?>" target="_blank" rel="noopener">
 					<img
-						src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/' . $social_link['icon'] ); ?>"
+						src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/social/' . $social_link['icon'] ); ?>"
 						alt="<?php echo esc_attr( $social_link['label'] ); ?>"
 					/>
 					<?php echo esc_html( $social_link['label'] ); ?>

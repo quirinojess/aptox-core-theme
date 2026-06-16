@@ -36,7 +36,7 @@ ob_start();
 		<div class="youtube-feed-header-inner">
 			<figure class="youtube-feed-icon" aria-hidden="true">
 				<img
-					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/youtube-section.png' ); ?>"
+					src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/social/ui-social-youtube-section.png' ); ?>"
 					alt=""
 					loading="lazy"
 				>

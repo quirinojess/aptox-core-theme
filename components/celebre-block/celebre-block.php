@@ -28,7 +28,7 @@ $post_count   = count( $posts );
 $use_carousel = $post_count > 1 || $has_filter;
 $section_id   = 'celebre-block-' . sanitize_title( $label );
 $layout_class = $use_carousel ? 'celebre-block-layout--carousel' : 'celebre-block-layout--flat';
-$icon_base    = get_template_directory_uri() . '/assets/icons/category/';
+$icon_base    = get_template_directory_uri() . '/assets/icons/celebre/ocasioes/';
 
 $render_card = static function ( $post ) {
 	if ( ! $post instanceof WP_Post ) {

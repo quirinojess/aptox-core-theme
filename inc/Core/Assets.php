@@ -663,8 +663,8 @@ class Assets {
 			array(
 				'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
 				'nonce'       => wp_create_nonce( 'aptox_like_nonce' ),
-				'iconOutline' => get_template_directory_uri() . '/assets/icons/ui/favorite-outline.svg',
-				'iconFilled'  => get_template_directory_uri() . '/assets/icons/ui/favorite-filled.svg',
+				'iconOutline' => get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-favorite-outline.svg',
+				'iconFilled'  => get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-favorite-filled.svg',
 			)
 		);
 	}

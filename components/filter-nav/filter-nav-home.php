@@ -16,7 +16,7 @@ $season = function_exists( 'aptox_get_season_context' )
 
 $house_taxonomy = taxonomy_exists( 'casa_categoria' ) ? 'casa_categoria' : 'casa';
 $home_archive   = home_url( '/casas/' );
-$icon_base      = get_template_directory_uri() . '/assets/icons/category/';
+$icon_base      = get_template_directory_uri() . '/assets/icons/casa/categorias/';
 
 $term_url = static function ( $slug ) use ( $house_taxonomy, $home_archive ) {
   $term = get_term_by( 'slug', $slug, $house_taxonomy );
@@ -46,7 +46,7 @@ $season_slug  = sanitize_title( $season['slug'] ?? 'verao' );
 $season_label = $season['label'] ?? 'Verão';
 $season_icon  = function_exists( 'aptox_filter_home_season_icon' )
   ? aptox_filter_home_season_icon( $season_slug )
-  : $icon_base . 'sun-home-decor.png';
+  : $icon_base . 'casa-sazonal-verao.png';
 $season_url   = add_query_arg(
   'tag',
   'decoracao-de-' . $season_slug,
@@ -71,7 +71,7 @@ $season_url   = add_query_arg(
 
     <li class="filter-item">
       <a href="<?php echo esc_url( $decoracao_url ); ?>">
-        <img src="<?php echo esc_url( $icon_base . 'decor.png' ); ?>" alt="Decoração">
+        <img src="<?php echo esc_url( $icon_base . 'casa-categoria-decoracao.png' ); ?>" alt="Decoração">
         <span>Decoração</span>
       </a>
     </li>
@@ -79,7 +79,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $reforma_url ); ?>">
         <img
-          src="<?php echo esc_url( $icon_base . 'reforma.png' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'casa-categoria-reforma.png' ); ?>"
           alt="Reforma"
         >
         <span>Reforma</span>
@@ -89,7 +89,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $diy_url ); ?>">
         <img
-          src="<?php echo esc_url( $icon_base . 'ico-diy.png' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'casa-categoria-faca-voce-mesmo.png' ); ?>"
           alt="Faça você mesmo"
         >
         <span>Faça você mesmo</span>
@@ -99,7 +99,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $organizacao_url ); ?>">
         <img
-          src="<?php echo esc_url( $icon_base . 'organize.png' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'casa-categoria-organizacao.png' ); ?>"
           alt="Organização"
         >
         <span>Organização</span>
@@ -109,7 +109,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $jardinagem_url ); ?>">
         <img
-          src="<?php echo esc_url( $icon_base . 'garden.png' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'casa-categoria-jardinagem.png' ); ?>"
           alt="Jardinagem"
         >
         <span>Jardinagem</span>
@@ -119,7 +119,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $planejar_url ); ?>">
         <img
-          src="<?php echo esc_url( $icon_base . 'planner-home.png' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'casa-categoria-planejando-um-lar.png' ); ?>"
           alt="Planejamento"
         >
         <span>Planejando um lar</span>
@@ -129,7 +129,7 @@ $season_url   = add_query_arg(
     <li class="filter-item">
       <a href="<?php echo esc_url( $lares_url ); ?>">
         <img
-          src="<?php echo esc_url( $icon_base . 'home-loved.png' ); ?>"
+          src="<?php echo esc_url( $icon_base . 'casa-categoria-lares.png' ); ?>"
           alt="Lares"
         >
         <span>Lares</span>

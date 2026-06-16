@@ -336,7 +336,7 @@ class ContentFilters {
 				<span class="post-image-pin__ring"></span>
 				<span class="post-image-pin__heart">
 					<img
-						src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-pin-heart.svg' ); ?>"
+						src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/actions/ui-action-pin-heart.svg' ); ?>"
 						alt=""
 						width="16"
 						height="16"

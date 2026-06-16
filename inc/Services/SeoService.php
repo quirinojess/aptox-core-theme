@@ -129,7 +129,7 @@ class SeoService {
 			'url'   => home_url( '/' ),
 			'logo'  => array(
 				'@type' => 'ImageObject',
-				'url'   => get_template_directory_uri() . '/assets/icons/ui/logo.svg',
+				'url'   => get_template_directory_uri() . '/assets/icons/ui/brand/ui-brand-logo.svg',
 			),
 			'sameAs' => array(
 				'https://www.instagram.com/aptox/',
@@ -750,7 +750,7 @@ class SeoService {
 			}
 		}
 
-		return get_template_directory_uri() . '/assets/icons/ui/logo.svg';
+		return get_template_directory_uri() . '/assets/icons/ui/brand/ui-brand-logo.svg';
 	}
 
 	/**

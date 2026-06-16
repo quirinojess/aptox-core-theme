@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $celebration_taxonomy = 'celebracao_categoria';
 $archive_url          = home_url( '/celebracoes/' );
-$icon_base            = get_template_directory_uri() . '/assets/icons/category/';
+$icon_base            = get_template_directory_uri() . '/assets/icons/celebre/ocasioes/';
 
 $term_url = static function ( array $slugs ) use ( $celebration_taxonomy, $archive_url ) {
 	foreach ( $slugs as $slug ) {
@@ -33,19 +33,19 @@ $term_url = static function ( array $slugs ) use ( $celebration_taxonomy, $archi
 
 $items = array(
 	array(
-		'icon'  => $icon_base . 'ico-birthday.png',
+		'icon'  => $icon_base . 'celebre-ocasiao-aniversario.png',
 		'title' => __( 'Aniversários', 'aptox' ),
 		'text'  => __( 'Inspirações para celebrar o dia único daquela pessoa mais que especial.', 'aptox' ),
 		'url'   => $term_url( array( 'aniversario', 'aniversarios' ) ),
 	),
 	array(
-		'icon'  => $icon_base . 'ico-wedding.png',
+		'icon'  => $icon_base . 'celebre-ocasiao-casamento.png',
 		'title' => __( 'Casamento', 'aptox' ),
 		'text'  => __( 'Ideias, dicas de planejamento e registros desse momento único na vida.', 'aptox' ),
 		'url'   => $term_url( array( 'casamento', 'casamentos' ) ),
 	),
 	array(
-		'icon'  => $icon_base . 'ico-valentine.png',
+		'icon'  => $icon_base . 'celebre-ocasiao-namorados.png',
 		'title' => __( 'Namorados', 'aptox' ),
 		'text'  => __( 'Dicas e inspirações para manter o romance em qualquer época do ano.', 'aptox' ),
 		'url'   => $term_url( array( 'dia-dos-namorados', 'namorados' ) ),

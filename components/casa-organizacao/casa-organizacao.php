@@ -128,7 +128,7 @@ if ( empty( $posts_by_filter['all'] ) ) {
 }
 
 $default_filter = 'all';
-$organize_icon  = get_template_directory_uri() . '/assets/icons/ui/icon-home-organize.png';
+$organize_icon  = get_template_directory_uri() . '/assets/icons/ui/sections/ui-section-casa-organizacao.png';
 
 $render_post_card = static function ( $post ) {
 	$post_id = $post->ID;
