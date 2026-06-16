@@ -15,7 +15,7 @@ class Setup {
 	 */
 	public function register() {
 		add_action( 'after_setup_theme', array( $this, 'setup_theme' ) );
-		add_action( 'init', array( $this, 'handle_season_preference' ), 1 );
+		add_action( 'init', array( $this, 'handle_season_preference' ), 0 );
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 		add_filter( 'show_admin_bar', '__return_false' );
 	}

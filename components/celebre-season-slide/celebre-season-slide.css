@@ -1,9 +1,5 @@
 /* Section: Celebre season slide (season-slide variant overrides) */
 
-.celebre-season-slide {
-  width: 100%;
-}
-
 .celebre-season-slide .season-slide-aside-title a {
   color: inherit;
   text-decoration: none;

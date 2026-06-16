@@ -152,6 +152,7 @@
   width: max(100%, 180px);
   height: 10px;
   transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .season-switcher__menu {

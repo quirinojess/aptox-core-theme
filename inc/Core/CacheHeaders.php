@@ -7,16 +7,12 @@
 
 namespace Aptox\Core;
 
+use Aptox\Services\SeasonService;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 
 class CacheHeaders {
-	/**
-	 * Cache lifetime for lazy section REST responses.
-	 */
-	private const SECTION_MAX_AGE = HOUR_IN_SECONDS;
-
 	/**
 	 * Register cache header hooks.
 	 *
@@ -27,7 +23,10 @@ class CacheHeaders {
 	}
 
 	/**
-	 * Allow browsers and CDNs to cache lazy section HTML briefly.
+	 * Prevent shared caches from serving the wrong seasonal HTML.
+	 *
+	 * Lazy section markup depends on the visitor season cookie/query param,
+	 * so these responses must not be cached publicly.
 	 *
 	 * @param \WP_REST_Response|\WP_HTTP_Response|\WP_Error|mixed $response Response object.
 	 * @param WP_REST_Server                                     $server REST server instance.
@@ -54,13 +53,16 @@ class CacheHeaders {
 			return $response;
 		}
 
-		$response->header(
-			'Cache-Control',
-			sprintf(
-				'public, max-age=%d, stale-while-revalidate=86400',
-				self::SECTION_MAX_AGE
-			)
-		);
+		$response->header( 'Cache-Control', 'private, no-cache, no-store, must-revalidate' );
+		$response->header( 'Pragma', 'no-cache' );
+		$response->header( 'Expires', '0' );
+
+		if (
+			$request->get_param( 'estacao' )
+			|| isset( $_COOKIE[ SeasonService::SEASON_COOKIE_NAME ] )
+		) {
+			$response->header( 'Vary', 'Cookie' );
+		}
 
 		return $response;
 	}

@@ -113,6 +113,8 @@ class SeasonService {
 			self::clear_season_caches();
 		}
 
+		self::bootstrap_request_season( $slug );
+
 		if ( ! headers_sent() ) {
 			self::set_season_session_cookie( $slug );
 
@@ -120,6 +122,34 @@ class SeasonService {
 			wp_safe_redirect( remove_query_arg( self::SEASON_QUERY_PARAM ) );
 			exit;
 		}
+	}
+
+	/**
+	 * Apply a season override for the current request render.
+	 *
+	 * @param string|null $slug Season slug.
+	 * @return void
+	 */
+	public static function bootstrap_request_season( $slug ) {
+		$resolved = self::resolve_season_slug( (string) $slug );
+
+		if ( null === $resolved ) {
+			return;
+		}
+
+		$_COOKIE[ self::SEASON_COOKIE_NAME ] = $resolved;
+	}
+
+	/**
+	 * Cookie settings exposed to front-end scripts.
+	 *
+	 * @return array<string, string>
+	 */
+	public static function get_client_cookie_config() {
+		return array(
+			'name' => self::SEASON_COOKIE_NAME,
+			'path' => COOKIEPATH ? COOKIEPATH : '/',
+		);
 	}
 
 	/**
@@ -473,7 +503,7 @@ class SeasonService {
 				array(
 					'title' => 'Receba ideias para um verão especial!',
 					'list'  => 'newsletter-summer',
-					'image' => get_template_directory_uri() . '/assets/img/cta-news-summer.jpg',
+					'image' => aptox_theme_image_uri( 'cta-news-summer' ),
 				)
 			),
 			'outono'     => array_merge(
@@ -489,6 +519,7 @@ class SeasonService {
 				array(
 					'title' => 'Receba ideias para um inverno aconchegante!',
 					'list'  => 'newsletter-winter',
+					'image' => aptox_theme_image_uri( 'cta-news-winter' ),
 				)
 			),
 			'primavera'  => array_merge(
@@ -496,6 +527,7 @@ class SeasonService {
 				array(
 					'title' => 'Receba ideias para uma primavera especial!',
 					'list'  => 'newsletter-spring',
+					'image' => aptox_theme_image_uri( 'cta-news-spring' ),
 				)
 			),
 			'fim-de-ano' => array_merge(
@@ -503,7 +535,7 @@ class SeasonService {
 				array(
 					'title' => 'Receba ideias para um fim de ano memorável!',
 					'list'  => 'newsletter-year-end',
-					'image' => aptox_theme_image_uri( 'cta-news-autumn' ),
+					'image' => aptox_theme_image_uri( 'cta-fim-de-ano' ),
 				)
 			),
 		);

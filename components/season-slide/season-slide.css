@@ -1,11 +1,18 @@
 /* Section: Season slide (shared layout) */
 
+.season-slide {
+  width: 90%;
+  max-width: min(var(--site-max-width), 90vw);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
 .season-slide-wrapper {
   display: grid;
   grid-template-columns: 70% 30%;
   grid-template-areas: "post slide";
   width: 100%;
-  max-width: var(--site-max-width);
+  max-width: 100%;
   margin: 0 auto;
 }
 

@@ -8,6 +8,7 @@
 namespace Aptox\Core;
 
 use Aptox\Services\NotFoundService;
+use Aptox\Services\SeasonService;
 
 class Assets {
 	/**
@@ -734,6 +735,7 @@ class Assets {
 			);
 
 			$this->localize_like_script( 'aptox-main' );
+			$this->localize_menu_script( 'aptox-main' );
 			if ( $should_enqueue_global_archive_load_more ) {
 				$this->enqueue_archive_load_more_script( array( 'aptox-main' ) );
 			}
@@ -768,6 +770,7 @@ class Assets {
 				file_exists( $menu_path ) ? (string) filemtime( $menu_path ) : '1.0',
 				true
 			);
+			$this->localize_menu_script( 'aptox-menu' );
 
 			$this->enqueue_footer_loja_script();
 
@@ -864,24 +867,30 @@ class Assets {
 		);
 
 		if ( $is_home ) {
+			$season_cookie = SeasonService::get_client_cookie_config();
+
 			wp_localize_script(
 				'aptox-home-lazy-sections',
 				'aptoxHomeLazy',
 				array(
 					'restUrl'        => rest_url( 'aptox/v1/home-section/' ),
 					'seasonSlug'     => sanitize_title( (string) ( aptox_get_season_context()['slug'] ?? '' ) ),
+					'cookieName'     => $season_cookie['name'],
 					'sectionScripts' => $this->get_lazy_home_section_scripts(),
 				)
 			);
 		}
 
 		if ( $is_celebre ) {
+			$season_cookie = SeasonService::get_client_cookie_config();
+
 			wp_localize_script(
 				'aptox-home-lazy-sections',
 				'aptoxCelebreLazy',
 				array(
 					'restUrl'        => rest_url( 'aptox/v1/celebre-section/' ),
 					'seasonSlug'     => sanitize_title( (string) ( aptox_get_season_context()['slug'] ?? '' ) ),
+					'cookieName'     => $season_cookie['name'],
 					'sectionScripts' => $this->get_lazy_celebre_section_scripts(),
 				)
 			);
@@ -1154,6 +1163,25 @@ class Assets {
 			array(),
 			file_exists( $slide_js_path ) ? (string) filemtime( $slide_js_path ) : '1.0',
 			true
+		);
+	}
+
+	/**
+	 * Add season switcher data to menu script.
+	 *
+	 * @param string $handle Script handle.
+	 * @return void
+	 */
+	private function localize_menu_script( $handle ) {
+		$cookie = SeasonService::get_client_cookie_config();
+
+		wp_localize_script(
+			$handle,
+			'aptoxSeason',
+			array(
+				'cookieName' => $cookie['name'],
+				'cookiePath' => $cookie['path'],
+			)
 		);
 	}
 

@@ -7,6 +7,7 @@
 
 namespace Aptox\Api;
 
+use Aptox\Services\SeasonService;
 use WP_Error;
 use WP_REST_Request;
 
@@ -64,6 +65,12 @@ class HomeSectionsEndpoint {
 				'methods'             => 'GET',
 				'callback'            => array( $this, 'handle_section_request' ),
 				'permission_callback' => '__return_true',
+				'args'                => array(
+					'estacao' => array(
+						'required'          => false,
+						'sanitize_callback' => 'sanitize_title',
+					),
+				),
 			)
 		);
 	}
@@ -84,6 +91,12 @@ class HomeSectionsEndpoint {
 				__( 'Seção inválida.', 'aptox' ),
 				array( 'status' => 404 )
 			);
+		}
+
+		SeasonService::bootstrap_request_season( $request->get_param( 'estacao' ) );
+
+		if ( null === SeasonService::get_override_season_slug() && isset( $_COOKIE[ SeasonService::SEASON_COOKIE_NAME ] ) ) {
+			SeasonService::bootstrap_request_season( wp_unslash( $_COOKIE[ SeasonService::SEASON_COOKIE_NAME ] ) );
 		}
 
 		ob_start();

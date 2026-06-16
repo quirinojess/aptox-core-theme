@@ -57,6 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const request = fetch(getSectionRequestUrl(sectionName), {
         method: 'GET',
+        cache: 'no-store',
+        credentials: 'same-origin',
         headers: {
           Accept: 'application/json',
         },
