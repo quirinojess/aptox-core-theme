@@ -566,6 +566,62 @@ class SeasonService {
 	}
 
 	/**
+	 * Resolve editorial cover image for a page and season.
+	 *
+	 * @param int         $page_id     Page ID.
+	 * @param string|null $season_slug Optional season slug.
+	 * @return array{url: string, alt: string, width: int, height: int}|null
+	 */
+	public static function get_editorial_cover_image( $page_id, $season_slug = null ) {
+		$page_id = absint( $page_id );
+
+		if ( $page_id <= 0 ) {
+			return null;
+		}
+
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$season_slug = sanitize_key( (string) $season_slug );
+
+		if ( '' === $season_slug ) {
+			return null;
+		}
+
+		$attachment_id = \Aptox\PostTypes\EditorialMetaBox::get_cover_attachment_id( $page_id, $season_slug );
+
+		if ( $attachment_id <= 0 || ! wp_attachment_is_image( $attachment_id ) ) {
+			return null;
+		}
+
+		$image_url = wp_get_attachment_image_url( $attachment_id, 'large' );
+
+		if ( ! $image_url ) {
+			return null;
+		}
+
+		$alt_text = trim( (string) get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) );
+
+		if ( '' === $alt_text ) {
+			$alt_text = sprintf(
+				/* translators: %s: season label */
+				__( 'Cover editorial de %s', 'aptox' ),
+				self::get_season_label( $season_slug )
+			);
+		}
+
+		$meta = wp_get_attachment_metadata( $attachment_id );
+
+		return array(
+			'url'    => $image_url,
+			'alt'    => $alt_text,
+			'width'  => isset( $meta['width'] ) ? (int) $meta['width'] : 0,
+			'height' => isset( $meta['height'] ) ? (int) $meta['height'] : 0,
+		);
+	}
+
+	/**
 	 * Legacy season labels map.
 	 *
 	 * @param string $slug Season slug.
@@ -612,6 +668,140 @@ class SeasonService {
 		$map = self::get_season_home_cta_text_map();
 
 		return $map[ $season_slug ] ?? '';
+	}
+
+	/**
+	 * Editorial ritual examples keyed by season slug.
+	 *
+	 * @return array<string, array<int, string>>
+	 */
+	private static function get_season_editorial_rituals_map() {
+		return array(
+			'primavera'  => array(
+				'Refazer o jardim',
+				'Assar um bolo de mel',
+				'Decorar em tons pastéis',
+				'Um novo cheirinho para casa',
+				'Organizar armário para vestidos',
+			),
+			'verao'      => array(
+				'Tomar um sorvete',
+				'Decorar com itens tropicais',
+				'Cultivar uma nova planta',
+				'Preparar um almoço ao ar livre',
+				'Organizar armário para biquínis',
+				'Uma festa colorida',
+			),
+			'outono'     => array(
+				'Tomar um café',
+				'Acender uma vela e ler um livro',
+				'Organizar armário para botas e itens de outono',
+				'Decorar com tons terrosos',
+				'Algo com chocolate',
+			),
+			'inverno'    => array(
+				'Tomar chocolate quente',
+				'Organizar armário para casacos',
+				'Trocar as mantas e deixar o sofá mais aconchegante',
+				'Montar uma noite de filmes em casa',
+				'Decorar com rosas brancas',
+			),
+			'fim-de-ano' => array(
+				'Montar a decoração de natal',
+				'Elaborar um cardápio para o fim de ano',
+				'Assar biscoitos aromáticos',
+				'Montar uma mesa especial para celebrar em família',
+				'Preparar presentes artesanais',
+				'Guardar com carinho as memórias do ano que passou',
+			),
+		);
+	}
+
+	/**
+	 * Seasonal intro copy for the editorial rituals block.
+	 *
+	 * @return array<string, string>
+	 */
+	private static function get_season_editorial_rituals_intro_map() {
+		return array(
+			'primavera'  => 'Na primavera, acreditamos que pequenas mudanças são capazes de renovar a forma como vivemos:',
+			'verao'      => 'No verão, acreditamos que pequenas mudanças são capazes de renovar a forma como vivemos:',
+			'outono'     => 'No outono, acreditamos que pequenas mudanças são capazes de renovar a forma como vivemos:',
+			'inverno'    => 'No inverno, acreditamos que pequenas mudanças são capazes de renovar a forma como vivemos:',
+			'fim-de-ano' => 'No fim de ano, acreditamos que pequenas mudanças são capazes de renovar a forma como vivemos:',
+		);
+	}
+
+	/**
+	 * Get editorial ritual examples for the current or given season.
+	 *
+	 * @param string|null $season_slug Optional season slug.
+	 * @return array<int, string>
+	 */
+	public static function get_season_editorial_rituals( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$map = self::get_season_editorial_rituals_map();
+
+		return $map[ $season_slug ] ?? $map['verao'];
+	}
+
+	/**
+	 * Get editorial rituals intro copy for the current or given season.
+	 *
+	 * @param string|null $season_slug Optional season slug.
+	 * @return string
+	 */
+	public static function get_season_editorial_rituals_intro( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$map = self::get_season_editorial_rituals_intro_map();
+
+		return $map[ $season_slug ] ?? $map['verao'];
+	}
+
+	/**
+	 * Get the latest published celebration post for the current or given season.
+	 *
+	 * @param string|null $season_slug Optional season slug.
+	 * @return \WP_Post|null
+	 */
+	public static function get_latest_season_celebration_post( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$season_slug = sanitize_key( (string) $season_slug );
+
+		if ( '' === $season_slug || ! post_type_exists( 'celebracoes' ) ) {
+			return null;
+		}
+
+		$taxonomies = array( 'celebracao_categoria', 'celebracao' );
+
+		foreach ( $taxonomies as $taxonomy ) {
+			if ( ! taxonomy_exists( $taxonomy ) ) {
+				continue;
+			}
+
+			$term = get_term_by( 'slug', $season_slug, $taxonomy );
+
+			if ( ! $term || is_wp_error( $term ) ) {
+				continue;
+			}
+
+			$post = self::get_latest_celebration_for_term( $term->term_id, $taxonomy );
+
+			if ( $post instanceof \WP_Post ) {
+				return $post;
+			}
+		}
+
+		return null;
 	}
 
 	/**

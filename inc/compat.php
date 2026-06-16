@@ -8,6 +8,7 @@
  * @package Aptox
  */
 
+use Aptox\Services\CelebreSeasonService;
 use Aptox\Services\LikesService;
 use Aptox\Services\RelatedPostsService;
 use Aptox\Services\SeasonService;
@@ -159,6 +160,70 @@ if ( ! function_exists( 'aptox_get_loja_archive_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_editorial_url' ) ) {
+	/**
+	 * Resolve the public Editorial page URL.
+	 *
+	 * @return string
+	 */
+	function aptox_get_editorial_url() {
+		$editorial_page = get_page_by_path( 'editorial' );
+
+		if ( $editorial_page ) {
+			return get_permalink( $editorial_page->ID );
+		}
+
+		$pages = get_pages(
+			array(
+				'meta_key'   => '_wp_page_template',
+				'meta_value' => 'templates/page-editorial.php',
+				'number'     => 1,
+			)
+		);
+
+		if ( ! empty( $pages ) ) {
+			return get_permalink( $pages[0] );
+		}
+
+		return home_url( '/editorial/' );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_manifesto_url' ) ) {
+	/**
+	 * Resolve the public Manifesto page URL (former Sobre page).
+	 *
+	 * @return string
+	 */
+	function aptox_get_manifesto_url() {
+		$manifesto_page = get_page_by_path( 'manifesto' );
+
+		if ( $manifesto_page ) {
+			return get_permalink( $manifesto_page->ID );
+		}
+
+		$legacy_sobre_page = get_page_by_path( 'sobre' );
+
+		if ( $legacy_sobre_page ) {
+			return get_permalink( $legacy_sobre_page->ID );
+		}
+
+		$pages = get_pages(
+			array(
+				'meta_key'   => '_wp_page_template',
+				'meta_value' => 'templates/page-sobre.php',
+				'number'     => 1,
+			)
+		);
+
+		if ( ! empty( $pages ) ) {
+			return get_permalink( $pages[0] );
+		}
+
+		return home_url( '/manifesto/' );
+	}
+}
+
 if ( ! function_exists( 'aptox_get_receita_tag_query_slug' ) ) {
 	/**
 	 * Read the active receita tag filter from the query string.
@@ -251,6 +316,12 @@ if ( ! function_exists( 'aptox_decor_season_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_season_festivity_icon' ) ) {
+	function aptox_season_festivity_icon( $season_slug = null ) {
+		return CelebreSeasonService::get_season_festivity_icon_url( $season_slug );
+	}
+}
+
 if ( ! function_exists( 'aptox_filter_home_season_icon' ) ) {
 	function aptox_filter_home_season_icon( $season_slug = null ) {
 		return SeasonService::filter_home_season_icon( $season_slug );
@@ -278,6 +349,61 @@ if ( ! function_exists( 'aptox_get_season_label' ) ) {
 if ( ! function_exists( 'aptox_get_season_home_cta_text' ) ) {
 	function aptox_get_season_home_cta_text( $season_slug = null ) {
 		return SeasonService::get_season_home_cta_text( $season_slug );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_season_editorial_rituals' ) ) {
+	function aptox_get_season_editorial_rituals( $season_slug = null ) {
+		return SeasonService::get_season_editorial_rituals( $season_slug );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_season_editorial_rituals_intro' ) ) {
+	function aptox_get_season_editorial_rituals_intro( $season_slug = null ) {
+		return SeasonService::get_season_editorial_rituals_intro( $season_slug );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_editorial_cover_image' ) ) {
+	/**
+	 * @param int         $page_id     Page ID.
+	 * @param string|null $season_slug Optional season slug.
+	 * @return array{url: string, alt: string, width: int, height: int}|null
+	 */
+	function aptox_get_editorial_cover_image( $page_id, $season_slug = null ) {
+		return SeasonService::get_editorial_cover_image( $page_id, $season_slug );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_season_celebration_post' ) ) {
+	/**
+	 * @param string|null $season_slug Optional season slug.
+	 * @return \WP_Post|null
+	 */
+	function aptox_get_season_celebration_post( $season_slug = null ) {
+		return SeasonService::get_latest_season_celebration_post( $season_slug );
+	}
+}
+
+if ( ! function_exists( 'aptox_render_celebration_post_content' ) ) {
+	/**
+	 * Render full celebration post content with theme filters.
+	 *
+	 * @param \WP_Post $post Celebration post.
+	 * @return string
+	 */
+	function aptox_render_celebration_post_content( $post ) {
+		if ( ! $post instanceof WP_Post ) {
+			return '';
+		}
+
+		$content = apply_filters( 'the_content', $post->post_content );
+
+		if ( function_exists( 'aptox_add_h2_anchors_to_content' ) ) {
+			$content = aptox_add_h2_anchors_to_content( $content );
+		}
+
+		return $content;
 	}
 }
 

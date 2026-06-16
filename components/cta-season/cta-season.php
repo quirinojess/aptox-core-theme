@@ -23,7 +23,7 @@ if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
 	$season_text  = aptox_get_season_home_cta_text( $season_slug );
 }
 
-$cache_key   = 'aptox_cta_season_v12_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_cta_season_v13_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -134,7 +134,7 @@ $inner_class = $featured_image
 
 			<?php if ( $featured_post instanceof WP_Post ) : ?>
 				<a
-					href="<?php echo esc_url( $featured_link ); ?>"
+					href="<?php echo esc_url( function_exists( 'aptox_get_editorial_url' ) ? aptox_get_editorial_url() : home_url( '/editorial/' ) ); ?>"
 					class="cta-season-btn"
 				>
 					leia nosso editorial

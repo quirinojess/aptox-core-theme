@@ -190,6 +190,7 @@ class Assets {
 			'aptox-index-cta'             => '/components/index-cta/index-cta.css',
 			'aptox-page-sobre'            => '/components/page-sobre/page-sobre.css',
 			'aptox-page-contato'          => '/components/page-contato/page-contato.css',
+			'aptox-page-editorial'        => '/components/page-editorial/page-editorial.css',
 			'aptox-page-not-found'        => '/components/page-not-found/page-not-found.css',
 			'aptox-page-sobre-timeline'   => '/components/page-sobre-timeline/page-sobre-timeline.css',
 			'aptox-page-sobre-clipping'   => '/components/page-sobre-clipping/page-sobre-clipping.css',
@@ -395,12 +396,13 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_static_page_styles() {
-		if ( is_page( 'sobre' ) ) {
+		if ( is_page( 'sobre' ) || is_page( 'manifesto' ) || is_page_template( 'templates/page-sobre.php' ) ) {
 			$this->enqueue_theme_styles(
 				array(
 					'aptox-page-sobre'           => '/components/page-sobre/page-sobre.css',
 					'aptox-page-sobre-timeline'  => '/components/page-sobre-timeline/page-sobre-timeline.css',
 					'aptox-page-sobre-clipping'  => '/components/page-sobre-clipping/page-sobre-clipping.css',
+					'aptox-page-editorial'       => '/components/page-editorial/page-editorial.css',
 				)
 			);
 		}
@@ -409,6 +411,19 @@ class Assets {
 			$this->enqueue_theme_style(
 				'aptox-page-contato',
 				'/components/page-contato/page-contato.css',
+				$this->get_component_style_deps()
+			);
+		}
+
+		if (
+			is_page( 'editorial' )
+			|| is_page( 'manifesto' )
+			|| is_page_template( 'templates/page-editorial.php' )
+			|| is_page_template( 'templates/page-manifesto.php' )
+		) {
+			$this->enqueue_theme_style(
+				'aptox-page-editorial',
+				'/components/page-editorial/page-editorial.css',
 				$this->get_component_style_deps()
 			);
 		}
@@ -817,6 +832,7 @@ class Assets {
 		$this->enqueue_casa_organizacao_script();
 		$this->enqueue_season_slide_script();
 		$this->enqueue_home_lazy_sections_script();
+		$this->enqueue_page_sobre_pillars_script();
 		$this->apply_defer_strategy();
 	}
 
@@ -1128,6 +1144,31 @@ class Assets {
 		wp_enqueue_script(
 			'aptox-celebre-block',
 			get_template_directory_uri() . '/components/celebre-block/celebre-block.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
+			true
+		);
+	}
+
+	/**
+	 * Enqueue Manifesto pillars carousel script.
+	 *
+	 * @return void
+	 */
+	private function enqueue_page_sobre_pillars_script() {
+		if ( $this->uses_lazy_section_scripts() ) {
+			return;
+		}
+
+		if ( ! is_page( 'sobre' ) && ! is_page( 'manifesto' ) && ! is_page_template( 'templates/page-sobre.php' ) ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/page-sobre/page-sobre-pillars.js';
+
+		wp_enqueue_script(
+			'aptox-page-sobre-pillars',
+			get_template_directory_uri() . '/components/page-sobre/page-sobre-pillars.js',
 			array(),
 			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
 			true

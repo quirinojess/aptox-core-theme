@@ -9,8 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$sobre_page = get_page_by_path( 'sobre' );
-$sobre_url  = $sobre_page ? get_permalink( $sobre_page->ID ) : home_url( '/sobre/' );
+$manifesto_url = function_exists( 'aptox_get_manifesto_url' )
+	? aptox_get_manifesto_url()
+	: home_url( '/manifesto/' );
 
 $cta_image = aptox_theme_image_uri( 'index-cta' );
 $cta_meta  = aptox_theme_image_meta( 'index-cta' );
@@ -48,7 +49,7 @@ $cta_meta  = aptox_theme_image_meta( 'index-cta' );
 			</p>
 
 			<a
-				href="<?php echo esc_url( $sobre_url ); ?>"
+				href="<?php echo esc_url( $manifesto_url ); ?>"
 				class="index-cta-btn"
 			>
 				leia nosso manifesto

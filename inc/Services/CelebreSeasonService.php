@@ -278,6 +278,38 @@ class CelebreSeasonService {
 	}
 
 	/**
+	 * Resolve a festivity occasion icon URL for a season slug.
+	 *
+	 * @param string|null $season_slug Season slug.
+	 * @return string
+	 */
+	public static function get_season_festivity_icon_url( $season_slug = null ) {
+		if ( null === $season_slug || '' === $season_slug ) {
+			$season_slug = SeasonService::get_override_season_slug();
+
+			if ( null === $season_slug ) {
+				$season_slug = self::get_current_season_slug();
+			}
+		}
+
+		$season_slug = sanitize_title( (string) $season_slug );
+		$keys        = self::get_festivity_keys_for_season_slug( $season_slug );
+
+		if ( empty( $keys ) ) {
+			return '';
+		}
+
+		$catalog = self::get_festivity_catalog();
+		$key     = $keys[0];
+
+		if ( empty( $catalog[ $key ]['icon'] ) ) {
+			return '';
+		}
+
+		return get_template_directory_uri() . '/assets/icons/celebre/ocasioes/' . sanitize_file_name( (string) $catalog[ $key ]['icon'] );
+	}
+
+	/**
 	 * Outono festivity calendar.
 	 *
 	 * @param int $month Month number.

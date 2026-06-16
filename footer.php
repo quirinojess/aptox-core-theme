@@ -30,6 +30,10 @@ $social_links = array(
 		'label' => 'Facebook',
 	),
 );
+
+$manifesto_url = function_exists( 'aptox_get_manifesto_url' )
+	? aptox_get_manifesto_url()
+	: home_url( '/manifesto/' );
 ?>
 
 	</div>
@@ -73,7 +77,7 @@ $social_links = array(
 	<div class="footer-simple-inner">
 		<nav class="footer-simple-nav">
 			<ul>
-				<li><a href="/sobre">Sobre</a></li>
+				<li><a href="<?php echo esc_url( $manifesto_url ); ?>"><?php esc_html_e( 'Manifesto', 'aptox' ); ?></a></li>
 				<li><a href="/termos-de-uso">Termos de uso</a></li>
 				<li><a href="/contato">Contato</a></li>
 			</ul>

@@ -186,6 +186,7 @@ body {
 
 .single #content,
 .single .content-recipe,
+.page-editorial-celebre #content,
 .page main > section.container {
   line-height: var(--line-height-prose);
   --line-height-quote: 1.75;
@@ -193,7 +194,8 @@ body {
 }
 
 .single #content a:not(.post-image-pin__button),
-.single .content-recipe a:not(.post-image-pin__button) {
+.single .content-recipe a:not(.post-image-pin__button),
+.page-editorial-celebre #content a:not(.post-image-pin__button) {
   padding-bottom: 2px;
   text-decoration: underline dotted 2px;
   text-underline-offset: calc(0.15em + 2px);
