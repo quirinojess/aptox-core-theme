@@ -119,6 +119,7 @@ $seasons = aptox_get_all_seasons();
 </header>
 
 <?php get_template_part( 'components/modal-search/modal-search' ); ?>
+<?php get_template_part( 'components/modal-season/modal-season' ); ?>
 
 <nav
   id="menu-mob"

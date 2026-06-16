@@ -67,12 +67,14 @@
 
 /* Section: Page Contato (form layout) */
 
-.page-contato-form {
+.page-contato-form,
+.newsletter-form-wrapper,
+.post-side-newsletter__form {
   width: 100%;
 }
 
-.page-contato-form .forminator-ui,
-.page-contato-form .forminator-custom-form {
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-ui,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-custom-form {
   margin: 0;
 }
 
@@ -83,7 +85,14 @@
   align-items: start;
 }
 
-.page-contato-form .forminator-row {
+.newsletter-form-wrapper .forminator-custom-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  align-items: start;
+}
+
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-row {
   margin: 0;
 }
 
@@ -105,11 +114,15 @@
   width: 100%;
 }
 
-.page-contato-form .forminator-col {
+.newsletter-form-wrapper .forminator-row:has(.forminator-button-submit) {
+  width: 100%;
+}
+
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-col {
   padding: 0;
 }
 
-.page-contato-form .forminator-field {
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-field {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
@@ -124,7 +137,7 @@
   min-height: 100%;
 }
 
-.page-contato-form .forminator-label {
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-label {
   display: block;
   margin: 0;
 
@@ -137,17 +150,17 @@
   color: rgba(17, 17, 17, 0.42);
 }
 
-.page-contato-form .forminator-input,
-.page-contato-form .forminator-textarea,
-.page-contato-form .forminator-select,
-.page-contato-form .forminator-input input,
-.page-contato-form .forminator-input select,
-.page-contato-form input[type="email"],
-.page-contato-form input[type="text"],
-.page-contato-form input[type="tel"],
-.page-contato-form input[type="url"],
-.page-contato-form textarea,
-.page-contato-form select {
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-input,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-textarea,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-select,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-input input,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-input select,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) input[type="email"],
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) input[type="text"],
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) input[type="tel"],
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) input[type="url"],
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) textarea,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) select {
   width: 100%;
   min-height: 0;
   padding: 0;
@@ -169,10 +182,10 @@
   resize: vertical;
 }
 
-.page-contato-form .forminator-input::placeholder,
-.page-contato-form .forminator-textarea::placeholder,
-.page-contato-form input::placeholder,
-.page-contato-form textarea::placeholder {
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-input::placeholder,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-textarea::placeholder,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) input::placeholder,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) textarea::placeholder {
   font-family: var(--font-base);
   font-size: var(--font-size-xxs);
   font-weight: 700;
@@ -182,12 +195,24 @@
   opacity: 1;
 }
 
-.page-contato-form .forminator-select .forminator-select-dropdown,
-.page-contato-form .forminator-select {
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-input input[type="text"],
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-input input[type="email"],
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) input[type="text"],
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) input[type="email"] {
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-select .forminator-select-dropdown,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-select {
   appearance: none;
 }
 
-.page-contato-form .forminator-button.forminator-button-submit {
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-button.forminator-button-submit {
   width: 100%;
   margin-inline: 0;
   background: var(--white) !important;
@@ -197,13 +222,17 @@
   box-shadow: none !important;
 }
 
-.page-contato-form .forminator-description,
-.page-contato-form .forminator-response-message {
-  grid-column: 1 / -1;
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-description,
+:is(.page-contato-form, .newsletter-form-wrapper, .post-side-newsletter__form) .forminator-response-message {
   font-family: var(--font-base);
   font-size: var(--font-size-xs);
   line-height: 1.5;
   color: var(--dark);
+}
+
+.page-contato-form .forminator-description,
+.page-contato-form .forminator-response-message {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 768px) {

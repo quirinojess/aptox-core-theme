@@ -136,7 +136,7 @@
 
 /* Section: Search modal (hide unused internal buttons) */
 
-.modal-content button:not(.close) {
+#searchModal .modal-content button:not(.close) {
   display: none;
 }
 
@@ -146,17 +146,25 @@
   position: absolute;
   top: var(--space-xs);
   right: var(--space-xs);
+  z-index: 11;
 
-  font-size: var(--font-size-lg);
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
   padding: 0;
   border: 0;
   appearance: none;
   -webkit-appearance: none;
-  background: transparent;
+  background: color-mix(in srgb, var(--off-white) 92%, transparent);
+  border-radius: 50%;
   color: var(--dark);
   cursor: pointer;
-  opacity: 0.5;
+
+  font-size: var(--font-size-2xl);
+  line-height: 1;
+  opacity: 1;
   transition: opacity 0.2s ease;
 }
 

@@ -264,8 +264,6 @@
 .post-side-newsletter__form input[type="email"],
 .post-side-newsletter__form input[type="text"] {
   width: 100%;
-  font-family: var(--font-base);
-  font-size: var(--font-size-xs);
 }
 
 .post-side-newsletter__form .forminator-button {

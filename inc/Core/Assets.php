@@ -751,6 +751,16 @@ class Assets {
 				true
 			);
 
+			$modal_season_path = get_template_directory() . '/components/modal-season/modal-season.js';
+
+			wp_enqueue_script(
+				'aptox-season-modal',
+				get_template_directory_uri() . '/components/modal-season/modal-season.js',
+				array(),
+				file_exists( $modal_season_path ) ? (string) filemtime( $modal_season_path ) : '1.0',
+				true
+			);
+
 			wp_enqueue_script(
 				'aptox-menu',
 				get_template_directory_uri() . '/components/menu/menu.js',

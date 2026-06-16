@@ -461,39 +461,50 @@ class SeasonService {
 	public static function get_season_newsletter_data() {
 		$season = self::get_season_context()['slug'];
 
+		$copy = array(
+			'description'       => 'Receba um guia especial com tudo o que você precisa para viver cada estação de forma mais aconchegante e intencional: receitas, decoração, tradições, organização do lar e inspirações selecionadas especialmente para esse período.',
+			'description_extra' => 'São apenas quatro edições por ano, preparadas com carinho para você aproveitar o melhor de cada estação.',
+			'button'            => 'QUERO RECEBER',
+		);
+
 		$data = array(
-			'verao'     => array(
-				'title'       => 'Chegou a estação mais quente do ano!',
-				'description' => 'Gostaria de receber inspirações e ideias para você curtir o verão da melhor maneira? Inscreva-se para receber conteúdos e mensagens exclusivas de forma gratuita.',
-				'button'      => 'QUERO RECEBER',
-				'list'        => 'newsletter-summer',
-				'image'       => get_template_directory_uri() . '/assets/img/cta-news-summer.jpg',
+			'verao'      => array_merge(
+				$copy,
+				array(
+					'title' => 'Receba ideias para um verão especial!',
+					'list'  => 'newsletter-summer',
+					'image' => get_template_directory_uri() . '/assets/img/cta-news-summer.jpg',
+				)
 			),
-			'outono'    => array(
-				'title'       => 'Ideias para um outono acolhedor',
-				'description' => 'Conteúdos especiais, receitas e celebrações para o outono.',
-				'button'      => 'QUERO RECEBER',
-				'list'        => 'newsletter-autumn',
-				'image'       => aptox_theme_image_uri( 'cta-news-autumn' ),
+			'outono'     => array_merge(
+				$copy,
+				array(
+					'title' => 'Receba ideias para um outono acolhedor!',
+					'list'  => 'newsletter-autumn',
+					'image' => aptox_theme_image_uri( 'cta-news-autumn' ),
+				)
 			),
-			'inverno'   => array(
-				'title'       => 'Conteúdos quentinhos para o inverno',
-				'description' => 'Inspirações afetivas, festas intimistas e novidades de inverno.',
-				'button'      => 'QUERO RECEBER',
-				'list'        => 'newsletter-winter',
+			'inverno'    => array_merge(
+				$copy,
+				array(
+					'title' => 'Receba ideias para um inverno aconchegante!',
+					'list'  => 'newsletter-winter',
+				)
 			),
-			'primavera' => array(
-				'title'       => 'A primavera chegou!',
-				'description' => 'Flores, cores e ideias para celebrar a primavera.',
-				'button'      => 'QUERO RECEBER',
-				'list'        => 'newsletter-spring',
+			'primavera'  => array_merge(
+				$copy,
+				array(
+					'title' => 'Receba ideias para uma primavera especial!',
+					'list'  => 'newsletter-spring',
+				)
 			),
-			'fim-de-ano' => array(
-				'title'       => 'Dezembro pede celebração!',
-				'description' => 'Gostaria de receber inspirações e ideias para você curtir o fim de ano da melhor maneira? Inscreva-se para receber conteúdos e mensagens exclusivas de forma gratuita.',
-				'button'      => 'QUERO RECEBER',
-				'list'        => 'newsletter-year-end',
-				'image'       => aptox_theme_image_uri( 'cta-news-autumn' ),
+			'fim-de-ano' => array_merge(
+				$copy,
+				array(
+					'title' => 'Receba ideias para um fim de ano memorável!',
+					'list'  => 'newsletter-year-end',
+					'image' => aptox_theme_image_uri( 'cta-news-autumn' ),
+				)
 			),
 		);
 

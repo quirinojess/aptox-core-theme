@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-$season     = aptox_get_season_context();
 $newsletter = aptox_get_season_newsletter_data();
 ?>
 
@@ -59,6 +58,12 @@ $newsletter = aptox_get_season_newsletter_data();
       <p class="season-modal-description">
         <?php echo esc_html( $newsletter['description'] ); ?>
       </p>
+
+      <?php if ( ! empty( $newsletter['description_extra'] ) ) : ?>
+        <p class="season-modal-description season-modal-description--extra">
+          <strong><?php echo esc_html( $newsletter['description_extra'] ); ?></strong>
+        </p>
+      <?php endif; ?>
 
       <div class="newsletter-form-wrapper">
         <?php echo do_shortcode( '[forminator_form id="7369"]' ); ?>
