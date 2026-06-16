@@ -1,6 +1,6 @@
 <?php
 /**
- * Archive template for Loja products.
+ * Template Name: Loja
  */
 
 get_header();
@@ -16,7 +16,7 @@ get_header();
 		'components/grid-loja/grid-loja',
 		null,
 		array(
-			'use_main_query' => true,
+			'posts_per_page' => 12,
 		)
 	);
 	?>

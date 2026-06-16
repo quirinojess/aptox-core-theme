@@ -74,6 +74,22 @@
   transform: scale(1.06) rotate(10deg);
 }
 
+.filter-item.is-active a {
+  opacity: 1;
+}
+
+.filter-item.is-active a span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.filter-nav--loja .filter-item img {
+  width: var(--filter-nav-icon-size);
+  height: var(--filter-nav-icon-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 /* Section: Filter navigation (mobile fixed + scroll) */
 
 @media (max-width: 768px) {
@@ -90,7 +106,8 @@
   }
 
   .filter-nav--casa,
-  .filter-nav--celebre {
+  .filter-nav--celebre,
+  .filter-nav--loja {
     bottom: 45px;
   }
 

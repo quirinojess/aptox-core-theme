@@ -34,6 +34,8 @@ $social_links = array(
 
 	</div>
 
+<?php get_template_part( 'components/footer-loja/footer-loja' ); ?>
+
 <section
 	class="site-footer-midia"
 	aria-label="<?php esc_attr_e( 'Redes sociais', 'aptox' ); ?>"

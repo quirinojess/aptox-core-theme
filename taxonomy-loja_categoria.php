@@ -4,61 +4,62 @@
  */
 
 get_header();
+
+$term = get_queried_object();
+
+if ( ! $term instanceof WP_Term ) {
+	$term = null;
+}
 ?>
 
-<main class="container">
-	<?php if ( have_posts() ) : ?>
-		<?php
-		$paged     = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
-		$max_pages = (int) $wp_query->max_num_pages;
-		?>
-		<section class="archive-grid" aria-label="<?php echo esc_attr__( 'Loja', 'aptox' ); ?>">
-			<?php while ( have_posts() ) : the_post(); ?>
+<section class="hero-container">
+	<?php if ( $term ) : ?>
+		<nav class="taxonomy-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'aptox' ); ?>">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'aptox' ); ?></a>
+			<span aria-hidden="true">›</span>
+			<a href="<?php echo esc_url( function_exists( 'aptox_get_loja_archive_url' ) ? aptox_get_loja_archive_url() : home_url( '/loja/' ) ); ?>">
+				<?php esc_html_e( 'Loja', 'aptox' ); ?>
+			</a>
+			<span aria-hidden="true">›</span>
+			<span><?php echo esc_html( $term->name ); ?></span>
+		</nav>
+
+		<h1 class="taxonomy-title">
+			<?php echo esc_html( $term->name ); ?>
+		</h1>
+
+		<?php if ( ! empty( $term->description ) ) : ?>
+			<div class="taxonomy-description">
+				<?php echo wp_kses_post( wpautop( $term->description ) ); ?>
+			</div>
+		<?php else : ?>
+			<p class="taxonomy-description">
 				<?php
-				$link_compra = get_post_meta( get_the_ID(), 'link_compra', true );
-				$card_url    = $link_compra ? $link_compra : get_permalink();
-				$card_attrs  = $link_compra
-					? ' target="_blank" rel="noopener noreferrer sponsored nofollow"'
-					: '';
+				echo esc_html(
+					sprintf(
+						/* translators: %s: category name */
+						__( 'Confira nossa seleção de %s na Loja Aptox. Produtos de afiliadas que amamos para casa, mesa e celebrações.', 'aptox' ),
+						$term->name
+					)
+				);
 				?>
-				<article <?php post_class( 'archive-card loja-card' ); ?>>
-					<a
-						href="<?php echo esc_url( $card_url ); ?>"
-						class="archive-thumb"
-						aria-hidden="true"
-						tabindex="-1"
-						<?php echo $card_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					>
-						<?php if ( has_post_thumbnail() ) : ?>
-							<figure class="archive-image">
-								<?php the_post_thumbnail( 'large' ); ?>
-							</figure>
-						<?php endif; ?>
-					</a>
-
-					<h3 class="archive-title">
-						<a href="<?php echo esc_url( $card_url ); ?>"<?php echo $card_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-							<?php the_title(); ?>
-						</a>
-					</h3>
-				</article>
-			<?php endwhile; ?>
-		</section>
-
-		<?php if ( $max_pages > $paged ) : ?>
-			<?php
-			aptox_render_archive_load_more(
-				array(
-					'paged'     => $paged,
-					'max_pages' => $max_pages,
-					'next_url'  => get_pagenum_link( $paged + 1 ),
-				)
-			);
-			?>
+			</p>
 		<?php endif; ?>
-	<?php else : ?>
-		<p><?php esc_html_e( 'Nenhum produto encontrado.', 'aptox' ); ?></p>
 	<?php endif; ?>
+</section>
+
+<main class="container loja-page">
+	<?php
+	get_template_part(
+		'components/grid-loja/grid-loja',
+		null,
+		array(
+			'use_main_query' => true,
+		)
+	);
+	?>
 </main>
+
+<?php get_template_part( 'components/filter-nav/filter-nav-loja' ); ?>
 
 <?php get_footer(); ?>

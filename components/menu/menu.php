@@ -93,6 +93,24 @@ $seasons = aptox_get_all_seasons();
           <span>Busca</span>
         </button>
 
+        <?php
+        $loja_url = function_exists( 'aptox_get_loja_archive_url' )
+          ? aptox_get_loja_archive_url()
+          : home_url( '/loja/' );
+        ?>
+
+        <a
+          class="menu-button"
+          href="<?php echo esc_url( $loja_url ); ?>"
+        >
+          <img
+            src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/ico-loja.svg' ); ?>"
+            alt=""
+            aria-hidden="true"
+          >
+          <span>Loja</span>
+        </a>
+
       </div>
 
     </div>

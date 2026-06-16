@@ -6,20 +6,41 @@
 get_header();
 
 $link_compra = get_post_meta( get_the_ID(), 'link_compra', true );
+$loja_url    = function_exists( 'aptox_get_loja_archive_url' )
+	? aptox_get_loja_archive_url()
+	: home_url( '/loja/' );
 ?>
 
 <main>
 	<?php if ( have_posts() ) : ?>
 		<?php while ( have_posts() ) : the_post(); ?>
+			<section class="hero-container loja-product-hero">
+				<nav class="taxonomy-breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'aptox' ); ?>">
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'aptox' ); ?></a>
+					<span aria-hidden="true">›</span>
+					<a href="<?php echo esc_url( $loja_url ); ?>"><?php esc_html_e( 'Loja', 'aptox' ); ?></a>
+					<span aria-hidden="true">›</span>
+					<span><?php the_title(); ?></span>
+				</nav>
+
+				<h1 class="taxonomy-title loja-product__title"><?php the_title(); ?></h1>
+			</section>
+
 			<section class="container">
 				<article id="post-<?php the_ID(); ?>" <?php post_class( 'loja-product' ); ?>>
 					<?php if ( has_post_thumbnail() ) : ?>
 						<figure class="loja-product__image">
-							<?php the_post_thumbnail( 'large' ); ?>
+							<?php
+							the_post_thumbnail(
+								'large',
+								array(
+									'loading' => 'eager',
+									'alt'     => get_post_meta( get_post_thumbnail_id(), '_wp_attachment_image_alt', true ) ?: get_the_title(),
+								)
+							);
+							?>
 						</figure>
 					<?php endif; ?>
-
-					<h1 class="loja-product__title"><?php the_title(); ?></h1>
 
 					<?php if ( has_excerpt() ) : ?>
 						<div class="loja-product__excerpt">
@@ -41,7 +62,7 @@ $link_compra = get_post_meta( get_the_ID(), 'link_compra', true );
 								target="_blank"
 								rel="noopener noreferrer sponsored nofollow"
 							>
-								Comprar
+								<?php esc_html_e( 'Comprar', 'aptox' ); ?>
 							</a>
 						</p>
 					<?php endif; ?>

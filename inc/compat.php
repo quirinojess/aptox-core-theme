@@ -130,6 +130,35 @@ if ( ! function_exists( 'aptox_get_receitas_archive_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_loja_archive_url' ) ) {
+	/**
+	 * Resolve the public Loja landing URL.
+	 *
+	 * @return string
+	 */
+	function aptox_get_loja_archive_url() {
+		$pages = get_pages(
+			array(
+				'meta_key'   => '_wp_page_template',
+				'meta_value' => 'templates/page-loja.php',
+				'number'     => 1,
+			)
+		);
+
+		if ( ! empty( $pages ) ) {
+			return get_permalink( $pages[0] );
+		}
+
+		$archive = get_post_type_archive_link( 'loja' );
+
+		if ( $archive ) {
+			return $archive;
+		}
+
+		return home_url( '/loja/' );
+	}
+}
+
 if ( ! function_exists( 'aptox_get_receita_tag_query_slug' ) ) {
 	/**
 	 * Read the active receita tag filter from the query string.

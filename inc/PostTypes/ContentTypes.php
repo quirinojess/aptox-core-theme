@@ -18,8 +18,12 @@ class ContentTypes {
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array( $this, 'register_global_tags' ), 11 );
 		add_action( 'init', array( $this, 'register_meta' ) );
+		add_action( 'template_redirect', array( $this, 'resolve_loja_category_request' ), 0 );
 		add_action( 'template_redirect', array( $this, 'redirect_legacy_loja_single_urls' ), 1 );
+		add_filter( 'pre_handle_404', array( $this, 'pre_handle_loja_category_404' ), 10, 2 );
+		add_filter( 'template_include', array( $this, 'include_loja_category_template' ), 99 );
 		add_action( 'after_switch_theme', array( $this, 'flush_rewrites_on_switch' ) );
+		add_action( 'init', array( $this, 'maybe_flush_loja_rewrites' ), 99 );
 	}
 
 	/**
@@ -292,19 +296,118 @@ class ContentTypes {
 	}
 
 	/**
-	 * Redirect legacy single product URLs that used the archive slug.
+	 * Resolve /loja/{categoria}/ when taxonomy rewrites are stale.
 	 *
 	 * @return void
 	 */
-	public function redirect_legacy_loja_single_urls() {
-		if ( is_admin() ) {
+	public function resolve_loja_category_request() {
+		if ( is_admin() || is_tax( 'loja_categoria' ) ) {
 			return;
 		}
 
+		$slug = $this->get_loja_path_slug();
+
+		if ( '' === $slug ) {
+			return;
+		}
+
+		$term = get_term_by( 'slug', $slug, 'loja_categoria' );
+
+		if ( ! $term || is_wp_error( $term ) ) {
+			return;
+		}
+
+		global $wp_query, $wp_the_query;
+
+		$paged = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+
+		$wp_the_query = new \WP_Query(
+			array(
+				'post_type'              => 'loja',
+				'post_status'            => 'publish',
+				'posts_per_page'         => 12,
+				'paged'                  => $paged,
+				'ignore_sticky_posts'    => true,
+				'tax_query'              => array(
+					array(
+						'taxonomy' => 'loja_categoria',
+						'field'    => 'term_id',
+						'terms'    => array( (int) $term->term_id ),
+					),
+				),
+			)
+		);
+
+		$wp_query = $wp_the_query;
+
+		$wp_the_query->is_tax            = true;
+		$wp_the_query->is_archive        = true;
+		$wp_the_query->is_home           = false;
+		$wp_the_query->is_singular       = false;
+		$wp_the_query->is_404            = false;
+		$wp_the_query->queried_object    = $term;
+		$wp_the_query->queried_object_id = (int) $term->term_id;
+		$wp_the_query->set( 'taxonomy', 'loja_categoria' );
+		$wp_the_query->set( 'term', $term->slug );
+		$wp_the_query->set( 'loja_categoria', $term->slug );
+
+		status_header( 200 );
+		nocache_headers();
+	}
+
+	/**
+	 * Prevent WordPress from treating valid Loja category URLs as 404.
+	 *
+	 * @param bool      $preempt  Whether to short-circuit default 404 handling.
+	 * @param \WP_Query $wp_query Main query instance.
+	 * @return bool
+	 */
+	public function pre_handle_loja_category_404( $preempt, $wp_query ) {
+		if ( is_admin() || ! $wp_query->is_main_query() ) {
+			return $preempt;
+		}
+
+		$slug = $this->get_loja_path_slug();
+
+		if ( '' === $slug ) {
+			return $preempt;
+		}
+
+		$term = get_term_by( 'slug', $slug, 'loja_categoria' );
+
+		if ( $term && ! is_wp_error( $term ) ) {
+			return true;
+		}
+
+		return $preempt;
+	}
+
+	/**
+	 * Force taxonomy template for resolved Loja category requests.
+	 *
+	 * @param string $template Current template path.
+	 * @return string
+	 */
+	public function include_loja_category_template( $template ) {
+		if ( ! is_tax( 'loja_categoria' ) ) {
+			return $template;
+		}
+
+		$found = locate_template( 'taxonomy-loja_categoria.php' );
+
+		return $found ? $found : $template;
+	}
+
+	/**
+	 * Extract the second segment from /loja/{slug}/ requests.
+	 *
+	 * @return string
+	 */
+	private function get_loja_path_slug() {
 		$path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH );
 
 		if ( ! is_string( $path ) ) {
-			return;
+			return '';
 		}
 
 		$home_path = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
@@ -316,12 +419,31 @@ class ContentTypes {
 		$path = trim( $path, '/' );
 
 		if ( ! preg_match( '#^loja/([^/]+)/?$#', $path, $matches ) ) {
+			return '';
+		}
+
+		return sanitize_title( $matches[1] );
+	}
+
+	/**
+	 * Redirect legacy single product URLs that used the archive slug.
+	 *
+	 * @return void
+	 */
+	public function redirect_legacy_loja_single_urls() {
+		if ( is_admin() ) {
 			return;
 		}
 
-		$slug = sanitize_title( $matches[1] );
+		$slug = $this->get_loja_path_slug();
 
 		if ( '' === $slug ) {
+			return;
+		}
+
+		$term = get_term_by( 'slug', $slug, 'loja_categoria' );
+
+		if ( $term && ! is_wp_error( $term ) ) {
 			return;
 		}
 
@@ -343,6 +465,20 @@ class ContentTypes {
 
 		wp_safe_redirect( get_permalink( $posts[0] ), 301 );
 		exit;
+	}
+
+	/**
+	 * Flush rewrite rules once after Loja taxonomy routing changes.
+	 *
+	 * @return void
+	 */
+	public function maybe_flush_loja_rewrites() {
+		if ( 'v2' === get_option( 'aptox_loja_rewrites', '' ) ) {
+			return;
+		}
+
+		flush_rewrite_rules( false );
+		update_option( 'aptox_loja_rewrites', 'v2', false );
 	}
 
 	/**

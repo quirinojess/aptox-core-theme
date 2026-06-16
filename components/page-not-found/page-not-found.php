@@ -14,6 +14,8 @@ use Aptox\Services\NotFoundService;
 $context  = NotFoundService::get_context();
 $posts    = NotFoundService::get_posts( $context );
 $is_mixed = 'mixed' === ( $context['mode'] ?? '' );
+$term     = ( ! empty( $context['term'] ) && $context['term'] instanceof WP_Term ) ? $context['term'] : null;
+$is_loja_category = $term && 'loja_categoria' === $term->taxonomy;
 
 $render_card = static function ( $post ) {
 	if ( ! $post instanceof WP_Post ) {
@@ -47,7 +49,13 @@ $render_card = static function ( $post ) {
 <section class="page-not-found" aria-labelledby="page-not-found-title">
 	<header class="page-not-found-header">
 		<h1 id="page-not-found-title" class="page-not-found-title">
-			<?php esc_html_e( 'Esse conteúdo ainda não está disponível.', 'aptox' ); ?>
+			<?php
+			if ( $is_loja_category ) {
+				echo esc_html( $term->name );
+			} else {
+				esc_html_e( 'Esse conteúdo ainda não está disponível.', 'aptox' );
+			}
+			?>
 		</h1>
 	</header>
 
@@ -60,15 +68,32 @@ $render_card = static function ( $post ) {
 					</p>
 				<?php endif; ?>
 
-				<section
-					class="archive-grid page-not-found-grid<?php echo $is_mixed ? ' page-not-found-grid--mixed' : ''; ?>"
-					aria-label="<?php esc_attr_e( 'Posts sugeridos', 'aptox' ); ?>"
-				>
-					<?php foreach ( $posts as $post ) : ?>
-						<?php $render_card( $post ); ?>
-					<?php endforeach; ?>
-				</section>
+				<?php if ( $is_loja_category ) : ?>
+					<?php
+					get_template_part(
+						'components/grid-loja/grid-loja',
+						null,
+						array(
+							'term_id'        => (int) $term->term_id,
+							'posts_per_page' => 12,
+						)
+					);
+					?>
+				<?php else : ?>
+					<section
+						class="archive-grid page-not-found-grid<?php echo $is_mixed ? ' page-not-found-grid--mixed' : ''; ?>"
+						aria-label="<?php esc_attr_e( 'Posts sugeridos', 'aptox' ); ?>"
+					>
+						<?php foreach ( $posts as $post ) : ?>
+							<?php $render_card( $post ); ?>
+						<?php endforeach; ?>
+					</section>
+				<?php endif; ?>
 			</div>
 		</div>
 	<?php endif; ?>
 </section>
+
+<?php if ( $is_loja_category ) : ?>
+	<?php get_template_part( 'components/filter-nav/filter-nav-loja' ); ?>
+<?php endif; ?>

@@ -7,6 +7,8 @@
 
 namespace Aptox\Core;
 
+use Aptox\Services\NotFoundService;
+
 class Assets {
 	/**
 	 * Register asset hooks.
@@ -82,6 +84,8 @@ class Assets {
 		$this->enqueue_filter_nav_styles();
 		$this->enqueue_casa_page_styles();
 		$this->enqueue_celebre_page_styles();
+		$this->enqueue_loja_page_styles();
+		$this->enqueue_footer_loja_styles();
 	}
 
 	/**
@@ -99,6 +103,7 @@ class Assets {
 			&& ! is_tax( 'celebracao_categoria' )
 			&& ! is_tax( 'celebracao' )
 			&& ! is_page_template( 'templates/page-celebration.php' )
+			&& ! $this->is_loja_context()
 		) {
 			return;
 		}
@@ -211,12 +216,121 @@ class Assets {
 	}
 
 	/**
+	 * Enqueue Loja page component styles (not always in stale build bundles).
+	 *
+	 * @return void
+	 */
+	private function enqueue_loja_page_styles() {
+		if ( ! $this->is_loja_context() ) {
+			return;
+		}
+
+		$deps = file_exists( get_template_directory() . '/assets/build/main.css' )
+			? array( 'aptox-main' )
+			: array( 'aptox-components' );
+
+		$components = array(
+			'aptox-loja-cta'   => '/components/loja-cta/loja-cta.css',
+			'aptox-grid-loja'  => '/components/grid-loja/grid-loja.css',
+			'aptox-page-loja'  => '/components/page-loja/page-loja.css',
+		);
+
+		foreach ( $components as $handle => $relative_path ) {
+			$file_path = get_template_directory() . $relative_path;
+
+			if ( ! file_exists( $file_path ) ) {
+				continue;
+			}
+
+			wp_enqueue_style(
+				$handle,
+				get_template_directory_uri() . $relative_path,
+				$deps,
+				(string) filemtime( $file_path )
+			);
+		}
+	}
+
+	/**
+	 * Whether the current request should load Loja page styles.
+	 *
+	 * @return bool
+	 */
+	private function is_loja_context() {
+		if (
+			is_post_type_archive( 'loja' )
+			|| is_tax( 'loja_categoria' )
+			|| is_page_template( 'templates/page-loja.php' )
+		) {
+			return true;
+		}
+
+		if ( ! is_404() ) {
+			return false;
+		}
+
+		$context = NotFoundService::get_context();
+		$term    = $context['term'] ?? null;
+
+		return $term instanceof \WP_Term && 'loja_categoria' === $term->taxonomy;
+	}
+
+	/**
+	 * Enqueue footer Loja carousel assets on every page.
+	 *
+	 * @return void
+	 */
+	private function enqueue_footer_loja_styles() {
+		$file_path = get_template_directory() . '/components/footer-loja/footer-loja.css';
+
+		if ( ! file_exists( $file_path ) ) {
+			return;
+		}
+
+		$deps = array();
+
+		if ( wp_style_is( 'aptox-main', 'registered' ) || wp_style_is( 'aptox-main', 'enqueued' ) ) {
+			$deps[] = 'aptox-main';
+		} elseif ( wp_style_is( 'aptox-components', 'registered' ) || wp_style_is( 'aptox-components', 'enqueued' ) ) {
+			$deps[] = 'aptox-components';
+		}
+
+		wp_enqueue_style(
+			'aptox-footer-loja',
+			get_template_directory_uri() . '/components/footer-loja/footer-loja.css',
+			$deps,
+			(string) filemtime( $file_path )
+		);
+	}
+
+	/**
+	 * Enqueue footer Loja carousel script on every page.
+	 *
+	 * @return void
+	 */
+	private function enqueue_footer_loja_script() {
+		$file_path = get_template_directory() . '/components/footer-loja/footer-loja.js';
+
+		if ( ! file_exists( $file_path ) ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			'aptox-footer-loja',
+			get_template_directory_uri() . '/components/footer-loja/footer-loja.js',
+			array(),
+			(string) filemtime( $file_path ),
+			true
+		);
+	}
+
+	/**
 	 * Enqueue scripts with conditional loading.
 	 *
 	 * @return void
 	 */
 	private function enqueue_scripts() {
-		$should_enqueue_global_archive_load_more = is_archive() || is_tax() || is_search();
+		$should_enqueue_global_archive_load_more = is_archive() || is_tax() || is_search() || $this->is_loja_context();
 
 		$build_js_path = get_template_directory() . '/assets/build/main.js';
 		if ( file_exists( $build_js_path ) ) {
@@ -237,6 +351,8 @@ class Assets {
 			if ( $should_enqueue_global_archive_load_more ) {
 				$this->enqueue_archive_load_more_script( array( 'aptox-main' ) );
 			}
+
+			$this->enqueue_footer_loja_script();
 		} else {
 			wp_enqueue_script(
 				'aptox-search-modal',
@@ -253,6 +369,8 @@ class Assets {
 				'1.0',
 				true
 			);
+
+			$this->enqueue_footer_loja_script();
 
 			if ( is_singular() ) {
 				wp_enqueue_script(

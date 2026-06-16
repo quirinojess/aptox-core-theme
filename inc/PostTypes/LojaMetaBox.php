@@ -16,6 +16,8 @@ class LojaMetaBox {
 	public function register() {
 		add_action( 'add_meta_boxes', array( $this, 'register_meta_box' ) );
 		add_action( 'save_post_loja', array( $this, 'save_meta' ), 10, 2 );
+		add_action( 'save_post_loja', array( $this, 'clear_footer_cache' ) );
+		add_action( 'deleted_post', array( $this, 'maybe_clear_footer_cache' ) );
 	}
 
 	/**
@@ -103,5 +105,26 @@ class LojaMetaBox {
 			'link_compra',
 			esc_url_raw( wp_unslash( (string) $_POST['link_compra'] ) )
 		);
+	}
+
+	/**
+	 * Clear cached footer carousel after product updates.
+	 *
+	 * @return void
+	 */
+	public function clear_footer_cache() {
+		delete_transient( 'aptox_footer_loja_v6' );
+	}
+
+	/**
+	 * Clear cached footer carousel when a product is deleted.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return void
+	 */
+	public function maybe_clear_footer_cache( $post_id ) {
+		if ( 'loja' === get_post_type( $post_id ) ) {
+			delete_transient( 'aptox_footer_loja_v6' );
+		}
 	}
 }
