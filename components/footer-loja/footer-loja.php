@@ -13,56 +13,54 @@ if ( ! post_type_exists( 'loja' ) ) {
 	return;
 }
 
-$cache_key   = 'aptox_footer_loja_v7';
-$cached_html = get_transient( $cache_key );
-
-if ( false !== $cached_html ) {
-	echo $cached_html;
-	return;
-}
-
-$query = new WP_Query(
-	array(
-		'post_type'              => 'loja',
-		'posts_per_page'         => -1,
-		'post_status'            => 'publish',
-		'ignore_sticky_posts'    => true,
-		'no_found_rows'          => true,
-		'update_post_term_cache' => false,
-		'update_post_meta_cache' => true,
-		'orderby'                => 'date',
-		'order'                  => 'DESC',
-	)
-);
-
-if ( ! $query->have_posts() ) {
-	wp_reset_postdata();
-	return;
-}
-
-$items = array();
-
-while ( $query->have_posts() ) {
-	$query->the_post();
-
-	if ( ! has_post_thumbnail() ) {
-		continue;
-	}
-
-	$link_compra = get_post_meta( get_the_ID(), 'link_compra', true );
-	$url         = $link_compra ? $link_compra : get_permalink();
-
-	$items[] = array(
-		'title' => get_the_title(),
-		'url'   => $url,
-		'image' => get_the_post_thumbnail( null, 'medium', array( 'loading' => 'lazy' ) ),
-	);
-}
-
-wp_reset_postdata();
+$cache_key    = function_exists( 'aptox_footer_loja_cache_key' ) ? aptox_footer_loja_cache_key() : 'aptox_footer_loja_v8';
+$cached_items = get_transient( $cache_key );
+$items        = is_array( $cached_items ) ? $cached_items : array();
 
 if ( empty( $items ) ) {
-	return;
+	$query = new WP_Query(
+		array(
+			'post_type'              => 'loja',
+			'posts_per_page'         => -1,
+			'post_status'            => 'publish',
+			'ignore_sticky_posts'    => true,
+			'no_found_rows'          => true,
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => true,
+			'orderby'                => 'date',
+			'order'                  => 'DESC',
+		)
+	);
+
+	if ( ! $query->have_posts() ) {
+		wp_reset_postdata();
+		return;
+	}
+
+	while ( $query->have_posts() ) {
+		$query->the_post();
+
+		if ( ! has_post_thumbnail() ) {
+			continue;
+		}
+
+		$link_compra = get_post_meta( get_the_ID(), 'link_compra', true );
+		$url         = $link_compra ? $link_compra : get_permalink();
+
+		$items[] = array(
+			'id'    => get_the_ID(),
+			'title' => get_the_title(),
+			'url'   => $url,
+		);
+	}
+
+	wp_reset_postdata();
+
+	if ( empty( $items ) ) {
+		return;
+	}
+
+	set_transient( $cache_key, $items, HOUR_IN_SECONDS );
 }
 
 ob_start();
@@ -92,6 +90,15 @@ ob_start();
 
 				<div class="tags-track footer-loja__track">
 					<?php foreach ( $items as $item ) : ?>
+						<?php
+						$image = function_exists( 'aptox_render_loja_thumbnail' )
+							? aptox_render_loja_thumbnail( (int) $item['id'], 'medium' )
+							: get_the_post_thumbnail( (int) $item['id'], 'medium', array( 'loading' => 'eager' ) );
+
+						if ( '' === $image ) {
+							continue;
+						}
+						?>
 						<article class="footer-loja__item tag-item-wrapper">
 							<a
 								href="<?php echo esc_url( $item['url'] ); ?>"
@@ -101,7 +108,7 @@ ob_start();
 								aria-label="<?php echo esc_attr( sprintf( __( 'Comprar %s', 'aptox' ), $item['title'] ) ); ?>"
 							>
 								<figure class="footer-loja__media">
-									<?php echo $item['image']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+									<?php echo $image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</figure>
 
 								<span class="footer-loja__overlay">
@@ -132,8 +139,4 @@ ob_start();
 </section>
 
 <?php
-$html = ob_get_clean();
-
-set_transient( $cache_key, $html, HOUR_IN_SECONDS );
-
-echo $html;
+echo ob_get_clean();

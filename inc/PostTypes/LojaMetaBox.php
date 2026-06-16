@@ -113,7 +113,12 @@ class LojaMetaBox {
 	 * @return void
 	 */
 	public function clear_footer_cache() {
-		delete_transient( 'aptox_footer_loja_v6' );
+		if ( function_exists( 'aptox_clear_footer_loja_cache' ) ) {
+			aptox_clear_footer_loja_cache();
+			return;
+		}
+
+		delete_transient( 'aptox_footer_loja_v8' );
 	}
 
 	/**
@@ -124,7 +129,7 @@ class LojaMetaBox {
 	 */
 	public function maybe_clear_footer_cache( $post_id ) {
 		if ( 'loja' === get_post_type( $post_id ) ) {
-			delete_transient( 'aptox_footer_loja_v6' );
+			$this->clear_footer_cache();
 		}
 	}
 }

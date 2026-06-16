@@ -89,9 +89,9 @@
     scroll-behavior: smooth;
     cursor: grab;
     padding: 0 var(--space-lg) var(--space-xs);
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    width: 100vw;
+    margin-left: calc(50% - var(--viewport-half));
+    margin-right: calc(50% - var(--viewport-half));
+    width: var(--viewport-width);
   }
 
   .recipe-tag-filter__tags.is-dragging {

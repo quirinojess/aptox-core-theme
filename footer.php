@@ -34,7 +34,13 @@ $social_links = array(
 
 	</div>
 
-<?php get_template_part( 'components/footer-loja/footer-loja' ); ?>
+<?php if ( function_exists( 'aptox_show_footer_loja' ) && aptox_show_footer_loja() ) : ?>
+	<?php if ( function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home() ) : ?>
+<div class="footer-loja-band" aria-hidden="true"></div>
+	<?php endif; ?>
+
+	<?php get_template_part( 'components/footer-loja/footer-loja' ); ?>
+<?php endif; ?>
 
 <section
 	class="site-footer-midia"

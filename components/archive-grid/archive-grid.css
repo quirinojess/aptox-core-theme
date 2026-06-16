@@ -103,7 +103,43 @@
     margin-top: var(--space-md);
   }
 
-  .archive-load-more .page-numbers {
+  .archive-load-more__trigger {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
     cursor: pointer;
+    font-family: var(--font-display);
+    font-size: var(--font-size-md);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: none;
+    color: var(--dark);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+
+  .archive-load-more__trigger:hover,
+  .archive-load-more__trigger:focus-visible {
+    opacity: 0.6;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .archive-load-more__trigger:disabled {
+    opacity: 0.45;
+    cursor: wait;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .archive-load-more__trigger {
+      transition: none;
+    }
   }
 

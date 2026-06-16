@@ -66,6 +66,10 @@
   --container-padding: 25px;
   --container-margin:  30px;
 
+  /* Full-bleed breakout (svw avoids horizontal scroll from scrollbar width). */
+  --viewport-width: 100vw;
+  --viewport-half: 50vw;
+
   --bullet-size: 10px;
   --bullet-offset: 0.62em;
 
@@ -128,12 +132,20 @@
   --z-overlay: 3000;
 }
 
+@supports (width: 100svw) {
+  :root {
+    --viewport-width: 100svw;
+    --viewport-half: 50svw;
+  }
+}
+
 /* Section: Global reset & document behavior */
 
 html {
   font-size: 100%;
   scroll-behavior: smooth;
   scroll-margin-top: 200px;
+  overflow-x: clip;
 }
 
 *,
@@ -169,6 +181,7 @@ body {
 
 .single #content a:not(.post-image-pin__button),
 .single .content-recipe a:not(.post-image-pin__button) {
+  padding-bottom: 3px;
   text-decoration: underline dotted 2px;
   text-underline-offset: 0.15em;
   text-decoration-color: currentColor;
@@ -321,6 +334,8 @@ h6 {
 .single #content ol,
 .single .content-recipe ol,
 .page main > section.container ol {
+  --editorial-ol-item-space: var(--space-md);
+
   list-style: none;
   margin: var(--space-md) 0;
   padding: 0 var(--space-sm);
@@ -330,30 +345,41 @@ h6 {
 .single #content ol li,
 .single .content-recipe ol li,
 .page main > section.container ol li {
-  display: grid;
-  grid-template-columns: 46px minmax(0, 1fr);
-  column-gap: var(--space-md);
-  align-items: start;
+  position: relative;
+  display: block;
+  padding-left: calc(46px + var(--space-md));
   counter-increment: editorial;
 
-  margin: 0 0 var(--space-md);
-  padding: 0 0 var(--space-sm);
+  margin: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: var(--editorial-ol-item-space);
   border-bottom: 2px dotted var(--dark);
   color: var(--dark);
+  line-height: var(--line-height-list);
+}
+
+.single #content ol li + li,
+.single .content-recipe ol li + li,
+.page main > section.container ol li + li {
+  padding-top: var(--editorial-ol-item-space);
 }
 
 .single #content ol li:last-child,
 .single .content-recipe ol li:last-child,
 .page main > section.container ol li:last-child {
-  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .single #content ol li::before,
 .single .content-recipe ol li::before,
 .page main > section.container ol li::before {
   content: counter(editorial, decimal-leading-zero);
-  grid-column: 1;
-  grid-row: 1 / -1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 46px;
 
   font-family: var(--font-display);
   font-size: var(--font-size-display-sm);
@@ -363,31 +389,33 @@ h6 {
   color: var(--dark);
 }
 
-.single #content ol li > *,
-.single .content-recipe ol li > *,
-.page main > section.container ol li > * {
-  grid-column: 2;
-  min-width: 0;
+.single #content ol li a:not(.post-image-pin__button),
+.single .content-recipe ol li a:not(.post-image-pin__button),
+.page main > section.container ol li a:not(.post-image-pin__button) {
+  display: inline;
+  padding-bottom: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  color: var(--dark);
+  text-decoration: none;
+  border-bottom: none;
+  text-underline-offset: unset;
+  text-decoration-color: unset;
+  transition: opacity 0.35s ease;
 }
 
-.single #content ol li > a,
 .single #content ol li > strong,
-.single .content-recipe ol li > a,
 .single .content-recipe ol li > strong,
-.page main > section.container ol li > a,
 .page main > section.container ol li > strong {
-  display: block;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--font-size-md);
-  font-weight: 400;
-  line-height: 1.25;
-  color: var(--dark);
+  font-weight: 700;
 }
 
 .single #content ol li > p,
 .single .content-recipe ol li > p,
 .page main > section.container ol li > p {
+  display: block;
   margin: var(--space-xs) 0 0;
   font-family: var(--font-base);
   font-size: var(--font-size-xs);
@@ -395,18 +423,16 @@ h6 {
   font-weight: 400;
 }
 
-.single #content ol li a:hover,
-.single .content-recipe ol li a:hover,
-.page main > section.container ol li a:hover {
+.single #content ol li a:not(.post-image-pin__button):hover,
+.single .content-recipe ol li a:not(.post-image-pin__button):hover,
+.page main > section.container ol li a:not(.post-image-pin__button):hover,
+.single #content ol li a:not(.post-image-pin__button):focus-visible,
+.single .content-recipe ol li a:not(.post-image-pin__button):focus-visible,
+.page main > section.container ol li a:not(.post-image-pin__button):focus-visible {
   opacity: 0.75;
-}
-
-.single #content ol li p a,
-.single .content-recipe ol li p a,
-.page main > section.container ol li p a {
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
+  text-decoration: none;
+  border-bottom: none;
+  text-decoration-color: transparent;
 }
 
 @media (max-width: 768px) {
@@ -414,9 +440,16 @@ h6 {
     padding-inline: 0;
   }
 
+  .single #content ol li,
+  .single .content-recipe ol li,
   .page main > section.container ol li {
-    grid-template-columns: 32px minmax(0, 1fr);
-    column-gap: var(--space-sm);
+    padding-left: calc(32px + var(--space-sm));
+  }
+
+  .single #content ol li::before,
+  .single .content-recipe ol li::before,
+  .page main > section.container ol li::before {
+    width: 32px;
   }
 
   .page main > section.container ul {

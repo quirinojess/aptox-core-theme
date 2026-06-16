@@ -34,7 +34,7 @@ $next_label = sprintf(
 <div class="archive-load-more">
 	<button
 		type="button"
-		class="next page-numbers"
+		class="archive-load-more__trigger"
 		data-load-more-global
 		data-grid-selector="<?php echo esc_attr( $grid_selector ); ?>"
 		data-card-selector="<?php echo esc_attr( $card_selector ); ?>"

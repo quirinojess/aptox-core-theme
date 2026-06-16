@@ -53,6 +53,7 @@
 }
 
 .page-contato-intro a {
+  padding-bottom: 3px;
   color: inherit;
   text-decoration: underline dotted 2px;
   text-underline-offset: 0.15em;

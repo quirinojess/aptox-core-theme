@@ -328,6 +328,98 @@ if ( ! function_exists( 'aptox_is_lazy_home' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_is_receita_context' ) ) {
+	/**
+	 * Whether the current view belongs to the Receitas section.
+	 *
+	 * @return bool
+	 */
+	function aptox_is_receita_context() {
+		return is_singular( 'receitas' )
+			|| is_tax( 'receita_categoria' )
+			|| is_tax( 'receita_tag' )
+			|| is_post_type_archive( 'receitas' )
+			|| is_page_template( 'templates/page-receitas.php' );
+	}
+}
+
+if ( ! function_exists( 'aptox_show_footer_loja' ) ) {
+	/**
+	 * Whether the footer Loja carousel should render.
+	 *
+	 * @return bool
+	 */
+	function aptox_show_footer_loja() {
+		if ( ! post_type_exists( 'loja' ) || aptox_is_receita_context() ) {
+			return false;
+		}
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'aptox_footer_loja_cache_key' ) ) {
+	/**
+	 * Transient key for cached footer Loja carousel data.
+	 *
+	 * @return string
+	 */
+	function aptox_footer_loja_cache_key() {
+		return 'aptox_footer_loja_v8';
+	}
+}
+
+if ( ! function_exists( 'aptox_clear_footer_loja_cache' ) ) {
+	/**
+	 * Clear cached footer Loja carousel data.
+	 *
+	 * @return void
+	 */
+	function aptox_clear_footer_loja_cache() {
+		delete_transient( aptox_footer_loja_cache_key() );
+
+		// Legacy HTML caches generated while lazy-load plugins were active.
+		foreach ( array( 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7' ) as $version ) {
+			delete_transient( 'aptox_footer_loja_' . $version );
+		}
+	}
+}
+
+if ( ! function_exists( 'aptox_render_loja_thumbnail' ) ) {
+	/**
+	 * Render a Loja product thumbnail without plugin-dependent lazy markup.
+	 *
+	 * @param int          $post_id Post ID.
+	 * @param string|int[] $size    Image size.
+	 * @param array        $args    Extra attributes.
+	 * @return string
+	 */
+	function aptox_render_loja_thumbnail( $post_id, $size = 'medium', $args = array() ) {
+		$post_id = (int) $post_id;
+
+		if ( $post_id <= 0 || ! has_post_thumbnail( $post_id ) ) {
+			return '';
+		}
+
+		$image_alt = get_post_meta( get_post_thumbnail_id( $post_id ), '_wp_attachment_image_alt', true );
+
+		if ( ! is_string( $image_alt ) || '' === $image_alt ) {
+			$image_alt = get_the_title( $post_id );
+		}
+
+		$args = wp_parse_args(
+			$args,
+			array(
+				'loading'  => 'eager',
+				'decoding' => 'async',
+				'alt'      => $image_alt,
+			)
+		);
+
+		return get_the_post_thumbnail( $post_id, $size, $args );
+	}
+}
+
 if ( ! function_exists( 'aptox_is_lazy_celebre' ) ) {
 	/**
 	 * Whether the current view uses the lazy-loaded Celebre layout.

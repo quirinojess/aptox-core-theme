@@ -51,7 +51,9 @@ $get_term_thumbnail = static function ( $term_id ) {
 	}
 
 	$query->the_post();
-	$image = has_post_thumbnail() ? get_the_post_thumbnail( null, 'thumbnail' ) : '';
+	$image = function_exists( 'aptox_render_loja_thumbnail' )
+		? aptox_render_loja_thumbnail( get_the_ID(), 'thumbnail' )
+		: ( has_post_thumbnail() ? get_the_post_thumbnail( null, 'thumbnail', array( 'loading' => 'eager' ) ) : '' );
 	wp_reset_postdata();
 
 	return $image;
@@ -76,7 +78,9 @@ $get_archive_thumbnail = static function () {
 	}
 
 	$query->the_post();
-	$image = has_post_thumbnail() ? get_the_post_thumbnail( null, 'thumbnail' ) : '';
+	$image = function_exists( 'aptox_render_loja_thumbnail' )
+		? aptox_render_loja_thumbnail( get_the_ID(), 'thumbnail' )
+		: ( has_post_thumbnail() ? get_the_post_thumbnail( null, 'thumbnail', array( 'loading' => 'eager' ) ) : '' );
 	wp_reset_postdata();
 
 	return $image;
