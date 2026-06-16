@@ -24,7 +24,7 @@ if ( 'auto' === $layout ) {
 
 $is_horizontal      = 'horizontal' === $layout;
 $section_class      = $is_horizontal ? 'about-author about-author--horizontal' : 'about-author about-author--vertical';
-$author_title       = aptox_hand_text( __( 'Olá, sou jess', 'aptox' ), false );
+$author_title       = __( 'Olá, sou Jess!', 'aptox' );
 $author_bio         = __(
 	'Escrevo diretamente da cidade de Curitiba, Brasil. Sou apaixonada por decoração, culinária e uma vida estilo "feito a mão". Gosto de escrever sobre tudo que me inspira e acredito em uma vida feita com mais amor.',
 	'aptox'

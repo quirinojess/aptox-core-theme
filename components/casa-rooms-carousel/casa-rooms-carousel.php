@@ -103,7 +103,7 @@ ob_start();
 			aria-label="<?php echo esc_attr__( 'Ver ambientes anteriores', 'aptox' ); ?>"
 			disabled
 		>
-			<span class="recipe-tags-nav__icon" aria-hidden="true">‹</span>
+			<span class="recipe-tags-nav__icon"><?php echo aptox_chevron_icon( 'left' ); ?></span>
 		</button>
 
 		<div class="tags-track">
@@ -131,7 +131,7 @@ ob_start();
 			class="recipe-tags-nav recipe-tags-nav--next"
 			aria-label="<?php echo esc_attr__( 'Ver próximos ambientes', 'aptox' ); ?>"
 		>
-			<span class="recipe-tags-nav__icon" aria-hidden="true">›</span>
+			<span class="recipe-tags-nav__icon"><?php echo aptox_chevron_icon( 'right' ); ?></span>
 		</button>
 			</div>
 		</div>

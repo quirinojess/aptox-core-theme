@@ -85,15 +85,29 @@ ob_start();
 					aria-label="<?php echo esc_attr__( 'Ver produtos anteriores', 'aptox' ); ?>"
 					disabled
 				>
-					<span class="recipe-tags-nav__icon" aria-hidden="true">‹</span>
+					<span class="recipe-tags-nav__icon"><?php echo aptox_chevron_icon( 'left' ); ?></span>
 				</button>
 
 				<div class="tags-track footer-loja__track">
 					<?php foreach ( $items as $item ) : ?>
 						<?php
 						$image = function_exists( 'aptox_render_loja_thumbnail' )
-							? aptox_render_loja_thumbnail( (int) $item['id'], 'medium' )
-							: get_the_post_thumbnail( (int) $item['id'], 'medium', array( 'loading' => 'eager' ) );
+							? aptox_render_loja_thumbnail(
+								(int) $item['id'],
+								'thumbnail',
+								array(
+									'loading' => 'lazy',
+									'sizes'   => '132px',
+								)
+							)
+							: get_the_post_thumbnail(
+								(int) $item['id'],
+								'thumbnail',
+								array(
+									'loading' => 'lazy',
+									'sizes'   => '132px',
+								)
+							);
 
 						if ( '' === $image ) {
 							continue;
@@ -131,7 +145,7 @@ ob_start();
 					class="recipe-tags-nav recipe-tags-nav--next"
 					aria-label="<?php echo esc_attr__( 'Ver próximos produtos', 'aptox' ); ?>"
 				>
-					<span class="recipe-tags-nav__icon" aria-hidden="true">›</span>
+					<span class="recipe-tags-nav__icon"><?php echo aptox_chevron_icon( 'right' ); ?></span>
 				</button>
 			</div>
 		</div>

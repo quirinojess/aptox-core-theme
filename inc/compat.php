@@ -603,3 +603,137 @@ if ( ! function_exists( 'aptox_render_archive_load_more' ) ) {
 		get_template_part( 'components/archive-grid/archive-load-more', null, $args );
 	}
 }
+
+if ( ! function_exists( 'aptox_chevron_icon' ) ) {
+	/**
+	 * Render a carousel chevron icon.
+	 *
+	 * @param string $direction Icon direction. Accepts `left` or `right`.
+	 * @return string
+	 */
+	function aptox_chevron_icon( $direction = 'right' ) {
+		$paths = array(
+			'left'  => 'M13 4l-6 6 6 6',
+			'right' => 'M7 16l6-6-6-6',
+		);
+
+		$path = isset( $paths[ $direction ] ) ? $paths[ $direction ] : $paths['right'];
+
+		return sprintf(
+			'<svg class="aptox-chevron-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="%s"></path></svg>',
+			esc_attr( $path )
+		);
+	}
+}
+
+if ( ! function_exists( 'aptox_theme_image_uri' ) ) {
+	/**
+	 * Resolve a theme image URI, preferring lighter optimized formats.
+	 *
+	 * @param string $basename File basename without extension.
+	 * @return string
+	 */
+	function aptox_theme_image_uri( $basename ) {
+		$basename = sanitize_file_name( (string) $basename );
+
+		if ( '' === $basename ) {
+			return '';
+		}
+
+		$directory = get_template_directory() . '/assets/img/';
+		$base_uri  = get_template_directory_uri() . '/assets/img/';
+		$formats   = array( 'webp', 'jpg', 'jpeg', 'png' );
+
+		foreach ( $formats as $format ) {
+			if ( file_exists( $directory . $basename . '.' . $format ) ) {
+				return $base_uri . $basename . '.' . $format;
+			}
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'aptox_theme_image_meta' ) ) {
+	/**
+	 * Read width and height for a theme image.
+	 *
+	 * @param string $basename File basename without extension.
+	 * @return array{width:int,height:int}
+	 */
+	function aptox_theme_image_meta( $basename ) {
+		$basename = sanitize_file_name( (string) $basename );
+		$path     = '';
+
+		foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $format ) {
+			$candidate = get_template_directory() . '/assets/img/' . $basename . '.' . $format;
+
+			if ( file_exists( $candidate ) ) {
+				$path = $candidate;
+				break;
+			}
+		}
+
+		if ( '' === $path ) {
+			return array(
+				'width'  => 0,
+				'height' => 0,
+			);
+		}
+
+		$size = function_exists( 'wp_getimagesize' ) ? wp_getimagesize( $path ) : getimagesize( $path );
+
+		return array(
+			'width'  => isset( $size[0] ) ? (int) $size[0] : 0,
+			'height' => isset( $size[1] ) ? (int) $size[1] : 0,
+		);
+	}
+}
+
+if ( ! function_exists( 'aptox_render_post_thumbnail' ) ) {
+	/**
+	 * Render a post thumbnail with theme defaults.
+	 *
+	 * @param int|\WP_Post|null $post  Post object, ID, or current loop item.
+	 * @param string|int[] $size  Image size.
+	 * @param array        $attrs Extra attributes.
+	 * @return string
+	 */
+	function aptox_render_post_thumbnail( $post, $size = 'aptox-card', $attrs = array() ) {
+		$post_id = $post instanceof \WP_Post ? (int) $post->ID : (int) $post;
+
+		if ( $post_id <= 0 ) {
+			$post_id = get_the_ID() ? (int) get_the_ID() : 0;
+		}
+
+		if ( $post_id <= 0 || ! has_post_thumbnail( $post_id ) ) {
+			return '';
+		}
+
+		$defaults = array(
+			'loading'  => 'lazy',
+			'decoding' => 'async',
+		);
+
+		return get_the_post_thumbnail( $post_id, $size, wp_parse_args( $attrs, $defaults ) );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_post_thumbnail_src' ) ) {
+	/**
+	 * Resolve a post thumbnail URL for a theme image size.
+	 *
+	 * @param int|\WP_Post $post Post object or ID.
+	 * @param string|int[] $size Image size.
+	 * @return string
+	 */
+	function aptox_get_post_thumbnail_src( $post, $size = 'aptox-feature' ) {
+		$url = get_the_post_thumbnail_url( $post, $size );
+
+		if ( $url ) {
+			return (string) $url;
+		}
+
+		return (string) get_the_post_thumbnail_url( $post, 'medium_large' );
+	}
+}

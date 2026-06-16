@@ -9,14 +9,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cta_image = get_template_directory_uri() . '/assets/img/home-cta.jpg';
+$cta_image = aptox_theme_image_uri( 'home-cta' );
+$cta_meta  = aptox_theme_image_meta( 'home-cta' );
 ?>
 
 <section
 	class="casa-cta"
 	aria-labelledby="casa-cta-title"
-	style="--casa-cta-image: url('<?php echo esc_url( $cta_image ); ?>');"
 >
+	<?php if ( $cta_image ) : ?>
+		<img
+			class="casa-cta__image"
+			src="<?php echo esc_url( $cta_image ); ?>"
+			alt=""
+			width="<?php echo esc_attr( (string) $cta_meta['width'] ); ?>"
+			height="<?php echo esc_attr( (string) $cta_meta['height'] ); ?>"
+			fetchpriority="high"
+			decoding="async"
+		>
+	<?php endif; ?>
 	<div class="casa-cta-inner">
 		<div class="casa-cta-content">
 			<h2 id="casa-cta-title" class="casa-cta-title">

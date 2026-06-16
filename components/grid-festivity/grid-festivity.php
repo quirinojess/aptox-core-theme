@@ -105,7 +105,7 @@ ob_start();
 							disabled
 							hidden
 						>
-							<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+							<span class="grid-festivity-nav__icon"><?php echo aptox_chevron_icon( 'left' ); ?></span>
 						</button>
 
 						<button
@@ -114,7 +114,7 @@ ob_start();
 							aria-label="<?php echo esc_attr__( 'Ver próximas festividades', 'aptox' ); ?>"
 							hidden
 						>
-							<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+							<span class="grid-festivity-nav__icon"><?php echo aptox_chevron_icon( 'right' ); ?></span>
 						</button>
 					</div>
 

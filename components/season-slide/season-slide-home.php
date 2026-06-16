@@ -60,7 +60,7 @@ $first_post_id = get_the_ID();
 $initial = array(
   'title'   => get_the_title(),
   'excerpt' => wp_trim_words( get_the_excerpt(), 26 ),
-  'image'   => get_the_post_thumbnail_url( $first_post_id, 'large' ),
+  'image'   => aptox_get_post_thumbnail_src( $first_post_id, 'aptox-feature' ),
   'link'    => get_permalink(),
 );
 
@@ -97,13 +97,18 @@ $badge = aptox_get_season_badge_data( $season_label );
       id="season-slide-post"
     >
 
-      <?php if ( $initial['image'] ) : ?>
+      <?php if ( has_post_thumbnail( $first_post_id ) ) : ?>
         <figure class="season-slide-image">
-          <img
-            src="<?php echo esc_url( $initial['image'] ); ?>"
-            alt="<?php echo esc_attr( $initial['title'] ); ?>"
-            loading="lazy"
-          >
+          <?php
+          echo aptox_render_post_thumbnail(
+            $first_post_id,
+            'aptox-feature',
+            array(
+              'loading' => 'lazy',
+              'alt'     => $initial['title'],
+            )
+          );
+          ?>
 
           <?php if ( ! empty( $badge['text'] ) ) : ?>
             <div
@@ -190,7 +195,7 @@ $badge = aptox_get_season_badge_data( $season_label );
             class="season-slide-item"
             data-title="<?php echo esc_attr( get_the_title() ); ?>"
             data-excerpt="<?php echo esc_attr( wp_trim_words( get_the_excerpt(), 26 ) ); ?>"
-            data-image="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>"
+            data-image="<?php echo esc_url( aptox_get_post_thumbnail_src( get_the_ID(), 'aptox-feature' ) ); ?>"
             data-link="<?php the_permalink(); ?>"
           >
             <div class="season-slide-item-content">

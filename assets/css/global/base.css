@@ -306,6 +306,10 @@ h6 {
     --line-height-h6: 22px;
   }
 
+  body {
+    padding-top: calc(var(--space-xxl) - 20px);
+  }
+
 }
 
 
@@ -538,6 +542,14 @@ h6 {
   .page main > section.container ul li:hover::after {
     transform: translateY(-50%) scale(1);
   }
+}
+
+/* Section: Carousel chevron icons */
+
+.aptox-chevron-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
 }
 
 blockquote {

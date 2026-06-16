@@ -41,6 +41,7 @@ class Theme {
 
 		( new Setup() )->register();
 		( new Assets() )->register();
+		( new CacheHeaders() )->register();
 		( new ContentFilters( $likes_service ) )->register();
 		( new LikesEndpoint( $likes_service ) )->register();
 		( new HomeSectionsEndpoint() )->register();
@@ -61,6 +62,7 @@ class Theme {
 		$files = array(
 			$base . '/Core/Setup.php',
 			$base . '/Core/Assets.php',
+			$base . '/Core/CacheHeaders.php',
 			$base . '/Services/SeasonService.php',
 			$base . '/Services/CelebreSeasonService.php',
 			$base . '/Services/NotFoundService.php',

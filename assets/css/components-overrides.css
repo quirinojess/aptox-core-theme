@@ -1,0 +1,20 @@
+/* Section: Handwritten typography (mobile weight override) */
+
+@media (max-width: 768px) {
+  h5,
+  h6,
+  .about-author-title,
+  .cta-season-name,
+  .casa-cta-title-hand,
+  .casa-organizacao-title-hand,
+  .celebre-cta-title-hand,
+  .season-slide-aside-title,
+  .grid-festivity-season,
+  .grid-recipe-season,
+  .recipe-section-heading__hand,
+  .index-cta-title-hand,
+  .post-side-newsletter__title-hand,
+  .youtube-feed-brand {
+    font-weight: var(--font-hand-weight, 600);
+  }
+}

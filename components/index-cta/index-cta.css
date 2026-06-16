@@ -16,10 +16,16 @@
   margin-bottom: 0;
 
   background-color: var(--off-white);
-  background-image: var(--index-cta-image);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: var(--index-cta-bg-position);
+}
+
+.index-cta__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--index-cta-bg-position);
 }
 
 /* Section: Index CTA (gradient overlay for text legibility) */

@@ -72,7 +72,7 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 		<?php endif; ?>
 
 		<h2 id="<?php echo esc_attr( $section_id ); ?>" class="celebre-block-title">
-			<span class="celebre-block-title-display"><?php esc_html_e( 'celebre', 'aptox' ); ?></span>
+			<span class="celebre-block-title-display"><?php esc_html_e( 'Celebre', 'aptox' ); ?></span>
 			<span class="celebre-block-title-hand"><?php echo esc_html( $label ); ?></span>
 		</h2>
 
@@ -111,7 +111,7 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 								disabled
 								hidden
 							>
-								<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+								<span class="celebre-block-nav__icon"><?php echo aptox_chevron_icon( 'left' ); ?></span>
 							</button>
 							<button
 								type="button"
@@ -119,7 +119,7 @@ $render_title = static function () use ( $section_id, $label, $icon, $icon_base,
 								aria-label="<?php esc_attr_e( 'Ver próximos posts', 'aptox' ); ?>"
 								hidden
 							>
-								<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+								<span class="celebre-block-nav__icon"><?php echo aptox_chevron_icon( 'right' ); ?></span>
 							</button>
 						</div>
 					</div>

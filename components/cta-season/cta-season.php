@@ -75,7 +75,7 @@ if ( ! empty( $season_slug ) && post_type_exists( 'celebracoes' ) ) {
 		if ( $query->have_posts() ) {
 			$query->the_post();
 			$featured_post  = get_post();
-			$featured_image = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+			$featured_image = aptox_get_post_thumbnail_src( get_the_ID(), 'aptox-feature' );
 			$featured_link  = get_permalink();
 			wp_reset_postdata();
 			break;

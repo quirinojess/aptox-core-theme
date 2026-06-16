@@ -84,14 +84,11 @@
 }
 
 .recipe-tags-nav__icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-  font-size: var(--font-size-section);
-  line-height: 1;
-  font-weight: 400;
 }
 
 .recipe-tags-nav:hover:not(:disabled) {

@@ -118,7 +118,7 @@ $render_section_title = static function () use ( $garden_icon ) {
 			</figure>
 
 			<h2 id="grid-casa-jardinagem-title" class="grid-festivity-heading">
-				<?php esc_html_e( 'dicas de', 'aptox' ); ?>
+				<?php esc_html_e( 'Dicas de', 'aptox' ); ?>
 				<span class="grid-festivity-season">
 					<?php esc_html_e( 'jardinagem', 'aptox' ); ?>
 				</span>
@@ -149,7 +149,7 @@ ob_start();
 							disabled
 							hidden
 						>
-							<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+							<span class="grid-festivity-nav__icon"><?php echo aptox_chevron_icon( 'left' ); ?></span>
 						</button>
 
 						<button
@@ -158,7 +158,7 @@ ob_start();
 							aria-label="<?php echo esc_attr__( 'Ver próximos posts', 'aptox' ); ?>"
 							hidden
 						>
-							<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+							<span class="grid-festivity-nav__icon"><?php echo aptox_chevron_icon( 'right' ); ?></span>
 						</button>
 					</div>
 

@@ -52,12 +52,10 @@ $classes   = $is_recipe ? 'back-to-top back-to-top--recipe' : 'back-to-top';
 					d="M 30,7 A 23,23 0 1,1 29.99,7"
 				/>
 			</defs>
-			<text class="back-to-top__text back-to-top__text--circle" text-anchor="middle">
+			<text class="back-to-top__text back-to-top__text--circle" text-anchor="start">
 				<textPath
 					href="#back-to-top-circle"
-					startOffset="50%"
-					lengthAdjust="spacingAndGlyphs"
-					textLength="132"
+					startOffset="2%"
 				>
 					<?php echo esc_html( $arc_text ); ?>
 				</textPath>

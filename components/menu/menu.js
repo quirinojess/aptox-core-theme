@@ -3,9 +3,12 @@
   if (!menu) return;
 
   let isScrolled = false;
+  let scrollTicking = false;
   const SCROLL_TRIGGER = 60;
 
-  window.addEventListener('scroll', () => {
+  const updateScrollState = () => {
+    scrollTicking = false;
+
     if (window.scrollY > SCROLL_TRIGGER && !isScrolled) {
       menu.classList.add('is-scrolled');
       isScrolled = true;
@@ -15,7 +18,18 @@
       menu.classList.remove('is-scrolled');
       isScrolled = false;
     }
-  });
+  };
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!scrollTicking) {
+        requestAnimationFrame(updateScrollState);
+        scrollTicking = true;
+      }
+    },
+    { passive: true }
+  );
 
   const switcher = document.querySelector('.season-switcher');
 

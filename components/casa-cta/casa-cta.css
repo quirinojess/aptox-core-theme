@@ -16,10 +16,16 @@
   margin-bottom: 0;
 
   background-color: var(--off-white);
-  background-image: var(--casa-cta-image);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: var(--casa-cta-bg-position);
+}
+
+.casa-cta__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--casa-cta-bg-position);
 }
 
 .casa-cta::before {

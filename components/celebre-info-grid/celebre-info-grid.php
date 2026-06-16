@@ -59,10 +59,9 @@ $items = array(
 >
 	<div
 		class="info-grid-inner celebre-info-grid__inner"
-		role="list"
 	>
 		<?php foreach ( $items as $item ) : ?>
-			<article class="info-grid-item celebre-info-grid__item" role="listitem">
+			<article class="info-grid-item celebre-info-grid__item">
 				<figure class="info-grid-icon celebre-info-grid__icon" aria-hidden="true">
 					<img
 						src="<?php echo esc_url( $item['icon'] ); ?>"
@@ -72,9 +71,9 @@ $items = array(
 				</figure>
 
 				<div class="info-grid-content celebre-info-grid__content">
-					<h3 class="info-grid-title">
+					<h2 class="info-grid-title">
 						<?php echo esc_html( $item['title'] ); ?>
-					</h3>
+					</h2>
 
 					<p class="info-grid-text">
 						<?php echo esc_html( $item['text'] ); ?>

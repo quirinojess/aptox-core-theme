@@ -39,6 +39,7 @@ class ContentFilters {
 		add_filter( 'the_content', array( $this, 'wrap_leia_tambem_blocks' ), 25 );
 		add_filter( 'the_content', array( $this, 'lazy_load_post_images' ), 30 );
 		add_filter( 'the_content', array( $this, 'add_post_image_pin_buttons' ), 999 );
+		add_filter( 'wp_content_img_tag', array( $this, 'optimize_content_image_tag' ), 10, 3 );
 		add_action( 'wp_head', array( $this, 'render_favicon_links' ) );
 		add_action( 'pre_get_posts', array( $this, 'extend_tag_archive_post_types' ) );
 		add_action( 'pre_get_posts', array( $this, 'filter_archives_by_tag_query_param' ) );
@@ -211,6 +212,45 @@ class ContentFilters {
 			},
 			$content
 		);
+	}
+
+	/**
+	 * Add async decoding to images rendered from post content.
+	 *
+	 * @param string $filtered_image Full img tag.
+	 * @param string $context        Context (e.g. the_content).
+	 * @param int    $attachment_id  Attachment ID.
+	 * @return string
+	 */
+	public function optimize_content_image_tag( $filtered_image, $context, $attachment_id ) {
+		unset( $context );
+
+		$attachment_id = (int) $attachment_id;
+
+		if ( false !== stripos( $filtered_image, 'decoding=' ) ) {
+			$updated = $filtered_image;
+		} else {
+			$updated = preg_replace( '/<img\b/i', '<img decoding="async"', $filtered_image, 1 );
+		}
+
+		if ( $attachment_id <= 0 || false !== stripos( $updated, 'srcset=' ) ) {
+			return $updated;
+		}
+
+		$srcset = wp_get_attachment_image_srcset( $attachment_id, 'large' );
+		$sizes  = wp_get_attachment_image_sizes( $attachment_id, 'large' );
+
+		if ( ! $srcset ) {
+			return $updated;
+		}
+
+		$extra = ' srcset="' . esc_attr( $srcset ) . '"';
+
+		if ( $sizes ) {
+			$extra .= ' sizes="' . esc_attr( $sizes ) . '"';
+		}
+
+		return preg_replace( '/<img\b/i', '<img' . $extra, $updated, 1 );
 	}
 
 	/**

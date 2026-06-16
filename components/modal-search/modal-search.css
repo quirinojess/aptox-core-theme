@@ -31,7 +31,7 @@
 .modal-content h5 {
   margin-bottom: 16px;
   font-family: var(--font-display);
-  font-size: var(--font-size-3xl);
+  font-size: calc(var(--font-size-3xl) - 4px);
 }
 
 /* Section: Search modal (form layout) */
@@ -148,6 +148,9 @@
   right: var(--space-xs);
 
   font-size: var(--font-size-lg);
+  line-height: 1;
+  padding: 0;
+  border: 0;
   appearance: none;
   -webkit-appearance: none;
   background: transparent;
@@ -185,7 +188,7 @@
 
 @media (max-width: 768px) {
   .modal-content h5 {
-    font-size: var(--font-size-title);
+    font-size: calc(var(--font-size-title) - 4px);
   }
 
   .modal .search-filters {

@@ -12,14 +12,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 $sobre_page = get_page_by_path( 'sobre' );
 $sobre_url  = $sobre_page ? get_permalink( $sobre_page->ID ) : home_url( '/sobre/' );
 
-$cta_image = get_template_directory_uri() . '/assets/img/index-cta.png';
+$cta_image = aptox_theme_image_uri( 'index-cta' );
+$cta_meta  = aptox_theme_image_meta( 'index-cta' );
 ?>
 
 <section
 	class="index-cta"
 	aria-labelledby="index-cta-title"
-	style="--index-cta-image: url('<?php echo esc_url( $cta_image ); ?>');"
 >
+	<?php if ( $cta_image ) : ?>
+		<img
+			class="index-cta__image"
+			src="<?php echo esc_url( $cta_image ); ?>"
+			alt=""
+			width="<?php echo esc_attr( (string) $cta_meta['width'] ); ?>"
+			height="<?php echo esc_attr( (string) $cta_meta['height'] ); ?>"
+			fetchpriority="high"
+			decoding="async"
+		>
+	<?php endif; ?>
 
 	<div class="index-cta-inner">
 

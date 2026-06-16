@@ -33,7 +33,7 @@ $cache_context = implode(
 		$show_season_title ? 'home' : 'archive',
 	)
 );
-$cache_key   = 'aptox_grid_recipe_v8_' . md5( $cache_context );
+$cache_key   = 'aptox_grid_recipe_v9_' . md5( $cache_context );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -105,7 +105,7 @@ if ( $show_season_title ) :
 					disabled
 					hidden
 				>
-					<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+					<span class="grid-recipe-nav__icon"><?php echo aptox_chevron_icon( 'left' ); ?></span>
 				</button>
 
 				<button
@@ -114,7 +114,7 @@ if ( $show_season_title ) :
 					aria-label="<?php echo esc_attr__( 'Ver próximas receitas', 'aptox' ); ?>"
 					hidden
 				>
-					<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+					<span class="grid-recipe-nav__icon"><?php echo aptox_chevron_icon( 'right' ); ?></span>
 				</button>
 			</div>
 		</div>
@@ -137,7 +137,7 @@ if ( $show_season_title ) :
 						>
 							<?php if ( has_post_thumbnail() ) : ?>
 								<figure class="archive-image">
-									<?php the_post_thumbnail( 'large', array( 'loading' => 'eager' ) ); ?>
+									<?php echo aptox_render_post_thumbnail( null, 'aptox-card', array( 'loading' => 'eager' ) ); ?>
 								</figure>
 							<?php endif; ?>
 						</a>
@@ -172,7 +172,7 @@ else :
 				>
 					<?php if ( has_post_thumbnail() ) : ?>
 						<figure class="archive-image">
-							<?php the_post_thumbnail( 'large' ); ?>
+							<?php echo aptox_render_post_thumbnail( null, 'aptox-card' ); ?>
 						</figure>
 					<?php endif; ?>
 				</a>

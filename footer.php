@@ -56,7 +56,11 @@ $social_links = array(
 				<a href="<?php echo esc_url( $social_link['url'] ); ?>" target="_blank" rel="noopener">
 					<img
 						src="<?php echo esc_url( get_template_directory_uri() . '/assets/icons/ui/social/' . $social_link['icon'] ); ?>"
-						alt="<?php echo esc_attr( $social_link['label'] ); ?>"
+						alt=""
+						aria-hidden="true"
+						width="12"
+						height="12"
+						decoding="async"
 					/>
 					<?php echo esc_html( $social_link['label'] ); ?>
 				</a>

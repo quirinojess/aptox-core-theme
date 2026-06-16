@@ -9,14 +9,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cta_image = get_template_directory_uri() . '/assets/img/celebre-cta.png';
+$cta_image = aptox_theme_image_uri( 'celebre-cta' );
+$cta_meta  = aptox_theme_image_meta( 'celebre-cta' );
 ?>
 
 <section
 	class="celebre-cta"
 	aria-labelledby="celebre-cta-title"
-	style="--celebre-cta-image: url('<?php echo esc_url( $cta_image ); ?>');"
 >
+	<?php if ( $cta_image ) : ?>
+		<img
+			class="celebre-cta__image"
+			src="<?php echo esc_url( $cta_image ); ?>"
+			alt=""
+			width="<?php echo esc_attr( (string) $cta_meta['width'] ); ?>"
+			height="<?php echo esc_attr( (string) $cta_meta['height'] ); ?>"
+			fetchpriority="high"
+			decoding="async"
+		>
+	<?php endif; ?>
+
 	<div class="celebre-cta-inner">
 		<div class="celebre-cta-content">
 			<h2 id="celebre-cta-title" class="celebre-cta-title">

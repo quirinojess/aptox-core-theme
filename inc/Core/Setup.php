@@ -39,6 +39,10 @@ class Setup {
 		add_theme_support( 'title-tag' );
 		add_theme_support( 'post-thumbnails' );
 
+		add_image_size( 'aptox-card', 600, 0, false );
+		add_image_size( 'aptox-feature', 960, 0, false );
+		add_image_size( 'aptox-hero', 1400, 0, false );
+
 		add_theme_support(
 			'html5',
 			array(

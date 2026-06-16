@@ -474,7 +474,7 @@ class SeasonService {
 				'description' => 'Conteúdos especiais, receitas e celebrações para o outono.',
 				'button'      => 'QUERO RECEBER',
 				'list'        => 'newsletter-autumn',
-				'image'       => get_template_directory_uri() . '/assets/img/cta-news-autumn.png',
+				'image'       => aptox_theme_image_uri( 'cta-news-autumn' ),
 			),
 			'inverno'   => array(
 				'title'       => 'Conteúdos quentinhos para o inverno',
@@ -493,7 +493,7 @@ class SeasonService {
 				'description' => 'Gostaria de receber inspirações e ideias para você curtir o fim de ano da melhor maneira? Inscreva-se para receber conteúdos e mensagens exclusivas de forma gratuita.',
 				'button'      => 'QUERO RECEBER',
 				'list'        => 'newsletter-year-end',
-				'image'       => get_template_directory_uri() . '/assets/img/cta-news-autumn.png',
+				'image'       => aptox_theme_image_uri( 'cta-news-autumn' ),
 			),
 		);
 

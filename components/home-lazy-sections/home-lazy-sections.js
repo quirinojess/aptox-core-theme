@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const request = fetch(getSectionRequestUrl(sectionName), {
         method: 'GET',
-        cache: 'no-store',
         headers: {
           Accept: 'application/json',
         },
@@ -118,6 +117,16 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
+      const sectionScript = config.sectionScripts?.[sectionName];
+
+      if (sectionScript && typeof window.aptoxLoadScript === 'function') {
+        try {
+          await window.aptoxLoadScript(sectionScript);
+        } catch {
+          // Carousel enhancements are optional if the script fails to load.
+        }
+      }
+
       content.innerHTML = html;
       section.classList.add('home-lazy-section--loaded');
       section.removeAttribute('aria-busy');
@@ -170,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
       selector: '[data-home-section]',
       restUrl: window.aptoxHomeLazy.restUrl,
       seasonSlug: window.aptoxHomeLazy.seasonSlug || '',
+      sectionScripts: window.aptoxHomeLazy.sectionScripts || {},
       getSectionName: (section) => section.dataset.homeSection || '',
     });
   }
@@ -179,6 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
       selector: '[data-celebre-section]',
       restUrl: window.aptoxCelebreLazy.restUrl,
       seasonSlug: window.aptoxCelebreLazy.seasonSlug || '',
+      sectionScripts: window.aptoxCelebreLazy.sectionScripts || {},
       getSectionName: (section) => section.dataset.celebreSection || '',
     });
   }
