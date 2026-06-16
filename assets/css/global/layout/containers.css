@@ -1,8 +1,8 @@
 /* Section: Posts alignment (content + sidebar) */
 
 .align-posts {
-  width: var(--container-md);
-  max-width: var(--container-xl);
+  width: 100%;
+  max-width: var(--site-max-width);
   margin: 0 auto;
   padding: 0 var(--container-padding);
 
@@ -270,15 +270,15 @@
 /* Section: Generic containers */
 
 .container {
-  width: var(--container-md);
-  max-width: var(--container-xl);
+  width: 100%;
+  max-width: var(--site-max-width);
   margin: 30px auto;
   padding: 0 var(--container-padding);
 }
 
 .container-lg {
-  width: var(--container-md);
-  max-width: var(--container-xl);
+  width: 100%;
+  max-width: var(--site-max-width);
   margin: 0 auto;
 
   padding-left: var(--container-padding);

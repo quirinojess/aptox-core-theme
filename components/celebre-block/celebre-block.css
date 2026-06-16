@@ -118,7 +118,8 @@
 
 .celebre-block-inner {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
   padding-inline: var(--container-padding);
   box-sizing: border-box;
   min-width: 0;

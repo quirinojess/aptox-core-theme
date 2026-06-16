@@ -14,9 +14,11 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-lg);
-  width: 95%;
-  max-width: 95%;
+  width: 100%;
+  max-width: var(--site-max-width);
   margin: 0 auto;
+  padding: 0 var(--container-padding);
+  box-sizing: border-box;
 }
 
 /* Section: Info Grid (item) */

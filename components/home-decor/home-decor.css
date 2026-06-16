@@ -5,9 +5,11 @@
   grid-template-columns: 2fr 1.2fr;
   gap: var(--space-xl);
 
-  width: 90vw;
-  max-width: 1400px;
+  width: 100%;
+  max-width: var(--site-max-width);
   margin: var(--space-xl) auto;
+  padding: 0 var(--container-padding);
+  box-sizing: border-box;
 }
 
 /* Section: Decoration (left posts) */

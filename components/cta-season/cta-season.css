@@ -6,6 +6,9 @@
   overflow: hidden;
   margin-bottom: var(--space-lg);
   background: var(--beige);
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 /* Section: CTA Season (inner layout) */
@@ -14,7 +17,11 @@
   display: grid;
   grid-template-columns: 40% 60%;
   align-items: stretch;
+  width: min(100%, var(--site-max-width));
+  max-width: var(--site-max-width);
+  margin: 0;
   max-height: 400px;
+  flex: 0 1 var(--site-max-width);
 }
 
 .cta-season-inner.no-image {
@@ -52,8 +59,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
+  text-align: left;
   gap: var(--space-sm);
-  padding: var(--space-lg) 6vw;
+  padding: var(--space-lg) var(--container-padding);
+}
+
+@media (min-width: 769px) {
+  .cta-season-content {
+    padding: var(--space-lg) var(--space-xl) var(--space-lg) clamp(var(--space-xl), 5vw, 96px);
+  }
 }
 
 .cta-season-title {
@@ -111,6 +126,7 @@
   .cta-season-inner {
     grid-template-columns: 1fr;
     max-height: none;
+    width: 100%;
   }
 
   .cta-season-media,

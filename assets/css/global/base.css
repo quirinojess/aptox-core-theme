@@ -56,12 +56,13 @@
 
   /* Section: Container & layout tokens */
 
+  --site-max-width: 1400px;
   --container-sm:   90vw;
   --container-md:   95vw;
   --container-blog: 70vw;
   --container-page: 1000px;
-  --container-lg:   1350px;
-  --container-xl:   1440px;
+  --container-lg:   var(--site-max-width);
+  --container-xl:   var(--site-max-width);
 
   --container-padding: 25px;
   --container-margin:  30px;

@@ -14,20 +14,21 @@
 .footer-loja {
   --footer-loja-size: 132px;
 
-  width: var(--viewport-width);
-  max-width: var(--viewport-width);
+  width: 100%;
   margin: 0;
   padding: 0;
-  background: transparent;
+  background: var(--beige);
   overflow: hidden;
-  margin-left: calc(50% - var(--viewport-half));
-  margin-right: calc(50% - var(--viewport-half));
 }
 
 .footer-loja__layout {
   display: flex;
   align-items: stretch;
   width: 100%;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  box-sizing: border-box;
   min-width: 0;
 }
 

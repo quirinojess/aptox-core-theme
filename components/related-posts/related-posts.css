@@ -16,9 +16,9 @@
 /* Section: Related posts (inner container) */
 
 .related-inner {
-  max-width: var(--container-lg);
+  max-width: var(--site-max-width);
   margin: 0 auto;
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-md) var(--container-padding);
 
   display: flex;
   gap: var(--space-xl);

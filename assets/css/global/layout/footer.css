@@ -12,9 +12,12 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 24px 32px;
-  margin: 0;
+  width: 100%;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
   padding: 0 var(--container-padding);
   list-style: none;
+  box-sizing: border-box;
 }
 
 .site-footer-midia h3 {
@@ -61,12 +64,13 @@
 }
 
 .footer-simple-inner {
-  max-width: var(--container-lg);
+  max-width: var(--site-max-width);
   margin: 0 auto;
-  padding: 30px;
+  padding: 30px var(--container-padding);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 }
 
 /* Section: Footer navigation */

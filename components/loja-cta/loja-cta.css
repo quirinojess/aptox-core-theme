@@ -19,9 +19,9 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: var(--container-xl);
+  max-width: var(--site-max-width);
   margin: 0 auto;
-  padding: var(--space-xl) 6vw;
+  padding: var(--space-xl) var(--container-padding);
   min-width: 0;
 }
 
