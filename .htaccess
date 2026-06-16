@@ -19,4 +19,15 @@
 	<FilesMatch "\.(css|js|mjs|svg|png|jpe?g|webp|gif|woff2?|otf|ico)$">
 		Header set Cache-Control "public, max-age=31536000, immutable"
 	</FilesMatch>
+
+	# Security headers (applied to HTML and assets).
+	Header always set X-Frame-Options "SAMEORIGIN"
+	Header always set X-Content-Type-Options "nosniff"
+	Header always set Referrer-Policy "strict-origin-when-cross-origin"
+	Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+	Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
+
+	# Compatibility-first CSP baseline.
+	Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https:; upgrade-insecure-requests"
 </IfModule>
