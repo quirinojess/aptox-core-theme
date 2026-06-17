@@ -94,10 +94,18 @@
 
 /* Section: Info Grid (tablet) */
 
-@media (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) {
   .info-grid-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .info-grid-item {
+    gap: var(--space-sm);
+  }
+
+  .info-grid-icon img {
+    max-width: 64px;
   }
 }
 

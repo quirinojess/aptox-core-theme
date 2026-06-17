@@ -25,7 +25,11 @@ $meal_slugs = array(
 
 $culinary_slugs = array(
 	'vegana',
-	'oriental',
+	'inglesa',
+	'argentina',
+	'chinesa',
+	'japonesa',
+	'arabe',
 	'brasileira',
 	'francesa',
 	'mexicana',

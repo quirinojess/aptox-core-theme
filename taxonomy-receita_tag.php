@@ -1,7 +1,20 @@
 <?php
 /**
  * Taxonomy template for Receita tags.
+ *
+ * Redirects to the Receitas archive/page with ?tag= so the sticky filter
+ * and category-style layout are always used.
  */
+
+$term = get_queried_object();
+
+if ( $term instanceof WP_Term && function_exists( 'aptox_get_receitas_archive_url' ) ) {
+	wp_safe_redirect(
+		add_query_arg( 'tag', $term->slug, aptox_get_receitas_archive_url() ),
+		301
+	);
+	exit;
+}
 
 get_header();
 ?>

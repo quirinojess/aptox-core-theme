@@ -224,6 +224,56 @@ if ( ! function_exists( 'aptox_get_manifesto_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_receita_tag_taxonomies' ) ) {
+	/**
+	 * Tag taxonomies used by receita filters, in priority order.
+	 *
+	 * @return array<int, string>
+	 */
+	function aptox_get_receita_tag_taxonomies() {
+		$taxonomies = array( 'post_tag' );
+
+		if ( taxonomy_exists( 'receita_tag' ) ) {
+			$taxonomies[] = 'receita_tag';
+		}
+
+		return $taxonomies;
+	}
+}
+
+if ( ! function_exists( 'aptox_resolve_receita_tag_term' ) ) {
+	/**
+	 * Resolve a receita tag slug against supported taxonomies.
+	 *
+	 * @param string|array<int, string> $slug_or_slugs Tag slug or slug candidates.
+	 * @return array{taxonomy: string, term: \WP_Term}|null
+	 */
+	function aptox_resolve_receita_tag_term( $slug_or_slugs ) {
+		$slugs = is_array( $slug_or_slugs ) ? $slug_or_slugs : array( (string) $slug_or_slugs );
+
+		foreach ( $slugs as $slug ) {
+			$candidate = sanitize_title( (string) $slug );
+
+			if ( '' === $candidate ) {
+				continue;
+			}
+
+			foreach ( aptox_get_receita_tag_taxonomies() as $taxonomy ) {
+				$term = get_term_by( 'slug', $candidate, $taxonomy );
+
+				if ( $term && ! is_wp_error( $term ) ) {
+					return array(
+						'taxonomy' => $taxonomy,
+						'term'     => $term,
+					);
+				}
+			}
+		}
+
+		return null;
+	}
+}
+
 if ( ! function_exists( 'aptox_get_receita_tag_query_slug' ) ) {
 	/**
 	 * Read the active receita tag filter from the query string.
@@ -231,6 +281,14 @@ if ( ! function_exists( 'aptox_get_receita_tag_query_slug' ) ) {
 	 * @return string
 	 */
 	function aptox_get_receita_tag_query_slug() {
+		if ( is_tax( aptox_get_receita_tag_taxonomies() ) ) {
+			$term = get_queried_object();
+
+			if ( $term instanceof WP_Term ) {
+				return $term->slug;
+			}
+		}
+
 		$query_slug = get_query_var( 'tag' );
 
 		if ( is_string( $query_slug ) && '' !== $query_slug ) {
@@ -254,23 +312,20 @@ if ( ! function_exists( 'aptox_get_receita_tag_link' ) ) {
 	 */
 	function aptox_get_receita_tag_link( array $slugs ) {
 		$resolved_slug = '';
+		$resolved      = aptox_resolve_receita_tag_term( $slugs );
 
-		foreach ( $slugs as $slug ) {
-			$candidate = sanitize_title( (string) $slug );
+		if ( null !== $resolved ) {
+			$resolved_slug = $resolved['term']->slug;
+		} else {
+			foreach ( $slugs as $slug ) {
+				$candidate = sanitize_title( (string) $slug );
 
-			if ( '' === $candidate ) {
-				continue;
-			}
+				if ( '' === $candidate ) {
+					continue;
+				}
 
-			$term = get_term_by( 'slug', $candidate, 'post_tag' );
-
-			if ( $term && ! is_wp_error( $term ) ) {
-				$resolved_slug = $term->slug;
-				break;
-			}
-
-			if ( '' === $resolved_slug ) {
 				$resolved_slug = $candidate;
+				break;
 			}
 		}
 

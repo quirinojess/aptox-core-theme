@@ -13,8 +13,8 @@ get_header();
 	$tag_slug = aptox_get_receita_tag_query_slug();
 
 	if ( $tag_slug ) :
-		$tag_term  = get_term_by( 'slug', $tag_slug, 'post_tag' );
-		$tag_label = ( $tag_term && ! is_wp_error( $tag_term ) ) ? $tag_term->name : $tag_slug;
+		$resolved  = aptox_resolve_receita_tag_term( $tag_slug );
+		$tag_label = null !== $resolved ? $resolved['term']->name : $tag_slug;
 		?>
 		<h1 class="taxonomy-title">
 			<?php echo esc_html( $tag_label ); ?>

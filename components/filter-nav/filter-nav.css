@@ -90,6 +90,54 @@
   object-fit: cover;
 }
 
+/* Section: Filter navigation (tablet scroll — celebre + casa) */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .filter-nav--celebre,
+  .filter-nav--casa {
+    overflow: hidden;
+  }
+
+  .filter-nav--celebre .filter-list,
+  .filter-nav--casa .filter-list {
+    grid-auto-columns: max-content;
+    column-gap: 0;
+    padding: 0 var(--container-padding);
+    margin-right: calc(var(--container-padding) * -1);
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .filter-nav--celebre .filter-list::-webkit-scrollbar,
+  .filter-nav--casa .filter-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-nav--celebre .filter-item,
+  .filter-nav--casa .filter-item {
+    width: max-content;
+    margin-inline: 24px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+
+  .filter-nav--celebre .filter-item a,
+  .filter-nav--casa .filter-item a {
+    width: auto;
+    gap: 10px;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+}
+
 /* Section: Filter navigation (mobile fixed + scroll) */
 
 @media (max-width: 768px) {

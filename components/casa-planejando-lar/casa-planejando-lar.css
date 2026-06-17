@@ -100,6 +100,26 @@
   opacity: 0.7;
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  .casa-planejando-lar.decoracao-section {
+    grid-template-columns: 2fr 1.2fr;
+    gap: var(--space-xl);
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin: var(--space-xl) auto;
+    padding: 0 var(--container-padding);
+  }
+
+  .casa-planejando-lar .decoracao-posts {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .casa-planejando-lar .decoracao-card img {
+    height: 350px;
+  }
+}
+
 @media (max-width: 900px) {
   .casa-planejando-lar-list__link {
     font-size: var(--font-size-md);

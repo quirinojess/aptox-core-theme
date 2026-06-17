@@ -247,10 +247,44 @@
   padding-bottom: var(--space-xl);
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) {
   .page-sobre-pillars-layout {
-    grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
-    align-items: center;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "intro"
+      "track";
+    gap: var(--space-md);
+    align-items: stretch;
+  }
+
+  .page-sobre-pillars-intro {
+    grid-row: auto;
+    margin-right: 0;
+    align-self: auto;
+  }
+
+  .page-sobre-pillars__title {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .page-sobre-pillars-carousel__controls {
+    display: none;
+  }
+
+  .page-sobre-page .page-sobre-pillars .info-grid-inner {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+    overflow: visible;
+    margin-right: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .page-sobre-page .page-sobre-pillars .info-grid-item {
+    flex: unset;
+    scroll-snap-align: unset;
   }
 }
 

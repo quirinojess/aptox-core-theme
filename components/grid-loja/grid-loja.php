@@ -173,6 +173,7 @@ $render_card = static function () {
 				'next_url'       => $next_url,
 				'grid_selector'  => '.loja-grid__items',
 				'card_selector'  => '.loja-grid__item',
+				'label'          => __( 'Ver mais', 'aptox' ),
 			)
 		);
 		?>

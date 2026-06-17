@@ -130,6 +130,19 @@
   opacity: 0.6;
 }
 
+/* Section: Footer (tablet) */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .site-footer-midia__list {
+    flex-wrap: nowrap;
+    gap: 20px 12px;
+  }
+
+  .site-footer-midia a {
+    letter-spacing: 0.08em;
+  }
+}
+
 /* Section: Footer (mobile ≤ 768px) */
 
 @media (max-width: 768px) {

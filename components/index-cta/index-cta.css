@@ -95,6 +95,14 @@
   overflow-wrap: break-word;
 }
 
+/* Section: Index CTA (tablet) */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .index-cta {
+    --index-cta-bg-position: calc(100% + 100px) calc(50% + 40px);
+  }
+}
+
 /* Section: Index CTA (mobile) */
 
 @media (max-width: 768px) {

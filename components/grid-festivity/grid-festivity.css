@@ -72,12 +72,47 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   gap: var(--space-lg);
-  align-items: start;
+  align-items: center;
+}
+
+.grid-festivity-layout--carousel .grid-festivity-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: auto;
+  min-height: 0;
+  padding: 0 var(--space-md);
+  align-self: center;
 }
 
 .grid-festivity-carousel {
   position: relative;
   min-width: 0;
+}
+
+@media (min-width: 769px) {
+  .grid-festivity-layout--carousel .grid-festivity-title {
+    height: 100%;
+  }
+
+  .grid-festivity-layout--carousel .grid-festivity-carousel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .grid-festivity-layout--carousel .grid-festivity-carousel__controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    margin-bottom: 0;
+  }
+
+  .grid-festivity-layout--carousel .grid-festivity-track {
+    padding-top: calc(32px + var(--space-xs));
+  }
 }
 
 .grid-festivity-carousel__controls {
@@ -162,6 +197,15 @@
 
   .grid-festivity-grid > *:nth-child(4) {
     display: flex;
+  }
+
+  .grid-festivity-grid {
+    align-items: center;
+  }
+
+  .grid-festivity-grid .grid-festivity-title {
+    aspect-ratio: auto;
+    align-self: center;
   }
 
   .grid-festivity-track .archive-card {

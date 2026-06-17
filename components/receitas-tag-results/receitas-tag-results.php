@@ -15,6 +15,11 @@ if ( '' === $tag_slug ) {
 	return;
 }
 
+$resolved     = aptox_resolve_receita_tag_term( $tag_slug );
+$tag_taxonomy = null !== $resolved ? $resolved['taxonomy'] : 'post_tag';
+$tag_slug     = null !== $resolved ? $resolved['term']->slug : $tag_slug;
+$tag_label    = null !== $resolved ? $resolved['term']->name : $tag_slug;
+
 $use_main_query = ! empty( $args['use_main_query'] );
 $query          = null;
 
@@ -31,7 +36,7 @@ if ( $use_main_query ) {
 			'paged'          => $paged,
 			'tax_query'      => array(
 				array(
-					'taxonomy' => 'post_tag',
+					'taxonomy' => $tag_taxonomy,
 					'field'    => 'slug',
 					'terms'    => $tag_slug,
 				),
@@ -46,8 +51,6 @@ if ( ! $query instanceof WP_Query ) {
 
 $paged     = max( 1, (int) $query->get( 'paged' ), (int) get_query_var( 'page' ) );
 $max_pages = (int) $query->max_num_pages;
-$tag_term  = get_term_by( 'slug', $tag_slug, 'post_tag' );
-$tag_label = ( $tag_term && ! is_wp_error( $tag_term ) ) ? $tag_term->name : $tag_slug;
 ?>
 
 <main class="container-lg">

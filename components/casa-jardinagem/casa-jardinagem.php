@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_casa_jardinagem_v1';
+$cache_key   = 'aptox_casa_jardinagem_v2';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -70,7 +70,7 @@ if ( empty( $posts ) ) {
 }
 
 $garden_icon   = get_template_directory_uri() . '/assets/icons/ui/sections/ui-section-decoracao-jardim.png';
-$use_carousel  = count( $posts ) > 3;
+$use_carousel  = count( $posts ) >= 3;
 
 $render_post_card = static function ( $post ) {
 	$post_id = $post->ID;

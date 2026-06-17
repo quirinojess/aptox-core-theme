@@ -48,8 +48,24 @@ $culinary_filters = array(
 		'slugs' => array( 'vegana' ),
 	),
 	array(
-		'label' => __( 'oriental', 'aptox' ),
-		'slugs' => array( 'oriental' ),
+		'label' => __( 'inglesa', 'aptox' ),
+		'slugs' => array( 'inglesa' ),
+	),
+	array(
+		'label' => __( 'argentina', 'aptox' ),
+		'slugs' => array( 'argentina' ),
+	),
+	array(
+		'label' => __( 'chinesa', 'aptox' ),
+		'slugs' => array( 'chinesa' ),
+	),
+	array(
+		'label' => __( 'japonesa', 'aptox' ),
+		'slugs' => array( 'japonesa' ),
+	),
+	array(
+		'label' => __( 'árabe', 'aptox' ),
+		'slugs' => array( 'arabe', 'árabe' ),
 	),
 	array(
 		'label' => __( 'brasileira', 'aptox' ),

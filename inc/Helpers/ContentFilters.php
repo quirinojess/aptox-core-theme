@@ -673,8 +673,19 @@ class ContentFilters {
 			$tax_query['relation'] = 'AND';
 		}
 
+		$resolved = function_exists( 'aptox_resolve_receita_tag_term' )
+			? aptox_resolve_receita_tag_term( $tag_slug )
+			: null;
+
+		if ( null !== $resolved ) {
+			$tag_taxonomy = $resolved['taxonomy'];
+			$tag_slug     = $resolved['term']->slug;
+		} else {
+			$tag_taxonomy = 'post_tag';
+		}
+
 		$tax_query[] = array(
-			'taxonomy' => 'post_tag',
+			'taxonomy' => $tag_taxonomy,
 			'field'    => 'slug',
 			'terms'    => $tag_slug,
 		);
