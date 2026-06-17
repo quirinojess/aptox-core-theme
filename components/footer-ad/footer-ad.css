@@ -1,0 +1,213 @@
+/* Section: Footer ad (sticky bar)
+   Fixed viewport: the ad widget must fit this slot (90px desktop / 50px mobile). */
+
+.footer-ad {
+  --footer-ad-height: 90px;
+  --footer-ad-bar-height: calc(var(--footer-ad-height) + (2 * var(--space-xs)));
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+
+  height: var(--footer-ad-bar-height);
+  max-height: var(--footer-ad-bar-height);
+  overflow: hidden;
+  contain: layout size style;
+
+  background: color-mix(in srgb, var(--beige) 70%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border-top: 1px solid color-mix(in srgb, var(--dark) 8%, transparent);
+  box-shadow: 0 -4px 16px color-mix(in srgb, var(--dark) 6%, transparent);
+
+  transform: translateY(100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.footer-ad.is-visible,
+html.has-footer-ad .footer-ad:not(.is-hidden) {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.footer-ad.is-hidden,
+html.footer-ad-dismissed .footer-ad {
+  display: none;
+}
+
+/* Section: Footer ad (layout) */
+
+.footer-ad__inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-sm);
+
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-xs) var(--space-sm);
+  box-sizing: border-box;
+}
+
+.footer-ad__label {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1.1;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
+.footer-ad__slot {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  height: var(--footer-ad-height);
+  max-height: var(--footer-ad-height);
+  overflow: hidden;
+  line-height: 0;
+  contain: strict;
+  isolation: isolate;
+}
+
+.footer-ad__widget {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.footer-ad__slot > * {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Section: Footer ad (close button) */
+
+.footer-ad__close.close {
+  position: relative;
+  top: auto;
+  right: auto;
+  transform: none;
+  flex-shrink: 0;
+  background: transparent;
+  border-radius: 0;
+  min-width: 2rem;
+  min-height: 2rem;
+  font-size: var(--font-size-2xl);
+  line-height: 1;
+  color: var(--dark);
+}
+
+@media (max-width: 768px) {
+  .footer-ad {
+    --footer-ad-height: 50px;
+    --footer-ad-bar-height: calc(
+      var(--footer-ad-height) + 1.5rem + var(--space-xxs) + (2 * var(--space-xxs))
+    );
+
+    height: var(--footer-ad-bar-height);
+    max-height: var(--footer-ad-bar-height);
+  }
+
+  .footer-ad__inner {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: var(--space-xxs);
+    height: auto;
+    padding: var(--space-xxs) var(--space-xs);
+  }
+
+  .footer-ad__label {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    font-size: var(--font-size-xs);
+  }
+
+  .footer-ad__slot {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+  }
+
+  .footer-ad__widget {
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .footer-ad__close.close {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    justify-self: end;
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-ad {
+    transition: none;
+  }
+}
+
+/* Section: Footer ad (lift fixed bottom UI only when ad is active) */
+
+html[data-footer-ad='active'] {
+  --footer-ad-bar-height: calc(90px + (2 * var(--space-xs)));
+}
+
+html[data-footer-ad='active'] #menu-mob,
+html[data-footer-ad='active'] .filter-nav,
+html[data-footer-ad='active'] .post-share-stack {
+  z-index: calc(var(--z-menu) + 1);
+}
+
+@media (max-width: 1023px) {
+  html[data-footer-ad='active'] .post-share-stack {
+    bottom: var(--footer-ad-bar-height);
+  }
+}
+
+@media (max-width: 768px) {
+  html[data-footer-ad='active'] {
+    --footer-ad-bar-height: calc(
+      50px + 1.5rem + var(--space-xxs) + (2 * var(--space-xxs))
+    );
+  }
+
+  html[data-footer-ad='active'] #menu-mob {
+    bottom: var(--footer-ad-bar-height);
+  }
+
+  html[data-footer-ad='active'] .filter-nav {
+    bottom: calc(55px + var(--footer-ad-bar-height));
+  }
+
+  html[data-footer-ad='active'] .filter-nav--casa,
+  html[data-footer-ad='active'] .filter-nav--celebre,
+  html[data-footer-ad='active'] .filter-nav--loja {
+    bottom: calc(45px + var(--footer-ad-bar-height));
+  }
+
+  html[data-footer-ad='active'] .post-share-stack {
+    bottom: calc(60px + var(--footer-ad-bar-height));
+  }
+}

@@ -74,5 +74,17 @@ class Setup {
 				'after_title'   => '</span>',
 			)
 		);
+
+		register_sidebar(
+			array(
+				'name'          => __( 'Rodapé publicidade', 'aptox' ),
+				'id'            => 'footer-ad-sidebar',
+				'description'   => __( 'Bloco sticky no rodapé. Slot fixo: 90px no desktop e 50px no mobile. No widget HTML, use um banner AdSense horizontal nesse tamanho — o anúncio se adapta ao layout, não o contrário.', 'aptox' ),
+				'before_widget' => '<div id="%1$s" class="footer-ad__widget %2$s">',
+				'after_widget'  => '</div>',
+				'before_title'  => '<span class="screen-reader-text">',
+				'after_title'   => '</span>',
+			)
+		);
 	}
 }

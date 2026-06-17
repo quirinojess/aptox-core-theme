@@ -64,6 +64,17 @@
       }
     };
 
+    const updateFeaturedImage = (imageUrl, altText) => {
+      if (!img || !imageUrl) {
+        return;
+      }
+
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+      img.src = imageUrl;
+      img.alt = altText || '';
+    };
+
     const activateItem = (item) => {
       if (!item) {
         return;
@@ -79,10 +90,7 @@
       featured.classList.add('is-transitioning');
 
       transitionTimer = window.setTimeout(() => {
-        if (img && item.dataset.image) {
-          img.src = item.dataset.image;
-          img.alt = item.dataset.title || '';
-        }
+        updateFeaturedImage(item.dataset.image, item.dataset.title);
         if (title) title.textContent = item.dataset.title || '';
         if (excerpt) excerpt.textContent = item.dataset.excerpt || '';
         if (link && item.dataset.link) link.href = item.dataset.link;

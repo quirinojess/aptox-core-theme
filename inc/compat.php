@@ -524,6 +524,17 @@ if ( ! function_exists( 'aptox_is_receita_context' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_show_footer_ad' ) ) {
+	/**
+	 * Whether the sticky footer ad bar should render.
+	 *
+	 * @return bool
+	 */
+	function aptox_show_footer_ad() {
+		return is_active_sidebar( 'footer-ad-sidebar' );
+	}
+}
+
 if ( ! function_exists( 'aptox_show_footer_loja' ) ) {
 	/**
 	 * Whether the footer Loja carousel should render.

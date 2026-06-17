@@ -80,6 +80,7 @@ class Assets {
 			$this->enqueue_celebre_page_styles();
 			$this->enqueue_loja_page_styles();
 			$this->enqueue_footer_loja_styles();
+			$this->enqueue_footer_ad_styles();
 			return;
 		}
 
@@ -207,6 +208,7 @@ class Assets {
 		);
 
 		$this->enqueue_theme_styles( $component_handles, array( 'aptox-layout-buttons' ) );
+		$this->enqueue_footer_ad_styles();
 	}
 
 	/**
@@ -714,6 +716,43 @@ class Assets {
 	}
 
 	/**
+	 * Enqueue sticky footer ad styles on every page.
+	 *
+	 * @return void
+	 */
+	private function enqueue_footer_ad_styles() {
+		if ( ! function_exists( 'aptox_show_footer_ad' ) || ! aptox_show_footer_ad() ) {
+			return;
+		}
+
+		$this->enqueue_theme_style(
+			'aptox-footer-ad',
+			'/components/footer-ad/footer-ad.css'
+		);
+	}
+
+	/**
+	 * Enqueue sticky footer ad assets when the widget area is active.
+	 *
+	 * @return void
+	 */
+	private function enqueue_footer_ad_assets() {
+		if ( is_admin() || ! function_exists( 'aptox_show_footer_ad' ) || ! aptox_show_footer_ad() ) {
+			return;
+		}
+
+		$script_path = get_template_directory() . '/components/footer-ad/footer-ad.js';
+
+		wp_enqueue_script(
+			'aptox-footer-ad',
+			get_template_directory_uri() . '/components/footer-ad/footer-ad.js',
+			array(),
+			file_exists( $script_path ) ? (string) filemtime( $script_path ) : '1.0',
+			true
+		);
+	}
+
+	/**
 	 * Enqueue footer Loja carousel script when the footer carousel is present.
 	 *
 	 * @return void
@@ -756,6 +795,7 @@ class Assets {
 			}
 
 			$this->enqueue_footer_loja_script();
+			$this->enqueue_footer_ad_assets();
 		} else {
 			$modal_search_path = get_template_directory() . '/components/modal-search/modal-search.js';
 			$menu_path         = get_template_directory() . '/components/menu/menu.js';
@@ -788,6 +828,7 @@ class Assets {
 			$this->localize_menu_script( 'aptox-menu' );
 
 			$this->enqueue_footer_loja_script();
+			$this->enqueue_footer_ad_assets();
 
 			if ( is_singular() ) {
 				wp_enqueue_script(
@@ -1014,6 +1055,7 @@ class Assets {
 			'aptox-season-slide',
 			'aptox-home-lazy-sections',
 			'aptox-load-script',
+			'aptox-footer-ad',
 		);
 
 		foreach ( $handles as $handle ) {
