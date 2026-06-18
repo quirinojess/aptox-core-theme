@@ -33,7 +33,7 @@ class YouTubeService {
 	/**
 	 * Cache duration for parsed video lists.
 	 */
-	private const VIDEOS_CACHE_TTL = 6 * HOUR_IN_SECONDS;
+	private const VIDEOS_CACHE_TTL = HOUR_IN_SECONDS;
 
 	/**
 	 * Cache duration for resolved channel IDs.
@@ -67,7 +67,7 @@ class YouTubeService {
 		$featured_url = class_exists( YouTubeFeaturedWidget::class )
 			? YouTubeFeaturedWidget::get_configured_video_url()
 			: '';
-		$cache_key    = 'aptox_youtube_home_feed_v5_' . md5( $featured_url );
+		$cache_key    = 'aptox_youtube_home_feed_v6_' . md5( $featured_url );
 		$cached       = get_transient( $cache_key );
 
 		if ( false !== $cached && is_array( $cached ) ) {
@@ -226,6 +226,8 @@ class YouTubeService {
 		$like_patterns = array(
 			'_transient_aptox_youtube_feed_%',
 			'_transient_aptox_youtube_home_feed_%',
+			'_transient_aptox_youtube_channel_entries_%',
+			'_transient_aptox_page_links_%',
 		);
 
 		foreach ( $like_patterns as $pattern ) {
@@ -247,7 +249,7 @@ class YouTubeService {
 	 * @return array<int, array<string, mixed>>
 	 */
 	private static function get_channel_entries() {
-		$cache_key = 'aptox_youtube_channel_entries_v3';
+		$cache_key = 'aptox_youtube_channel_entries_v4';
 		$cached    = get_transient( $cache_key );
 
 		if ( false !== $cached && is_array( $cached ) ) {

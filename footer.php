@@ -3,33 +3,8 @@
  * Global footer template.
  */
 
-$social_links = array(
-	array(
-		'url'   => 'https://www.instagram.com/aptox/',
-		'icon'  => 'ui-social-instagram.svg',
-		'label' => 'Instagram',
-	),
-	array(
-		'url'   => 'https://br.pinterest.com/aptoxblog/',
-		'icon'  => 'ui-social-pinterest.svg',
-		'label' => 'Pinterest',
-	),
-	array(
-		'url'   => 'https://www.youtube.com/@aptoxblog',
-		'icon'  => 'ui-social-youtube.svg',
-		'label' => 'YouTube',
-	),
-	array(
-		'url'   => 'https://www.tiktok.com/@aptoxblog',
-		'icon'  => 'ui-social-tiktok.svg',
-		'label' => 'TikTok',
-	),
-	array(
-		'url'   => 'https://www.facebook.com/aptox',
-		'icon'  => 'ui-social-facebook.svg',
-		'label' => 'Facebook',
-	),
-);
+$is_links_page = function_exists( 'aptox_is_links_page' ) && aptox_is_links_page();
+$social_links  = function_exists( 'aptox_get_social_links' ) ? aptox_get_social_links() : array();
 
 $manifesto_url = function_exists( 'aptox_get_manifesto_url' )
 	? aptox_get_manifesto_url()
@@ -38,7 +13,7 @@ $manifesto_url = function_exists( 'aptox_get_manifesto_url' )
 
 	</div>
 
-<?php if ( function_exists( 'aptox_show_footer_loja' ) && aptox_show_footer_loja() ) : ?>
+<?php if ( ! $is_links_page && function_exists( 'aptox_show_footer_loja' ) && aptox_show_footer_loja() ) : ?>
 	<?php if ( function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home() ) : ?>
 <div class="footer-loja-band" aria-hidden="true"></div>
 	<?php endif; ?>
@@ -46,6 +21,7 @@ $manifesto_url = function_exists( 'aptox_get_manifesto_url' )
 	<?php get_template_part( 'components/footer-loja/footer-loja' ); ?>
 <?php endif; ?>
 
+<?php if ( ! $is_links_page ) : ?>
 <section
 	class="site-footer-midia"
 	aria-label="<?php esc_attr_e( 'Redes sociais', 'aptox' ); ?>"
@@ -72,7 +48,9 @@ $manifesto_url = function_exists( 'aptox_get_manifesto_url' )
 		<?php endforeach; ?>
 	</ul>
 </section>
+<?php endif; ?>
 
+<?php if ( ! $is_links_page ) : ?>
 <footer class="site-footer-simple">
 	<div class="footer-simple-inner">
 		<nav class="footer-simple-nav">
@@ -93,10 +71,13 @@ $manifesto_url = function_exists( 'aptox_get_manifesto_url' )
 		</div>
 	</div>
 </footer>
+<?php endif; ?>
 
-<?php get_template_part( 'components/edit-post/edit-post' ); ?>
+<?php if ( ! $is_links_page ) : ?>
+	<?php get_template_part( 'components/edit-post/edit-post' ); ?>
+<?php endif; ?>
 
-<?php if ( function_exists( 'aptox_show_footer_ad' ) && aptox_show_footer_ad() ) : ?>
+<?php if ( ! $is_links_page && function_exists( 'aptox_show_footer_ad' ) && aptox_show_footer_ad() ) : ?>
 	<?php get_template_part( 'components/footer-ad/footer-ad' ); ?>
 <?php else : ?>
 	<script>

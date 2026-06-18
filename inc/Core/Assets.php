@@ -81,6 +81,7 @@ class Assets {
 			$this->enqueue_loja_page_styles();
 			$this->enqueue_footer_loja_styles();
 			$this->enqueue_footer_ad_styles();
+			$this->enqueue_links_page_styles();
 			return;
 		}
 
@@ -191,6 +192,7 @@ class Assets {
 			'aptox-index-cta'             => '/components/index-cta/index-cta.css',
 			'aptox-page-sobre'            => '/components/page-sobre/page-sobre.css',
 			'aptox-page-contato'          => '/components/page-contato/page-contato.css',
+			'aptox-page-links'            => '/components/page-links/page-links.css',
 			'aptox-page-editorial'        => '/components/page-editorial/page-editorial.css',
 			'aptox-page-not-found'        => '/components/page-not-found/page-not-found.css',
 			'aptox-page-sobre-timeline'   => '/components/page-sobre-timeline/page-sobre-timeline.css',
@@ -417,6 +419,20 @@ class Assets {
 			);
 		}
 
+		if ( function_exists( 'aptox_is_links_page' ) && aptox_is_links_page() ) {
+			$this->enqueue_theme_style(
+				'aptox-youtube-feed',
+				'/components/youtube-feed/youtube-feed.css',
+				$this->get_component_style_deps()
+			);
+
+			$this->enqueue_theme_style(
+				'aptox-page-links',
+				'/components/page-links/page-links.css',
+				array_merge( $this->get_component_style_deps(), array( 'aptox-youtube-feed' ) )
+			);
+		}
+
 		if (
 			is_page( 'editorial' )
 			|| is_page( 'manifesto' )
@@ -549,6 +565,31 @@ class Assets {
 			get_template_directory_uri() . '/components/filter-nav/filter-nav.css',
 			$deps,
 			(string) filemtime( $file_path )
+		);
+	}
+
+	/**
+	 * Enqueue Links landing page styles when the build bundle is stale.
+	 *
+	 * @return void
+	 */
+	private function enqueue_links_page_styles() {
+		if ( ! function_exists( 'aptox_is_links_page' ) || ! aptox_is_links_page() ) {
+			return;
+		}
+
+		$deps = $this->get_component_style_deps();
+
+		$this->enqueue_theme_style(
+			'aptox-youtube-feed',
+			'/components/youtube-feed/youtube-feed.css',
+			$deps
+		);
+
+		$this->enqueue_theme_style(
+			'aptox-page-links',
+			'/components/page-links/page-links.css',
+			array_merge( $deps, array( 'aptox-youtube-feed' ) )
 		);
 	}
 

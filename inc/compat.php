@@ -509,6 +509,269 @@ if ( ! function_exists( 'aptox_is_lazy_home' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_is_links_page' ) ) {
+	/**
+	 * Whether the current view uses the Linktree-style links landing page.
+	 *
+	 * @return bool
+	 */
+	function aptox_is_links_page() {
+		return is_page_template( 'templates/page-links.php' );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_social_links' ) ) {
+	/**
+	 * Social profile URLs used in the footer and links landing page.
+	 *
+	 * @return array<int, array{url: string, icon: string, label: string}>
+	 */
+	function aptox_get_social_links() {
+		return array(
+			array(
+				'url'   => 'https://www.instagram.com/aptox/',
+				'icon'  => 'ui-social-instagram.svg',
+				'label' => 'Instagram',
+			),
+			array(
+				'url'   => 'https://br.pinterest.com/aptoxblog/',
+				'icon'  => 'ui-social-pinterest.svg',
+				'label' => 'Pinterest',
+			),
+			array(
+				'url'   => 'https://www.youtube.com/@aptoxblog',
+				'icon'  => 'ui-social-youtube.svg',
+				'label' => 'YouTube',
+			),
+			array(
+				'url'   => 'https://www.tiktok.com/@aptoxblog',
+				'icon'  => 'ui-social-tiktok.svg',
+				'label' => 'TikTok',
+			),
+			array(
+				'url'   => 'https://www.facebook.com/aptox',
+				'icon'  => 'ui-social-facebook.svg',
+				'label' => 'Facebook',
+			),
+		);
+	}
+}
+
+if ( ! function_exists( 'aptox_page_links_get_casa_posts' ) ) {
+	/**
+	 * Resolve Casa posts for the links landing page.
+	 *
+	 * First item: latest seasonal decoration post (decoracao + decoracao-de-{season} tag).
+	 * Next items: latest Casa posts excluding seasonal decoration posts.
+	 *
+	 * @param string $season_slug Season slug.
+	 * @return array<int, \WP_Post>
+	 */
+	function aptox_page_links_get_casa_posts( $season_slug ) {
+		if ( ! post_type_exists( 'casas' ) ) {
+			return array();
+		}
+
+		$season_slug = sanitize_title( $season_slug );
+		$tag_slug    = 'decoracao-de-' . $season_slug;
+
+		$house_taxonomy = 'casa_categoria';
+
+		foreach ( array( 'casa_categoria', 'casa' ) as $candidate_taxonomy ) {
+			if ( ! taxonomy_exists( $candidate_taxonomy ) ) {
+				continue;
+			}
+
+			$decor_term = get_term_by( 'slug', 'decoracao', $candidate_taxonomy );
+
+			if ( $decor_term && ! is_wp_error( $decor_term ) ) {
+				$house_taxonomy = $candidate_taxonomy;
+				break;
+			}
+		}
+
+		$season_decor_tax_query = array(
+			'relation' => 'AND',
+			array(
+				'taxonomy' => $house_taxonomy,
+				'field'    => 'slug',
+				'terms'    => 'decoracao',
+			),
+			array(
+				'taxonomy' => 'post_tag',
+				'field'    => 'slug',
+				'terms'    => $tag_slug,
+			),
+		);
+
+		$featured_query = new WP_Query(
+			array(
+				'post_type'              => 'casas',
+				'posts_per_page'         => 1,
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'tax_query'              => $season_decor_tax_query,
+				'orderby'                => 'date',
+				'order'                  => 'DESC',
+			)
+		);
+
+		$featured_post = $featured_query->have_posts() ? $featured_query->posts[0] : null;
+		wp_reset_postdata();
+
+		if ( ! $featured_post instanceof WP_Post ) {
+			$fallback_query = new WP_Query(
+				array(
+					'post_type'              => 'casas',
+					'posts_per_page'         => 3,
+					'ignore_sticky_posts'    => true,
+					'no_found_rows'          => true,
+					'update_post_term_cache' => false,
+					'update_post_meta_cache' => false,
+					'orderby'                => 'date',
+					'order'                  => 'DESC',
+				)
+			);
+
+			$fallback_posts = $fallback_query->have_posts() ? $fallback_query->posts : array();
+			wp_reset_postdata();
+
+			return $fallback_posts;
+		}
+
+		$exclude_ids = get_posts(
+			array(
+				'post_type'              => 'casas',
+				'posts_per_page'         => -1,
+				'fields'                 => 'ids',
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'tax_query'              => $season_decor_tax_query,
+			)
+		);
+
+		$others_query = new WP_Query(
+			array(
+				'post_type'              => 'casas',
+				'posts_per_page'         => 2,
+				'post__not_in'           => array_map( 'intval', $exclude_ids ),
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'orderby'                => 'date',
+				'order'                  => 'DESC',
+			)
+		);
+
+		$posts = array();
+
+		if ( $featured_post instanceof WP_Post ) {
+			$posts[] = $featured_post;
+		}
+
+		if ( $others_query->have_posts() ) {
+			$posts = array_merge( $posts, $others_query->posts );
+		}
+
+		wp_reset_postdata();
+
+		return $posts;
+	}
+}
+
+if ( ! function_exists( 'aptox_page_links_get_latest_youtube_video' ) ) {
+	/**
+	 * Resolve the latest YouTube video for the links landing page.
+	 *
+	 * @return array<string, mixed>|null
+	 */
+	function aptox_page_links_get_latest_youtube_video() {
+		if ( ! function_exists( 'aptox_get_youtube_videos' ) ) {
+			return null;
+		}
+
+		$videos = aptox_get_youtube_videos( 12 );
+
+		foreach ( $videos as $video ) {
+			if ( is_array( $video ) && empty( $video['is_short'] ) ) {
+				return $video;
+			}
+		}
+
+		if ( ! empty( $videos[0] ) && is_array( $videos[0] ) ) {
+			return $videos[0];
+		}
+
+		return null;
+	}
+}
+
+if ( ! function_exists( 'aptox_page_links_get_posts_by_season_tag' ) ) {
+	/**
+	 * Resolve posts for the links landing page by seasonal post tag.
+	 *
+	 * @param string $post_type   Post type slug.
+	 * @param string $season_slug Season slug.
+	 * @param string $tag_prefix  Tag prefix before the season slug.
+	 * @param int    $limit       Number of posts to return.
+	 * @return array<int, \WP_Post>
+	 */
+	function aptox_page_links_get_posts_by_season_tag( $post_type, $season_slug, $tag_prefix, $limit = 3 ) {
+		if ( ! post_type_exists( $post_type ) ) {
+			return array();
+		}
+
+		$season_slug = sanitize_title( $season_slug );
+		$tag_slug    = $tag_prefix . $season_slug;
+		$term        = get_term_by( 'slug', $tag_slug, 'post_tag' );
+
+		if ( ! $term || is_wp_error( $term ) ) {
+			return array();
+		}
+
+		$query = new WP_Query(
+			array(
+				'post_type'              => $post_type,
+				'posts_per_page'         => max( 1, (int) $limit ),
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'tax_query'              => array(
+					array(
+						'taxonomy' => 'post_tag',
+						'field'    => 'term_id',
+						'terms'    => array( (int) $term->term_id ),
+					),
+				),
+				'orderby'                => 'date',
+				'order'                  => 'DESC',
+			)
+		);
+
+		$posts = $query->have_posts() ? $query->posts : array();
+		wp_reset_postdata();
+
+		return $posts;
+	}
+}
+
+add_filter(
+	'body_class',
+	static function ( $classes ) {
+		if ( function_exists( 'aptox_is_links_page' ) && aptox_is_links_page() ) {
+			$classes[] = 'aptox-links-page';
+		}
+
+		return $classes;
+	}
+);
+
 if ( ! function_exists( 'aptox_is_receita_context' ) ) {
 	/**
 	 * Whether the current view belongs to the Receitas section.
@@ -542,6 +805,10 @@ if ( ! function_exists( 'aptox_show_footer_loja' ) ) {
 	 * @return bool
 	 */
 	function aptox_show_footer_loja() {
+		if ( function_exists( 'aptox_is_links_page' ) && aptox_is_links_page() ) {
+			return false;
+		}
+
 		if ( ! post_type_exists( 'loja' ) || aptox_is_receita_context() ) {
 			return false;
 		}

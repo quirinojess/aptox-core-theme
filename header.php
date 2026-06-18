@@ -16,8 +16,10 @@
 
 <div id="align">
 
+	<?php if ( ! function_exists( 'aptox_is_links_page' ) || ! aptox_is_links_page() ) : ?>
 	<header id="header">
 		<div class="container-header">
 			<?php get_template_part( 'components/menu/menu' ); ?>
 		</div>
 	</header>
+	<?php endif; ?>
