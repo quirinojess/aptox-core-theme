@@ -9,19 +9,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_youtube_feed_v9';
-$cached_html = get_transient( $cache_key );
+$featured_url = class_exists( '\Aptox\Widgets\YouTubeFeaturedWidget' )
+	? \Aptox\Widgets\YouTubeFeaturedWidget::get_configured_video_url()
+	: '';
+$cache_key    = 'aptox_youtube_feed_v10_' . md5( $featured_url );
+$cached_html  = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
 	echo $cached_html;
 	return;
 }
 
-$feed       = aptox_get_youtube_home_feed();
-$long_video = ! empty( $feed['long_video'] ) ? $feed['long_video'] : null;
-$shorts     = ! empty( $feed['shorts'] ) ? $feed['shorts'] : array();
+$feed           = aptox_get_youtube_home_feed();
+$featured_video = ! empty( $feed['featured_video'] ) ? $feed['featured_video'] : null;
+$long_videos    = ! empty( $feed['long_videos'] ) ? $feed['long_videos'] : array();
 
-if ( ! $long_video && empty( $shorts ) ) {
+if ( ! $featured_video && empty( $long_videos ) ) {
 	return;
 }
 
@@ -57,18 +60,18 @@ ob_start();
 	</header>
 
 	<div class="youtube-feed-layout">
-		<?php if ( $long_video ) : ?>
+		<?php if ( $featured_video ) : ?>
 			<article class="youtube-feed-featured">
 				<a
-					href="<?php echo esc_url( $long_video['url'] ); ?>"
+					href="<?php echo esc_url( $featured_video['url'] ); ?>"
 					class="youtube-feed-thumb"
 					target="_blank"
 					rel="noopener noreferrer"
-					aria-label="<?php echo esc_attr( $long_video['title'] ); ?>"
+					aria-label="<?php echo esc_attr( $featured_video['title'] ); ?>"
 				>
 					<figure class="youtube-feed-image">
 						<img
-							src="<?php echo esc_url( $long_video['thumbnail'] ); ?>"
+							src="<?php echo esc_url( $featured_video['thumbnail'] ); ?>"
 							alt=""
 							loading="lazy"
 						>
@@ -79,30 +82,30 @@ ob_start();
 
 				<h3 class="youtube-feed-featured-title">
 					<a
-						href="<?php echo esc_url( $long_video['url'] ); ?>"
+						href="<?php echo esc_url( $featured_video['url'] ); ?>"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<?php echo esc_html( $long_video['title'] ); ?>
+						<?php echo esc_html( $featured_video['title'] ); ?>
 					</a>
 				</h3>
 			</article>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $shorts ) ) : ?>
+		<?php if ( ! empty( $long_videos ) ) : ?>
 			<aside
-				class="youtube-feed-shorts"
+				class="youtube-feed-recent"
 				aria-label="<?php esc_attr_e( 'Vídeos recentes', 'aptox' ); ?>"
 			>
-				<ul class="youtube-feed-shorts-list">
-					<?php foreach ( $shorts as $short ) : ?>
-						<li class="youtube-feed-shorts-item">
+				<ul class="youtube-feed-recent-list">
+					<?php foreach ( $long_videos as $video ) : ?>
+						<li class="youtube-feed-recent-item">
 							<a
-								href="<?php echo esc_url( $short['url'] ); ?>"
+								href="<?php echo esc_url( $video['url'] ); ?>"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								<?php echo esc_html( $short['title'] ); ?>
+								<?php echo esc_html( $video['title'] ); ?>
 							</a>
 						</li>
 					<?php endforeach; ?>

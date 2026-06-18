@@ -17,6 +17,7 @@ class Setup {
 		add_action( 'after_setup_theme', array( $this, 'setup_theme' ) );
 		add_action( 'init', array( $this, 'handle_season_preference' ), 0 );
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
+		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 		add_filter( 'show_admin_bar', '__return_false' );
 	}
 
@@ -86,5 +87,26 @@ class Setup {
 				'after_title'   => '</span>',
 			)
 		);
+
+		register_sidebar(
+			array(
+				'name'          => __( 'Seção YouTube (Home)', 'aptox' ),
+				'id'            => 'youtube-home-featured',
+				'description'   => __( 'Adicione o widget "Vídeo YouTube em destaque" para escolher o vídeo exibido à esquerda na home.', 'aptox' ),
+				'before_widget' => '',
+				'after_widget'  => '',
+				'before_title'  => '',
+				'after_title'   => '',
+			)
+		);
+	}
+
+	/**
+	 * Register custom widgets.
+	 *
+	 * @return void
+	 */
+	public function register_widgets() {
+		register_widget( \Aptox\Widgets\YouTubeFeaturedWidget::class );
 	}
 }

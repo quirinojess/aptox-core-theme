@@ -70,18 +70,21 @@
 
 .youtube-feed-layout {
   display: grid;
-  grid-template-columns: minmax(0, 62%) minmax(0, 38%);
+  grid-template-columns: minmax(0, 560px) minmax(0, 300px);
   gap: var(--space-lg);
   align-items: start;
+  justify-content: center;
+  width: min(100%, 920px);
+  margin-inline: auto;
 }
 
-.youtube-feed-layout:has(.youtube-feed-featured):not(:has(.youtube-feed-shorts)) {
+.youtube-feed-layout:has(.youtube-feed-featured):not(:has(.youtube-feed-recent)) {
   grid-template-columns: 1fr;
-  max-width: 820px;
+  max-width: 560px;
   margin: 0 auto;
 }
 
-.youtube-feed-layout:not(:has(.youtube-feed-featured)):has(.youtube-feed-shorts) {
+.youtube-feed-layout:not(:has(.youtube-feed-featured)):has(.youtube-feed-recent) {
   grid-template-columns: 1fr;
   max-width: 520px;
   margin: 0 auto;
@@ -123,8 +126,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: rgba(17, 17, 17, 0.72);
   transform: translate(-50%, -50%);
@@ -169,26 +172,26 @@
   opacity: 0.7;
 }
 
-/* Section: YouTube feed (shorts list) */
+/* Section: YouTube feed (recent long videos list) */
 
-.youtube-feed-shorts {
+.youtube-feed-recent {
   min-width: 0;
   padding-top: var(--space-xs);
 }
 
-.youtube-feed-shorts-list {
+.youtube-feed-recent-list {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.youtube-feed-shorts-item + .youtube-feed-shorts-item {
+.youtube-feed-recent-item + .youtube-feed-recent-item {
   margin-top: var(--space-md);
   padding-top: var(--space-md);
   border-top: 2px dotted var(--dark);
 }
 
-.youtube-feed-shorts-item a {
+.youtube-feed-recent-item a {
   display: block;
   font-family: var(--font-display);
   font-size: var(--font-size-md);
@@ -198,7 +201,7 @@
   transition: opacity var(--transition-fast);
 }
 
-.youtube-feed-shorts-item a:hover {
+.youtube-feed-recent-item a:hover {
   opacity: 0.65;
 }
 
@@ -206,11 +209,12 @@
 
 @media (max-width: 1024px) {
   .youtube-feed-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 560px);
+    width: min(100%, 560px);
     gap: var(--space-md);
   }
 
-  .youtube-feed-shorts {
+  .youtube-feed-recent {
     padding-top: 0;
   }
 }
@@ -228,7 +232,7 @@
     font-size: var(--font-size-lg);
   }
 
-  .youtube-feed-shorts-item a {
+  .youtube-feed-recent-item a {
     font-size: var(--font-size-md);
   }
 }

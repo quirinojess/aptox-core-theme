@@ -17,6 +17,7 @@ use Aptox\PostTypes\EditorialMetaBox;
 use Aptox\PostTypes\ReceitaMetaBox;
 use Aptox\Services\LikesService;
 use Aptox\Services\SeoService;
+use Aptox\Widgets\YouTubeFeaturedWidget;
 
 class Theme {
 	/**
@@ -54,6 +55,7 @@ class Theme {
 		( new EditorialMetaBox() )->register();
 		( new ReceitaMetaBox() )->register();
 		( new SeoService() )->register();
+		YouTubeFeaturedWidget::register_hooks();
 	}
 
 	/**
@@ -84,6 +86,7 @@ class Theme {
 			$base . '/PostTypes/LojaMetaBox.php',
 			$base . '/PostTypes/EditorialMetaBox.php',
 			$base . '/PostTypes/ReceitaMetaBox.php',
+			$base . '/Widgets/YouTubeFeaturedWidget.php',
 			$base . '/compat.php',
 		);
 
