@@ -8,6 +8,7 @@
   .casa-cta-title-hand,
   .casa-organizacao-title-hand,
   .celebre-cta-title-hand,
+  .celebre-block-title-hand,
   .season-slide-aside-title,
   .grid-festivity-season,
   .grid-recipe-season,
@@ -15,6 +16,6 @@
   .index-cta-title-hand,
   .post-side-newsletter__title-hand,
   .youtube-feed-brand {
-    font-weight: var(--font-hand-weight, 600);
+    font-weight: var(--font-hand-weight, 400);
   }
 }

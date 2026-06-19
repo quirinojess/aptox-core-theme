@@ -74,11 +74,10 @@
 
 .celebre-cta-title-hand {
   font-family: var(--font-hand);
-  font-size: var(--font-size-display);
+  font-size: var(--font-size-hand-md);
   line-height: 1;
   font-weight: 400;
   white-space: nowrap;
-  vertical-align: -20px;
   padding-left: 5px;
 }
 
@@ -129,6 +128,6 @@
   }
 
   .celebre-cta-title-hand {
-    font-size: var(--font-size-hand-md);
+    font-size: var(--font-size-hand-sm);
   }
 }

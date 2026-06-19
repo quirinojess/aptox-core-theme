@@ -762,7 +762,7 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_footer_ad_styles() {
-		if ( ! function_exists( 'aptox_show_footer_ad' ) || ! aptox_show_footer_ad() ) {
+		if ( is_admin() || ( function_exists( 'aptox_is_links_page' ) && aptox_is_links_page() ) ) {
 			return;
 		}
 
@@ -778,7 +778,7 @@ class Assets {
 	 * @return void
 	 */
 	private function enqueue_footer_ad_assets() {
-		if ( is_admin() || ! function_exists( 'aptox_show_footer_ad' ) || ! aptox_show_footer_ad() ) {
+		if ( is_admin() || ( function_exists( 'aptox_is_links_page' ) && aptox_is_links_page() ) ) {
 			return;
 		}
 

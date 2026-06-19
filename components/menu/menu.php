@@ -120,13 +120,3 @@ $seasons = aptox_get_all_seasons();
 
 <?php get_template_part( 'components/modal-search/modal-search' ); ?>
 <?php get_template_part( 'components/modal-season/modal-season' ); ?>
-
-<nav
-  id="menu-mob"
-  class="menu-mobile"
-  aria-label="Menu mobile"
->
-  <a href="<?php echo esc_url( home_url( '/em-casa' ) ); ?>">Casa</a>
-   <a href="<?php echo esc_url( home_url( '/na-cozinha' ) ); ?>">Receitas</a>
-  <a href="<?php echo esc_url( home_url( '/celebrando' ) ); ?>">Celebre</a>
-</nav>

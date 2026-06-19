@@ -77,18 +77,12 @@ $manifesto_url = function_exists( 'aptox_get_manifesto_url' )
 	<?php get_template_part( 'components/edit-post/edit-post' ); ?>
 <?php endif; ?>
 
+<?php if ( ! $is_links_page ) : ?>
+	<?php get_template_part( 'components/menu/menu-mob' ); ?>
+<?php endif; ?>
+
 <?php if ( ! $is_links_page && function_exists( 'aptox_show_footer_ad' ) && aptox_show_footer_ad() ) : ?>
 	<?php get_template_part( 'components/footer-ad/footer-ad' ); ?>
-<?php else : ?>
-	<script>
-	(function () {
-		var root = document.documentElement;
-		root.removeAttribute('data-footer-ad');
-		root.classList.remove('has-footer-ad', 'footer-ad-dismissed');
-		root.style.removeProperty('--footer-ad-lift');
-		root.style.removeProperty('--footer-ad-bar-height');
-	})();
-	</script>
 <?php endif; ?>
 
 <?php wp_footer(); ?>

@@ -77,11 +77,10 @@
 
 .index-cta-title-hand {
   font-family: var(--font-hand);
-  font-size: calc(var(--font-size-display) + 6px);
+  font-size: var(--font-size-hand-md);
   line-height: 1;
   font-weight: 400;
   white-space: nowrap;
-  vertical-align: -20px;
   padding-left: 5px;
 }
 
@@ -143,7 +142,7 @@
   }
 
   .index-cta-title-hand {
-    font-size: calc(var(--font-size-hand-md) + 4px);
+    font-size: var(--font-size-hand-sm);
   }
 
 }

@@ -44,25 +44,11 @@
 
 .casa-organizacao-title {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--font-size-section);
-  line-height: 1.4;
-  font-weight: 400;
   color: var(--dark);
   white-space: nowrap;
 }
 
-.casa-organizacao-title-hand {
-  font-family: var(--font-hand);
-  font-size: var(--font-size-hand-sm);
-  line-height: 1;
-  font-weight: 400;
-  vertical-align: -12px;
-  padding-right: 5px;
-}
-
 .casa-organizacao-title-display {
-  font-family: var(--font-display);
   font-weight: 400;
 }
 
@@ -176,15 +162,6 @@
 }
 
 @media (max-width: 1024px) {
-  .casa-organizacao-title {
-    font-size: var(--font-size-title);
-  }
-
-  .casa-organizacao-title-hand {
-    font-size: var(--font-size-3xl);
-    vertical-align: -10px;
-  }
-
   .casa-organizacao-icon img {
     height: 45px;
   }
@@ -219,17 +196,11 @@
   }
 
   .casa-organizacao-title {
-    font-size: var(--font-size-h6);
     line-height: 1.2;
     white-space: normal;
   }
 
-  .casa-organizacao-title-hand {
-    display: inline;
-    padding-right: 5px;
-    vertical-align: -8px;
-  }
-
+  .casa-organizacao-title-hand,
   .casa-organizacao-title-display {
     display: inline;
   }

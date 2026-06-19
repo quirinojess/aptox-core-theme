@@ -78,10 +78,6 @@
 
 .cta-season-title a {
   display: inline-block;
-  font-family: var(--font-display);
-  font-size: var(--font-size-section);
-  line-height: 1.4;
-  font-weight: 400;
   text-decoration: none;
   color: var(--dark);
   overflow-wrap: break-word;
@@ -90,16 +86,6 @@
 
 .cta-season-title a:hover {
   opacity: 0.75;
-}
-
-.cta-season-name {
-  font-family: var(--font-hand);
-  font-size: var(--font-size-hand-md);
-  line-height: 1;
-  font-weight: 400;
-  white-space: nowrap;
-  vertical-align: -15px;
-  padding-left: 5px;
 }
 
 .cta-season-text {
@@ -137,13 +123,5 @@
 
   .cta-season-content {
     padding: var(--space-lg) var(--container-padding);
-  }
-
-  .cta-season-title a {
-    font-size: var(--font-size-h6);
-  }
-
-  .cta-season-name {
-    font-size: var(--font-size-xxl);
   }
 }

@@ -34,8 +34,7 @@
   height: auto;
 }
 
-.single #content .post-image-pin__button,
-.single .content-recipe .post-image-pin__button {
+.post-image-pin__button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -44,16 +43,29 @@
 
   width: 80px;
   height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  max-width: 80px;
+  max-height: 80px;
   padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 
   display: block;
   background: var(--beige);
   background-image: none;
+  border: none;
   border-radius: 50%;
   text-decoration: none;
   color: var(--black);
-  overflow: visible;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 11px;
   font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1;
+  text-transform: none;
+  text-align: center;
 
   opacity: 0;
   visibility: hidden;
@@ -73,16 +85,6 @@
   transform: translate(-50%, -50%) scale(1);
 }
 
-.single #content .post-image-pin__media.is-pin-active .post-image-pin__button,
-.single .content-recipe .post-image-pin__media.is-pin-active .post-image-pin__button,
-.single #content .post-image-pin__button:focus-visible,
-.single .content-recipe .post-image-pin__button:focus-visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
-}
-
 @media (hover: hover) {
   .post-image-pin__media:hover .post-image-pin__button {
     opacity: 1;
@@ -90,18 +92,9 @@
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1);
   }
-
-  .single #content .post-image-pin__media:hover .post-image-pin__button,
-  .single .content-recipe .post-image-pin__media:hover .post-image-pin__button {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
-  }
 }
 
-.single #content .post-image-pin__button:hover,
-.single .content-recipe .post-image-pin__button:hover {
+.post-image-pin__button:hover {
   opacity: 0.92;
 }
 
@@ -111,6 +104,7 @@
   place-items: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .post-image-pin__ring {
@@ -118,6 +112,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   animation: post-image-pin-spin 14s linear infinite;
   transform-origin: center center;
   pointer-events: none;
@@ -127,7 +122,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .post-image-pin__ring text {
@@ -168,12 +163,23 @@
 
 /* Section: Block Pinterest extension overlays on post images */
 
+[data-pin-log],
+[class^="PIN_"],
+span[data-pin-hover] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .single #content [data-pin-log],
 .single #content [class^="PIN_"],
 .single #content span[data-pin-hover],
 .single .content-recipe [data-pin-log],
 .single .content-recipe [class^="PIN_"],
-.single .content-recipe span[data-pin-hover] {
+.single .content-recipe span[data-pin-hover],
+.page-editorial-celebre #content [data-pin-log],
+.page-editorial-celebre #content [class^="PIN_"],
+.page-editorial-celebre #content span[data-pin-hover] {
   display: none !important;
   visibility: hidden !important;
   pointer-events: none !important;
@@ -184,10 +190,13 @@
     cursor: pointer;
   }
 
-  .single #content .post-image-pin__button,
-  .single .content-recipe .post-image-pin__button {
+  .post-image-pin__button {
     width: 68px;
     height: 68px;
+    min-width: 68px;
+    min-height: 68px;
+    max-width: 68px;
+    max-height: 68px;
   }
 
   .post-image-pin__ring text {

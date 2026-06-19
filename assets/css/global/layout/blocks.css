@@ -146,21 +146,7 @@
 
 .recipe-section-heading__title {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--font-size-xl);
-  line-height: 1.4;
-  font-weight: 400;
   color: var(--dark);
-}
-
-.recipe-section-heading__hand {
-  font-family: var(--font-hand);
-  font-size: var(--font-size-hand-sm);
-  line-height: 1;
-  font-weight: 400;
-  white-space: nowrap;
-  vertical-align: -12px;
-  padding-left: 5px;
 }
 
 @media (max-width: 768px) {

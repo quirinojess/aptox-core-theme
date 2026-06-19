@@ -14,6 +14,15 @@
 
 <body <?php body_class(); ?>>
 
+<?php if ( ! function_exists( 'aptox_is_links_page' ) || ! aptox_is_links_page() ) : ?>
+<script>
+document.documentElement.removeAttribute('data-footer-ad');
+document.documentElement.classList.remove('has-footer-ad', 'footer-ad-dismissed');
+document.documentElement.style.removeProperty('--footer-ad-lift');
+document.documentElement.style.removeProperty('--footer-ad-bar-height');
+</script>
+<?php endif; ?>
+
 <div id="align">
 
 	<?php if ( ! function_exists( 'aptox_is_links_page' ) || ! aptox_is_links_page() ) : ?>

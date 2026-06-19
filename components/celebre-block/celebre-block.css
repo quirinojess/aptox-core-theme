@@ -182,10 +182,6 @@
 
 .celebre-block-title {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--font-size-section);
-  line-height: 1.3;
-  font-weight: 400;
   color: var(--dark);
 }
 
@@ -200,16 +196,14 @@
   width: fit-content;
   max-width: 100%;
   margin-top: var(--space-xs);
-  font-family: var(--font-hand);
-  font-size: var(--font-size-hand-md);
-  line-height: 1.1;
-  font-weight: 400;
   font-synthesis: none;
+  transform: none;
+  vertical-align: initial;
 }
 
 .celebre-block-link {
   font-family: var(--font-base);
-  font-size: var(--font-size-xxs);
+  font-size: var(--font-size-2xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -374,15 +368,6 @@
 
   .celebre-block-carousel__controls .celebre-season-filter-nav {
     justify-content: flex-end;
-  }
-
-  .celebre-block-title {
-    font-size: var(--font-size-title);
-  }
-
-  .celebre-block-title-hand {
-    font-size: var(--font-size-hand-md);
-    font-weight: 400;
   }
 
   .celebre-block-icon img {

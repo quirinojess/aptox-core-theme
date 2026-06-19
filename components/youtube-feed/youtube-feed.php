@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $featured_url = class_exists( '\Aptox\Widgets\YouTubeFeaturedWidget' )
 	? \Aptox\Widgets\YouTubeFeaturedWidget::get_configured_video_url()
 	: '';
-$cache_key    = 'aptox_youtube_feed_v10_' . md5( $featured_url );
+$cache_key    = 'aptox_youtube_feed_v11_' . md5( $featured_url );
 $cached_html  = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -52,8 +52,9 @@ ob_start();
 					href="<?php echo esc_url( aptox_get_youtube_channel_url() ); ?>"
 					target="_blank"
 					rel="noopener noreferrer"
+					aria-label="<?php esc_attr_e( 'YouTube', 'aptox' ); ?>"
 				>
-					<?php esc_html_e( 'YouTube', 'aptox' ); ?>
+					<?php echo esc_html( aptox_hand_text( __( 'YouTube', 'aptox' ) ) ); ?>
 				</a>
 			</h2>
 		</div>

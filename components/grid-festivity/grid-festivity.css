@@ -50,20 +50,13 @@
 
 .grid-festivity-heading {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--font-size-section);
-  line-height: 1.35;
-  font-weight: 400;
   color: var(--dark);
 }
 
 .grid-festivity-season {
   display: block;
   margin-top: var(--space-xs);
-  font-family: var(--font-hand);
-  font-size: var(--font-size-h2);
-  line-height: 1;
-  font-weight: 400;
+  padding-left: 0;
 }
 
 /* Section: Season festivities carousel */
@@ -187,14 +180,6 @@
 }
 
 @media (max-width: 1024px) {
-  .grid-festivity-heading {
-    font-size: var(--font-size-title);
-  }
-
-  .grid-festivity-season {
-    font-size: var(--font-size-3xl);
-  }
-
   .grid-festivity-grid > *:nth-child(4) {
     display: flex;
   }
@@ -222,14 +207,6 @@
   .grid-festivity-title {
     aspect-ratio: auto;
     min-height: 180px;
-  }
-
-  .grid-festivity-heading {
-    font-size: var(--font-size-h6);
-  }
-
-  .grid-festivity-season {
-    font-size: var(--font-size-2xl);
   }
 
   .grid-festivity-icon img {

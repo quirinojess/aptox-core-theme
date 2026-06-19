@@ -315,6 +315,7 @@
     z-index: var(--z-menu);
     justify-content: center;
     padding: var(--space-md);
+    padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px));
     background: var(--off-white);
   }
 
@@ -326,6 +327,14 @@
     color: var(--dark);
     padding: 0 20px;
     text-decoration: none;
+  }
+
+  html:not([data-footer-ad='active']) #menu-mob {
+    bottom: 0 !important;
+  }
+
+  html[data-footer-ad='active'] #menu-mob {
+    bottom: var(--footer-ad-bar-height, 0px) !important;
   }
 }
 

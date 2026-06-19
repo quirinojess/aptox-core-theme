@@ -32,18 +32,14 @@ if ( ! function_exists( 'aptox_get_all_seasons' ) ) {
 
 if ( ! function_exists( 'aptox_hand_text' ) ) {
 	/**
-	 * Normalize copy rendered with the handwriting font (no accents).
+	 * Normalize copy rendered with the handwriting font.
 	 *
 	 * @param string $text      Text to normalize.
-	 * @param bool   $lowercase Whether to lowercase after removing accents.
+	 * @param bool   $lowercase Whether to lowercase the text.
 	 * @return string
 	 */
 	function aptox_hand_text( $text, $lowercase = true ) {
 		$text = (string) $text;
-
-		if ( function_exists( 'remove_accents' ) ) {
-			$text = remove_accents( $text );
-		}
 
 		if ( $lowercase ) {
 			$text = mb_strtolower( $text, 'UTF-8' );
@@ -784,6 +780,59 @@ if ( ! function_exists( 'aptox_is_receita_context' ) ) {
 			|| is_tax( 'receita_tag' )
 			|| is_post_type_archive( 'receitas' )
 			|| is_page_template( 'templates/page-receitas.php' );
+	}
+}
+
+if ( ! function_exists( 'aptox_footer_ad_slot_has_content' ) ) {
+	/**
+	 * Whether rendered footer ad markup contains a visible ad unit.
+	 *
+	 * @param string $html Sidebar output HTML.
+	 * @return bool
+	 */
+	function aptox_footer_ad_slot_has_content( $html ) {
+		$html = trim( (string) $html );
+
+		if ( '' === $html ) {
+			return false;
+		}
+
+		if ( '' !== trim( wp_strip_all_tags( $html ) ) ) {
+			return true;
+		}
+
+		return (bool) preg_match( '/<(iframe|img|ins|picture|video|object|embed)\b/i', $html );
+	}
+}
+
+if ( ! function_exists( 'aptox_get_footer_ad_slot_html' ) ) {
+	/**
+	 * Render and return footer ad sidebar markup.
+	 *
+	 * @return string
+	 */
+	function aptox_get_footer_ad_slot_html() {
+		static $cached_html = null;
+		static $resolved    = false;
+
+		if ( $resolved ) {
+			return $cached_html;
+		}
+
+		$resolved = true;
+
+		if ( ! is_active_sidebar( 'footer-ad-sidebar' ) ) {
+			$cached_html = '';
+			return $cached_html;
+		}
+
+		ob_start();
+		dynamic_sidebar( 'footer-ad-sidebar' );
+		$html = ob_get_clean();
+
+		$cached_html = is_string( $html ) ? $html : '';
+
+		return $cached_html;
 	}
 }
 

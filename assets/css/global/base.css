@@ -25,11 +25,12 @@
 }
 
 @font-face {
-  font-family: "Ariel Script";
-  src: url("../../fonts/Ariel Script.otf") format("opentype");
+  font-family: "Ashley";
+  src: url("../../fonts/Ashley%20Southine%20Demo.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  size-adjust: 115%;
 }
 
 /* Section: Design tokens (colors, spacing, layout, typography) */
@@ -80,8 +81,10 @@
 
   --font-base:    "BTH Sans Serif", sans-serif;
   --font-display: "BTH Primary", serif;
-  --font-hand:         "Ariel Script", cursive;
+  --font-hand:         "Ashley", cursive;
   --font-hand-weight:  400;
+  --font-hand-inline-shift: -0.06em;
+  --font-hand-vertical-align: -10px;
 
   --font-size-2xs: 8px;
   --font-size-xxs: 10px;
@@ -107,9 +110,14 @@
   --font-size-title:   24px;
   --font-size-subtitle: 22px;
   --font-size-author:  30px;
-  --font-size-hand-sm: 35px;
-  --font-size-hand-md: 44px;
-  --font-size-hand-lg: 45px;
+  --font-size-hand-sm: 38px;
+  --font-size-hand-md: 46px;
+  --font-size-hand-lg: 50px;
+
+  /* Display + hand inline pair (ref: season-slide "Decore para o outono") */
+  --font-size-display-hand-display: var(--font-size-section);
+  --font-size-display-hand-hand: calc(var(--font-size-hand-sm) - 1px);
+  --font-display-hand-gap: 5px;
 
   --line-height-body:  1.75;
   --line-height-prose: 2;
@@ -270,6 +278,7 @@ h6 {
   margin: 0;
   padding: 0;
   font-weight: var(--font-hand-weight, 400);
+  font-synthesis: none;
 }
 
 h5 {
@@ -290,7 +299,6 @@ h6 {
 .casa-organizacao-title-hand,
 .celebre-cta-title-hand,
 .celebre-block-title-hand,
-.season-slide-aside-title,
 .grid-festivity-season,
 .grid-recipe-season,
 .recipe-section-heading__hand,
@@ -298,13 +306,91 @@ h6 {
 .post-side-newsletter__title-hand,
 .youtube-feed-brand {
   font-weight: var(--font-hand-weight, 400);
+  font-synthesis: none;
+}
+
+/* Section: Display + hand pair (sizes & inline alignment) */
+
+.grid-recipe-title,
+.grid-festivity-heading,
+.youtube-feed-title,
+.cta-season-title a,
+.casa-organizacao-title,
+.recipe-section-heading__title,
+.season-slide-aside-title-main,
+.celebre-season-slide-title-main,
+.casa-organizacao-title-display,
+.celebre-block-title-display {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-hand-display);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.grid-recipe-season,
+.grid-festivity-season,
+.youtube-feed-brand,
+.cta-season-name,
+.casa-organizacao-title-hand,
+.recipe-section-heading__hand,
+.season-slide-aside-title-season,
+.celebre-season-slide-title-season,
+.celebre-block-title-hand {
+  font-family: var(--font-hand);
+  font-size: var(--font-size-display-hand-hand);
+  line-height: 1;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.grid-recipe-season,
+.grid-festivity-season,
+.youtube-feed-brand,
+.cta-season-name,
+.recipe-section-heading__hand,
+.season-slide-aside-title-season,
+.celebre-season-slide-title-season {
+  padding-left: var(--font-display-hand-gap);
+}
+
+.casa-organizacao-title-hand {
+  padding-left: 0;
+  padding-right: var(--font-display-hand-gap);
+}
+
+[class*="-title-hand"]:not(.celebre-block-title-hand),
+.recipe-section-heading__hand,
+.cta-season-name,
+.grid-recipe-season,
+.grid-festivity-season,
+.season-slide-aside-title-season,
+.celebre-season-slide-title-season,
+.casa-organizacao-title-hand,
+.page-editorial-celebre__signoff-hand,
+.youtube-feed-brand {
+  display: inline-block;
+  vertical-align: var(--font-hand-vertical-align);
+  transform: translateY(var(--font-hand-inline-shift));
+}
+
+.index-cta-title,
+.casa-cta-title,
+.celebre-cta-title {
+  --font-hand-inline-shift: 0.12em;
 }
 
 
 @media (max-width: 768px) {
 
   :root {
-    --font-hand-weight: 600;
+    --font-hand-weight: 400;
+
+    --font-size-hand-sm: 34px;
+    --font-size-hand-md: 42px;
+    --font-size-hand-lg: 46px;
+
+    --font-size-display-hand-display: var(--font-size-h6);
+    --font-size-display-hand-hand: calc(var(--font-size-hand-sm) - 1px);
 
     --font-size-h1: 32px;
     --font-size-h2: 28px;
@@ -561,6 +647,46 @@ h6 {
   .page main > section.container ul li:hover::after {
     transform: translateY(-50%) scale(1);
   }
+}
+
+/* Section: WP Recipe Maker — keep plugin list styles (no editorial bullets) */
+
+.single #content [class*="wprm-"] ul,
+.single #content [class*="wprm-"] ol,
+.single .content-recipe [class*="wprm-"] ul,
+.single .content-recipe [class*="wprm-"] ol {
+  list-style: revert;
+  margin: revert;
+  padding: revert;
+  counter-reset: revert;
+}
+
+.single #content [class*="wprm-"] ul li,
+.single #content [class*="wprm-"] ol li,
+.single .content-recipe [class*="wprm-"] ul li,
+.single .content-recipe [class*="wprm-"] ol li {
+  position: static;
+  display: revert;
+  margin: revert;
+  padding: revert;
+  padding-left: revert;
+  border-bottom: none;
+  counter-increment: revert;
+  line-height: revert;
+  color: revert;
+}
+
+.single #content [class*="wprm-"] ul li::before,
+.single #content [class*="wprm-"] ul li::after,
+.single #content [class*="wprm-"] ol li::before,
+.single .content-recipe [class*="wprm-"] ul li::before,
+.single .content-recipe [class*="wprm-"] ul li::after,
+.single .content-recipe [class*="wprm-"] ol li::before {
+  content: none;
+  display: none;
+  background: none;
+  transition: none;
+  transform: none;
 }
 
 /* Section: Carousel chevron icons */

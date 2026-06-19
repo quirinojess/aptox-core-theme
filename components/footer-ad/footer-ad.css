@@ -193,8 +193,26 @@ html[data-footer-ad='active'] .post-share-stack {
     );
   }
 
+  html:not([data-footer-ad='active']) #menu-mob {
+    bottom: 0 !important;
+  }
+
+  html:not([data-footer-ad='active']) .filter-nav {
+    bottom: 55px;
+  }
+
+  html:not([data-footer-ad='active']) .filter-nav--casa,
+  html:not([data-footer-ad='active']) .filter-nav--celebre,
+  html:not([data-footer-ad='active']) .filter-nav--loja {
+    bottom: 45px;
+  }
+
+  html:not([data-footer-ad='active']) .post-share-stack {
+    bottom: 60px;
+  }
+
   html[data-footer-ad='active'] #menu-mob {
-    bottom: var(--footer-ad-bar-height);
+    bottom: var(--footer-ad-bar-height, 0px) !important;
   }
 
   html[data-footer-ad='active'] .filter-nav {
