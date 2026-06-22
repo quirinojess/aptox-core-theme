@@ -1,6 +1,8 @@
 <?php
 /**
  * Archive template (global fallback)
+ *
+ * @package Aptox
  */
 
 get_header();
@@ -36,6 +38,7 @@ if ( have_posts() ) {
 ?>
 
 <section class="hero-container">
+
   <nav class="taxonomy-breadcrumb" aria-label="Breadcrumb">
     <a href="<?php echo esc_url( $home_url ); ?>">Home</a>
 
@@ -66,6 +69,10 @@ if ( have_posts() ) {
 
 
 <main id="primary" class="site-main container">
+  <?php
+  $paged     = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+  $max_pages = (int) $wp_query->max_num_pages;
+  ?>
 
   <?php if ( have_posts() ) : ?>
 
@@ -88,7 +95,7 @@ if ( have_posts() ) {
           >
             <?php if ( has_post_thumbnail() ) : ?>
               <figure class="archive-image">
-                <?php the_post_thumbnail( 'large' ); ?>
+                <?php the_post_thumbnail( 'aptox-card' ); ?>
               </figure>
             <?php endif; ?>
           </a>
@@ -105,9 +112,17 @@ if ( have_posts() ) {
 
     </section>
 
-    <nav class="navigation pagination">
-      <?php the_posts_pagination(); ?>
-    </nav>
+    <?php if ( $max_pages > $paged ) : ?>
+      <?php
+      aptox_render_archive_load_more(
+        array(
+          'paged'     => $paged,
+          'max_pages' => $max_pages,
+          'next_url'  => get_pagenum_link( $paged + 1 ),
+        )
+      );
+      ?>
+    <?php endif; ?>
 
   <?php else : ?>
 

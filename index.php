@@ -7,21 +7,38 @@ get_header();
 ?>
 
 <main>
-	<section class="container-lg">
-		<?php get_template_part( 'components/grid-recipe/grid-recipe' ); ?>
+	<section class="index-cta-section">
+		<?php get_template_part( 'components/index-cta/index-cta' ); ?>
 	</section>
 
-	<section class="container">
-		<h5>e muitas receitas</h5>
-		<?php get_template_part( 'components/recipe-carousel/recipe-carousel' ); ?>
+	<section class="home-lazy-section" data-home-section="info-grid">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section>
-		<?php get_template_part( 'components/cta-editorial/cta-editorial' ); ?>
+	<section class="home-lazy-section" data-home-section="cta-season">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 
-	<section class="container">
-		<?php get_template_part( 'components/home-decor-slide/home-decor-slide' ); ?>
+	<section class="home-lazy-section container-lg" data-home-section="grid-recipe">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
+	</section>
+
+	<section class="home-lazy-section container" data-home-section="season-slide">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
+	</section>
+
+	<section class="home-lazy-section" data-home-section="grid-festivity">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
+	</section>
+
+	<section class="home-lazy-section container-lg" data-home-section="youtube-feed">
+		<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+		<div class="home-lazy-section__content"></div>
 	</section>
 </main>
 

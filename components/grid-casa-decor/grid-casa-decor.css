@@ -1,0 +1,30 @@
+/* Section: Casa seasonal decoration carousel */
+
+.grid-casa-decor {
+  width: 100%;
+  margin: 0 0 var(--space-lg);
+  padding-top: var(--space-sm);
+}
+
+.grid-casa-decor .grid-recipe-icon img {
+  height: 50px;
+}
+
+.grid-casa-decor .grid-recipe-track .archive-card {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.grid-casa-decor .grid-recipe-track .archive-thumb,
+.grid-casa-decor .grid-recipe-track .archive-thumb img,
+.grid-casa-decor .grid-recipe-track .archive-image,
+.grid-casa-decor .grid-recipe-track .archive-image img {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .grid-casa-decor .grid-recipe-icon img {
+    height: 40px;
+  }
+}

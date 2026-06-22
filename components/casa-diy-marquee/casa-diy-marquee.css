@@ -1,0 +1,88 @@
+/* Section: Casa DIY marquee strip */
+
+.casa-diy-marquee {
+  width: 100%;
+  background: var(--beige);
+  padding: 18px 0;
+  overflow: hidden;
+}
+
+.casa-diy-marquee__viewport {
+  overflow: hidden;
+}
+
+.casa-diy-marquee__inner {
+  display: flex;
+  width: max-content;
+  animation: casa-diy-marquee-scroll 45s linear infinite;
+}
+
+.casa-diy-marquee__track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-shrink: 0;
+  padding-right: 32px;
+}
+
+.casa-diy-marquee__title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
+.casa-diy-marquee__dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dark);
+  flex-shrink: 0;
+}
+
+.casa-diy-marquee__link {
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--dark);
+  white-space: nowrap;
+  transition: opacity var(--transition-fast);
+}
+
+.casa-diy-marquee__link:hover {
+  opacity: 0.6;
+}
+
+@keyframes casa-diy-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .casa-diy-marquee__inner {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .casa-diy-marquee {
+    padding: 14px 0;
+  }
+
+  .casa-diy-marquee__track {
+    gap: 24px;
+    padding-right: 24px;
+  }
+}

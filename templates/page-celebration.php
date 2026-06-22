@@ -6,11 +6,23 @@
 get_header();
 ?>
 
-<?php get_template_part( 'components/cta-celebration/cta-celebration' ); ?>
+<section class="celebre-cta-section">
+	<?php get_template_part( 'components/celebre-cta/celebre-cta' ); ?>
+</section>
 
-<section class="container">
-	<h5 class="center">veja todos os posts</h5>
-	<?php get_template_part( 'components/grid-celebration/grid-celebration' ); ?>
+<section class="home-lazy-section container" data-celebre-section="season-slide">
+	<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+	<div class="home-lazy-section__content"></div>
+</section>
+
+<section class="home-lazy-section" data-celebre-section="celebre-season">
+	<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+	<div class="home-lazy-section__content"></div>
+</section>
+
+<section class="home-lazy-section" data-celebre-section="info-grid">
+	<div class="home-lazy-section__placeholder" aria-hidden="true"></div>
+	<div class="home-lazy-section__content"></div>
 </section>
 
 <?php get_template_part( 'components/filter-nav/filter-nav-celebration' ); ?>

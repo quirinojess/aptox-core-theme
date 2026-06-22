@@ -79,7 +79,7 @@ class LikesService {
 			);
 		}
 
-		$allowed_types = array( 'post', 'casas', 'receitas', 'celebracoes' );
+		$allowed_types = array( 'post', 'casas', 'receitas', 'celebracoes', 'loja' );
 		if ( ! in_array( $post->post_type, $allowed_types, true ) ) {
 			return array(
 				'error' => 'post_type_not_likable',

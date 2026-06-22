@@ -1,0 +1,332 @@
+/* Section: Season slide (shared layout) */
+
+.season-slide {
+  width: 90%;
+  max-width: min(var(--site-max-width), 90vw);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.season-slide-wrapper {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-areas: "post slide";
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Section: Decoration slide (featured post card) */
+
+.season-slide-post {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  align-items: stretch;
+  overflow: visible;
+
+  width: 100%;
+  background: var(--beige);
+  grid-area: post;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s ease;
+}
+
+/* Section: Decoration slide (image area) */
+
+.season-slide-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.season-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Section: Decoration slide (season badge) */
+
+.season-slide-badge {
+  position: absolute;
+  top: -37px;
+  left: -37px;
+  z-index: 2;
+  width: 132px;
+  height: 132px;
+  pointer-events: none;
+}
+
+.season-slide-badge svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: season-slide-badge-spin 18s linear infinite;
+  transform-origin: center;
+}
+
+.season-slide-badge text {
+  fill: var(--black);
+  font-family: var(--font-display);
+  font-size: var(--season-slide-badge-font-size, var(--font-size-xxs));
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+}
+
+@keyframes season-slide-badge-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Section: Decoration slide (content area) */
+
+.season-slide-content {
+  padding: var(--space-xl) var(--space-lg);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Section: Decoration slide (typography) */
+
+.season-slide-title {
+  margin-bottom: var(--space-md);
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-hand-md);
+  line-height: 1.1;
+  color: var(--dark);
+}
+
+.season-slide-excerpt {
+  margin-bottom: var(--space-lg);
+
+  font-size: var(--font-size-md);
+  line-height: 1.8;
+  color: var(--dark);
+}
+
+/* Section: Decoration slide (CTA) */
+
+.season-slide-cta {
+  align-self: flex-start;
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  color: var(--dark);
+}
+
+/* Section: Decoration slide (aside numbered list) */
+
+.season-slide-aside {
+  grid-area: slide;
+
+  padding-left: var(--space-lg);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.season-slide-aside-title {
+  margin-bottom: var(--space-lg);
+  color: var(--dark);
+}
+
+.season-slide-aside-title-main {
+  font-weight: normal;
+}
+
+.season-slide-aside-title-season {
+  font-weight: normal;
+}
+
+/* Section: Decoration slide (list layout) */
+
+.season-slide-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  counter-reset: season-slide;
+}
+
+/* Section: Decoration slide (list item) */
+
+.season-slide-item {
+  counter-increment: season-slide;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-md);
+  align-items: start;
+
+  padding: var(--space-md) 0;
+  border-bottom: 2px dotted var(--dark);
+  cursor: pointer;
+
+  transition: opacity var(--transition-fast);
+}
+
+.season-slide-item:first-child {
+  padding-top: 0;
+}
+
+.season-slide-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Section: Decoration slide (list number) */
+
+.season-slide-item::before {
+  content: counter(season-slide, decimal-leading-zero);
+
+  font-family: var(--font-display);
+  font-size: clamp(var(--font-size-3xl), 5vw, calc(var(--font-size-display) + 14px));
+  font-weight: 400;
+  line-height: 1;
+  color: var(--dark);
+}
+
+/* Section: Decoration slide (list text) */
+
+.season-slide-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-top: 0.15em;
+}
+
+.season-slide-item-title {
+  display: block;
+
+  font-family: var(--font-display);
+  font-size: clamp(var(--font-size-sm), calc(1.2vw + 4px), calc(var(--font-size-md) + 4px));
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dark);
+}
+
+.season-slide-item-excerpt {
+  margin: 0;
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  color: var(--dark);
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Section: Decoration slide (active / hover state) */
+
+.season-slide-list:has(.is-active) .season-slide-item:not(.is-active) {
+  opacity: 0.35;
+}
+
+.season-slide-item.is-active,
+.season-slide-item:hover {
+  opacity: 1;
+}
+
+/* Section: Decoration slide (post transition) */
+
+.season-slide-post.is-transitioning {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Section: Decoration slide (responsive) */
+
+@media (max-width: 1024px) {
+  .season-slide-wrapper {
+    grid-template-columns: 70% 30%;
+    grid-template-areas: "post slide";
+    gap: var(--space-md);
+  }
+
+  .season-slide-post {
+    grid-template-columns: 42% 58%;
+  }
+
+  .season-slide-aside {
+    padding-left: var(--space-md);
+  }
+
+  .season-slide-content {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .season-slide-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .season-slide-badge {
+    top: -31px;
+    left: -31px;
+    width: 108px;
+    height: 108px;
+  }
+
+  .season-slide-excerpt {
+    font-size: var(--font-size-md);
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .season-slide-wrapper {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "slide"
+      "post";
+
+    gap: var(--space-lg);
+  }
+
+  .season-slide-aside {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .season-slide-aside-title-main {
+    font-weight: normal;
+  }
+
+  .season-slide-aside-title-season {
+    font-weight: var(--font-hand-weight, 400);
+  }
+
+  .season-slide-title,
+  .season-slide-item-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* Section: Decoration slide (reduced motion) */
+
+@media (prefers-reduced-motion: reduce) {
+  .season-slide-post,
+  .season-slide-item {
+    transition: none;
+  }
+
+  .season-slide-badge svg {
+    animation: none;
+  }
+}
+

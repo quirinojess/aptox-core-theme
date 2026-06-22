@@ -2,7 +2,7 @@
 /**
  * Seasonal Archive Grid — Celebration
  *
-@Context Archive Celebration 
+ * @context Archive Celebration
  */
 
 $season = aptox_get_season_context();
@@ -19,7 +19,45 @@ $posts_per_page = isset( $args['posts_per_page'] )
 	? (int) $args['posts_per_page']
 	: 4;
 
-$cache_key   = 'aptox_grid_celebration_' . md5( $season_slug . '|' . $posts_per_page );
+$paged = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+$queried = get_queried_object();
+
+$active_taxonomy = '';
+$active_term_slug = '';
+$allowed_category_taxonomies = array( 'celebracao_categoria', 'celebracao' );
+
+if ( $queried instanceof WP_Term && in_array( $queried->taxonomy, $allowed_category_taxonomies, true ) ) {
+	$active_taxonomy  = $queried->taxonomy;
+	$active_term_slug = $queried->slug;
+}
+
+$tax_query = array();
+
+if ( ! empty( $active_taxonomy ) && ! empty( $active_term_slug ) ) {
+	$tax_query[] = array(
+		'taxonomy' => $active_taxonomy,
+		'field'    => 'slug',
+		'terms'    => array( $active_term_slug ),
+	);
+} elseif ( ! empty( $season_slug ) ) {
+	$tax_query[] = array(
+		'taxonomy' => 'post_tag',
+		'field'    => 'slug',
+		'terms'    => array( $tag_slug ),
+	);
+}
+
+$cache_context = implode(
+	'|',
+	array(
+		$season_slug,
+		$active_taxonomy,
+		$active_term_slug,
+		(string) $posts_per_page,
+		(string) $paged,
+	)
+);
+$cache_key   = 'aptox_grid_celebration_' . md5( $cache_context );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -27,30 +65,23 @@ if ( false !== $cached_html ) {
 	return;
 }
 
-$query = null;
+$query_args = array(
+	'post_type'              => 'celebracoes',
+	'posts_per_page'         => $posts_per_page,
+	'ignore_sticky_posts'    => true,
+	'no_found_rows'          => false,
+	'update_post_term_cache' => false,
+	'update_post_meta_cache' => false,
+	'paged'                  => $paged,
+	'orderby'                => 'date',
+	'order'                  => 'DESC',
+);
 
-if ( ! empty( $season_slug ) ) {
-
-	$query = new WP_Query(
-		[
-			'post_type'              => 'celebracoes',
-			'posts_per_page'         => $posts_per_page,
-			'ignore_sticky_posts'    => true,
-			'no_found_rows'          => true,
-			'update_post_term_cache' => false,
-			'update_post_meta_cache' => false,
-			'tax_query'              => [
-				[
-					'taxonomy' => 'post_tag',
-					'field'    => 'slug',
-					'terms'    => $tag_slug,
-				],
-			],
-			'orderby'                => 'date',
-			'order'                  => 'DESC',
-		]
-	);
+if ( ! empty( $tax_query ) ) {
+	$query_args['tax_query'] = $tax_query;
 }
+
+$query = new WP_Query( $query_args );
 
 
 

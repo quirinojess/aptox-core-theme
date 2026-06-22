@@ -12,7 +12,7 @@ $term = get_queried_object();
 	<nav class="taxonomy-breadcrumb">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
 		<span>›</span>
-		<a href="<?php echo esc_url( home_url( '/casas' ) ); ?>">Casas</a>
+		<a href="<?php echo esc_url( home_url( '/casas' ) ); ?>">Casa</a>
 		<span>›</span>
 		<span><?php echo esc_html( $term->name ); ?></span>
 	</nav>
@@ -30,6 +30,10 @@ $term = get_queried_object();
 
 <main class="container">
 	<?php if ( have_posts() ) : ?>
+		<?php
+		$paged     = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+		$max_pages = (int) $wp_query->max_num_pages;
+		?>
 		<section class="archive-grid">
 			<?php while ( have_posts() ) : the_post(); ?>
 				<article class="archive-card">
@@ -39,7 +43,7 @@ $term = get_queried_object();
 						<?php endif; ?>
 					</a>
 
-					<h3 class="recipe-title">
+					<h3 class="archive-title">
 						<a href="<?php the_permalink(); ?>">
 							<?php the_title(); ?>
 						</a>
@@ -48,11 +52,17 @@ $term = get_queried_object();
 			<?php endwhile; ?>
 		</section>
 
-		<div id="navigation">
-			<?php if ( function_exists( 'load_more_button' ) ) : ?>
-				<?php load_more_button(); ?>
-			<?php endif; ?>
-		</div>
+		<?php if ( $max_pages > $paged ) : ?>
+			<?php
+			aptox_render_archive_load_more(
+				array(
+					'paged'     => $paged,
+					'max_pages' => $max_pages,
+					'next_url'  => get_pagenum_link( $paged + 1 ),
+				)
+			);
+			?>
+		<?php endif; ?>
 	<?php else : ?>
 		<p>Nenhuma casa encontrada.</p>
 	<?php endif; ?>

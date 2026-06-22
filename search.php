@@ -9,9 +9,10 @@ $search_term = get_search_query();
 $post_type   = get_query_var( 'post_type' );
 
 $labels = array(
-	'casas'    => 'Casas',
-	'receitas' => 'Receitas',
+	'casas'       => 'Casa',
+	'receitas'    => 'Receitas',
 	'celebracoes' => 'Celebre',
+	'loja'        => 'Loja',
 );
 
 $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
@@ -26,6 +27,10 @@ $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
 
 <main class="container">
 	<?php if ( have_posts() ) : ?>
+		<?php
+		$paged     = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+		$max_pages = (int) $wp_query->max_num_pages;
+		?>
 
 		<section class="archive-grid">
 			<?php while ( have_posts() ) : the_post(); ?>
@@ -37,7 +42,7 @@ $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
 						<?php endif; ?>
 					</a>
 
-					<h3 class="recipe-title">
+					<h3 class="archive-title">
 						<a href="<?php the_permalink(); ?>">
 							<?php the_title(); ?>
 						</a>
@@ -47,11 +52,17 @@ $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
 			<?php endwhile; ?>
 		</section>
 
-		<div id="navigation">
-			<?php if ( function_exists( 'load_more_button' ) ) : ?>
-				<?php load_more_button(); ?>
-			<?php endif; ?>
-		</div>
+		<?php if ( $max_pages > $paged ) : ?>
+			<?php
+			aptox_render_archive_load_more(
+				array(
+					'paged'     => $paged,
+					'max_pages' => $max_pages,
+					'next_url'  => get_pagenum_link( $paged + 1 ),
+				)
+			);
+			?>
+		<?php endif; ?>
 
 	<?php else : ?>
 

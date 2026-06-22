@@ -11,6 +11,8 @@
   background: var(--beige);
 
   z-index: 2;
+
+  --filter-nav-icon-size: 26.4px;
 }
 
 .filter-list {
@@ -20,26 +22,13 @@
 
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(130px, 1fr);
+  grid-auto-columns: minmax(0, 1fr);
   align-items: end;
   column-gap: var(--space-md);
-
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.filter-list::-webkit-scrollbar {
-  display: none;
 }
 
 .filter-item {
-  min-width: 130px;
+  min-width: 0;
   list-style: none;
 
   display: flex;
@@ -52,8 +41,10 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-xs);
+  width: 100%;
+  min-width: 0;
 
-  font-size: 9px;
+  font-size: var(--font-size-xxs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -62,10 +53,89 @@
   color: var(--dark);
 }
 
+.filter-item a span {
+  white-space: nowrap;
+}
+
 .filter-item img {
-  max-width: 23px;
+  width: auto;
   height: auto;
+  max-width: var(--filter-nav-icon-size);
+  max-height: var(--filter-nav-icon-size);
+  flex-shrink: 0;
   display: block;
+  object-fit: contain;
+  object-position: center;
+  transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.filter-item a:hover img {
+  transform: scale(1.06) rotate(10deg);
+}
+
+.filter-item.is-active a {
+  opacity: 1;
+}
+
+.filter-item.is-active a span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.filter-nav--loja .filter-item img {
+  width: var(--filter-nav-icon-size);
+  height: var(--filter-nav-icon-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Section: Filter navigation (tablet scroll — celebre + casa) */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .filter-nav--celebre,
+  .filter-nav--casa {
+    overflow: hidden;
+  }
+
+  .filter-nav--celebre .filter-list,
+  .filter-nav--casa .filter-list {
+    grid-auto-columns: max-content;
+    column-gap: 0;
+    padding: 0 var(--container-padding);
+    margin-right: calc(var(--container-padding) * -1);
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .filter-nav--celebre .filter-list::-webkit-scrollbar,
+  .filter-nav--casa .filter-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-nav--celebre .filter-item,
+  .filter-nav--casa .filter-item {
+    width: max-content;
+    margin-inline: 24px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+
+  .filter-nav--celebre .filter-item a,
+  .filter-nav--casa .filter-item a {
+    width: auto;
+    gap: 10px;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
 }
 
 /* Section: Filter navigation (mobile fixed + scroll) */
@@ -73,29 +143,29 @@
 @media (max-width: 768px) {
   .filter-nav {
     position: fixed;
-    bottom: 65px;
+    bottom: 55px;
     left: 0;
-
-    margin: 0;
-    padding: var(--space-sm) 0;
-
+    padding: 10px 0;
     width: 100%;
     background: var(--beige);
-
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     z-index: var(--z-menu);
+    --filter-nav-icon-size: 22.4px;
+  }
+
+  .filter-nav--casa,
+  .filter-nav--celebre,
+  .filter-nav--loja {
+    bottom: 45px;
   }
 
   .filter-list {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
+    grid-auto-columns: max-content;
+    column-gap: 0;
+    padding: 0 var(--space-md);
 
     overflow-x: auto;
     overflow-y: hidden;
-
-    padding: 0 var(--space-md);
-    gap: var(--space-sm);
 
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x proximity;
@@ -109,21 +179,27 @@
   }
 
   .filter-item {
-    flex: 0 0 auto;
-    width: 72px;
-
+    width: max-content;
+    margin-inline: 20px;
     scroll-snap-align: center;
   }
 
-  .filter-item img {
-    max-width: 18px;
-  }
-
   .filter-item a {
-    font-size: 8px;
+    width: auto;
+    gap: 10px;
+    font-size: var(--font-size-xxs);
     letter-spacing: 0.08em;
     line-height: 1.3;
     text-align: center;
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .filter-item img {
+    transition: none;
+  }
+
+  .filter-item a:hover img {
+    transform: none;
+  }
+}

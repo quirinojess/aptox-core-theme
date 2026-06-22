@@ -1,0 +1,48 @@
+/* Section: Post share stack (sticky / fixed wrapper) */
+
+.post-share-stack {
+  position: sticky;
+  bottom: 0;
+  z-index: 999;
+  width: 100%;
+  overflow: visible;
+}
+
+.post-share-stack .share-bar {
+  position: relative;
+  bottom: auto;
+  z-index: 1;
+}
+
+.post-share-stack .back-to-top {
+  position: absolute;
+  right: var(--space-lg);
+  bottom: calc(100% + var(--back-to-top-gap, 14px));
+  z-index: 2;
+}
+
+.post-share-stack .back-to-top--recipe {
+  right: 12px;
+}
+
+@media (max-width: 1023px) {
+  .post-share-stack {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .post-share-stack {
+    bottom: 60px;
+  }
+
+  .post-share-stack .back-to-top {
+    right: var(--container-padding);
+  }
+
+  .post-share-stack .back-to-top--recipe {
+    right: 12px;
+  }
+}

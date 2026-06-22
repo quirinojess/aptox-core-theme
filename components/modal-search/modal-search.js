@@ -27,31 +27,3 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.setAttribute('aria-hidden', 'true');
   }
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-  const openSeason = document.getElementById('openSeason');
-  const seasonModal = document.getElementById('seasonModal');
-  const seasonContent = seasonModal?.querySelector('.season-modal');
-  const closeBtn = seasonModal?.querySelector('.close');
-
-  if (!openSeason || !seasonModal || !seasonContent) return;
-
-  openSeason.addEventListener('click', (e) => {
-    e.stopPropagation();
-    seasonModal.classList.add('is-open');
-    seasonModal.setAttribute('aria-hidden', 'false');
-  });
-
-  seasonModal.addEventListener('click', (e) => {
-    if (!seasonContent.contains(e.target)) {
-      seasonModal.classList.remove('is-open');
-      seasonModal.setAttribute('aria-hidden', 'true');
-    }
-  });
-
-  closeBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    seasonModal.classList.remove('is-open');
-    seasonModal.setAttribute('aria-hidden', 'true');
-  });
-});

@@ -1,0 +1,172 @@
+/* Section: Standard button tokens */
+
+:root {
+  --btn-padding-y: var(--space-sm);
+  --btn-padding-x: var(--space-md);
+  --btn-margin-inline: 5px;
+  --btn-border-color: var(--dark);
+  --btn-border-width: 1px;
+  --btn-radius-tl: 255px 15px;
+  --btn-radius-tr: 15px 225px;
+  --btn-radius-br: 225px 15px;
+  --btn-radius-bl: 15px 255px;
+  --btn-radius-tl-hover: 18px 248px;
+  --btn-radius-tr-hover: 238px 18px;
+  --btn-radius-br-hover: 18px 218px;
+  --btn-radius-bl-hover: 238px 18px;
+  --btn-transition-duration: 520ms;
+  --btn-transition-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --btn-transition-move-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Section: Standard button selectors */
+
+.aptox-btn,
+.elm-button,
+.index-cta-btn,
+.cta-season-btn,
+.post-side-newsletter__form .forminator-button,
+.newsletter-form-wrapper .forminator-button,
+.page-contato-form .forminator-button,
+button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not(.celebre-season-filter__tab):not(.casa-organizacao-tag):not(.archive-load-more__trigger):not([class*="-nav"]),
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  max-width: 100%;
+  box-sizing: border-box;
+
+  margin-block: 0;
+  margin-inline: var(--btn-margin-inline);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  border: var(--btn-border-width) solid var(--btn-border-color);
+  border-top-left-radius: var(--btn-radius-tl);
+  border-top-right-radius: var(--btn-radius-tr);
+  border-bottom-right-radius: var(--btn-radius-br);
+  border-bottom-left-radius: var(--btn-radius-bl);
+  background: var(--white);
+  background-image: none;
+  box-shadow: none;
+  color: var(--btn-border-color);
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    border-radius var(--btn-transition-duration) var(--btn-transition-ease),
+    transform var(--btn-transition-duration) var(--btn-transition-move-ease),
+    background-color var(--btn-transition-duration) var(--btn-transition-ease),
+    color var(--btn-transition-duration) var(--btn-transition-ease);
+}
+
+.aptox-btn:hover,
+.elm-button:hover,
+.index-cta-btn:hover,
+.cta-season-btn:hover,
+.post-side-newsletter__form .forminator-button:hover,
+.newsletter-form-wrapper .forminator-button:hover,
+.page-contato-form .forminator-button:hover,
+button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not(.celebre-season-filter__tab):not(.casa-organizacao-tag):not([class*="-nav"]):hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover {
+  background: var(--white);
+  color: var(--btn-border-color);
+  border-top-left-radius: var(--btn-radius-tl-hover);
+  border-top-right-radius: var(--btn-radius-tr-hover);
+  border-bottom-right-radius: var(--btn-radius-br-hover);
+  border-bottom-left-radius: var(--btn-radius-bl-hover);
+  box-shadow: none;
+  transform: translate3d(1.5px, 0.5px, 0) rotate(-0.2deg);
+}
+
+.aptox-btn:focus-visible,
+.elm-button:focus-visible,
+.index-cta-btn:focus-visible,
+.cta-season-btn:focus-visible,
+.post-side-newsletter__form .forminator-button:focus-visible,
+.newsletter-form-wrapper .forminator-button:focus-visible,
+.page-contato-form .forminator-button:focus-visible,
+button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not(.celebre-season-filter__tab):not(.casa-organizacao-tag):not([class*="-nav"]):focus-visible,
+input[type="submit"]:focus-visible,
+input[type="button"]:focus-visible,
+input[type="reset"]:focus-visible {
+  background: var(--white);
+  color: var(--btn-border-color);
+  border-top-left-radius: var(--btn-radius-tl-hover);
+  border-top-right-radius: var(--btn-radius-tr-hover);
+  border-bottom-right-radius: var(--btn-radius-br-hover);
+  border-bottom-left-radius: var(--btn-radius-bl-hover);
+  box-shadow: none;
+  transform: translate3d(1.5px, 0.5px, 0) rotate(-0.2deg);
+}
+
+.aptox-btn:disabled,
+button:not(.aptox-btn--plain):disabled,
+input[type="submit"]:disabled,
+input[type="button"]:disabled,
+input[type="reset"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aptox-btn,
+  .elm-button,
+  .index-cta-btn,
+  .cta-season-btn,
+  .post-side-newsletter__form .forminator-button,
+  .newsletter-form-wrapper .forminator-button,
+  .page-contato-form .forminator-button,
+  button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not(.celebre-season-filter__tab):not(.casa-organizacao-tag):not(.archive-load-more__trigger):not([class*="-nav"]),
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"] {
+    transition: none;
+  }
+
+  .aptox-btn:hover,
+  .elm-button:hover,
+  .index-cta-btn:hover,
+  .cta-season-btn:hover,
+  .post-side-newsletter__form .forminator-button:hover,
+  .newsletter-form-wrapper .forminator-button:hover,
+  .page-contato-form .forminator-button:hover,
+  button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not(.celebre-season-filter__tab):not(.casa-organizacao-tag):not([class*="-nav"]):hover,
+  input[type="submit"]:hover,
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  .aptox-btn:focus-visible,
+  .elm-button:focus-visible,
+  .index-cta-btn:focus-visible,
+  .cta-season-btn:focus-visible,
+  .post-side-newsletter__form .forminator-button:focus-visible,
+  .newsletter-form-wrapper .forminator-button:focus-visible,
+  .page-contato-form .forminator-button:focus-visible,
+  button:not(.aptox-btn--plain):not(.close):not(.back-to-top):not(.menu-button):not(.season-switcher__trigger):not(.season-switcher__option):not(.like-btn):not(.share-copy-link):not(.post-image-pin__button):not(.recipe-toggle):not(.btn-pular-receita):not(.celebre-season-filter__tab):not(.casa-organizacao-tag):not([class*="-nav"]):focus-visible,
+  input[type="submit"]:focus-visible,
+  input[type="button"]:focus-visible,
+  input[type="reset"]:focus-visible {
+    transform: none;
+  }
+}

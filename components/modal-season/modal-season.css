@@ -1,10 +1,14 @@
 /* Section: Season modal (layout) */
 
+#seasonModal {
+  background: color-mix(in srgb, var(--beige) 70%, transparent);
+}
+
 .season-modal {
   position: relative;
   max-width: 860px;
   padding: 0;
-  background: var(--beige);
+  background: var(--off-white);
 
   display: grid;
   grid-template-columns: 35% 65%;
@@ -26,8 +30,6 @@
 /* Section: Season modal (header close button) */
 
 .season-modal-header .close {
-  position: absolute;
-  top: var(--space-xs);
   right: var(--space-sm);
 }
 
@@ -65,17 +67,32 @@
 
 .season-modal-title {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: var(--font-size-2xl);
   line-height: 1.15;
   margin: 0;
+  padding-top: 25px;
   color: var(--dark);
 }
 
 .season-modal-description {
-  font-size: 14px;
-  line-height: 1.45;
-  margin: var(--space-xs) 0 var(--space-sm);
-  color: var(--medium-dark);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  margin: 0;
+  color: var(--dark);
+}
+
+.season-modal-description--extra {
+  margin-top: var(--space-xs);
+}
+
+.season-modal-description--extra strong {
+  font-weight: 600;
+}
+
+/* Section: Season modal (form — shared with page contato) */
+
+.season-modal-body .newsletter-form-wrapper {
+  margin-top: var(--space-xs);
 }
 
 /* Section: Season modal (mobile) */
@@ -87,7 +104,25 @@
   }
 
   .season-modal-header {
+    position: relative;
+    top: auto;
+    left: auto;
     grid-column: 1 / -1;
+    grid-row: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--off-white);
+    z-index: 20;
+  }
+
+  .season-modal-header .close {
+    position: relative;
+    top: auto;
+    right: auto;
+    background: transparent;
   }
 
   .season-modal-image {
@@ -103,11 +138,12 @@
   }
 
   .season-modal-title {
-    font-size: 24px;
+    font-size: var(--font-size-title);
+    padding-top: 0;
   }
 
   .season-modal-description {
-    font-size: 13px;
+    font-size: var(--font-size-xs);
     line-height: 1.5;
   }
 }

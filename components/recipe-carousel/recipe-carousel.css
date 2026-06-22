@@ -1,14 +1,21 @@
 /* Section: Recipe tags carousel */
 
 .recipe-tags-carousel {
-  position: relative;
-  width: 100vw;
-  margin: var(--space-md) 0 var(--space-sm);
+  --recipe-tag-image-size: 72px;
 
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  position: relative;
+  width: var(--viewport-width);
+  margin: var(--space-md) 0 var(--space-sm);
+  margin-left: calc(50% - var(--viewport-half));
+  margin-right: calc(50% - var(--viewport-half));
+}
+
+/* Section: Carousel viewport (track + nav) */
+
+.recipe-tags-carousel__viewport {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
 }
 
 /* Section: Recipe tags edge fade */
@@ -19,13 +26,113 @@
   top: 0;
   right: 0;
   width: 60px;
-  height: 100%;
+  height: calc(var(--recipe-tag-image-size) + var(--space-xs));
   pointer-events: none;
   background: linear-gradient(
     to right,
     rgba(251, 247, 242, 0),
     rgba(251, 247, 242, 1)
   );
+  z-index: 1;
+}
+
+/* Section: Carousel navigation (desktop only; hidden on touch via [hidden]) */
+
+.recipe-tags-nav {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--dark);
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(17, 17, 17, 0.08);
+
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  z-index: 2;
+}
+
+.recipe-tags-nav[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .recipe-tags-nav {
+    display: none !important;
+  }
+
+  .recipe-tags-carousel__viewport {
+    padding: 0;
+  }
+
+  .recipe-tags-carousel::after {
+    right: 0;
+  }
+}
+
+.recipe-tags-nav__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.recipe-tags-nav:hover:not(:disabled) {
+  box-shadow: 0 4px 16px rgba(17, 17, 17, 0.12);
+}
+
+.recipe-tags-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .recipe-tags-carousel__viewport {
+    padding: 0 52px;
+  }
+
+  .recipe-tags-nav:not([hidden]) {
+    display: flex;
+    position: absolute;
+    top: calc(var(--recipe-tag-image-size) / 2);
+    margin: 0;
+    transform: translateY(-50%);
+  }
+
+  .recipe-tags-nav--prev {
+    left: var(--space-sm);
+  }
+
+  .recipe-tags-nav--next {
+    right: var(--space-sm);
+  }
+
+  .recipe-tags-nav:hover:not(:disabled) {
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .recipe-tags-carousel__viewport .tags-track {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .recipe-tags-carousel::after {
+    right: 52px;
+  }
 }
 
 /* Section: Tags track (scroll container) */
@@ -34,6 +141,8 @@
   display: flex;
   gap: var(--space-md);
   padding: 0 var(--space-lg) var(--space-xs);
+  width: 100%;
+  min-width: 0;
 
   overflow-x: auto;
   overflow-y: hidden;
@@ -49,23 +158,11 @@
   display: none;
 }
 
-/* Section: Tags track (desktop drag affordance) */
-
-@media (hover: hover) {
-  .tags-track {
-    cursor: grab;
-  }
-
-  .tags-track:active {
-    cursor: grabbing;
-  }
-}
-
 /* Section: Tag item */
 
 .tag-item {
   flex: 0 0 auto;
-  width: 120px;
+  width: 96px;
   text-align: center;
   text-decoration: none;
   color: var(--dark);
@@ -75,9 +172,9 @@
 /* Section: Tag image */
 
 .tag-image {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto var(--space-sm);
+  width: var(--recipe-tag-image-size);
+  height: var(--recipe-tag-image-size);
+  margin: 0 auto var(--space-xs);
   border-radius: 50%;
   overflow: hidden;
   background: var(--beige);
@@ -88,22 +185,30 @@
   height: 100%;
   object-fit: cover;
   display: block;
-
-  transition: transform 0.6s ease;
   transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.tag-image:hover img {
-  transform: rotate(-3deg) scale(1.02);
+.tag-item:hover .tag-image img {
+  transform: scale(1.06) rotate(10deg);
 }
 
 /* Section: Tag label */
 
 .tag-label {
-  font-size: 0.75em;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;
   display: block;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .tag-image img {
+    transition: none;
+  }
+
+  .tag-item:hover .tag-image img {
+    transform: none;
+  }
+}

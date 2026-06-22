@@ -127,8 +127,8 @@ if ( empty( $related_posts ) ) {
         id="related-title"
         class="related-heading"
       >
-        <span class="related-leia">Leia</span><br>
-        <span class="related-mais">esses também</span>
+        <span class="related-leia">Leia também</span>
+        <span class="related-mais">esses outros posts</span>
       </h2>
 
     </header>

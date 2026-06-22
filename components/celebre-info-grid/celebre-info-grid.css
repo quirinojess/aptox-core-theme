@@ -1,0 +1,130 @@
+/* Section: Celebre info grid */
+
+.celebre-info-grid__item {
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: var(--space-md);
+}
+
+.celebre-info-grid__icon {
+  flex-shrink: 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin: 0;
+}
+
+.celebre-info-grid__icon img {
+  width: auto;
+  height: auto;
+  max-width: 36px;
+  max-height: 36px;
+  margin: 0;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.celebre-info-grid__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.celebre-info-grid__link {
+  display: inline-block;
+  margin-top: var(--space-xs);
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--dark);
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.celebre-info-grid__link:hover {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .celebre-info-grid .info-grid-inner {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+
+  .celebre-info-grid .info-grid-item {
+    flex: unset;
+    flex-direction: row;
+    align-items: center;
+    scroll-snap-align: unset;
+    text-align: left;
+    gap: var(--space-sm);
+  }
+
+  .celebre-info-grid .info-grid-icon {
+    align-self: center;
+    justify-content: center;
+    width: auto;
+  }
+
+  .celebre-info-grid .info-grid-icon img {
+    height: auto;
+    max-height: none;
+    margin: 0;
+    object-position: center center;
+  }
+
+  .celebre-info-grid .info-grid-content {
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .celebre-info-grid .info-grid-inner {
+    gap: var(--space-sm);
+    padding: 0 var(--container-padding);
+  }
+
+  .celebre-info-grid .info-grid-title {
+    font-size: var(--font-size-xxs);
+    letter-spacing: 0.1em;
+  }
+
+  .celebre-info-grid .info-grid-text {
+    font-size: var(--font-size-xxs);
+    line-height: 1.5;
+  }
+
+  .celebre-info-grid__item {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: var(--space-xs);
+  }
+
+  .celebre-info-grid__icon {
+    align-self: center;
+    width: auto;
+  }
+
+  .celebre-info-grid__icon img {
+    max-width: 32px;
+    max-height: 32px;
+  }
+
+  .celebre-info-grid__content {
+    align-items: flex-start;
+    width: auto;
+  }
+}

@@ -8,7 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-$cache_key   = 'aptox_recipe_carousel';
+/**
+ * Global cache for the recipe carousel.
+ *
+ */
+$cache_key   = 'aptox_recipe_carousel_v6';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -16,12 +20,30 @@ if ( false !== $cached_html ) {
 	return;
 }
 
-$terms = get_terms(
+$resolved_recipe_taxonomy = 'receita_categoria';
+
+$recipe_terms = get_terms(
 	array(
 		'taxonomy'   => 'receita_categoria',
 		'hide_empty' => true,
 	)
 );
+
+if ( empty( $recipe_terms ) || is_wp_error( $recipe_terms ) ) {
+	$legacy_terms = get_terms(
+		array(
+			'taxonomy'   => 'receita',
+			'hide_empty' => true,
+		)
+	);
+
+	if ( ! empty( $legacy_terms ) && ! is_wp_error( $legacy_terms ) ) {
+		$resolved_recipe_taxonomy = 'receita';
+		$recipe_terms             = $legacy_terms;
+	}
+}
+
+$terms = $recipe_terms;
 
 if ( empty( $terms ) || is_wp_error( $terms ) ) {
   return;
@@ -31,18 +53,22 @@ ob_start();
 ?>
 
 <section
-  class="recipe-tags-carousel"
-  aria-labelledby="recipe-tags-carousel-title"
+  class="recipe-sticky-categories"
+  aria-label="<?php esc_attr_e( 'Categorias de receitas', 'aptox' ); ?>"
 >
+  <div class="recipe-tags-carousel">
+  <div class="recipe-tags-carousel__viewport">
 
-  <h2
-    id="recipe-tags-carousel-title"
-    class="screen-reader-text"
-  >
-    Categorias de Receitas
-  </h2>
+    <button
+      type="button"
+      class="recipe-tags-nav recipe-tags-nav--prev"
+      aria-label="<?php echo esc_attr__( 'Ver categorias anteriores', 'aptox' ); ?>"
+      disabled
+    >
+      <span class="recipe-tags-nav__icon"><?php echo aptox_chevron_icon( 'left' ); ?></span>
+    </button>
 
-  <div class="tags-track">
+    <div class="tags-track">
 
     <?php foreach ( $terms as $term ) :
 
@@ -53,7 +79,7 @@ ob_start();
         'no_found_rows'       => true,
         'tax_query'           => array(
           array(
-            'taxonomy' => 'receita_categoria',
+            'taxonomy' => $resolved_recipe_taxonomy,
             'field'    => 'term_id',
             'terms'    => $term->term_id,
           ),
@@ -66,12 +92,21 @@ ob_start();
       }
 
       $query->the_post();
+
+      $term_link = get_term_link( $term, $resolved_recipe_taxonomy );
+      if ( is_wp_error( $term_link ) ) {
+        $recipe_archive = get_post_type_archive_link( 'receitas' );
+        if ( ! $recipe_archive ) {
+          $recipe_archive = home_url( '/receitas/' );
+        }
+        $term_link = trailingslashit( untrailingslashit( $recipe_archive ) ) . 'categoria/' . $term->slug . '/';
+      }
     ?>
 
       <article class="tag-item-wrapper">
 
         <a
-          href="<?php echo esc_url( get_term_link( $term ) ); ?>"
+          href="<?php echo esc_url( $term_link ); ?>"
           class="tag-item"
           aria-label="<?php echo esc_attr( $term->name ); ?>"
         >
@@ -95,8 +130,19 @@ ob_start();
     endforeach;
     ?>
 
+    </div>
+
+    <button
+      type="button"
+      class="recipe-tags-nav recipe-tags-nav--next"
+      aria-label="<?php echo esc_attr__( 'Ver próximas categorias', 'aptox' ); ?>"
+    >
+      <span class="recipe-tags-nav__icon"><?php echo aptox_chevron_icon( 'right' ); ?></span>
+    </button>
+
   </div>
 
+  </div>
 </section>
 <?php
 $html = ob_get_clean();

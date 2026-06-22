@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   document.addEventListener('click', function (e) {
+    const copyBtn = e.target.closest('.share-copy-link');
+    if (copyBtn) {
+      copyPostLink(copyBtn);
+      return;
+    }
+
     const btn = e.target.closest('.like-btn');
     if (!btn) return;
 
@@ -50,5 +56,51 @@ document.addEventListener('DOMContentLoaded', function () {
       icon.src = aptoxLike.iconFilled;
     }
   });
+
+  function copyPostLink(button) {
+    const url = button.dataset.url;
+    if (!url) return;
+
+    const copiedLabel = 'Link copiado!';
+    const defaultLabel = button.getAttribute('aria-label') || 'Copiar link do post';
+
+    const showCopiedState = function () {
+      button.classList.add('is-copied');
+      button.setAttribute('aria-label', copiedLabel);
+
+      window.setTimeout(function () {
+        button.classList.remove('is-copied');
+        button.setAttribute('aria-label', defaultLabel);
+      }, 2000);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url).then(showCopiedState).catch(function () {
+        fallbackCopy(url, showCopiedState);
+      });
+      return;
+    }
+
+    fallbackCopy(url, showCopiedState);
+  }
+
+  function fallbackCopy(text, onSuccess) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      document.execCommand('copy');
+      onSuccess();
+    } catch (error) {
+      return;
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  }
 
 });

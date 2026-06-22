@@ -1,0 +1,247 @@
+/**
+ * Aptox wp-admin color scheme.
+ */
+
+:root {
+  --aptox-off-white: #fbfbfb;
+  --aptox-beige: #f3f1f0;
+  --aptox-dark: #111111;
+  --aptox-black: #050505;
+  --aptox-border: color-mix(in srgb, var(--aptox-black) 12%, transparent);
+}
+
+body {
+  background: var(--aptox-off-white);
+  color: var(--aptox-dark);
+}
+
+#wpadminbar {
+  background: var(--aptox-black);
+}
+
+#wpadminbar .ab-item,
+#wpadminbar a.ab-item,
+#wpadminbar > #wp-toolbar span.ab-label,
+#wpadminbar > #wp-toolbar span.noticon {
+  color: var(--aptox-off-white);
+}
+
+#wpadminbar .ab-top-menu > li:hover > .ab-item,
+#wpadminbar .ab-top-menu > li.hover > .ab-item,
+#wpadminbar .ab-top-menu > li > .ab-item:focus,
+#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
+#wpadminbar .ab-top-menu > li.menupop.hover > .ab-item,
+#wpadminbar.nojs .ab-top-menu > li.menupop:hover > .ab-item,
+#wpadminbar .quicklinks .ab-sub-wrapper .menupop.hover > a,
+#wpadminbar .quicklinks .menupop ul li a:focus,
+#wpadminbar .quicklinks .menupop ul li a:focus strong,
+#wpadminbar .quicklinks .menupop.hover > a,
+#wpadminbar .quicklinks .menupop.hover > a .blavatar,
+#wpadminbar .quicklinks .menupop.hover > a .ab-icon::before,
+#wpadminbar .quicklinks .menupop.hover > a .ab-label {
+  background: var(--aptox-dark);
+  color: var(--aptox-off-white);
+}
+
+#adminmenuback,
+#adminmenuwrap,
+#adminmenu {
+  background: var(--aptox-beige);
+}
+
+#adminmenu a {
+  color: var(--aptox-black);
+}
+
+#adminmenu div.wp-menu-name {
+  color: var(--aptox-black);
+}
+
+#adminmenu div.wp-menu-image::before {
+  color: var(--aptox-dark);
+}
+
+#adminmenu .wp-submenu,
+#adminmenu .wp-has-current-submenu .wp-submenu,
+#adminmenu .wp-has-current-submenu.opensub .wp-submenu,
+#adminmenu a.wp-has-current-submenu:focus + .wp-submenu {
+  background: var(--aptox-off-white);
+}
+
+#adminmenu .wp-submenu a {
+  color: var(--aptox-dark);
+}
+
+#adminmenu li.menu-top:hover,
+#adminmenu li.opensub > a.menu-top,
+#adminmenu li > a.menu-top:focus {
+  background-color: var(--aptox-off-white);
+  color: var(--aptox-black);
+}
+
+#adminmenu li.menu-top:hover div.wp-menu-image::before,
+#adminmenu li.opensub > a.menu-top div.wp-menu-image::before,
+#adminmenu li > a.menu-top:focus div.wp-menu-image::before {
+  color: var(--aptox-black);
+}
+
+#adminmenu li.current a.menu-top,
+#adminmenu li.wp-has-current-submenu a.menu-top,
+#adminmenu li.wp-has-current-submenu .wp-submenu .wp-submenu-head,
+#adminmenu .wp-has-current-submenu .wp-submenu a.current {
+  background: var(--aptox-off-white);
+  color: var(--aptox-black);
+}
+
+#adminmenu li.current div.wp-menu-image::before,
+#adminmenu li.wp-has-current-submenu div.wp-menu-image::before,
+#adminmenu a.current:hover div.wp-menu-image::before,
+#adminmenu li.wp-has-current-submenu a:focus div.wp-menu-image::before,
+#adminmenu li.wp-has-current-submenu.opensub div.wp-menu-image::before {
+  color: var(--aptox-black);
+}
+
+#adminmenu .wp-submenu a:hover,
+#adminmenu .wp-submenu a:focus,
+#adminmenu .wp-submenu li.current a {
+  background: var(--aptox-beige);
+  color: var(--aptox-black);
+}
+
+#collapse-button {
+  color: var(--aptox-black);
+}
+
+#collapse-button:hover,
+#collapse-button:focus {
+  color: var(--aptox-dark);
+}
+
+#wpcontent,
+#wpfooter {
+  background: var(--aptox-off-white);
+}
+
+#wpfooter {
+  color: var(--aptox-dark);
+}
+
+.wrap h1,
+.wrap h2,
+.wrap .page-title-action {
+  color: var(--aptox-black);
+}
+
+.wp-core-ui .button,
+.wp-core-ui .button-secondary {
+  border-color: var(--aptox-border);
+  color: var(--aptox-black);
+  background: var(--aptox-beige);
+}
+
+.wp-core-ui .button:hover,
+.wp-core-ui .button-secondary:hover,
+.wp-core-ui .button:focus,
+.wp-core-ui .button-secondary:focus {
+  border-color: var(--aptox-dark);
+  color: var(--aptox-black);
+  background: var(--aptox-off-white);
+}
+
+.wp-core-ui .button-primary {
+  background: var(--aptox-black);
+  border-color: var(--aptox-black);
+  color: var(--aptox-off-white);
+}
+
+.wp-core-ui .button-primary:hover,
+.wp-core-ui .button-primary:focus {
+  background: var(--aptox-dark);
+  border-color: var(--aptox-dark);
+  color: var(--aptox-off-white);
+}
+
+a {
+  color: var(--aptox-dark);
+}
+
+a:hover,
+a:active,
+a:focus {
+  color: var(--aptox-black);
+}
+
+.postbox {
+  border-color: var(--aptox-border);
+}
+
+.postbox .postbox-header {
+  background: var(--aptox-beige);
+  border-bottom-color: var(--aptox-border);
+}
+
+.postbox .postbox-header h2,
+.postbox .postbox-header h3 {
+  color: var(--aptox-black);
+}
+
+.widefat thead th,
+.widefat thead td,
+.widefat tfoot th,
+.widefat tfoot td {
+  background: var(--aptox-beige);
+  color: var(--aptox-black);
+}
+
+.widefat td,
+.widefat th {
+  border-color: var(--aptox-border);
+}
+
+.alternate,
+.striped > tbody > :nth-child(odd),
+ul.striped > :nth-child(odd) {
+  background-color: color-mix(in srgb, var(--aptox-beige) 55%, var(--aptox-off-white));
+}
+
+#dashboard-widgets .postbox {
+  background: var(--aptox-off-white);
+}
+
+.notice,
+div.updated,
+div.error {
+  border-left-color: var(--aptox-dark);
+}
+
+#screen-meta,
+#screen-meta-links .show-settings {
+  background: var(--aptox-beige);
+  border-color: var(--aptox-border);
+  color: var(--aptox-dark);
+}
+
+#screen-meta-links .show-settings:hover,
+#screen-meta-links .show-settings:focus {
+  color: var(--aptox-black);
+}
+
+.edit-post-layout,
+.interface-interface-skeleton__html-container {
+  background: var(--aptox-off-white);
+}
+
+.interface-interface-skeleton__sidebar,
+.interface-complementary-area,
+.components-panel {
+  background: var(--aptox-beige);
+}
+
+.components-button.is-primary {
+  background: var(--aptox-black);
+}
+
+.components-button.is-primary:hover:not(:disabled),
+.components-button.is-primary:focus:not(:disabled) {
+  background: var(--aptox-dark);
+}

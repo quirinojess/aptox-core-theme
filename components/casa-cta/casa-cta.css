@@ -1,0 +1,128 @@
+/* Section: Casa CTA */
+
+.casa-cta-section {
+  margin-top: calc(-1 * var(--space-xxl));
+}
+
+.casa-cta {
+  --casa-cta-bg-position: right center;
+
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+
+  background-color: var(--off-white);
+}
+
+.casa-cta__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--casa-cta-bg-position);
+}
+
+.casa-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(251, 251, 251, 0.92) 0%,
+    rgba(251, 251, 251, 0.75) 45%,
+    rgba(251, 251, 251, 0) 75%
+  );
+}
+
+.casa-cta-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--container-padding);
+  min-width: 0;
+}
+
+.casa-cta-content {
+  width: min(460px, 100%);
+  max-width: 100%;
+  text-align: right;
+}
+
+.casa-cta-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-section);
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--dark);
+  margin: 0 0 var(--space-md) 0;
+  padding-top: 80px;
+  overflow-wrap: break-word;
+}
+
+.casa-cta-title-hand {
+  font-family: var(--font-hand);
+  font-size: var(--font-size-hand-md);
+  line-height: 1;
+  font-weight: 400;
+  white-space: nowrap;
+  padding-left: 5px;
+}
+
+.casa-cta-text {
+  font-size: var(--font-size-sm);
+  line-height: 1.75;
+  color: var(--dark);
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .casa-cta-section {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .casa-cta {
+    --casa-cta-bg-position: calc(100% + 120px) center;
+
+    min-height: 62vh;
+    align-items: flex-end;
+  }
+
+  .casa-cta::before {
+    background: linear-gradient(
+      to top,
+      rgba(251, 251, 251, 0.96) 0%,
+      rgba(251, 251, 251, 0.82) 42%,
+      rgba(251, 251, 251, 0) 72%
+    );
+  }
+
+  .casa-cta-inner {
+    padding: var(--space-md) var(--container-padding) var(--space-lg);
+  }
+
+  .casa-cta-content {
+    width: 100%;
+    text-align: center;
+  }
+
+  .casa-cta-title {
+    font-size: var(--font-size-h6);
+    padding-top: 300px;
+  }
+
+  .casa-cta-title-hand {
+    font-size: var(--font-size-hand-sm);
+  }
+}
