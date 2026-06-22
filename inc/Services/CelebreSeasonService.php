@@ -82,7 +82,7 @@ class CelebreSeasonService {
 			return 'fim-de-ano';
 		}
 
-		return self::detect_astronomical_season_slug( $now );
+		return SeasonService::detect_calendar_season_slug( $now );
 	}
 
 	/**
@@ -100,19 +100,27 @@ class CelebreSeasonService {
 			return $day <= 24 ? 'natal' : 'ano-novo';
 		}
 
-		$season = self::detect_astronomical_season_slug( $now );
+		$outono_keys = self::get_outono_festivity_keys( $month, $day );
+
+		if ( ! empty( $outono_keys ) ) {
+			return $outono_keys[0];
+		}
+
+		$primavera_keys = self::get_primavera_festivity_keys( $month, $day );
+
+		if ( ! empty( $primavera_keys ) ) {
+			return $primavera_keys[0];
+		}
+
+		$season = SeasonService::detect_calendar_season_slug( $now );
 
 		switch ( $season ) {
 			case 'verao':
 				return 'carnaval';
-			case 'outono':
-				$keys = self::get_outono_festivity_keys( $month, $day );
-				return ! empty( $keys ) ? $keys[0] : 'pascoa';
 			case 'inverno':
 				return 'pais';
 			case 'primavera':
-				$keys = self::get_primavera_festivity_keys( $month, $day );
-				return ! empty( $keys ) ? $keys[0] : 'halloween';
+				return 'halloween';
 		}
 
 		return '';
@@ -131,23 +139,28 @@ class CelebreSeasonService {
 			return self::get_festivity_keys_for_season_slug( $override );
 		}
 
-		$now = $now instanceof \DateTimeImmutable ? $now : self::get_site_datetime();
+		$now   = $now instanceof \DateTimeImmutable ? $now : self::get_site_datetime();
+		$month = (int) $now->format( 'n' );
 
-		if ( 12 === (int) $now->format( 'n' ) ) {
+		if ( 12 === $month ) {
 			return array( 'natal', 'ano-novo' );
 		}
 
-		$season = self::detect_astronomical_season_slug( $now );
+		if ( $month >= 3 && $month <= 6 ) {
+			return array( 'pascoa', 'maes', 'junina' );
+		}
+
+		if ( $month >= 9 && $month <= 11 ) {
+			return array( 'halloween', 'muertos' );
+		}
+
+		$season = SeasonService::detect_calendar_season_slug( $now );
 
 		switch ( $season ) {
 			case 'verao':
 				return array( 'carnaval' );
-			case 'outono':
-				return array( 'pascoa', 'maes', 'junina' );
 			case 'inverno':
 				return array( 'pais' );
-			case 'primavera':
-				return array( 'halloween', 'muertos' );
 		}
 
 		return array();
@@ -360,34 +373,6 @@ class CelebreSeasonService {
 			: new \DateTimeZone( 'America/Sao_Paulo' );
 
 		return new \DateTimeImmutable( 'now', $timezone );
-	}
-
-	/**
-	 * @param \DateTimeImmutable $now Current site datetime.
-	 * @return string
-	 */
-	private static function detect_astronomical_season_slug( \DateTimeImmutable $now ) {
-		$year     = (int) $now->format( 'Y' );
-		$timezone = $now->getTimezone();
-
-		$autumn_start = new \DateTimeImmutable( $year . '-03-20 00:00:00', $timezone );
-		$winter_start = new \DateTimeImmutable( $year . '-06-21 00:00:00', $timezone );
-		$spring_start = new \DateTimeImmutable( $year . '-09-23 00:00:00', $timezone );
-		$summer_start = new \DateTimeImmutable( $year . '-12-21 00:00:00', $timezone );
-
-		if ( $now >= $summer_start || $now < $autumn_start ) {
-			return 'verao';
-		}
-
-		if ( $now >= $autumn_start && $now < $winter_start ) {
-			return 'outono';
-		}
-
-		if ( $now >= $winter_start && $now < $spring_start ) {
-			return 'inverno';
-		}
-
-		return 'primavera';
 	}
 
 	/**

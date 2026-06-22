@@ -16,6 +16,7 @@ class Setup {
 	public function register() {
 		add_action( 'after_setup_theme', array( $this, 'setup_theme' ) );
 		add_action( 'init', array( $this, 'handle_season_preference' ), 0 );
+		add_action( 'wp_head', array( $this, 'render_season_storage_sync' ), 0 );
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 		add_filter( 'show_admin_bar', '__return_false' );
@@ -29,6 +30,19 @@ class Setup {
 	public function handle_season_preference() {
 		\Aptox\Services\SeasonService::bootstrap_season_cookies();
 		\Aptox\Services\SeasonService::handle_season_switch();
+	}
+
+	/**
+	 * Reset browser session state when the natural season changes.
+	 *
+	 * @return void
+	 */
+	public function render_season_storage_sync() {
+		if ( function_exists( 'aptox_is_links_page' ) && aptox_is_links_page() ) {
+			return;
+		}
+
+		\Aptox\Services\SeasonService::render_client_storage_sync_script();
 	}
 
 	/**

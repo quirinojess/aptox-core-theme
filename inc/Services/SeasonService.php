@@ -10,6 +10,8 @@ namespace Aptox\Services;
 class SeasonService {
 	public const SEASON_COOKIE_NAME = 'aptox_season_session';
 	public const LEGACY_SEASON_COOKIE_NAME = 'aptox_season';
+	public const SEASON_CALENDAR_COOKIE_NAME = 'aptox_season_calendar';
+	public const SEASON_STORAGE_SYNC_KEY = 'aptox-season-calendar';
 	public const SEASON_QUERY_PARAM = 'estacao';
 
 	/**
@@ -77,12 +79,38 @@ class SeasonService {
 	}
 
 	/**
-	 * Remove legacy persistent cookie and keep season override session-scoped.
+	 * Remove legacy persistent cookie and reset stale session overrides.
 	 *
 	 * @return void
 	 */
 	public static function bootstrap_season_cookies() {
 		self::expire_season_cookie( self::LEGACY_SEASON_COOKIE_NAME );
+		self::sync_natural_season_boundary();
+	}
+
+	/**
+	 * Clear manual season overrides when the natural calendar season changes.
+	 *
+	 * @return void
+	 */
+	private static function sync_natural_season_boundary() {
+		if ( headers_sent() ) {
+			return;
+		}
+
+		$current_natural = self::detect_natural_season_slug();
+		$stored_calendar = isset( $_COOKIE[ self::SEASON_CALENDAR_COOKIE_NAME ] )
+			? self::resolve_season_slug( wp_unslash( $_COOKIE[ self::SEASON_CALENDAR_COOKIE_NAME ] ) )
+			: null;
+
+		if ( null !== $stored_calendar && $stored_calendar !== $current_natural ) {
+			self::expire_season_cookie( self::SEASON_COOKIE_NAME );
+			self::clear_season_caches();
+		}
+
+		if ( $stored_calendar !== $current_natural ) {
+			self::set_calendar_season_cookie( $current_natural );
+		}
 	}
 
 	/**
@@ -166,6 +194,79 @@ class SeasonService {
 		);
 
 		$_COOKIE[ self::SEASON_COOKIE_NAME ] = $slug;
+	}
+
+	/**
+	 * Remember the last natural season seen by the visitor.
+	 *
+	 * @param string $slug Natural season slug.
+	 * @return void
+	 */
+	private static function set_calendar_season_cookie( $slug ) {
+		setcookie(
+			self::SEASON_CALENDAR_COOKIE_NAME,
+			$slug,
+			array(
+				'expires'  => time() + YEAR_IN_SECONDS,
+				'path'     => COOKIEPATH ? COOKIEPATH : '/',
+				'domain'   => COOKIE_DOMAIN,
+				'secure'   => is_ssl(),
+				'httponly' => false,
+				'samesite' => 'Lax',
+			)
+		);
+
+		$_COOKIE[ self::SEASON_CALENDAR_COOKIE_NAME ] = $slug;
+	}
+
+	/**
+	 * Session storage keys cleared when the natural season changes.
+	 *
+	 * @return array<int, string>
+	 */
+	public static function get_client_storage_keys_to_reset() {
+		return array(
+			'aptox-season-modal-shown',
+			'aptox-footer-ad-dismissed',
+		);
+	}
+
+	/**
+	 * Config for front-end sessionStorage sync on season boundary changes.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function get_client_storage_config() {
+		return array(
+			'calendarKey' => self::SEASON_STORAGE_SYNC_KEY,
+			'calendarSlug' => self::detect_natural_season_slug(),
+			'keysToClear'  => self::get_client_storage_keys_to_reset(),
+		);
+	}
+
+	/**
+	 * Output an early head script that resets browser session state on season change.
+	 *
+	 * @return void
+	 */
+	public static function render_client_storage_sync_script() {
+		if ( is_admin() || headers_sent() ) {
+			return;
+		}
+
+		$config = self::get_client_storage_config();
+
+		if ( empty( $config['calendarSlug'] ) ) {
+			return;
+		}
+
+		$config_json = wp_json_encode( $config );
+
+		if ( ! is_string( $config_json ) ) {
+			return;
+		}
+
+		echo '<script>(function(){try{var config=' . $config_json . ';var stored=sessionStorage.getItem(config.calendarKey);if(stored&&stored!==config.calendarSlug){config.keysToClear.forEach(function(item){sessionStorage.removeItem(item);});}sessionStorage.setItem(config.calendarKey,config.calendarSlug);}catch(e){}})();</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -316,33 +417,30 @@ class SeasonService {
 	}
 
 	/**
-	 * Detect astronomical season slug (southern hemisphere).
+	 * Detect meteorological season slug for the southern hemisphere (Brazil).
+	 *
+	 * Mar–May: outono · Jun–Aug: inverno · Sep–Nov: primavera · Jan–Feb: verão.
+	 * December is handled separately as fim-de-ano.
 	 *
 	 * @param \DateTimeImmutable $now Current site datetime.
 	 * @return string
 	 */
-	private static function detect_astronomical_season_slug( \DateTimeImmutable $now ) {
-		$year = (int) $now->format( 'Y' );
-		$timezone = $now->getTimezone();
+	public static function detect_calendar_season_slug( \DateTimeImmutable $now ) {
+		$month = (int) $now->format( 'n' );
 
-		$autumn_start = new \DateTimeImmutable( $year . '-03-20 00:00:00', $timezone );
-		$winter_start = new \DateTimeImmutable( $year . '-06-21 00:00:00', $timezone );
-		$spring_start = new \DateTimeImmutable( $year . '-09-23 00:00:00', $timezone );
-		$summer_start = new \DateTimeImmutable( $year . '-12-21 00:00:00', $timezone );
-
-		if ( $now >= $summer_start || $now < $autumn_start ) {
-			return 'verao';
-		}
-
-		if ( $now >= $autumn_start && $now < $winter_start ) {
+		if ( $month >= 3 && $month <= 5 ) {
 			return 'outono';
 		}
 
-		if ( $now >= $winter_start && $now < $spring_start ) {
+		if ( $month >= 6 && $month <= 8 ) {
 			return 'inverno';
 		}
 
-		return 'primavera';
+		if ( $month >= 9 && $month <= 11 ) {
+			return 'primavera';
+		}
+
+		return 'verao';
 	}
 
 	/**
@@ -363,7 +461,7 @@ class SeasonService {
 	/**
 	 * Detect season slug for southern hemisphere based on current date.
 	 *
-	 * December is always treated as year-end context, regardless of the solstice.
+	 * December is always treated as year-end context.
 	 *
 	 * @return string
 	 */
@@ -374,7 +472,7 @@ class SeasonService {
 			return 'fim-de-ano';
 		}
 
-		return self::detect_astronomical_season_slug( $now );
+		return self::detect_calendar_season_slug( $now );
 	}
 
 	/**
