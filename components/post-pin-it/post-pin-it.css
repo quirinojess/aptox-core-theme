@@ -1,0 +1,221 @@
+/* Section: Post image Pin It button */
+
+.post-image-pin__media {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.post-image-pin__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(17, 17, 17, 0);
+  pointer-events: none;
+  transition: background 0.4s ease;
+}
+
+.post-image-pin__media.is-pin-active::after {
+  background: rgba(17, 17, 17, 0.22);
+}
+
+@media (hover: hover) {
+  .post-image-pin__media:hover::after {
+    background: rgba(17, 17, 17, 0.22);
+  }
+}
+
+.post-image-pin__media > img,
+.post-image-pin__media > a > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.post-image-pin__button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  z-index: 3;
+
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  max-width: 80px;
+  max-height: 80px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  display: block;
+  background: var(--beige);
+  background-image: none;
+  border: none;
+  border-radius: 50%;
+  text-decoration: none;
+  color: var(--black);
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1;
+  text-transform: none;
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.94);
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    transform 0.35s ease;
+}
+
+.post-image-pin__media.is-pin-active .post-image-pin__button,
+.post-image-pin__button:focus-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (hover: hover) {
+  .post-image-pin__media:hover .post-image-pin__button {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.post-image-pin__button:hover {
+  opacity: 0.92;
+}
+
+.post-image-pin__badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.post-image-pin__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  animation: post-image-pin-spin 14s linear infinite;
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.post-image-pin__ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.post-image-pin__ring text {
+  fill: var(--black);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: -0.5px;
+  text-transform: lowercase;
+}
+
+.post-image-pin__heart {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.post-image-pin__heart img {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  max-width: none;
+}
+
+@keyframes post-image-pin-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Section: Block Pinterest extension overlays on post images */
+
+[data-pin-log],
+[class^="PIN_"],
+span[data-pin-hover] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.single #content [data-pin-log],
+.single #content [class^="PIN_"],
+.single #content span[data-pin-hover],
+.single .content-recipe [data-pin-log],
+.single .content-recipe [class^="PIN_"],
+.single .content-recipe span[data-pin-hover],
+.page-editorial-celebre #content [data-pin-log],
+.page-editorial-celebre #content [class^="PIN_"],
+.page-editorial-celebre #content span[data-pin-hover] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 768px) {
+  .post-image-pin__media {
+    cursor: pointer;
+  }
+
+  .post-image-pin__button {
+    width: 68px;
+    height: 68px;
+    min-width: 68px;
+    min-height: 68px;
+    max-width: 68px;
+    max-height: 68px;
+  }
+
+  .post-image-pin__ring text {
+    font-size: 10px;
+  }
+
+  .post-image-pin__heart img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-image-pin__media::after,
+  .post-image-pin__button {
+    transition: none;
+  }
+
+  .post-image-pin__ring {
+    animation: none;
+  }
+}

@@ -1,0 +1,33 @@
+# Long-lived caching for versioned theme static assets (Apache).
+# Assets are cache-busted via ?ver=filemtime in wp_enqueue_script/style.
+
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresByType text/css "access plus 1 year"
+	ExpiresByType application/javascript "access plus 1 year"
+	ExpiresByType image/svg+xml "access plus 1 year"
+	ExpiresByType image/png "access plus 1 year"
+	ExpiresByType image/jpeg "access plus 1 year"
+	ExpiresByType image/webp "access plus 1 year"
+	ExpiresByType image/gif "access plus 1 year"
+	ExpiresByType font/woff2 "access plus 1 year"
+	ExpiresByType font/woff "access plus 1 year"
+	ExpiresByType font/otf "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+	<FilesMatch "\.(css|js|mjs|svg|png|jpe?g|webp|gif|woff2?|otf|ico)$">
+		Header set Cache-Control "public, max-age=31536000, immutable"
+	</FilesMatch>
+
+	# Security headers (applied to HTML and assets).
+	Header always set X-Frame-Options "SAMEORIGIN"
+	Header always set X-Content-Type-Options "nosniff"
+	Header always set Referrer-Policy "strict-origin-when-cross-origin"
+	Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+	Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
+
+	# Compatibility-first CSP baseline.
+	Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https:; upgrade-insecure-requests"
+</IfModule>

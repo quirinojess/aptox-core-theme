@@ -11,6 +11,7 @@ get_header();
 		<?php while ( have_posts() ) : the_post(); ?>
 			<section class="container">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<h1 class="screen-reader-text"><?php the_title(); ?></h1>
 					<div class="content-recipe">
 						<?php the_content(); ?>
 					</div>
@@ -18,21 +19,24 @@ get_header();
 
 				<div class="content-footer">
 					<h5>Com amor,</h5>
-					<div class="navigation">
-						<?php edit_post_link( 'Editar este artigo', '<p>', '</p>' ); ?>
-					</div>
 				</div>
 			</section>
 		<?php endwhile; ?>
 	<?php endif; ?>
 
-	<?php get_template_part( 'components/author/author' ); ?>
-	<?php get_template_part( 'components/share/share' ); ?>
+	<?php
+	get_template_part(
+		'components/author/author',
+		null,
+		array(
+			'layout' => 'horizontal',
+		)
+	);
+	?>
+	<?php get_template_part( 'components/post-share-stack/post-share-stack' ); ?>
 	<?php get_template_part( 'components/related-posts/related-posts' ); ?>
+	<?php get_template_part( 'components/post-taxonomies/post-taxonomies' ); ?>
+	<?php get_template_part( 'components/post-nav/post-nav' ); ?>
 </main>
-
-<button class="btn-pular-receita" type="button" aria-label="Pular para a receita">
-	VER RECEITA
-</button>
 
 <?php get_footer(); ?>

@@ -1,0 +1,28 @@
+/* Section: Celebre season slide (season-slide variant overrides) */
+
+.celebre-season-slide .season-slide-aside-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.celebre-season-slide .season-slide-aside-title a:hover {
+  opacity: 0.75;
+}
+
+.celebre-season-slide .celebre-season-slide-title-main {
+  font-weight: normal;
+}
+
+.celebre-season-slide .celebre-season-slide-title-season {
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  .celebre-season-slide .celebre-season-slide-title-main {
+    font-weight: normal;
+  }
+
+  .celebre-season-slide .celebre-season-slide-title-season {
+    font-weight: var(--font-hand-weight, 400);
+  }
+}

@@ -1,0 +1,236 @@
+/* Section: Season festivities grid */
+
+.grid-festivity {
+  width: 100%;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-lg) 0;
+  background: var(--beige);
+}
+
+.grid-festivity-grid {
+  width: 100%;
+}
+
+.grid-festivity-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 20 / 25;
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.grid-festivity-title-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.grid-festivity-icon {
+  flex-shrink: 0;
+  display: flex;
+  margin: 0;
+}
+
+.grid-festivity-icon img {
+  width: auto;
+  height: 42px;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+  transform-origin: center center;
+  transition: transform var(--transition-fast);
+}
+
+.grid-festivity-title-inner:hover .grid-festivity-icon img {
+  transform: rotate(-10deg);
+}
+
+.grid-festivity-heading {
+  margin: 0;
+  color: var(--dark);
+}
+
+.grid-festivity-season {
+  display: block;
+  margin-top: var(--space-xs);
+  padding-left: 0;
+}
+
+/* Section: Season festivities carousel */
+
+.grid-festivity-layout--carousel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.grid-festivity-layout--carousel .grid-festivity-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: auto;
+  min-height: 0;
+  padding: 0 var(--space-md);
+  align-self: center;
+}
+
+.grid-festivity-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+@media (min-width: 769px) {
+  .grid-festivity-layout--carousel .grid-festivity-title {
+    height: 100%;
+  }
+
+  .grid-festivity-layout--carousel .grid-festivity-carousel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .grid-festivity-layout--carousel .grid-festivity-carousel__controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    margin-bottom: 0;
+  }
+
+  .grid-festivity-layout--carousel .grid-festivity-track {
+    padding-top: calc(32px + var(--space-xs));
+  }
+}
+
+.grid-festivity-carousel__controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.grid-festivity-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--dark);
+  opacity: 0.35;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: opacity var(--transition-fast);
+}
+
+.grid-festivity-nav__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.grid-festivity-nav[hidden] {
+  display: none;
+}
+
+.grid-festivity-nav:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.grid-festivity-nav:disabled {
+  opacity: 0.15;
+  cursor: default;
+}
+
+.grid-festivity-track {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: var(--space-xs);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.grid-festivity-track::-webkit-scrollbar {
+  display: none;
+}
+
+.grid-festivity-track .archive-card {
+  flex: 0 0 calc((100% - (2 * var(--space-lg))) / 3);
+  min-width: 0;
+  scroll-snap-align: start;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@media (max-width: 1024px) {
+  .grid-festivity-grid > *:nth-child(4) {
+    display: flex;
+  }
+
+  .grid-festivity-grid {
+    align-items: center;
+  }
+
+  .grid-festivity-grid .grid-festivity-title {
+    aspect-ratio: auto;
+    align-self: center;
+  }
+
+  .grid-festivity-track .archive-card {
+    flex-basis: calc((100% - var(--space-lg)) / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-festivity-layout--carousel {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .grid-festivity-title {
+    aspect-ratio: auto;
+    min-height: 180px;
+  }
+
+  .grid-festivity-icon img {
+    height: 36px;
+  }
+
+  .grid-festivity-track .archive-card {
+    flex-basis: 78%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-festivity-grid .archive-card,
+  .grid-festivity-track .archive-card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .grid-festivity-track {
+    scroll-behavior: auto;
+  }
+
+  .grid-festivity-title-inner:hover .grid-festivity-icon img {
+    transform: none;
+  }
+}

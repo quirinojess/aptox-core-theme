@@ -3,12 +3,12 @@
 .taxonomy-breadcrumb {
   margin-bottom: var(--space-xs);
 
-  font-size: 10px;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
 
-  color: var(--medium-dark);
+  color: var(--dark);
 }
 
 .taxonomy-breadcrumb a {
@@ -26,19 +26,20 @@
   margin-bottom: var(--space-sm);
 
   font-family: var(--font-display);
-  font-size: 45px;
+  font-size: var(--font-size-hand-lg);
   line-height: 1.1;
   text-align: center;
+  text-transform: capitalize;
 
   color: var(--dark);
 }
 
 .taxonomy-description {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   line-height: 1.8;
   text-align: center;
 
-  color: var(--medium-dark);
+  color: var(--dark);
 }
 
 .taxonomy-description a {
@@ -54,11 +55,11 @@
   }
 
   .taxonomy-title {
-    font-size: 2.6rem;
+    font-size: var(--font-size-display-sm);
   }
 
   .taxonomy-description {
-    font-size: 1rem;
+    font-size: var(--font-size-md);
   }
 }
 

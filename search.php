@@ -9,9 +9,10 @@ $search_term = get_search_query();
 $post_type   = get_query_var( 'post_type' );
 
 $labels = array(
-	'casas'    => 'Casas',
-	'receitas' => 'Receitas',
+	'casas'       => 'Casa',
+	'receitas'    => 'Receitas',
 	'celebracoes' => 'Celebre',
+	'loja'        => 'Loja',
 );
 
 $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
@@ -41,7 +42,7 @@ $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
 						<?php endif; ?>
 					</a>
 
-					<h3 class="recipe-title">
+					<h3 class="archive-title">
 						<a href="<?php the_permalink(); ?>">
 							<?php the_title(); ?>
 						</a>
@@ -52,17 +53,15 @@ $context = isset( $labels[ $post_type ] ) ? $labels[ $post_type ] : 'Tudo';
 		</section>
 
 		<?php if ( $max_pages > $paged ) : ?>
-			<div class="archive-load-more">
-				<button
-					type="button"
-					class="next page-numbers"
-					data-load-more-global
-					data-grid-selector=".archive-grid"
-					data-next-url="<?php echo esc_url( get_pagenum_link( $paged + 1 ) ); ?>"
-				>
-					Leia mais
-				</button>
-			</div>
+			<?php
+			aptox_render_archive_load_more(
+				array(
+					'paged'     => $paged,
+					'max_pages' => $max_pages,
+					'next_url'  => get_pagenum_link( $paged + 1 ),
+				)
+			);
+			?>
 		<?php endif; ?>
 
 	<?php else : ?>

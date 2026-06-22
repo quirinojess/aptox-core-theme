@@ -1,10 +1,22 @@
 /* Components bundle: import contextual component styles */
 
 @import url("../../components/archive-grid/archive-grid.css");
+@import url("../../components/grid-casa-decor/grid-casa-decor.css");
+@import url("../../components/casa-reforma/casa-reforma.css");
+@import url("../../components/casa-cta/casa-cta.css");
+@import url("../../components/celebre-cta/celebre-cta.css");
+@import url("../../components/celebre-block/celebre-block.css");
+@import url("../../components/casa-diy-marquee/casa-diy-marquee.css");
+@import url("../../components/casa-organizacao/casa-organizacao.css");
+@import url("../../components/grid-festivity/grid-festivity.css");
+@import url("../../components/casa-jardinagem/casa-jardinagem.css");
+@import url("../../components/casa-rooms-carousel/casa-rooms-carousel.css");
+@import url("../../components/casa-planejando-lar/casa-planejando-lar.css");
+@import url("../../components/grid-recipe/grid-recipe.css");
 @import url("../../components/recipe-carousel/recipe-carousel.css");
+@import url("../../components/recipe-tag-filter/recipe-tag-filter.css");
 @import url("../../components/modal-search/modal-search.css");
 @import url("../../components/modal-season/modal-season.css");
-@import url("../../components/cta-editorial/cta-editorial.css");
 @import url("../../components/home-decor/home-decor.css");
 @import url("../../components/related-posts/related-posts.css");
 @import url("global/layout/taxonomy.css");
@@ -13,5 +25,50 @@
 @import url("../../components/author/author.css");
 @import url("../../components/sidebar/sidebar.css");
 @import url("../../components/share/share.css");
-@import url("../../components/home-decor-slide/home-decor-slide.css");
+@import url("../../components/post-pin-it/post-pin-it.css");
+@import url("../../components/post-share-stack/post-share-stack.css");
+@import url("../../components/post-taxonomies/post-taxonomies.css");
+@import url("../../components/post-nav/post-nav.css");
+@import url("../../components/back-to-top/back-to-top.css");
+@import url("../../components/edit-post/edit-post.css");
+@import url("../../components/season-slide/season-slide.css");
+@import url("../../components/index-cta/index-cta.css");
+@import url("../../components/page-sobre/page-sobre.css");
+@import url("../../components/page-contato/page-contato.css");
+@import url("../../components/page-links/page-links.css");
+@import url("../../components/page-editorial/page-editorial.css");
+@import url("../../components/page-not-found/page-not-found.css");
+@import url("../../components/page-sobre-timeline/page-sobre-timeline.css");
+@import url("../../components/page-sobre-clipping/page-sobre-clipping.css");
+@import url("../../components/info-grid/info-grid.css");
+@import url("../../components/cta-season/cta-season.css");
+@import url("../../components/grid-festivity/grid-festivity.css");
+@import url("../../components/page-loja/page-loja.css");
+@import url("../../components/grid-loja/grid-loja.css");
+@import url("../../components/loja-cta/loja-cta.css");
+@import url("../../components/footer-loja/footer-loja.css");
+@import url("../../components/youtube-feed/youtube-feed.css");
+@import url("../../components/home-lazy-sections/home-lazy-sections.css");
+
+/* Section: Handwritten typography (mobile weight override) */
+
+@media (max-width: 768px) {
+  h5,
+  h6,
+  .about-author-title,
+  .cta-season-name,
+.casa-cta-title-hand,
+.casa-organizacao-title-hand,
+  .celebre-cta-title-hand,
+  .celebre-block-title-hand,
+  .season-slide-aside-title,
+  .grid-festivity-season,
+  .grid-recipe-season,
+  .recipe-section-heading__hand,
+  .index-cta-title-hand,
+  .post-side-newsletter__title-hand,
+  .youtube-feed-brand {
+    font-weight: var(--font-hand-weight, 400);
+  }
+}
 

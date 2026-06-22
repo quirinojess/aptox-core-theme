@@ -6,28 +6,21 @@
 get_header();
 ?>
 
-<div id="recipe-sticky">
-	<div class="recipe-sticky-header">
-		<span class="recipe-sticky-title">BUSQUE POR TIPO</span>
-
-		<button
-			id="recipe-toggle"
-			class="recipe-toggle"
-			aria-expanded="false"
-			aria-controls="recipe-sticky-content"
-			aria-label="Abrir ou fechar filtros"
-		>
-			<span class="icon icon-open">⌵</span>
-			<span class="icon icon-close">✕</span>
-		</button>
-	</div>
-
-	<section id="recipe-sticky-content">
-		<?php get_template_part( 'components/recipe-carousel/recipe-carousel' ); ?>
-	</section>
-</div>
+<?php get_template_part( 'components/recipe-sticky/recipe-sticky' ); ?>
 
 <main class="container-lg">
+	<?php
+	$tag_slug = aptox_get_receita_tag_query_slug();
+
+	if ( $tag_slug ) :
+		$resolved  = aptox_resolve_receita_tag_term( $tag_slug );
+		$tag_label = null !== $resolved ? $resolved['term']->name : $tag_slug;
+		?>
+		<h1 class="taxonomy-title">
+			<?php echo esc_html( $tag_label ); ?>
+		</h1>
+	<?php endif; ?>
+
 	<?php if ( have_posts() ) : ?>
 		<?php
 		$paged     = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
@@ -52,17 +45,15 @@ get_header();
 		</section>
 
 		<?php if ( $max_pages > $paged ) : ?>
-			<div class="archive-load-more">
-				<button
-					type="button"
-					class="next page-numbers"
-					data-load-more-global
-					data-grid-selector=".archive-grid"
-					data-next-url="<?php echo esc_url( get_pagenum_link( $paged + 1 ) ); ?>"
-				>
-					Leia mais
-				</button>
-			</div>
+			<?php
+			aptox_render_archive_load_more(
+				array(
+					'paged'     => $paged,
+					'max_pages' => $max_pages,
+					'next_url'  => $tag_slug ? add_query_arg( 'tag', $tag_slug, get_pagenum_link( $paged + 1 ) ) : get_pagenum_link( $paged + 1 ),
+				)
+			);
+			?>
 		<?php endif; ?>
 	<?php else : ?>
 		<p>Nenhuma receita encontrada.</p>

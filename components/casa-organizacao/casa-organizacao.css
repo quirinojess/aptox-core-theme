@@ -1,0 +1,251 @@
+/* Section: Casa organização carousel */
+
+.casa-organizacao {
+  width: 100%;
+  margin: var(--space-xl) 0;
+}
+
+.casa-organizacao-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.casa-organizacao-header {
+  min-width: 0;
+}
+
+.casa-organizacao-header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: 100%;
+}
+
+.casa-organizacao-icon {
+  flex-shrink: 0;
+  display: flex;
+  margin: -8px 0 0;
+}
+
+.casa-organizacao-icon img {
+  width: auto;
+  height: 58px;
+  display: block;
+  object-fit: contain;
+  transition: transform var(--transition-fast);
+}
+
+.casa-organizacao-header-inner:hover .casa-organizacao-icon img {
+  transform: rotate(-10deg);
+}
+
+.casa-organizacao-title {
+  margin: 0;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
+.casa-organizacao-title-display {
+  font-weight: 400;
+}
+
+.casa-organizacao-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.casa-organizacao-filter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.casa-organizacao-filter-label {
+  margin: 0;
+
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
+.casa-organizacao-tags {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+  min-width: 0;
+}
+
+.casa-organizacao-tag-sep {
+  margin: 0 0.35em;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  color: var(--dark);
+  opacity: 0.45;
+  user-select: none;
+}
+
+.casa-organizacao-tag {
+  margin: 0;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: none;
+  text-decoration: none;
+  color: var(--dark);
+  opacity: 0.55;
+  white-space: nowrap;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: opacity var(--transition-fast);
+}
+
+.casa-organizacao-tag:hover,
+.casa-organizacao-tag:focus-visible {
+  opacity: 0.85;
+}
+
+.casa-organizacao-tag.is-active {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.casa-organizacao-carousel__controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.casa-organizacao-carousel {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.casa-organizacao-panel[hidden] {
+  display: none;
+}
+
+.casa-organizacao-panel .archive-card {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@media (max-width: 1024px) {
+  .casa-organizacao-icon img {
+    height: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  .casa-organizacao-top {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-items: stretch;
+    gap: var(--space-sm);
+  }
+
+  .casa-organizacao-header {
+    grid-row: 1;
+  }
+
+  .casa-organizacao-toolbar {
+    grid-row: 2;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .casa-organizacao-header-inner {
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .casa-organizacao-icon {
+    margin: 0;
+  }
+
+  .casa-organizacao-title {
+    line-height: 1.2;
+    white-space: normal;
+  }
+
+  .casa-organizacao-title-hand,
+  .casa-organizacao-title-display {
+    display: inline;
+  }
+
+  .casa-organizacao-filter {
+    flex: 1;
+    min-width: 0;
+    gap: 0.2em;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .casa-organizacao-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .casa-organizacao-tags {
+    flex-wrap: nowrap;
+  }
+
+  .casa-organizacao-tag-sep {
+    margin: 0 0.12em;
+  }
+
+  .casa-organizacao-tag {
+    padding: 0 4px;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.04em;
+  }
+
+  .casa-organizacao-filter-label {
+    letter-spacing: 0.08em;
+  }
+
+  .casa-organizacao-carousel__controls {
+    gap: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .casa-organizacao-header-inner:hover .casa-organizacao-icon img {
+    transform: none;
+  }
+}

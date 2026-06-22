@@ -6,17 +6,52 @@
 
 .elm-button {
   margin: 3vw 0;
-
-  background: none !important;
-  border: none;
-
-  font-family: var(--font-display);
-  font-size: 24px;
-  color: var(--black);
 }
 
 .block-title {
   margin: 80px 0 40px 0;
+}
+
+/* Section: Post "Leia também" callout */
+
+.post-leia-tambem {
+  margin: var(--space-sm) 0;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--beige);
+
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+.post-leia-tambem p {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+}
+
+.single #content .post-leia-tambem a,
+.single .content-recipe .post-leia-tambem a,
+.post-leia-tambem a {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 400;
+  text-transform: inherit;
+  text-decoration: none;
+  background-image: none;
+}
+
+.post-leia-tambem > a:only-of-type:first-child:last-child {
+  display: block;
+}
+
+.post-leia-tambem a:hover {
+  opacity: 0.7;
 }
 
 /* Section: Manifest block */
@@ -59,7 +94,7 @@
   display: block;
   text-align: center;
 
-  font-size: 0.75em;
+  font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -69,11 +104,55 @@
   padding: 0 10px;
 
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: var(--font-size-h6);
   font-weight: 600;
   text-transform: capitalize;
 
   color: var(--dark);
+}
+
+/* Section: Recipe section heading (single receitas) */
+
+.recipe-section-heading {
+  margin-top: 20px;
+  margin-bottom: var(--space-md);
+  padding-left: 60px;
+  text-align: left;
+  scroll-margin-top: 24px;
+}
+
+.recipe-section-heading__inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-sm);
+  max-width: 100%;
+}
+
+.recipe-section-heading__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.recipe-section-heading__icon img {
+  width: auto;
+  height: 36px;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.recipe-section-heading__title {
+  margin: 0;
+  color: var(--dark);
+}
+
+@media (max-width: 768px) {
+  .recipe-section-heading {
+    padding-left: 20px;
+  }
 }
 
 /* Section: Skip recipe button */
@@ -87,11 +166,12 @@
   padding: 6px 10px;
   background: #000;
   color: #fff;
-  font-size: 0.75em;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;
   text-decoration: none;
+  background-image: none;
 
   border-radius: 8px 8px 0 0;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -124,7 +204,7 @@
 @media (max-width: 768px) {
   .btn-pular-receita {
     padding: 8px 12px;
-    font-size: 10px;
+    font-size: var(--font-size-xxs);
     letter-spacing: 0.06em;
     right: -36px;
     border-radius: 6px 6px 0 0;

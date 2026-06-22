@@ -2,7 +2,11 @@
 Theme Name: Aptox Core Season
 Theme URI: https://aptox.com
 Author: Jessica Quirino
-Description: Editorial theme with seasonal context
-Version: 1.0
-Text Domain: aptox-season
+Author URI: https://aptox.com
+Description: Tema editorial Aptox para casa, receitas, celebrações e loja. Layout off-white e beige, contexto sazonal, performance otimizada e campos nativos para integração com WP Recipe Maker.
+Version: 2.0
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 8.0
+Text Domain: aptox
 */

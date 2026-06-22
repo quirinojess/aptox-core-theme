@@ -12,7 +12,7 @@ $term = get_queried_object();
 	<nav class="taxonomy-breadcrumb">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
 		<span>›</span>
-		<a href="<?php echo esc_url( home_url( '/casas' ) ); ?>">Casas</a>
+		<a href="<?php echo esc_url( home_url( '/casas' ) ); ?>">Casa</a>
 		<span>›</span>
 		<span><?php echo esc_html( $term->name ); ?></span>
 	</nav>
@@ -43,7 +43,7 @@ $term = get_queried_object();
 						<?php endif; ?>
 					</a>
 
-					<h3 class="recipe-title">
+					<h3 class="archive-title">
 						<a href="<?php the_permalink(); ?>">
 							<?php the_title(); ?>
 						</a>
@@ -53,17 +53,15 @@ $term = get_queried_object();
 		</section>
 
 		<?php if ( $max_pages > $paged ) : ?>
-			<div class="archive-load-more">
-				<button
-					type="button"
-					class="next page-numbers"
-					data-load-more-global
-					data-grid-selector=".archive-grid"
-					data-next-url="<?php echo esc_url( get_pagenum_link( $paged + 1 ) ); ?>"
-				>
-					Leia mais
-				</button>
-			</div>
+			<?php
+			aptox_render_archive_load_more(
+				array(
+					'paged'     => $paged,
+					'max_pages' => $max_pages,
+					'next_url'  => get_pagenum_link( $paged + 1 ),
+				)
+			);
+			?>
 		<?php endif; ?>
 	<?php else : ?>
 		<p>Nenhuma casa encontrada.</p>

@@ -1,12 +1,8 @@
 /* Section: Share bar (base) */
 
 .share-bar {
-  position: sticky;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  background: var(--medium);
-  z-index: 999;
+  background: var(--beige);
   display: none;
 }
 
@@ -19,6 +15,23 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
+}
+
+.share-like-group,
+.share-icons-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.share-label {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  font-weight: 400;
+  color: var(--dark);
+  white-space: nowrap;
 }
 
 /* Section: Share bar (like button) */
@@ -38,38 +51,37 @@
   cursor: pointer;
 
   font-family: var(--font-base);
-  font-size: 14px;
-  color: #1f1f1f;
+  font-size: var(--font-size-sm);
+  color: var(--dark);
 }
 
 .like-icon {
   width: 20px;
   height: 20px;
-  transition: transform var(--transition-fast);
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.like-btn:hover .like-icon {
+  transform: scale(1.06) rotate(10deg);
 }
 
 .like-btn:active .like-icon {
-  transform: scale(1.1);
+  transform: scale(1.06) rotate(10deg);
 }
 
 .like-count {
-  font-size: 13px;
-  color: #1f1f1f;
+  font-size: var(--font-size-sm);
+  color: var(--dark);
 }
 
-/* Section: Share bar (text & icons) */
-
-.share-text {
-  font-size: 14px;
-  color: #1f1f1f;
-}
+/* Section: Share bar (social icons) */
 
 .share-icons {
   display: flex;
-  gap: var(--space-sm);
   margin: 0;
   padding: 0;
-  list-style: none;
 }
 
 .share-icons ul {
@@ -78,6 +90,7 @@
   gap: 12px;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
 .share-icons li {
@@ -93,17 +106,49 @@
   justify-content: center;
 
   border-radius: 50%;
-  transition: background-color var(--transition-fast);
 }
 
-.share-icons a:hover {
-  background-color: #f3eee7;
+.share-copy-link {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.share-copy-link.is-copied {
+  opacity: 0.65;
 }
 
 .share-icons img {
   width: 15px;
   height: 15px;
   display: block;
+  transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.share-copy-link img {
+  width: 15px;
+  height: 15px;
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.share-icons a:hover img {
+  transform: scale(1.06) rotate(10deg);
+}
+
+.share-copy-link:hover img {
+  transform: scale(1.06) rotate(10deg);
 }
 
 /* Section: Share bar (desktop) */
@@ -119,10 +164,6 @@
 @media (max-width: 1023px) {
   .share-bar {
     display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
     width: 100%;
     background: var(--beige);
   }
@@ -132,8 +173,12 @@
     gap: var(--space-sm);
   }
 
+  .share-label {
+    font-size: calc(var(--font-size-xs) + 2px);
+  }
+
   .like-btn {
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     gap: 4px;
   }
 
@@ -143,10 +188,15 @@
   }
 
   .like-count {
-    font-size: 11px;
+    font-size: var(--font-size-xs);
   }
 
   .share-icons a {
+    width: 28px;
+    height: 28px;
+  }
+
+  .share-copy-link {
     width: 28px;
     height: 28px;
   }
@@ -155,20 +205,29 @@
     width: 13px;
     height: 13px;
   }
+
+  .share-copy-link img {
+    width: 13px;
+    height: 13px;
+  }
 }
 
 @media (max-width: 768px) {
-  .share-bar {
-    bottom: 60px;
-  }
-
   .share-bar-inner {
     padding-left: var(--container-padding);
     padding-right: var(--container-padding);
   }
 
-  .share-text {
-    display: none;
+  .share-label {
+    font-size: calc(var(--font-size-xxs) + 2px);
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .like-btn:hover .like-icon,
+  .like-btn:active .like-icon,
+  .share-icons a:hover img,
+  .share-copy-link:hover img {
+    transform: none;
+  }
+}

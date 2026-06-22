@@ -1,14 +1,46 @@
+/* Section: Self-hosted fonts */
+
+@font-face {
+  font-family: "BTH Primary";
+  src: url("../../fonts/bth-primary-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BTH Primary";
+  src: url("../../fonts/bth-primary-regular-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BTH Sans Serif";
+  src: url("../../fonts/bth-sans-serif-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ashley";
+  src: url("../../fonts/Ashley%20Southine%20Demo.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 115%;
+}
+
 /* Section: Design tokens (colors, spacing, layout, typography) */
 
 :root {
 
   /* Section: Colors */
 
-  --off-white:   #FBF7F2;
-  --beige:       #F4EFEA;
-  --medium:      #D6D1CE;
-  --medium-low:  #AEA8A6;
-  --medium-dark: #333333;
+  --off-white:   #FBFBFB;
+  --beige:      #F3F1F0;
   --dark:        #111111;
   --black:       #050505;
   --white:       #FEFCFA;
@@ -25,29 +57,79 @@
 
   /* Section: Container & layout tokens */
 
+  --site-max-width: 1400px;
   --container-sm:   90vw;
   --container-md:   95vw;
   --container-blog: 70vw;
+  --container-blog-width: 800px;
   --container-page: 1000px;
-  --container-lg:   1350px;
-  --container-xl:   1440px;
+  --container-lg:   var(--site-max-width);
+  --container-xl:   var(--site-max-width);
 
   --container-padding: 25px;
   --container-margin:  30px;
+  --sidebar-gap:       50px;
+
+  /* Full-bleed breakout (svw avoids horizontal scroll from scrollbar width). */
+  --viewport-width: 100vw;
+  --viewport-half: 50vw;
+
+  --bullet-size: 10px;
+  --bullet-offset: 0.62em;
 
   /* Section: Typography tokens */
 
-  --font-base:    "DM Sans", serif;
-  --font-display: "DM Serif Display", serif;
-  --font-hand:    "Meow Script", cursive;
+  --font-base:    "BTH Sans Serif", sans-serif;
+  --font-display: "BTH Primary", serif;
+  --font-hand:         "Ashley", cursive;
+  --font-hand-weight:  400;
+  --font-hand-inline-shift: -0.06em;
+  --font-hand-vertical-align: -10px;
 
+  --font-size-2xs: 8px;
   --font-size-xxs: 10px;
   --font-size-xs:  12px;
   --font-size-sm:  14px;
   --font-size-md:  16px;
   --font-size-lg:  18px;
   --font-size-xl:  25px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 32px;
   --font-size-xxl: 40px;
+  --font-size-display: 48px;
+  --font-size-display-sm: 36px;
+
+  --font-size-h1: 42px;
+  --font-size-h2: 38px;
+  --font-size-h3: var(--font-size-3xl);
+  --font-size-h4: var(--font-size-xl);
+  --font-size-h5: var(--font-size-xxl);
+  --font-size-h6: 20px;
+
+  --font-size-section: var(--font-size-2xl);
+  --font-size-title:   24px;
+  --font-size-subtitle: 22px;
+  --font-size-author:  30px;
+  --font-size-hand-sm: 38px;
+  --font-size-hand-md: 46px;
+  --font-size-hand-lg: 50px;
+
+  /* Display + hand inline pair (ref: season-slide "Decore para o outono") */
+  --font-size-display-hand-display: var(--font-size-section);
+  --font-size-display-hand-hand: calc(var(--font-size-hand-sm) - 1px);
+  --font-display-hand-gap: 5px;
+
+  --line-height-body:  1.75;
+  --line-height-prose: 2;
+  --line-height-quote: 1.6;
+  --line-height-list:  1.7;
+
+  --line-height-h1: 50px;
+  --line-height-h2: 40px;
+  --line-height-h3: 30px;
+  --line-height-h4: 28px;
+  --line-height-h5: 30px;
+  --line-height-h6: 22px;
 
   /* Section: Motion & transitions */
 
@@ -61,11 +143,20 @@
   --z-overlay: 3000;
 }
 
+@supports (width: 100svw) {
+  :root {
+    --viewport-width: 100svw;
+    --viewport-half: 50svw;
+  }
+}
+
 /* Section: Global reset & document behavior */
 
 html {
+  font-size: 100%;
   scroll-behavior: smooth;
   scroll-margin-top: 200px;
+  overflow-x: clip;
 }
 
 *,
@@ -82,18 +173,62 @@ body {
   padding-top: var(--space-xxl);
 
   background: var(--off-white);
-  color: var(--medium-dark);
+  color: var(--dark);
 
   font-family: var(--font-base);
-  font-size: 1em;
-  line-height: 28px;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-body);
+}
+
+::selection {
+  background: var(--dark);
+  color: var(--white);
+}
+
+::-moz-selection {
+  background: var(--dark);
+  color: var(--white);
+}
+
+/* Section: Single posts & pages (long-form reading) */
+
+.single #content,
+.single .content-recipe,
+.page-editorial-celebre #content,
+.page main > section.container {
+  line-height: var(--line-height-prose);
+  --line-height-quote: 1.75;
+  --line-height-list: 1.85;
+}
+
+.single #content a:not(.post-image-pin__button),
+.single .content-recipe a:not(.post-image-pin__button),
+.page-editorial-celebre #content a:not(.post-image-pin__button) {
+  padding-bottom: 2px;
+  text-decoration: underline dotted 2px;
+  text-underline-offset: calc(0.15em + 2px);
+  text-decoration-color: currentColor;
+  transition: text-decoration-color 0.35s ease;
+}
+
+.single #content a:not(.post-image-pin__button):hover,
+.single #content a:not(.post-image-pin__button):focus-visible,
+.single .content-recipe a:not(.post-image-pin__button):hover,
+.single .content-recipe a:not(.post-image-pin__button):focus-visible {
+  text-decoration-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .single #content a:not(.post-image-pin__button),
+  .single .content-recipe a:not(.post-image-pin__button) {
+    transition: none;
+  }
 }
 
 /* Section: Basic element resets */
 
 button {
-  border: none;
-  background: none;
+  font: inherit;
 }
 
 a {
@@ -118,23 +253,23 @@ h4 {
 }
 
 h1 {
-  font-size: 42px;
-  line-height: 50px;
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
 }
 
 h2 {
-  font-size: 38px;
-  line-height: 40px;
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
 }
 
 h3 {
-  font-size: 32px;
-  line-height: 30px;
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
 }
 
 h4 {
-  font-size: 25px;
-  line-height: 28px;
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
 }
 
 h5,
@@ -142,49 +277,142 @@ h6 {
   font-family: var(--font-hand);
   margin: 0;
   padding: 0;
+  font-weight: var(--font-hand-weight, 400);
+  font-synthesis: none;
 }
 
 h5 {
-  font-size: 40px;
-  line-height: 30px;
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
 }
 
 h6 {
-  font-size: 20px;
-  line-height: 22px;
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+}
+
+/* Section: Handwritten typography (normal weight) */
+
+.about-author-title,
+.cta-season-name,
+.casa-cta-title-hand,
+.casa-organizacao-title-hand,
+.celebre-cta-title-hand,
+.celebre-block-title-hand,
+.grid-festivity-season,
+.grid-recipe-season,
+.recipe-section-heading__hand,
+.index-cta-title-hand,
+.post-side-newsletter__title-hand,
+.youtube-feed-brand {
+  font-weight: var(--font-hand-weight, 400);
+  font-synthesis: none;
+}
+
+/* Section: Display + hand pair (sizes & inline alignment) */
+
+.grid-recipe-title,
+.grid-festivity-heading,
+.youtube-feed-title,
+.cta-season-title a,
+.casa-organizacao-title,
+.recipe-section-heading__title,
+.season-slide-aside-title-main,
+.celebre-season-slide-title-main,
+.casa-organizacao-title-display,
+.celebre-block-title-display {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-hand-display);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.grid-recipe-season,
+.grid-festivity-season,
+.youtube-feed-brand,
+.cta-season-name,
+.casa-organizacao-title-hand,
+.recipe-section-heading__hand,
+.season-slide-aside-title-season,
+.celebre-season-slide-title-season,
+.celebre-block-title-hand {
+  font-family: var(--font-hand);
+  font-size: var(--font-size-display-hand-hand);
+  line-height: 1;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.grid-recipe-season,
+.grid-festivity-season,
+.youtube-feed-brand,
+.cta-season-name,
+.recipe-section-heading__hand,
+.season-slide-aside-title-season,
+.celebre-season-slide-title-season {
+  padding-left: var(--font-display-hand-gap);
+}
+
+.casa-organizacao-title-hand {
+  padding-left: 0;
+  padding-right: var(--font-display-hand-gap);
+}
+
+[class*="-title-hand"]:not(.celebre-block-title-hand),
+.recipe-section-heading__hand,
+.cta-season-name,
+.grid-recipe-season,
+.grid-festivity-season,
+.season-slide-aside-title-season,
+.celebre-season-slide-title-season,
+.casa-organizacao-title-hand,
+.page-editorial-celebre__signoff-hand,
+.youtube-feed-brand {
+  display: inline-block;
+  vertical-align: var(--font-hand-vertical-align);
+  transform: translateY(var(--font-hand-inline-shift));
+}
+
+.index-cta-title,
+.casa-cta-title,
+.celebre-cta-title {
+  --font-hand-inline-shift: 0.12em;
 }
 
 
 @media (max-width: 768px) {
 
-  h1 {
-    font-size: 32px;
-    line-height: 38px;
+  :root {
+    --font-hand-weight: 400;
+
+    --font-size-hand-sm: 34px;
+    --font-size-hand-md: 42px;
+    --font-size-hand-lg: 46px;
+
+    --font-size-display-hand-display: var(--font-size-h6);
+    --font-size-display-hand-hand: calc(var(--font-size-hand-sm) - 1px);
+
+    --font-size-h1: 32px;
+    --font-size-h2: 28px;
+    --font-size-h3: 24px;
+    --font-size-h4: 20px;
+    --font-size-h5: 28px;
+    --font-size-h6: var(--font-size-lg);
+
+    --line-height-h1: 38px;
+    --line-height-h2: 32px;
+    --line-height-h3: 28px;
+    --line-height-h4: 24px;
+    --line-height-h5: 40px;
+    --line-height-h6: 22px;
   }
 
-  h2 {
-    font-size: 28px;
-    line-height: 32px;
+  body {
+    padding-top: calc(var(--space-xxl) - 30px);
   }
 
-  h3 {
-    font-size: 24px;
-    line-height: 28px;
-  }
-
-  h4 {
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  h5 {
-    font-size: 28px;
-    line-height: 40px;
-  }
-
-  h6 {
-    font-size: 18px;
-    line-height: 22px;
+  body.single {
+    padding-top: calc(var(--space-xxl) - 44px);
   }
 
 }
@@ -198,54 +426,279 @@ h6 {
   padding-bottom: 20px;
 }
 
-/* Section: Editorial ordered lists */
-
-ol {
-  list-style: none;
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
-  margin: 40px 0;
-  padding-left: 24px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
+/* Section: Editorial ordered lists (post content — matches sidebar resumo) */
+
+.single #content ol,
+.single .content-recipe ol,
+.page main > section.container ol {
+  --editorial-ol-item-space: var(--space-md);
+
+  list-style: none;
+  margin: var(--space-md) 0;
+  padding: 0 var(--space-sm);
   counter-reset: editorial;
 }
 
-ol li {
+.single #content ol li,
+.single .content-recipe ol li,
+.page main > section.container ol li {
+  position: relative;
+  display: block;
+  padding-left: calc(46px + var(--space-md));
   counter-increment: editorial;
 
-  position: relative;
-  padding-left: 50px; 
-  margin-bottom: 25px;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--medium-dark);
+  margin: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: var(--editorial-ol-item-space);
+  border-bottom: 2px dotted var(--dark);
+  color: var(--dark);
+  line-height: var(--line-height-list);
 }
 
-/* Section: Editorial ordered list marker */
+.single #content ol li + li,
+.single .content-recipe ol li + li,
+.page main > section.container ol li + li {
+  padding-top: var(--editorial-ol-item-space);
+}
 
-ol li::before {
+.single #content ol li:last-child,
+.single .content-recipe ol li:last-child,
+.page main > section.container ol li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.single #content ol li::before,
+.single .content-recipe ol li::before,
+.page main > section.container ol li::before {
   content: counter(editorial, decimal-leading-zero);
   position: absolute;
   left: 0;
-  top: -8px; 
+  top: 0;
+  width: 46px;
+
   font-family: var(--font-display);
-  font-size: 1.6rem;
-  line-height: 1.7;
-  color: var(--medium-low);
+  font-size: var(--font-size-display-sm);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--dark);
 }
 
-/* Section: Links inside editorial lists */
-
-ol li a {
-  color: inherit;
+.single #content ol li a:not(.post-image-pin__button),
+.single .content-recipe ol li a:not(.post-image-pin__button),
+.page main > section.container ol li a:not(.post-image-pin__button) {
+  display: inline;
+  padding-bottom: 2px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  color: var(--dark);
   text-decoration: none;
+  border-bottom: none;
+  text-underline-offset: unset;
+  text-decoration-color: unset;
+  transition: opacity 0.35s ease;
 }
 
-ol li a:hover {
-  opacity: 0.8;
+.single #content ol li > strong,
+.single .content-recipe ol li > strong,
+.page main > section.container ol li > strong {
+  font-weight: 700;
+}
+
+.single #content ol li > p,
+.single .content-recipe ol li > p,
+.page main > section.container ol li > p {
+  display: block;
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-base);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.single #content ol li a:not(.post-image-pin__button):hover,
+.single .content-recipe ol li a:not(.post-image-pin__button):hover,
+.page main > section.container ol li a:not(.post-image-pin__button):hover,
+.single #content ol li a:not(.post-image-pin__button):focus-visible,
+.single .content-recipe ol li a:not(.post-image-pin__button):focus-visible,
+.page main > section.container ol li a:not(.post-image-pin__button):focus-visible {
+  opacity: 0.75;
+  text-decoration: none;
+  border-bottom: none;
+  text-decoration-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .page main > section.container ol {
+    padding-inline: 0;
+  }
+
+  .single #content ol li,
+  .single .content-recipe ol li,
+  .page main > section.container ol li {
+    padding-left: calc(32px + var(--space-sm));
+  }
+
+  .single #content ol li::before,
+  .single .content-recipe ol li::before,
+  .page main > section.container ol li::before {
+    width: 32px;
+  }
+
+  .page main > section.container ul {
+    padding-inline: 0;
+  }
+
+  .page main > section.container blockquote {
+    margin: var(--space-md) 0;
+    padding: var(--space-md) var(--space-sm);
+    background-color: var(--beige);
+  }
+}
+
+/* Section: Editorial unordered lists (post content — hand-drawn bullet) */
+
+.single #content ul,
+.single .content-recipe ul,
+.page main > section.container ul {
+  list-style: none;
+  margin: var(--space-md) 0;
+  padding: 0 var(--space-sm);
+}
+
+.single #content ul li,
+.single .content-recipe ul li,
+.page main > section.container ul li {
+  position: relative;
+  margin: 0 0 var(--space-sm);
+  padding-left: calc(var(--bullet-size) + var(--space-sm));
+  line-height: var(--line-height-list);
+  color: var(--dark);
+}
+
+.single #content ul li:last-child,
+.single .content-recipe ul li:last-child,
+.page main > section.container ul li:last-child {
+  margin-bottom: 0;
+}
+
+.single #content ul li::before,
+.single .content-recipe ul li::before,
+.page main > section.container ul li::before,
+.single #content ul li::after,
+.single .content-recipe ul li::after,
+.page main > section.container ul li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: var(--bullet-offset);
+  width: var(--bullet-size);
+  height: var(--bullet-size);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.single #content ul li::before,
+.single .content-recipe ul li::before,
+.page main > section.container ul li::before {
+  background: url("../../icons/ui/actions/ui-action-bullet-outline.svg") center / contain no-repeat;
+}
+
+.single #content ul li::after,
+.single .content-recipe ul li::after,
+.page main > section.container ul li::after {
+  background: url("../../icons/ui/actions/ui-action-bullet-filled.svg") center / contain no-repeat;
+  transform: translateY(-50%) scale(0);
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+
+.single #content ul li:hover::after,
+.single .content-recipe ul li:hover::after,
+.page main > section.container ul li:hover::after {
+  transform: translateY(-50%) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .single #content ul li::after,
+  .single .content-recipe ul li::after,
+  .page main > section.container ul li::after {
+    transition: none;
+  }
+
+  .single #content ul li:hover::after,
+  .single .content-recipe ul li:hover::after,
+  .page main > section.container ul li:hover::after {
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* Section: WP Recipe Maker — keep plugin list styles (no editorial bullets) */
+
+.single #content [class*="wprm-"] ul,
+.single #content [class*="wprm-"] ol,
+.single .content-recipe [class*="wprm-"] ul,
+.single .content-recipe [class*="wprm-"] ol {
+  list-style: revert;
+  margin: revert;
+  padding: revert;
+  counter-reset: revert;
+}
+
+.single #content [class*="wprm-"] ul li,
+.single #content [class*="wprm-"] ol li,
+.single .content-recipe [class*="wprm-"] ul li,
+.single .content-recipe [class*="wprm-"] ol li {
+  position: static;
+  display: revert;
+  margin: revert;
+  padding: revert;
+  padding-left: revert;
+  border-bottom: none;
+  counter-increment: revert;
+  line-height: revert;
+  color: revert;
+}
+
+.single #content [class*="wprm-"] ul li::before,
+.single #content [class*="wprm-"] ul li::after,
+.single #content [class*="wprm-"] ol li::before,
+.single .content-recipe [class*="wprm-"] ul li::before,
+.single .content-recipe [class*="wprm-"] ul li::after,
+.single .content-recipe [class*="wprm-"] ol li::before {
+  content: none;
+  display: none;
+  background: none;
+  transition: none;
+  transform: none;
+}
+
+/* Section: Carousel chevron icons */
+
+.aptox-chevron-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
 }
 
 blockquote {
- box-sizing: border-box;
+  box-sizing: border-box;
   max-width: 100%;
   margin: 32px 0;
   padding: 24px 32px;
@@ -254,15 +707,17 @@ blockquote {
 
 blockquote p {
   margin: 0;
+  font-size: var(--font-size-md);
   font-style: italic;
-  line-height: 1.6;
+  line-height: var(--line-height-quote);
 }
 
 blockquote i {
   display: block;
   margin-top: 12px;
   font-style: normal;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
   opacity: 0.7;
 }
 

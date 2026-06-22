@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!trigger) return;
 
   const gridSelector = trigger.dataset.gridSelector || '.archive-grid';
+  const cardSelector = trigger.dataset.cardSelector || '.archive-card';
   const grid = document.querySelector(gridSelector);
   if (!grid) return;
 
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const incomingGrid = doc.querySelector(gridSelector);
     if (!incomingGrid) return '';
 
-    const cards = incomingGrid.querySelectorAll('.archive-card');
+    const cards = incomingGrid.querySelectorAll(cardSelector);
     let html = '';
     cards.forEach((card) => {
       html += card.outerHTML;
