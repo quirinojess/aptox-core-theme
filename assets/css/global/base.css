@@ -69,6 +69,7 @@
   --container-padding: 25px;
   --container-margin:  30px;
   --sidebar-gap:       50px;
+  --sidebar-width:     320px;
 
   /* Full-bleed breakout (svw avoids horizontal scroll from scrollbar width). */
   --viewport-width: 100vw;
@@ -141,6 +142,13 @@
   --z-menu:    1000;
   --z-modal:   2000;
   --z-overlay: 3000;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --sidebar-gap:   24px;
+    --sidebar-width: 240px;
+  }
 }
 
 @supports (width: 100svw) {
@@ -708,7 +716,7 @@ blockquote {
 blockquote p {
   margin: 0;
   font-size: var(--font-size-md);
-  font-style: italic;
+  font-style: normal;
   line-height: var(--line-height-quote);
 }
 
