@@ -576,7 +576,6 @@ h6 {
   .page main > section.container blockquote {
     margin: var(--space-md) 0;
     padding: var(--space-md) var(--space-sm);
-    background-color: var(--beige);
   }
 }
 
@@ -710,6 +709,10 @@ blockquote {
   max-width: 100%;
   margin: 32px 0;
   padding: 24px 32px;
+}
+
+.single #content blockquote,
+.single .content-recipe blockquote {
   background-color: var(--beige);
 }
 
