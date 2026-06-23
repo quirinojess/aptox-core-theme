@@ -143,8 +143,9 @@
 @media (max-width: 768px) {
   .filter-nav {
     position: fixed;
-    bottom: 55px;
+    bottom: 60px;
     left: 0;
+    margin: 5px 0 0;
     padding: 10px 0;
     width: 100%;
     background: var(--beige);
@@ -156,7 +157,7 @@
   .filter-nav--casa,
   .filter-nav--celebre,
   .filter-nav--loja {
-    bottom: 45px;
+    bottom: 50px;
   }
 
   .filter-list {

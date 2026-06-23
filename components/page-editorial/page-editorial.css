@@ -696,6 +696,7 @@
 .page-editorial-celebre #content blockquote {
   margin: var(--space-md) 0;
   padding: var(--space-md) var(--space-lg);
+  background-color: var(--beige);
 }
 
 .page-editorial-celebre #content a:not(.post-image-pin__button) {

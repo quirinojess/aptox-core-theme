@@ -805,6 +805,49 @@ if ( ! function_exists( 'aptox_footer_ad_slot_has_content' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_normalize_footer_ad_slot_html' ) ) {
+	/**
+	 * Normalize footer AdSense markup for the horizontal sticky slot.
+	 *
+	 * @param string $html Widget output HTML.
+	 * @return string
+	 */
+	function aptox_normalize_footer_ad_slot_html( $html ) {
+		$html = (string) $html;
+
+		if ( '' === trim( $html ) ) {
+			return $html;
+		}
+
+		$html = preg_replace( '/\sdata-full-width-responsive=(["\'])true\1/i', '', $html );
+		$html = preg_replace( '/\sdata-ad-format=(["\'])auto\1/i', ' data-ad-format="horizontal"', $html );
+
+		if ( preg_match( '/<ins\b[^>]*class=(["\'])adsbygoogle\1/i', $html ) ) {
+			$html = preg_replace_callback(
+				'/<ins\b[^>]*class=(["\'])adsbygoogle\1[^>]*>/i',
+				static function ( $matches ) {
+					$tag = $matches[0];
+
+					if ( preg_match( '/\sstyle=(["\'])/i', $tag ) ) {
+						return preg_replace(
+							'/\sstyle=(["\'])([^"\']*)\1/i',
+							' style="display:block;width:100%;height:90px;max-height:90px"',
+							$tag,
+							1
+						);
+					}
+
+					return rtrim( $tag, '>' ) . ' style="display:block;width:100%;height:90px;max-height:90px">';
+				},
+				$html,
+				1
+			);
+		}
+
+		return $html;
+	}
+}
+
 if ( ! function_exists( 'aptox_get_footer_ad_slot_html' ) ) {
 	/**
 	 * Render and return footer ad sidebar markup.
@@ -832,6 +875,10 @@ if ( ! function_exists( 'aptox_get_footer_ad_slot_html' ) ) {
 
 		$cached_html = is_string( $html ) ? $html : '';
 
+		if ( function_exists( 'aptox_normalize_footer_ad_slot_html' ) ) {
+			$cached_html = aptox_normalize_footer_ad_slot_html( $cached_html );
+		}
+
 		return $cached_html;
 	}
 }
@@ -843,7 +890,11 @@ if ( ! function_exists( 'aptox_show_footer_ad' ) ) {
 	 * @return bool
 	 */
 	function aptox_show_footer_ad() {
-		return is_active_sidebar( 'footer-ad-sidebar' );
+		if ( ! is_active_sidebar( 'footer-ad-sidebar' ) ) {
+			return false;
+		}
+
+		return aptox_footer_ad_slot_has_content( aptox_get_footer_ad_slot_html() );
 	}
 }
 

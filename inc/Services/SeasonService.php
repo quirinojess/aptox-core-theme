@@ -227,7 +227,6 @@ class SeasonService {
 	public static function get_client_storage_keys_to_reset() {
 		return array(
 			'aptox-season-modal-shown',
-			'aptox-footer-ad-dismissed',
 		);
 	}
 

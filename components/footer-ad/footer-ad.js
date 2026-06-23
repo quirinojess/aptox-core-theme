@@ -1,280 +1,92 @@
 (function () {
-  const storageKey = 'aptox-footer-ad-dismissed';
-
-  const clearFooterAdState = () => {
+  const activateSticky = () => {
     const root = document.documentElement;
 
-    root.removeAttribute('data-footer-ad');
-    root.classList.remove('has-footer-ad');
-    root.style.removeProperty('--footer-ad-lift');
-    root.style.removeProperty('--footer-ad-bar-height');
+    root.setAttribute('data-aptox-sticky', 'active');
+    root.classList.add('has-aptox-sticky');
+    root.classList.remove('aptox-sticky-dismissed');
   };
 
-  const syncFooterAdState = (state) => {
-    clearFooterAdState();
-
-    if (state === 'active' && !applyMeasuredLift()) {
-      clearFooterAdState();
-    }
-  };
-
-  window.aptoxSyncFooterAdState = syncFooterAdState;
-
-  const hasVisibleBox = (element) => {
-    if (!element) {
-      return false;
-    }
-
-    const rect = element.getBoundingClientRect();
-
-    return rect.height > 1 && rect.width > 1;
-  };
-
-  const slotHasVisibleAd = (slot) => {
-    if (!slot) {
-      return false;
-    }
-
-    const iframes = slot.querySelectorAll('iframe');
-
-    for (const iframe of iframes) {
-      if (hasVisibleBox(iframe)) {
-        return true;
-      }
-    }
-
-    const images = slot.querySelectorAll('img[src]');
-
-    for (const image of images) {
-      if (hasVisibleBox(image)) {
-        return true;
-      }
-    }
-
-    const media = slot.querySelectorAll('video, embed, object');
-
-    for (const element of media) {
-      if (hasVisibleBox(element)) {
-        return true;
-      }
-    }
-
-    const adSense = slot.querySelector('ins[data-ad-client], ins[data-ad-slot], ins.adsbygoogle');
-
-    if (adSense) {
-      if (adSense.getAttribute('data-ad-status') === 'filled') {
-        return true;
-      }
-
-      const innerFrame = adSense.querySelector('iframe');
-
-      return hasVisibleBox(innerFrame);
-    }
-
-    return false;
-  };
-
-  const slotHasPendingAd = (slot) => {
-    if (!slot) {
-      return false;
-    }
-
-    return Boolean(
-      slot.querySelector('ins[data-ad-client], ins[data-ad-slot], ins.adsbygoogle')
-    );
-  };
-
-  const applyMeasuredLift = () => {
+  const hideSticky = () => {
     const root = document.documentElement;
-    const footerAd = document.getElementById('footerAd');
+    const chrome = document.getElementById('aptoxStickyChrome');
 
-    clearFooterAdState();
-
-    if (!footerAd || !footerAd.classList.contains('is-visible') || footerAd.classList.contains('is-hidden')) {
-      return false;
-    }
-
-    const height = Math.ceil(footerAd.getBoundingClientRect().height);
-
-    if (height < 2) {
-      return false;
-    }
-
-    root.style.setProperty('--footer-ad-bar-height', `${height}px`);
-    root.setAttribute('data-footer-ad', 'active');
-    root.classList.add('has-footer-ad');
-
-    return true;
+    chrome?.classList.add('is-hidden');
+    root.classList.add('aptox-sticky-dismissed');
+    root.removeAttribute('data-aptox-sticky');
+    root.classList.remove('has-aptox-sticky');
   };
 
-  const clearDismissedOnReload = () => {
-    const navEntry = performance.getEntriesByType('navigation')[0];
-
-    if (!navEntry || navEntry.type !== 'reload') {
+  const requestAdSenseRender = (slot) => {
+    if (!slot) {
       return;
     }
 
-    try {
-      sessionStorage.removeItem(storageKey);
-    } catch (error) {
-      /* Ignore storage errors. */
-    }
-  };
+    slot.querySelectorAll('ins.adsbygoogle').forEach((ins) => {
+      if (ins.getAttribute('data-adsbygoogle-status')) {
+        return;
+      }
 
-  const isDismissed = () => {
-    try {
-      return sessionStorage.getItem(storageKey) === 'true';
-    } catch (error) {
-      return false;
-    }
-  };
-
-  const hideFooterAd = (footerAd, { remove = false } = {}) => {
-    if (!footerAd) {
-      clearFooterAdState();
-      return;
-    }
-
-    if (remove) {
-      footerAd.remove();
-    } else {
-      footerAd.classList.remove('is-visible');
-      footerAd.classList.add('is-hidden');
-      footerAd.setAttribute('aria-hidden', 'true');
-      document.documentElement.classList.add('footer-ad-dismissed');
-    }
-
-    clearFooterAdState();
-  };
-
-  const showFooterAd = (footerAd) => {
-    footerAd.classList.remove('is-hidden');
-    footerAd.classList.add('is-visible');
-    footerAd.setAttribute('aria-hidden', 'false');
-    document.documentElement.classList.remove('footer-ad-dismissed');
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (!applyMeasuredLift()) {
-          hideFooterAd(footerAd, { remove: true });
-        }
-      });
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (error) {
+        /* Ignore AdSense init errors. */
+      }
     });
   };
 
-  const bindCloseButton = (footerAd) => {
-    const closeBtn = footerAd.querySelector('.footer-ad__close');
+  const initSticky = () => {
+    try {
+      sessionStorage.removeItem('aptox-footer-ad-dismissed');
+    } catch (error) {
+      /* Ignore storage errors. */
+    }
+
+    const chrome = document.getElementById('aptoxStickyChrome');
+
+    if (!chrome || chrome.dataset.hasWidget !== 'true' || chrome.classList.contains('is-hidden')) {
+      return;
+    }
+
+    const slot = document.getElementById('aptoxStickySlot');
+    const closeBtn = chrome.querySelector('.close');
+
+    requestAdSenseRender(slot);
+
+    chrome.classList.remove('is-hidden');
+    chrome.classList.add('is-visible');
+    activateSticky();
 
     if (!closeBtn || closeBtn.dataset.bound === 'true') {
       return;
     }
 
     closeBtn.dataset.bound = 'true';
-    closeBtn.addEventListener('click', () => {
-      hideFooterAd(footerAd);
-
-      try {
-        sessionStorage.setItem(storageKey, 'true');
-      } catch (error) {
-        /* Ignore storage errors. */
-      }
+    closeBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      hideSticky();
     });
   };
 
-  let pendingRetryTimer = null;
+  window.aptoxSyncFooterAdState = (state) => {
+    const chrome = document.getElementById('aptoxStickyChrome');
 
-  const clearPendingRetry = () => {
-    if (pendingRetryTimer !== null) {
-      window.clearInterval(pendingRetryTimer);
-      pendingRetryTimer = null;
+    if (!chrome || chrome.dataset.hasWidget !== 'true') {
+      return;
     }
+
+    if (state === 'active') {
+      chrome.classList.remove('is-hidden');
+      chrome.classList.add('is-visible');
+      activateSticky();
+      return;
+    }
+
+    hideSticky();
   };
 
-  const evaluateFooterAd = () => {
-    clearPendingRetry();
-    clearFooterAdState();
-
-    const footerAd = document.getElementById('footerAd');
-
-    if (!footerAd) {
-      return;
-    }
-
-    const slot = footerAd.querySelector('.footer-ad__slot');
-
-    if (!slotHasVisibleAd(slot)) {
-      if (slotHasPendingAd(slot)) {
-        let attempts = 0;
-
-        pendingRetryTimer = window.setInterval(() => {
-          attempts += 1;
-
-          if (slotHasVisibleAd(slot)) {
-            clearPendingRetry();
-            evaluateFooterAd();
-            return;
-          }
-
-          if (attempts >= 20) {
-            clearPendingRetry();
-            hideFooterAd(footerAd, { remove: true });
-          }
-        }, 500);
-
-        return;
-      }
-
-      hideFooterAd(footerAd, { remove: true });
-      return;
-    }
-
-    if (isDismissed()) {
-      hideFooterAd(footerAd);
-      bindCloseButton(footerAd);
-      return;
-    }
-
-    showFooterAd(footerAd);
-    bindCloseButton(footerAd);
-  };
-
-  const syncLiftToVisibleBar = () => {
-    const footerAd = document.getElementById('footerAd');
-
-    if (!footerAd || document.documentElement.classList.contains('footer-ad-dismissed')) {
-      clearFooterAdState();
-      return;
-    }
-
-    if (!footerAd.classList.contains('is-visible') || footerAd.classList.contains('is-hidden')) {
-      clearFooterAdState();
-      return;
-    }
-
-    const slot = footerAd.querySelector('.footer-ad__slot');
-
-    if (!slotHasVisibleAd(slot)) {
-      clearFooterAdState();
-      return;
-    }
-
-    applyMeasuredLift();
-  };
-
-  clearDismissedOnReload();
-  evaluateFooterAd();
-
-  document.addEventListener('DOMContentLoaded', evaluateFooterAd);
-  window.addEventListener('resize', syncLiftToVisibleBar);
-  window.visualViewport?.addEventListener('resize', syncLiftToVisibleBar);
-  window.visualViewport?.addEventListener('scroll', syncLiftToVisibleBar);
-
-  window.addEventListener('pageshow', (event) => {
-    if (!event.persisted) {
-      return;
-    }
-
-    clearDismissedOnReload();
-    evaluateFooterAd();
-  });
+  initSticky();
+  document.addEventListener('DOMContentLoaded', initSticky);
+  window.addEventListener('load', initSticky);
 })();

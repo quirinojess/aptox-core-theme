@@ -27,8 +27,6 @@
   z-index: 10;
 }
 
-/* Section: Season modal (header close button) */
-
 .season-modal-header .close {
   right: var(--space-sm);
 }

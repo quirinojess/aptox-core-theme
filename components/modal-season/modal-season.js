@@ -14,23 +14,44 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  const getStickyChrome = () => document.getElementById('aptoxStickyChrome');
+
+  const setStickyBlocked = (blocked) => {
+    getStickyChrome()?.style.setProperty('pointer-events', blocked ? 'none' : '');
+  };
+
+  const restoreSticky = () => {
+    setStickyBlocked(false);
+
+    if (typeof window.aptoxSyncFooterAdState === 'function') {
+      window.aptoxSyncFooterAdState('active');
+    }
+  };
+
   const closeModal = () => {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
+    restoreSticky();
   };
 
   const openModal = () => {
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     sessionStorage.setItem(storageKey, 'true');
+    setStickyBlocked(true);
   };
 
   setTimeout(openModal, 400);
 
-  closeBtn?.addEventListener('click', closeModal);
+  closeBtn?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    closeModal();
+  });
 
   modal.addEventListener('click', (event) => {
     if (event.target === modal) {
+      event.preventDefault();
       closeModal();
     }
   });

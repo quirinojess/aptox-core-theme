@@ -105,7 +105,7 @@
   --font-size-h3: var(--font-size-3xl);
   --font-size-h4: var(--font-size-xl);
   --font-size-h5: var(--font-size-xxl);
-  --font-size-h6: 20px;
+  --font-size-h6: var(--font-size-md);
 
   --font-size-section: var(--font-size-2xl);
   --font-size-title:   24px;
@@ -130,7 +130,7 @@
   --line-height-h3: 30px;
   --line-height-h4: 28px;
   --line-height-h5: 30px;
-  --line-height-h6: 22px;
+  --line-height-h6: 20px;
 
   /* Section: Motion & transitions */
 
@@ -256,7 +256,8 @@ img {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h6 {
   font-family: var(--font-display);
 }
 
@@ -280,21 +281,20 @@ h4 {
   line-height: var(--line-height-h4);
 }
 
-h5,
-h6 {
+h5 {
   font-family: var(--font-hand);
   margin: 0;
   padding: 0;
   font-weight: var(--font-hand-weight, 400);
   font-synthesis: none;
-}
-
-h5 {
   font-size: var(--font-size-h5);
   line-height: var(--line-height-h5);
 }
 
 h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
   font-size: var(--font-size-h6);
   line-height: var(--line-height-h6);
 }
@@ -405,14 +405,14 @@ h6 {
     --font-size-h3: 24px;
     --font-size-h4: 20px;
     --font-size-h5: 28px;
-    --font-size-h6: var(--font-size-lg);
+    --font-size-h6: var(--font-size-md);
 
     --line-height-h1: 38px;
     --line-height-h2: 32px;
     --line-height-h3: 28px;
     --line-height-h4: 24px;
     --line-height-h5: 40px;
-    --line-height-h6: 22px;
+    --line-height-h6: 20px;
   }
 
   body {
@@ -450,7 +450,8 @@ h6 {
 
 .single #content ol,
 .single .content-recipe ol,
-.page main > section.container ol {
+.page main > section.container ol,
+.page-editorial-celebre #content ol {
   --editorial-ol-item-space: var(--space-md);
 
   list-style: none;
@@ -461,45 +462,70 @@ h6 {
 
 .single #content ol li,
 .single .content-recipe ol li,
-.page main > section.container ol li {
+.page main > section.container ol li,
+.page-editorial-celebre #content ol li {
   position: relative;
-  display: block;
-  padding-left: calc(46px + var(--space-md));
   counter-increment: editorial;
 
-  margin: 0;
-  padding-top: 0;
-  padding-right: 0;
-  padding-bottom: var(--editorial-ol-item-space);
+  margin: 0 0 var(--editorial-ol-item-space);
+  padding: 0 0 var(--space-sm) calc(40px + var(--space-md));
   border-bottom: 2px dotted var(--dark);
   color: var(--dark);
   line-height: var(--line-height-list);
 }
 
-.single #content ol li + li,
-.single .content-recipe ol li + li,
-.page main > section.container ol li + li {
-  padding-top: var(--editorial-ol-item-space);
+.single #content ol li :is(img, picture, svg),
+.single .content-recipe ol li :is(img, picture, svg),
+.page main > section.container ol li :is(img, picture, svg),
+.page-editorial-celebre #content ol li :is(img, picture, svg) {
+  display: inline-block;
+  width: auto;
+  height: 1.15em;
+  max-height: 24px;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.single #content ol li > :is(p, ul, ol, div, figure, blockquote),
+.single .content-recipe ol li > :is(p, ul, ol, div, figure, blockquote),
+.page main > section.container ol li > :is(p, ul, ol, div, figure, blockquote),
+.page-editorial-celebre #content ol li > :is(p, ul, ol, div, figure, blockquote) {
+  min-width: 0;
 }
 
 .single #content ol li:last-child,
 .single .content-recipe ol li:last-child,
-.page main > section.container ol li:last-child {
+.page main > section.container ol li:last-child,
+.page-editorial-celebre #content ol li:last-child {
+  margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
 }
 
+.single #content ol li:last-child::before,
+.single .content-recipe ol li:last-child::before,
+.page main > section.container ol li:last-child::before,
+.page-editorial-celebre #content ol li:last-child::before {
+  bottom: 0;
+}
+
 .single #content ol li::before,
 .single .content-recipe ol li::before,
-.page main > section.container ol li::before {
+.page main > section.container ol li::before,
+.page-editorial-celebre #content ol li::before {
   content: counter(editorial, decimal-leading-zero);
   position: absolute;
-  left: 0;
   top: 0;
-  width: 46px;
+  bottom: var(--space-sm);
+  left: 0;
+  width: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   font-family: var(--font-display);
-  font-size: var(--font-size-display-sm);
+  font-size: var(--font-size-2xl);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -508,9 +534,12 @@ h6 {
 
 .single #content ol li a:not(.post-image-pin__button),
 .single .content-recipe ol li a:not(.post-image-pin__button),
-.page main > section.container ol li a:not(.post-image-pin__button) {
+.page main > section.container ol li a:not(.post-image-pin__button),
+.page-editorial-celebre #content ol li a:not(.post-image-pin__button) {
   display: inline;
-  padding-bottom: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding-bottom: 0;
   font-family: inherit;
   font-size: inherit;
   font-weight: 700;
@@ -525,13 +554,15 @@ h6 {
 
 .single #content ol li > strong,
 .single .content-recipe ol li > strong,
-.page main > section.container ol li > strong {
+.page main > section.container ol li > strong,
+.page-editorial-celebre #content ol li > strong {
   font-weight: 700;
 }
 
 .single #content ol li > p,
 .single .content-recipe ol li > p,
-.page main > section.container ol li > p {
+.page main > section.container ol li > p,
+.page-editorial-celebre #content ol li > p {
   display: block;
   margin: var(--space-xs) 0 0;
   font-family: var(--font-base);
@@ -543,9 +574,11 @@ h6 {
 .single #content ol li a:not(.post-image-pin__button):hover,
 .single .content-recipe ol li a:not(.post-image-pin__button):hover,
 .page main > section.container ol li a:not(.post-image-pin__button):hover,
+.page-editorial-celebre #content ol li a:not(.post-image-pin__button):hover,
 .single #content ol li a:not(.post-image-pin__button):focus-visible,
 .single .content-recipe ol li a:not(.post-image-pin__button):focus-visible,
-.page main > section.container ol li a:not(.post-image-pin__button):focus-visible {
+.page main > section.container ol li a:not(.post-image-pin__button):focus-visible,
+.page-editorial-celebre #content ol li a:not(.post-image-pin__button):focus-visible {
   opacity: 0.75;
   text-decoration: none;
   border-bottom: none;
@@ -553,27 +586,32 @@ h6 {
 }
 
 @media (max-width: 768px) {
-  .page main > section.container ol {
+  .page main > section.container ol,
+  .page-editorial-celebre #content ol {
     padding-inline: 0;
   }
 
   .single #content ol li,
   .single .content-recipe ol li,
-  .page main > section.container ol li {
-    padding-left: calc(32px + var(--space-sm));
+  .page main > section.container ol li,
+  .page-editorial-celebre #content ol li {
+    padding-left: calc(28px + var(--space-sm));
   }
 
   .single #content ol li::before,
   .single .content-recipe ol li::before,
-  .page main > section.container ol li::before {
-    width: 32px;
+  .page main > section.container ol li::before,
+  .page-editorial-celebre #content ol li::before {
+    width: 28px;
+    font-size: var(--font-size-xl);
   }
 
   .page main > section.container ul {
     padding-inline: 0;
   }
 
-  .page main > section.container blockquote {
+  .page main > section.container blockquote,
+  .page-editorial-celebre #content blockquote {
     margin: var(--space-md) 0;
     padding: var(--space-md) var(--space-sm);
   }
@@ -712,7 +750,8 @@ blockquote {
 }
 
 .single #content blockquote,
-.single .content-recipe blockquote {
+.single .content-recipe blockquote,
+.page-editorial-celebre #content blockquote {
   background-color: var(--beige);
 }
 

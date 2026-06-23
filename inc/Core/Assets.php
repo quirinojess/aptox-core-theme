@@ -100,6 +100,7 @@ class Assets {
 			'aptox-layout-menu',
 			'aptox-layout-footer',
 			'aptox-layout-buttons',
+			'aptox-footer-ad',
 		);
 
 		if ( function_exists( 'aptox_is_lazy_home' ) && aptox_is_lazy_home() ) {
@@ -768,7 +769,8 @@ class Assets {
 
 		$this->enqueue_theme_style(
 			'aptox-footer-ad',
-			'/components/footer-ad/footer-ad.css'
+			'/components/footer-ad/footer-ad.css',
+			array( 'aptox-base' )
 		);
 	}
 
