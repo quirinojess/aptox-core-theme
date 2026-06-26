@@ -40,7 +40,7 @@ foreach ( array( 'casa_categoria', 'casa' ) as $candidate_taxonomy ) {
 		continue;
 	}
 
-	$candidate_term = get_term_by( 'slug', 'decoracao', $candidate_taxonomy );
+	$candidate_term = get_term_by( 'slug', 'decoracao-sazonal', $candidate_taxonomy );
 	if ( $candidate_term && ! is_wp_error( $candidate_term ) ) {
 		$resolved_house_taxonomy = $candidate_taxonomy;
 		break;
@@ -60,7 +60,7 @@ $query = new WP_Query(
 			array(
 				'taxonomy' => $resolved_house_taxonomy,
 				'field'    => 'slug',
-				'terms'    => 'decoracao',
+				'terms'    => 'decoracao-sazonal',
 			),
 			array(
 				'taxonomy' => 'post_tag',

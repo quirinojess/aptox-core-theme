@@ -50,7 +50,7 @@ $season_icon  = function_exists( 'aptox_filter_home_season_icon' )
 $season_url   = add_query_arg(
   'tag',
   'decoracao-de-' . $season_slug,
-  $term_url( 'decoracao' )
+  $term_url( 'decoracao-sazonal' )
 );
 ?>
 

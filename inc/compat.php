@@ -557,7 +557,7 @@ if ( ! function_exists( 'aptox_page_links_get_casa_posts' ) ) {
 	/**
 	 * Resolve Casa posts for the links landing page.
 	 *
-	 * First item: latest seasonal decoration post (decoracao + decoracao-de-{season} tag).
+	 * First item: latest seasonal decoration post (decoracao-sazonal + decoracao-de-{season} tag).
 	 * Next items: latest Casa posts excluding seasonal decoration posts.
 	 *
 	 * @param string $season_slug Season slug.
@@ -578,7 +578,7 @@ if ( ! function_exists( 'aptox_page_links_get_casa_posts' ) ) {
 				continue;
 			}
 
-			$decor_term = get_term_by( 'slug', 'decoracao', $candidate_taxonomy );
+			$decor_term = get_term_by( 'slug', 'decoracao-sazonal', $candidate_taxonomy );
 
 			if ( $decor_term && ! is_wp_error( $decor_term ) ) {
 				$house_taxonomy = $candidate_taxonomy;
@@ -591,7 +591,7 @@ if ( ! function_exists( 'aptox_page_links_get_casa_posts' ) ) {
 			array(
 				'taxonomy' => $house_taxonomy,
 				'field'    => 'slug',
-				'terms'    => 'decoracao',
+				'terms'    => 'decoracao-sazonal',
 			),
 			array(
 				'taxonomy' => 'post_tag',

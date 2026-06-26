@@ -220,7 +220,7 @@ class SeasonService {
 	}
 
 	/**
-	 * Session storage keys cleared when the natural season changes.
+	 * Browser storage keys cleared when the natural season changes.
 	 *
 	 * @return array<int, string>
 	 */
@@ -265,7 +265,7 @@ class SeasonService {
 			return;
 		}
 
-		echo '<script>(function(){try{var config=' . $config_json . ';var stored=sessionStorage.getItem(config.calendarKey);if(stored&&stored!==config.calendarSlug){config.keysToClear.forEach(function(item){sessionStorage.removeItem(item);});}sessionStorage.setItem(config.calendarKey,config.calendarSlug);}catch(e){}})();</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<script>(function(){try{var config=' . $config_json . ';var stored=sessionStorage.getItem(config.calendarKey);if(stored&&stored!==config.calendarSlug){config.keysToClear.forEach(function(item){sessionStorage.removeItem(item);localStorage.removeItem(item);});}sessionStorage.setItem(config.calendarKey,config.calendarSlug);}catch(e){}})();</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
