@@ -917,6 +917,32 @@ if ( ! function_exists( 'aptox_show_footer_loja' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_casa_rooms_carousel_cache_key' ) ) {
+	/**
+	 * Transient key for cached Casa rooms carousel HTML.
+	 *
+	 * @return string
+	 */
+	function aptox_casa_rooms_carousel_cache_key() {
+		return 'aptox_casa_rooms_carousel_v4';
+	}
+}
+
+if ( ! function_exists( 'aptox_clear_casa_rooms_carousel_cache' ) ) {
+	/**
+	 * Clear cached Casa rooms carousel HTML.
+	 *
+	 * @return void
+	 */
+	function aptox_clear_casa_rooms_carousel_cache() {
+		delete_transient( aptox_casa_rooms_carousel_cache_key() );
+
+		foreach ( array( 'v1', 'v2', 'v3' ) as $version ) {
+			delete_transient( 'aptox_casa_rooms_carousel_' . $version );
+		}
+	}
+}
+
 if ( ! function_exists( 'aptox_footer_loja_cache_key' ) ) {
 	/**
 	 * Transient key for cached footer Loja carousel data.

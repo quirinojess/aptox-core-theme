@@ -9,12 +9,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_casa_rooms_carousel_v3';
+$cache_key = function_exists( 'aptox_casa_rooms_carousel_cache_key' )
+	? aptox_casa_rooms_carousel_cache_key()
+	: 'aptox_casa_rooms_carousel_v4';
+
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
 	echo $cached_html;
 	return;
+}
+
+$house_taxonomy = 'casa_categoria';
+$spaces_term    = null;
+
+foreach ( array( 'casa_categoria', 'casa' ) as $candidate_taxonomy ) {
+	if ( ! taxonomy_exists( $candidate_taxonomy ) ) {
+		continue;
+	}
+
+	$candidate_term = get_term_by( 'slug', 'decoracao-por-espacos', $candidate_taxonomy );
+
+	if ( $candidate_term && ! is_wp_error( $candidate_term ) ) {
+		$house_taxonomy = $candidate_taxonomy;
+		$spaces_term    = $candidate_term;
+		break;
+	}
 }
 
 $room_tags = array(
@@ -33,22 +53,45 @@ foreach ( $room_tags as $tag_slug => $label ) {
 	$tag = get_term_by( 'slug', $tag_slug, 'post_tag' );
 
 	if ( ! $tag || is_wp_error( $tag ) ) {
+		$tag = get_term_by( 'name', $label, 'post_tag' );
+	}
+
+	if ( ! $tag || is_wp_error( $tag ) ) {
 		continue;
+	}
+
+	$tax_query = array(
+		'relation' => 'AND',
+		array(
+			'taxonomy' => 'post_tag',
+			'field'    => 'slug',
+			'terms'    => $tag->slug,
+		),
+	);
+
+	if ( $spaces_term ) {
+		$tax_query[] = array(
+			'taxonomy' => $house_taxonomy,
+			'field'    => 'slug',
+			'terms'    => 'decoracao-por-espacos',
+		);
 	}
 
 	$query = new WP_Query(
 		array(
 			'post_type'              => 'casas',
 			'posts_per_page'         => 1,
+			'orderby'                => 'date',
+			'order'                  => 'DESC',
 			'ignore_sticky_posts'    => true,
 			'no_found_rows'          => true,
 			'update_post_term_cache' => false,
 			'update_post_meta_cache' => true,
-			'tax_query'              => array(
+			'tax_query'              => $tax_query,
+			'meta_query'             => array(
 				array(
-					'taxonomy' => 'post_tag',
-					'field'    => 'slug',
-					'terms'    => $tag_slug,
+					'key'     => '_thumbnail_id',
+					'compare' => 'EXISTS',
 				),
 			),
 		)
@@ -61,21 +104,26 @@ foreach ( $room_tags as $tag_slug => $label ) {
 
 	$query->the_post();
 
-	if ( ! has_post_thumbnail() ) {
-		wp_reset_postdata();
-		continue;
+	if ( $spaces_term ) {
+		$item_link = get_term_link( $spaces_term );
+
+		if ( ! is_wp_error( $item_link ) ) {
+			$item_link = add_query_arg( 'tag', $tag->slug, $item_link );
+		} else {
+			$item_link = get_tag_link( $tag );
+		}
+	} else {
+		$item_link = get_tag_link( $tag );
 	}
 
-	$tag_link = get_tag_link( $tag );
-
-	if ( is_wp_error( $tag_link ) ) {
+	if ( is_wp_error( $item_link ) ) {
 		wp_reset_postdata();
 		continue;
 	}
 
 	$items[] = array(
 		'label' => $label,
-		'link'  => $tag_link,
+		'link'  => $item_link,
 		'image' => get_the_post_thumbnail( null, 'medium' ),
 	);
 

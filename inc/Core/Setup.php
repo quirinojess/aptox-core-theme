@@ -20,6 +20,7 @@ class Setup {
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 		add_filter( 'show_admin_bar', '__return_false' );
+		add_action( 'save_post_casas', array( $this, 'clear_casa_component_caches' ) );
 	}
 
 	/**
@@ -43,6 +44,17 @@ class Setup {
 		}
 
 		\Aptox\Services\SeasonService::render_client_storage_sync_script();
+	}
+
+	/**
+	 * Clear Casa archive component caches when a Casa post is saved.
+	 *
+	 * @return void
+	 */
+	public function clear_casa_component_caches() {
+		if ( function_exists( 'aptox_clear_casa_rooms_carousel_cache' ) ) {
+			aptox_clear_casa_rooms_carousel_cache();
+		}
 	}
 
 	/**
