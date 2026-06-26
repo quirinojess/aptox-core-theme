@@ -7,10 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const storageKey = 'aptox-season-modal-shown';
   const closeBtn = modal.querySelector('.close');
-  const navEntry = performance.getEntriesByType('navigation')[0];
-  const isReload = navEntry?.type === 'reload';
 
-  if (!isReload && sessionStorage.getItem(storageKey) === 'true') {
+  const markAsShown = () => {
+    try {
+      localStorage.setItem(storageKey, 'true');
+    } catch (error) {
+      // Ignore private browsing / storage restrictions.
+    }
+  };
+
+  const hasBeenShown = () => {
+    try {
+      return localStorage.getItem(storageKey) === 'true';
+    } catch (error) {
+      return false;
+    }
+  };
+
+  if (hasBeenShown()) {
     return;
   }
 
@@ -31,13 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeModal = () => {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
+    markAsShown();
     restoreSticky();
   };
 
   const openModal = () => {
+    if (hasBeenShown()) {
+      return;
+    }
+
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    sessionStorage.setItem(storageKey, 'true');
+    markAsShown();
     setStickyBlocked(true);
   };
 
