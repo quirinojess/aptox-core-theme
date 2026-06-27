@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $cache_key = function_exists( 'aptox_casa_rooms_carousel_cache_key' )
 	? aptox_casa_rooms_carousel_cache_key()
-	: 'aptox_casa_rooms_carousel_v4';
+	: 'aptox_casa_rooms_carousel_v5';
 
 $cached_html = get_transient( $cache_key );
 
@@ -37,46 +37,95 @@ foreach ( array( 'casa_categoria', 'casa' ) as $candidate_taxonomy ) {
 	}
 }
 
-$room_tags = array(
-	'cozinha'    => __( 'Cozinha', 'aptox' ),
-	'banheiro'   => __( 'Banheiro', 'aptox' ),
-	'quarto'     => __( 'Quarto', 'aptox' ),
-	'escritorio' => __( 'Escritório', 'aptox' ),
-	'varanda'    => __( 'Varanda', 'aptox' ),
-	'sala'       => __( 'Sala', 'aptox' ),
-	'lavanderia' => __( 'Lavanderia', 'aptox' ),
+if ( ! $spaces_term ) {
+	return;
+}
+
+$post_ids = get_posts(
+	array(
+		'post_type'              => 'casas',
+		'posts_per_page'         => -1,
+		'fields'                 => 'ids',
+		'post_status'            => 'publish',
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'update_post_term_cache' => true,
+		'tax_query'              => array(
+			array(
+				'taxonomy' => $house_taxonomy,
+				'field'    => 'term_id',
+				'terms'    => array( (int) $spaces_term->term_id ),
+			),
+		),
+	)
 );
+
+if ( empty( $post_ids ) ) {
+	return;
+}
+
+$tags = wp_get_object_terms(
+	$post_ids,
+	'post_tag',
+	array(
+		'orderby' => 'name',
+		'order'   => 'ASC',
+	)
+);
+
+if ( is_wp_error( $tags ) || empty( $tags ) ) {
+	return;
+}
+
+$tags = array_values(
+	array_filter(
+		$tags,
+		static function ( $tag ) {
+			return 0 !== strpos( $tag->slug, 'decoracao-de-' );
+		}
+	)
+);
+
+if ( empty( $tags ) ) {
+	return;
+}
+
+$preferred_slugs = array(
+	'cozinha',
+	'banheiro',
+	'quarto',
+	'escritorio',
+	'varanda',
+	'sala',
+	'lavanderia',
+);
+
+usort(
+	$tags,
+	static function ( $a, $b ) use ( $preferred_slugs ) {
+		$a_pos = array_search( $a->slug, $preferred_slugs, true );
+		$b_pos = array_search( $b->slug, $preferred_slugs, true );
+
+		$a_pos = false === $a_pos ? PHP_INT_MAX : $a_pos;
+		$b_pos = false === $b_pos ? PHP_INT_MAX : $b_pos;
+
+		if ( $a_pos !== $b_pos ) {
+			return $a_pos <=> $b_pos;
+		}
+
+		return strcasecmp( $a->name, $b->name );
+	}
+);
+
+$category_link = get_term_link( $spaces_term );
+
+if ( is_wp_error( $category_link ) ) {
+	$category_link = '';
+}
 
 $items = array();
 
-foreach ( $room_tags as $tag_slug => $label ) {
-	$tag = get_term_by( 'slug', $tag_slug, 'post_tag' );
-
-	if ( ! $tag || is_wp_error( $tag ) ) {
-		$tag = get_term_by( 'name', $label, 'post_tag' );
-	}
-
-	if ( ! $tag || is_wp_error( $tag ) ) {
-		continue;
-	}
-
-	$tax_query = array(
-		'relation' => 'AND',
-		array(
-			'taxonomy' => 'post_tag',
-			'field'    => 'slug',
-			'terms'    => $tag->slug,
-		),
-	);
-
-	if ( $spaces_term ) {
-		$tax_query[] = array(
-			'taxonomy' => $house_taxonomy,
-			'field'    => 'slug',
-			'terms'    => 'decoracao-por-espacos',
-		);
-	}
-
+foreach ( $tags as $tag ) {
 	$query = new WP_Query(
 		array(
 			'post_type'              => 'casas',
@@ -87,11 +136,17 @@ foreach ( $room_tags as $tag_slug => $label ) {
 			'no_found_rows'          => true,
 			'update_post_term_cache' => false,
 			'update_post_meta_cache' => true,
-			'tax_query'              => $tax_query,
-			'meta_query'             => array(
+			'tax_query'              => array(
+				'relation' => 'AND',
 				array(
-					'key'     => '_thumbnail_id',
-					'compare' => 'EXISTS',
+					'taxonomy' => $house_taxonomy,
+					'field'    => 'term_id',
+					'terms'    => array( (int) $spaces_term->term_id ),
+				),
+				array(
+					'taxonomy' => 'post_tag',
+					'field'    => 'term_id',
+					'terms'    => array( (int) $tag->term_id ),
 				),
 			),
 		)
@@ -104,27 +159,21 @@ foreach ( $room_tags as $tag_slug => $label ) {
 
 	$query->the_post();
 
-	if ( $spaces_term ) {
-		$item_link = get_term_link( $spaces_term );
-
-		if ( ! is_wp_error( $item_link ) ) {
-			$item_link = add_query_arg( 'tag', $tag->slug, $item_link );
-		} else {
-			$item_link = get_tag_link( $tag );
-		}
-	} else {
-		$item_link = get_tag_link( $tag );
-	}
+	$item_link = $category_link
+		? add_query_arg( 'tag', $tag->slug, $category_link )
+		: get_tag_link( $tag );
 
 	if ( is_wp_error( $item_link ) ) {
 		wp_reset_postdata();
 		continue;
 	}
 
+	$image = has_post_thumbnail() ? get_the_post_thumbnail( null, 'medium' ) : '';
+
 	$items[] = array(
-		'label' => $label,
+		'label' => $tag->name,
 		'link'  => $item_link,
-		'image' => get_the_post_thumbnail( null, 'medium' ),
+		'image' => $image,
 	);
 
 	wp_reset_postdata();
@@ -162,9 +211,11 @@ ob_start();
 						class="tag-item"
 						aria-label="<?php echo esc_attr( $item['label'] ); ?>"
 					>
-						<figure class="tag-image">
-							<?php echo $item['image']; ?>
-						</figure>
+						<?php if ( '' !== $item['image'] ) : ?>
+							<figure class="tag-image">
+								<?php echo $item['image']; ?>
+							</figure>
+						<?php endif; ?>
 
 						<span class="tag-label">
 							<?php echo esc_html( $item['label'] ); ?>

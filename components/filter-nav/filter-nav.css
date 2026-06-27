@@ -15,6 +15,12 @@
   --filter-nav-icon-size: 26.4px;
 }
 
+@media (min-width: 769px) {
+  .filter-nav {
+    z-index: var(--z-menu);
+  }
+}
+
 .filter-list {
   width: 100%;
   margin: 0;
@@ -143,7 +149,7 @@
 @media (max-width: 768px) {
   .filter-nav {
     position: fixed;
-    bottom: 60px;
+    bottom: 65px;
     left: 0;
     margin: 5px 0 0;
     padding: 10px 0;
@@ -157,7 +163,7 @@
   .filter-nav--casa,
   .filter-nav--celebre,
   .filter-nav--loja {
-    bottom: 50px;
+    bottom: 55px;
   }
 
   .filter-list {

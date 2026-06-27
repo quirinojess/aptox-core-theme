@@ -924,7 +924,7 @@ if ( ! function_exists( 'aptox_casa_rooms_carousel_cache_key' ) ) {
 	 * @return string
 	 */
 	function aptox_casa_rooms_carousel_cache_key() {
-		return 'aptox_casa_rooms_carousel_v4';
+		return 'aptox_casa_rooms_carousel_v5';
 	}
 }
 
@@ -937,7 +937,7 @@ if ( ! function_exists( 'aptox_clear_casa_rooms_carousel_cache' ) ) {
 	function aptox_clear_casa_rooms_carousel_cache() {
 		delete_transient( aptox_casa_rooms_carousel_cache_key() );
 
-		foreach ( array( 'v1', 'v2', 'v3' ) as $version ) {
+		foreach ( array( 'v1', 'v2', 'v3', 'v4' ) as $version ) {
 			delete_transient( 'aptox_casa_rooms_carousel_' . $version );
 		}
 	}
