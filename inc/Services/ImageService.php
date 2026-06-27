@@ -47,7 +47,9 @@ class ImageService {
 		add_filter( 'wp_generate_attachment_metadata', array( $this, 'ensure_webp_companion' ), 20, 2 );
 		add_filter( 'wp_get_attachment_url', array( $this, 'prefer_webp_attachment_url' ), 10, 2 );
 		add_filter( 'wp_get_attachment_image_src', array( $this, 'prefer_webp_image_src' ), 10, 4 );
-		add_filter( 'wp_content_img_tag', array( $this, 'prefer_webp_in_content_image' ), 12, 3 );
+		add_filter( 'wp_calculate_image_srcset', array( $this, 'prefer_webp_image_srcset' ), 10, 5 );
+		add_filter( 'wp_content_img_tag', array( $this, 'prefer_webp_in_content_image' ), 16, 3 );
+		add_filter( 'the_content', array( $this, 'prefer_webp_in_content_links' ), 31 );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', array( $this, 'register_admin_page' ) );
@@ -257,21 +259,9 @@ class ImageService {
 			return $image;
 		}
 
-		$webp_url = preg_replace( '/\.(jpe?g|png)$/i', '.webp', $image[0] );
+		$webp_url = $this->replace_url_with_webp_if_exists( $image[0] );
 
-		if ( ! is_string( $webp_url ) || $webp_url === $image[0] ) {
-			return $image;
-		}
-
-		$upload = wp_get_upload_dir();
-
-		if ( empty( $upload['baseurl'] ) || empty( $upload['basedir'] ) ) {
-			return $image;
-		}
-
-		$webp_path = str_replace( $upload['baseurl'], $upload['basedir'], $webp_url );
-
-		if ( file_exists( $webp_path ) ) {
+		if ( $webp_url !== $image[0] ) {
 			$image[0] = $webp_url;
 		}
 
@@ -279,7 +269,39 @@ class ImageService {
 	}
 
 	/**
-	 * Swap content image src to WebP when available.
+	 * Prefer WebP sources inside responsive srcset maps.
+	 *
+	 * @param array<int, array<string, int|string>>|false $sources       Source list.
+	 * @param array<int, int>                             $size_array    Requested size.
+	 * @param string                                      $image_src     Image src URL.
+	 * @param array<string, mixed>                        $image_meta    Attachment metadata.
+	 * @param int                                         $attachment_id Attachment ID.
+	 * @return array<int, array<string, int|string>>|false
+	 */
+	public function prefer_webp_image_srcset( $sources, $size_array, $image_src, $image_meta, $attachment_id ) {
+		unset( $size_array, $image_src, $image_meta, $attachment_id );
+
+		if ( ! is_array( $sources ) ) {
+			return $sources;
+		}
+
+		foreach ( $sources as $width => $source ) {
+			if ( empty( $source['url'] ) || ! is_string( $source['url'] ) ) {
+				continue;
+			}
+
+			$webp_url = $this->replace_url_with_webp_if_exists( $source['url'] );
+
+			if ( $webp_url !== $source['url'] ) {
+				$sources[ $width ]['url'] = $webp_url;
+			}
+		}
+
+		return $sources;
+	}
+
+	/**
+	 * Swap content image src and srcset to WebP when companions exist.
 	 *
 	 * @param string $filtered_image Full img tag.
 	 * @param string $context        Context.
@@ -289,30 +311,126 @@ class ImageService {
 	public function prefer_webp_in_content_image( $filtered_image, $context, $attachment_id ) {
 		unset( $context, $attachment_id );
 
-		if ( ! preg_match( '/\bsrc=(["\'])([^"\']+)\1/i', $filtered_image, $matches ) ) {
-			return $filtered_image;
+		$updated = $filtered_image;
+
+		if ( preg_match( '/\bsrc=(["\'])([^"\']+)\1/i', $updated, $matches ) ) {
+			$src      = html_entity_decode( $matches[2], ENT_QUOTES, 'UTF-8' );
+			$webp_url = $this->replace_url_with_webp_if_exists( $src );
+
+			if ( $webp_url !== $src ) {
+				$replaced = preg_replace(
+					'/\bsrc=(["\'])[^"\']+\1/i',
+					'src=$1' . esc_url( $webp_url ) . '$1',
+					$updated,
+					1
+				);
+
+				if ( is_string( $replaced ) ) {
+					$updated = $replaced;
+				}
+			}
 		}
 
-		$src = html_entity_decode( $matches[2], ENT_QUOTES, 'UTF-8' );
+		if ( preg_match( '/\bsrcset=(["\'])([^"\']+)\1/i', $updated, $matches ) ) {
+			$srcset      = html_entity_decode( $matches[2], ENT_QUOTES, 'UTF-8' );
+			$webp_srcset = $this->replace_srcset_with_webp( $srcset );
 
-		if ( preg_match( '/\.webp$/i', $src ) ) {
-			return $filtered_image;
+			if ( $webp_srcset !== $srcset ) {
+				$replaced = preg_replace(
+					'/\bsrcset=(["\'])[^"\']+\1/i',
+					'srcset=$1' . esc_attr( $webp_srcset ) . '$1',
+					$updated,
+					1
+				);
+
+				if ( is_string( $replaced ) ) {
+					$updated = $replaced;
+				}
+			}
 		}
 
-		$webp_url = preg_replace( '/\.(jpe?g|png)$/i', '.webp', $src );
+		return $updated;
+	}
 
-		if ( ! is_string( $webp_url ) || $webp_url === $src || ! $this->upload_url_exists( $webp_url ) ) {
-			return $filtered_image;
+	/**
+	 * Point linked media files in post content to WebP companions.
+	 *
+	 * @param string $content Post content.
+	 * @return string
+	 */
+	public function prefer_webp_in_content_links( $content ) {
+		if ( ! is_string( $content ) || is_admin() || ! is_singular() || '' === trim( $content ) ) {
+			return $content;
 		}
 
-		$replaced = preg_replace(
-			'/\bsrc=(["\'])[^"\']+\1/i',
-			'src=$1' . esc_url( $webp_url ) . '$1',
-			$filtered_image,
-			1
+		if ( false === stripos( $content, '<a' ) ) {
+			return $content;
+		}
+
+		$replaced = preg_replace_callback(
+			'/<a\b([^>]*?)\bhref=(["\'])([^"\']+)\2/i',
+			function ( $matches ) {
+				$href = html_entity_decode( $matches[3], ENT_QUOTES, 'UTF-8' );
+
+				if ( ! preg_match( '/\.(jpe?g|png)$/i', $href ) ) {
+					return $matches[0];
+				}
+
+				$webp_href = $this->replace_url_with_webp_if_exists( $href );
+
+				if ( $webp_href === $href ) {
+					return $matches[0];
+				}
+
+				return '<a' . $matches[1] . 'href=' . $matches[2] . esc_url( $webp_href ) . $matches[2];
+			},
+			$content
 		);
 
-		return is_string( $replaced ) ? $replaced : $filtered_image;
+		return is_string( $replaced ) ? $replaced : $content;
+	}
+
+	/**
+	 * @param string $url Public uploads URL.
+	 * @return string
+	 */
+	private function replace_url_with_webp_if_exists( $url ) {
+		if ( ! is_string( $url ) || '' === $url || preg_match( '/\.webp$/i', $url ) ) {
+			return (string) $url;
+		}
+
+		$webp_url = preg_replace( '/\.(jpe?g|png)$/i', '.webp', $url );
+
+		if ( ! is_string( $webp_url ) || $webp_url === $url || ! $this->upload_url_exists( $webp_url ) ) {
+			return $url;
+		}
+
+		return $webp_url;
+	}
+
+	/**
+	 * @param string $srcset srcset attribute value.
+	 * @return string
+	 */
+	private function replace_srcset_with_webp( $srcset ) {
+		$candidates = array_map( 'trim', explode( ',', $srcset ) );
+		$converted  = array();
+
+		foreach ( $candidates as $candidate ) {
+			if ( '' === $candidate ) {
+				continue;
+			}
+
+			if ( preg_match( '/^(\S+)\s+(.+)$/', $candidate, $matches ) ) {
+				$url        = $this->replace_url_with_webp_if_exists( html_entity_decode( $matches[1], ENT_QUOTES, 'UTF-8' ) );
+				$converted[] = esc_url( $url ) . ' ' . trim( $matches[2] );
+				continue;
+			}
+
+			$converted[] = $candidate;
+		}
+
+		return implode( ', ', $converted );
 	}
 
 	/**

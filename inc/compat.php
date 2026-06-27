@@ -403,6 +403,18 @@ if ( ! function_exists( 'aptox_get_season_home_cta_text' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_clear_minify_cache' ) ) {
+	/**
+	 * Delete generated minified asset cache files.
+	 *
+	 * @return void
+	 */
+	function aptox_clear_minify_cache() {
+		$service = new \Aptox\Services\AssetMinifyService();
+		$service->clear_cache();
+	}
+}
+
 if ( ! function_exists( 'aptox_get_season_editorial_description' ) ) {
 	/**
 	 * Seasonal editorial description for the current or given season.

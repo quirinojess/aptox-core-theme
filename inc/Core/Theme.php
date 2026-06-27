@@ -16,9 +16,11 @@ use Aptox\PostTypes\ContentTypes;
 use Aptox\PostTypes\LojaMetaBox;
 use Aptox\PostTypes\EditorialMetaBox;
 use Aptox\PostTypes\ReceitaMetaBox;
+use Aptox\Services\AssetMinifyService;
 use Aptox\Services\ImageService;
 use Aptox\Services\LikesService;
 use Aptox\Services\SeoService;
+use Aptox\Services\SitemapService;
 use Aptox\Widgets\YouTubeFeaturedWidget;
 
 class Theme {
@@ -49,6 +51,7 @@ class Theme {
 		( new Admin() )->register();
 		( new CacheHeaders() )->register();
 		( new ImageService() )->register();
+		( new AssetMinifyService() )->register();
 		( new ImageAlt() )->register();
 		( new ContentFilters( $likes_service ) )->register();
 		( new LikesEndpoint( $likes_service ) )->register();
@@ -59,6 +62,7 @@ class Theme {
 		( new EditorialMetaBox() )->register();
 		( new ReceitaMetaBox() )->register();
 		( new SeoService() )->register();
+		( new SitemapService() )->register();
 		YouTubeFeaturedWidget::register_hooks();
 	}
 
@@ -82,7 +86,10 @@ class Theme {
 			$base . '/Services/RelatedPostsService.php',
 			$base . '/Services/LikesService.php',
 			$base . '/Services/ImageService.php',
+			$base . '/Services/AssetMinifyService.php',
+			$base . '/Helpers/AssetMinifier.php',
 			$base . '/Services/SeoService.php',
+			$base . '/Services/SitemapService.php',
 			$base . '/Api/HomeSectionsEndpoint.php',
 			$base . '/Api/CelebreSectionsEndpoint.php',
 			$base . '/Api/LikesEndpoint.php',
