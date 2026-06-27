@@ -144,7 +144,7 @@ $render_post_card = static function ( $post ) {
 			aria-label="<?php echo esc_attr( get_the_title( $post_id ) ); ?>"
 		>
 			<figure class="archive-image">
-				<?php echo aptox_render_post_thumbnail( $post_id, 'aptox-card', array( 'alt' => '' ) ); ?>
+				<?php echo aptox_render_post_thumbnail( $post_id, 'aptox-card' ); ?>
 			</figure>
 		</a>
 

@@ -986,11 +986,11 @@ if ( ! function_exists( 'aptox_render_loja_thumbnail' ) ) {
 			return '';
 		}
 
-		$image_alt = get_post_meta( get_post_thumbnail_id( $post_id ), '_wp_attachment_image_alt', true );
-
-		if ( ! is_string( $image_alt ) || '' === $image_alt ) {
-			$image_alt = get_the_title( $post_id );
-		}
+		$image_alt = aptox_resolve_image_alt(
+			(int) get_post_thumbnail_id( $post_id ),
+			get_the_title( $post_id ),
+			$post_id
+		);
 
 		$args = wp_parse_args(
 			$args,
@@ -1000,6 +1000,10 @@ if ( ! function_exists( 'aptox_render_loja_thumbnail' ) ) {
 				'alt'      => $image_alt,
 			)
 		);
+
+		if ( isset( $args['alt'] ) && '' === trim( (string) $args['alt'] ) ) {
+			$args['alt'] = $image_alt;
+		}
 
 		if ( empty( $args['sizes'] ) ) {
 			$args['sizes'] = aptox_get_thumbnail_sizes_attr( $size );
@@ -1279,6 +1283,26 @@ if ( ! function_exists( 'aptox_theme_image_meta' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_resolve_image_alt' ) ) {
+	/**
+	 * Resolve semantic alt text for an attachment.
+	 *
+	 * @param int    $attachment_id Attachment ID.
+	 * @param string $fallback      Context fallback, usually a post title.
+	 * @param int    $post_id       Post ID for excerpt/title context.
+	 * @return string
+	 */
+	function aptox_resolve_image_alt( $attachment_id = 0, $fallback = '', $post_id = 0 ) {
+		static $service = null;
+
+		if ( ! $service instanceof \Aptox\Helpers\ImageAlt ) {
+			$service = new \Aptox\Helpers\ImageAlt();
+		}
+
+		return $service->resolve_alt( (int) $attachment_id, (string) $fallback, (int) $post_id );
+	}
+}
+
 if ( ! function_exists( 'aptox_get_thumbnail_sizes_attr' ) ) {
 	/**
 	 * Responsive sizes hint for theme thumbnail contexts.
@@ -1338,6 +1362,14 @@ if ( ! function_exists( 'aptox_render_post_thumbnail' ) ) {
 
 		if ( empty( $attrs['sizes'] ) ) {
 			$attrs['sizes'] = aptox_get_thumbnail_sizes_attr( $size );
+		}
+
+		if ( ! isset( $attrs['alt'] ) || '' === trim( (string) $attrs['alt'] ) ) {
+			$attrs['alt'] = aptox_resolve_image_alt(
+				(int) get_post_thumbnail_id( $post_id ),
+				get_the_title( $post_id ),
+				$post_id
+			);
 		}
 
 		return get_the_post_thumbnail( $post_id, $size, $attrs );

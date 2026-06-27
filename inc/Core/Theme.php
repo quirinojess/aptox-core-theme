@@ -11,6 +11,7 @@ use Aptox\Api\CelebreSectionsEndpoint;
 use Aptox\Api\HomeSectionsEndpoint;
 use Aptox\Api\LikesEndpoint;
 use Aptox\Helpers\ContentFilters;
+use Aptox\Helpers\ImageAlt;
 use Aptox\PostTypes\ContentTypes;
 use Aptox\PostTypes\LojaMetaBox;
 use Aptox\PostTypes\EditorialMetaBox;
@@ -48,6 +49,7 @@ class Theme {
 		( new Admin() )->register();
 		( new CacheHeaders() )->register();
 		( new ImageService() )->register();
+		( new ImageAlt() )->register();
 		( new ContentFilters( $likes_service ) )->register();
 		( new LikesEndpoint( $likes_service ) )->register();
 		( new HomeSectionsEndpoint() )->register();
@@ -85,6 +87,7 @@ class Theme {
 			$base . '/Api/CelebreSectionsEndpoint.php',
 			$base . '/Api/LikesEndpoint.php',
 			$base . '/Helpers/ContentFilters.php',
+			$base . '/Helpers/ImageAlt.php',
 			$base . '/PostTypes/ContentTypes.php',
 			$base . '/PostTypes/LojaMetaBox.php',
 			$base . '/PostTypes/EditorialMetaBox.php',
