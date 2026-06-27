@@ -23,7 +23,7 @@ if ( is_array( $season ) && ! empty( $season['slug'] ) ) {
 	$season_text  = aptox_get_season_home_cta_text( $season_slug );
 }
 
-$cache_key   = 'aptox_cta_season_v13_' . sanitize_key( $season_slug );
+$cache_key   = 'aptox_cta_season_v14_' . sanitize_key( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {

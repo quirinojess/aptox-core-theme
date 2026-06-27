@@ -403,6 +403,18 @@ if ( ! function_exists( 'aptox_get_season_home_cta_text' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_season_editorial_description' ) ) {
+	/**
+	 * Seasonal editorial description for the current or given season.
+	 *
+	 * @param string|null $season_slug Optional season slug.
+	 * @return string
+	 */
+	function aptox_get_season_editorial_description( $season_slug = null ) {
+		return SeasonService::get_season_editorial_description( $season_slug );
+	}
+}
+
 if ( ! function_exists( 'aptox_get_season_editorial_rituals' ) ) {
 	function aptox_get_season_editorial_rituals( $season_slug = null ) {
 		return SeasonService::get_season_editorial_rituals( $season_slug );

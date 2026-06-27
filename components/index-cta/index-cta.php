@@ -45,7 +45,7 @@ $cta_meta  = aptox_theme_image_meta( 'index-cta' );
 			</h1>
 
 			<p class="index-cta-text">
-				Esse é um espaço para quem ama viver as estações, cozinhar experiências, celebrar momentos e cuidar da casa de forma intencional e afetiva.
+				Aqui você encontra inspirações para a casa, decoração, receitas de cada estação e celebrações cheias de significado para viver cada época do ano.
 			</p>
 
 			<a

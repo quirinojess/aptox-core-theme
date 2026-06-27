@@ -19,7 +19,7 @@ $posts_per_page = isset( $args['posts_per_page'] )
 	? (int) $args['posts_per_page']
 	: 2;
 
-$cache_key   = 'aptox_cta_celebration_' . md5( $season_slug . '|' . $posts_per_page );
+$cache_key   = 'aptox_cta_celebration_v2_' . md5( $season_slug . '|' . $posts_per_page );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {

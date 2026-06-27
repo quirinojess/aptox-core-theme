@@ -369,39 +369,72 @@ class SeasonService {
 	 * @return array<string, array<string, string>>
 	 */
 	private static function get_season_map() {
+		$descriptions = self::get_season_editorial_description_map();
+
 		return array(
 			'verao'      => array(
 				'icon'        => 'verao',
 				'label'       => 'Verão',
 				'slug'        => 'verao',
-				'description' => 'Ideias, inspirações e detalhes pensados para celebrar os momentos mais especiais do verão.',
+				'description' => $descriptions['verao'],
 			),
 			'outono'     => array(
 				'icon'        => 'outono',
 				'label'       => 'Outono',
 				'slug'        => 'outono',
-				'description' => 'Ideias, inspirações e detalhes pensados para celebrar os momentos mais especiais do outono.',
+				'description' => $descriptions['outono'],
 			),
 			'inverno'    => array(
 				'icon'        => 'inverno',
 				'label'       => 'Inverno',
 				'slug'        => 'inverno',
-				'description' => 'Ideias, inspirações e detalhes pensados para celebrar os momentos mais especiais do inverno.',
+				'description' => $descriptions['inverno'],
 			),
 			'primavera'  => array(
 				'icon'        => 'primavera',
 				'label'       => 'Primavera',
 				'slug'        => 'primavera',
-				'description' => 'Ideias, inspirações e detalhes pensados para celebrar os momentos mais especiais da primavera.',
+				'description' => $descriptions['primavera'],
 			),
 			'fim-de-ano' => array(
 				'icon'            => 'fim-de-ano',
 				'label'           => 'Fim de Ano',
 				'slug'            => 'fim-de-ano',
 				'highlight_title' => 'Chegou a época da magia',
-				'description'     => 'Ideias, inspirações e detalhes pensados para celebrar os momentos mais especiais do natal e ano novo',
+				'description'     => $descriptions['fim-de-ano'],
 			),
 		);
+	}
+
+	/**
+	 * Seasonal editorial copy keyed by season slug.
+	 *
+	 * @return array<string, string>
+	 */
+	private static function get_season_editorial_description_map() {
+		return array(
+			'verao'      => 'Descubra inspirações para o verão: ideias de decoração para deixar a casa mais leve e fresca, receitas para os dias quentes e celebrações cheias de significado para aproveitar essa estação com alegria, leveza e criatividade.',
+			'outono'     => 'Descubra inspirações para o outono: ideias de decoração para deixar a casa mais acolhedora, receitas para os dias mais amenos e celebrações cheias de significado para aproveitar essa estação com calma, aconchego e criatividade.',
+			'inverno'    => 'Descubra inspirações para o inverno: ideias de decoração para deixar a casa mais aconchegante, receitas para os dias frios e celebrações cheias de significado para aproveitar essa estação com conforto, beleza e criatividade.',
+			'primavera'  => 'Descubra inspirações para a primavera: ideias de decoração para renovar a casa com cores e vida, receitas para os dias mais floridos e celebrações cheias de significado para aproveitar essa estação com renovação, beleza e criatividade.',
+			'fim-de-ano' => 'Descubra inspirações para o fim de ano: ideias de decoração para deixar a casa mais festiva e acolhedora, receitas para as comemorações e celebrações cheias de significado para aproveitar essa temporada com magia, afeto e criatividade.',
+		);
+	}
+
+	/**
+	 * Get seasonal editorial description for the current or given season.
+	 *
+	 * @param string|null $season_slug Optional season slug.
+	 * @return string
+	 */
+	public static function get_season_editorial_description( $season_slug = null ) {
+		if ( null === $season_slug ) {
+			$season_slug = self::detect_current_season_slug();
+		}
+
+		$map = self::get_season_editorial_description_map();
+
+		return $map[ $season_slug ] ?? $map['verao'];
 	}
 
 	/**
@@ -742,13 +775,7 @@ class SeasonService {
 	 * @return array<string, string>
 	 */
 	private static function get_season_home_cta_text_map() {
-		return array(
-			'primavera'  => 'Uma estação cheia de flores e novos começos. Perfeita para abrir as janelas, encher a casa de cores e aproveitar os dias mais leves. Venha conferir as nossas seleções para essa estação e se inspirar para curtir essa época em grande estilo.',
-			'verao'      => 'Uma estação cheia de sol e momentos ao ar livre. Perfeita para reunir quem você ama, preparar receitas refrescantes e aproveitar cada dia ao máximo. Venha conferir as nossas seleções para essa estação e se inspirar para curtir essa época em grande estilo.',
-			'inverno'    => 'Uma estação cheia de aconchego. Perfeita para colocar uma manta no sofá, acender uma velinha e saborear uma bebida bem quentinha. Venha conferir as nossas seleções para essa estação e se inspirar para curtir esses dias em grande estilo.',
-			'outono'     => 'Uma estação cheia de aconchego. Perfeita para acender aquela velinha e tomar um delicioso cafézinho. Venha conferir as nossas seleções para essa estação e se inspirar para curtir esses dias em grande estilo.',
-			'fim-de-ano' => 'Uma época cheia de encanto e tradição. Perfeita para decorar a casa, preparar receitas especiais e compartilhar momentos à mesa. Venha conferir as nossas seleções para o fim de ano e se inspirar para celebrar essa temporada em grande estilo.',
-		);
+		return self::get_season_editorial_description_map();
 	}
 
 	/**
@@ -758,13 +785,7 @@ class SeasonService {
 	 * @return string
 	 */
 	public static function get_season_home_cta_text( $season_slug = null ) {
-		if ( null === $season_slug ) {
-			$season_slug = self::detect_current_season_slug();
-		}
-
-		$map = self::get_season_home_cta_text_map();
-
-		return $map[ $season_slug ] ?? '';
+		return self::get_season_editorial_description( $season_slug );
 	}
 
 	/**

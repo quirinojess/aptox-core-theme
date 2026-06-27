@@ -9,6 +9,21 @@ namespace Aptox\Services;
 
 class SeoService {
 	/**
+	 * Default document title for the site home.
+	 */
+	private const SITE_TITLE = 'APTOX | Casa, receitas e celebrações';
+
+	/**
+	 * Site brand used in document titles and structured data.
+	 */
+	private const SITE_BRAND = 'APTOX';
+
+	/**
+	 * Default meta description for the site home.
+	 */
+	private const SITE_META_DESCRIPTION = 'Aqui você encontra inspirações para a casa, decoração, receitas de cada estação e celebrações cheias de significado para viver cada época do ano.';
+
+	/**
 	 * Register hooks.
 	 *
 	 * @return void
@@ -125,7 +140,7 @@ class SeoService {
 		return array(
 			'@type' => 'Organization',
 			'@id'   => home_url( '/#organization' ),
-			'name'  => get_bloginfo( 'name' ),
+			'name'  => self::SITE_BRAND,
 			'url'   => home_url( '/' ),
 			'logo'  => array(
 				'@type' => 'ImageObject',
@@ -146,11 +161,12 @@ class SeoService {
 	 */
 	private function get_website_schema() {
 		return array(
-			'@type'     => 'WebSite',
-			'@id'       => home_url( '/#website' ),
-			'url'       => home_url( '/' ),
-			'name'      => get_bloginfo( 'name' ),
-			'publisher' => array(
+			'@type'        => 'WebSite',
+			'@id'          => home_url( '/#website' ),
+			'url'          => home_url( '/' ),
+			'name'         => self::SITE_TITLE,
+			'description'  => self::SITE_META_DESCRIPTION,
+			'publisher'    => array(
 				'@id' => home_url( '/#organization' ),
 			),
 			'potentialAction' => array(
@@ -467,6 +483,17 @@ class SeoService {
 	 * @return array<string, string>
 	 */
 	public function filter_document_title_parts( $parts ) {
+		if ( $this->is_site_home_context() ) {
+			$parts['title'] = self::SITE_TITLE;
+			unset( $parts['site'], $parts['tagline'] );
+
+			return $parts;
+		}
+
+		if ( ! empty( $parts['site'] ) ) {
+			$parts['site'] = self::SITE_BRAND;
+		}
+
 		if ( is_tax( 'loja_categoria' ) ) {
 			$term = get_queried_object();
 
@@ -495,21 +522,51 @@ class SeoService {
 	}
 
 	/**
-	 * Output meta description, canonical and Open Graph tags for Loja pages.
+	 * Output meta description, canonical and Open Graph tags.
 	 *
 	 * @return void
 	 */
 	public function render_meta_tags() {
-		if ( is_admin() || ! $this->should_render_theme_meta_tags() || ! $this->is_loja_seo_context() ) {
+		if ( is_admin() || ! $this->should_render_theme_meta_tags() ) {
 			return;
 		}
 
-		$description = $this->get_loja_meta_description();
-		$canonical   = $this->get_loja_canonical_url();
-		$title       = wp_get_document_title();
-		$image       = $this->get_loja_social_image();
-		$og_type     = is_singular( 'loja' ) ? 'product' : 'website';
+		if ( $this->is_site_home_context() ) {
+			$this->output_meta_tags(
+				self::SITE_META_DESCRIPTION,
+				home_url( '/' ),
+				wp_get_document_title(),
+				$this->get_home_social_image(),
+				'website'
+			);
 
+			return;
+		}
+
+		if ( ! $this->is_loja_seo_context() ) {
+			return;
+		}
+
+		$this->output_meta_tags(
+			$this->get_loja_meta_description(),
+			$this->get_loja_canonical_url(),
+			wp_get_document_title(),
+			$this->get_loja_social_image(),
+			is_singular( 'loja' ) ? 'product' : 'website'
+		);
+	}
+
+	/**
+	 * Print description, canonical and social tags.
+	 *
+	 * @param string $description Meta description.
+	 * @param string $canonical   Canonical URL.
+	 * @param string $title       Document title.
+	 * @param string $image       Social image URL.
+	 * @param string $og_type     Open Graph type.
+	 * @return void
+	 */
+	private function output_meta_tags( $description, $canonical, $title, $image, $og_type ) {
 		if ( '' !== $description ) {
 			printf(
 				'<meta name="description" content="%s">' . "\n",
@@ -543,6 +600,32 @@ class SeoService {
 		}
 
 		echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+	}
+
+	/**
+	 * Whether the current request is the public site home.
+	 *
+	 * @return bool
+	 */
+	private function is_site_home_context() {
+		return ( is_front_page() || is_home() ) && ! is_paged();
+	}
+
+	/**
+	 * Social share image for the site home.
+	 *
+	 * @return string
+	 */
+	private function get_home_social_image() {
+		if ( function_exists( 'aptox_theme_image_uri' ) ) {
+			$image = aptox_theme_image_uri( 'index-cta' );
+
+			if ( $image ) {
+				return $image;
+			}
+		}
+
+		return get_template_directory_uri() . '/assets/icons/ui/brand/ui-brand-logo.svg';
 	}
 
 	/**
