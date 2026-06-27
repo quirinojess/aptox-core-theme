@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_casa_planejando_lar_v9';
+$cache_key   = 'aptox_casa_planejando_lar_v10';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -85,11 +85,16 @@ ob_start();
 			<article class="decoracao-card">
 				<a href="<?php echo esc_url( get_permalink( $post ) ); ?>" class="decoracao-link">
 					<figure class="decoracao-image">
-						<img
-							src="<?php echo esc_url( get_the_post_thumbnail_url( $post, 'large' ) ); ?>"
-							alt="<?php echo esc_attr( get_the_title( $post ) ); ?>"
-							loading="lazy"
-						>
+						<?php
+						echo aptox_render_post_thumbnail(
+							$post,
+							'aptox-card',
+							array(
+								'alt'   => get_the_title( $post ),
+								'sizes' => '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px',
+							)
+						);
+						?>
 					</figure>
 
 					<h3 class="decoracao-title">

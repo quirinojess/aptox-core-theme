@@ -65,7 +65,7 @@ if ( $query->have_posts() ) :
             class="season-card-link"
           >
             <figure class="season-card-image">
-              <?php the_post_thumbnail( 'large' ); ?>
+              <?php echo aptox_render_post_thumbnail( null, 'aptox-card' ); ?>
             </figure>
           </a>
         </article>

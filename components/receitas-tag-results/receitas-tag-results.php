@@ -67,7 +67,7 @@ $max_pages = (int) $query->max_num_pages;
 				<article class="archive-card">
 					<a href="<?php the_permalink(); ?>" class="archive-thumb">
 						<?php if ( has_post_thumbnail() ) : ?>
-							<?php the_post_thumbnail( 'large' ); ?>
+							<?php echo aptox_render_post_thumbnail( null, 'aptox-card' ); ?>
 						<?php endif; ?>
 					</a>
 

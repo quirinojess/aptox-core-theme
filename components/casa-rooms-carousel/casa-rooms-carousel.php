@@ -168,7 +168,7 @@ foreach ( $tags as $tag ) {
 		continue;
 	}
 
-	$image = has_post_thumbnail() ? get_the_post_thumbnail( null, 'medium' ) : '';
+	$image = has_post_thumbnail() ? aptox_render_post_thumbnail( null, 'medium' ) : '';
 
 	$items[] = array(
 		'label' => $tag->name,

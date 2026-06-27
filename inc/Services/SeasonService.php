@@ -1034,7 +1034,9 @@ class SeasonService {
 			return null;
 		}
 
-		$image = get_the_post_thumbnail_url( $post->ID, 'large' );
+		$image = function_exists( 'aptox_get_post_thumbnail_src' )
+			? aptox_get_post_thumbnail_src( $post->ID, 'aptox-card' )
+			: get_the_post_thumbnail_url( $post->ID, 'aptox-card' );
 
 		if ( ! $image ) {
 			return null;

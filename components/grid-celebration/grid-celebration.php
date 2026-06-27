@@ -105,7 +105,7 @@ if ( $query instanceof WP_Query && $query->have_posts() ) :
 		  >
 			<?php if ( has_post_thumbnail() ) : ?>
 			  <figure class="archive-image">
-				<?php the_post_thumbnail( 'large' ); ?>
+				<?php echo aptox_render_post_thumbnail( null, 'aptox-card' ); ?>
 			  </figure>
 			<?php endif; ?>
 		  </a>

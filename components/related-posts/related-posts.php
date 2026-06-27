@@ -147,7 +147,7 @@ if ( empty( $related_posts ) ) {
           >
             <?php if ( has_post_thumbnail() ) : ?>
               <figure class="related-image">
-                <?php the_post_thumbnail( 'blog' ); ?>
+                <?php echo aptox_render_post_thumbnail( null, 'aptox-card' ); ?>
               </figure>
             <?php endif; ?>
           </a>

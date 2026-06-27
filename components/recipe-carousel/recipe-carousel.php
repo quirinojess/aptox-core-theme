@@ -113,7 +113,7 @@ ob_start();
 
           <?php if ( has_post_thumbnail() ) : ?>
             <figure class="tag-image">
-              <?php the_post_thumbnail( 'medium' ); ?>
+              <?php echo aptox_render_post_thumbnail( null, 'medium' ); ?>
             </figure>
           <?php endif; ?>
 

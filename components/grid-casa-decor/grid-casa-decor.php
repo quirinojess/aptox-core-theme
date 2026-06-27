@@ -25,7 +25,7 @@ if ( empty( $season_slug ) ) {
 
 $tag_slug = 'decoracao-de-' . $season_slug;
 
-$cache_key   = 'aptox_grid_casa_decor_v1_' . md5( $season_slug );
+$cache_key   = 'aptox_grid_casa_decor_v2_' . md5( $season_slug );
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -138,7 +138,7 @@ ob_start();
 						>
 							<?php if ( has_post_thumbnail() ) : ?>
 								<figure class="archive-image">
-									<?php the_post_thumbnail( 'large', array( 'loading' => 'eager' ) ); ?>
+									<?php echo aptox_render_post_thumbnail( null, 'aptox-card', array( 'loading' => 'eager' ) ); ?>
 								</figure>
 							<?php endif; ?>
 						</a>

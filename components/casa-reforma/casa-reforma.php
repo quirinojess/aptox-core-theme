@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_casa_reforma_v6';
+$cache_key   = 'aptox_casa_reforma_v7';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -61,9 +61,8 @@ wp_reset_postdata();
 $featured_post = $posts[0];
 $featured_id   = $featured_post->ID;
 $featured_url  = get_permalink( $featured_id );
-$featured_img  = get_the_post_thumbnail_url( $featured_id, 'large' );
 
-if ( ! $featured_img ) {
+if ( ! has_post_thumbnail( $featured_id ) ) {
 	return;
 }
 
@@ -81,11 +80,15 @@ ob_start();
 	<div class="casa-reforma-layout">
 		<figure class="casa-reforma-featured">
 			<a href="<?php echo esc_url( $featured_url ); ?>" tabindex="-1" aria-hidden="true">
-				<img
-					src="<?php echo esc_url( $featured_img ); ?>"
-					alt="<?php echo esc_attr( get_the_title( $featured_id ) ); ?>"
-					loading="lazy"
-				>
+				<?php
+				echo aptox_render_post_thumbnail(
+					$featured_id,
+					'aptox-feature',
+					array(
+						'alt' => get_the_title( $featured_id ),
+					)
+				);
+				?>
 			</a>
 		</figure>
 

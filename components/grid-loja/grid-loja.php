@@ -84,15 +84,9 @@ $render_card = static function () {
 				<figure class="loja-grid__media">
 					<?php
 					if ( function_exists( 'aptox_render_loja_thumbnail' ) ) {
-						echo aptox_render_loja_thumbnail( get_the_ID(), 'medium_large' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo aptox_render_loja_thumbnail( get_the_ID(), 'aptox-card' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					} else {
-						the_post_thumbnail(
-							'medium_large',
-							array(
-								'loading' => 'eager',
-								'alt'     => $image_alt,
-							)
-						);
+						echo aptox_render_post_thumbnail( null, 'aptox-card', array( 'loading' => 'eager', 'alt' => $image_alt ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					?>
 				</figure>

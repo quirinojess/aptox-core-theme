@@ -31,7 +31,7 @@ $render_card = static function ( $post ) {
 		>
 			<?php if ( has_post_thumbnail( $post ) ) : ?>
 				<figure class="archive-image">
-					<?php echo get_the_post_thumbnail( $post, 'large', array( 'loading' => 'lazy' ) ); ?>
+					<?php echo aptox_render_post_thumbnail( $post, 'aptox-card', array( 'loading' => 'lazy' ) ); ?>
 				</figure>
 			<?php endif; ?>
 		</a>

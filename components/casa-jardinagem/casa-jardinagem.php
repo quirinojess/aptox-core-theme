@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cache_key   = 'aptox_casa_jardinagem_v2';
+$cache_key   = 'aptox_casa_jardinagem_v3';
 $cached_html = get_transient( $cache_key );
 
 if ( false !== $cached_html ) {
@@ -75,9 +75,8 @@ $use_carousel  = count( $posts ) >= 3;
 $render_post_card = static function ( $post ) {
 	$post_id = $post->ID;
 	$url     = get_permalink( $post_id );
-	$image   = get_the_post_thumbnail_url( $post_id, 'large' );
 
-	if ( ! $image ) {
+	if ( ! has_post_thumbnail( $post_id ) ) {
 		return;
 	}
 	?>
@@ -88,11 +87,7 @@ $render_post_card = static function ( $post ) {
 			aria-label="<?php echo esc_attr( get_the_title( $post_id ) ); ?>"
 		>
 			<figure class="archive-image">
-				<img
-					src="<?php echo esc_url( $image ); ?>"
-					alt=""
-					loading="lazy"
-				>
+				<?php echo aptox_render_post_thumbnail( $post_id, 'aptox-card', array( 'alt' => '' ) ); ?>
 			</figure>
 		</a>
 

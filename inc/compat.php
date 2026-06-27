@@ -924,7 +924,7 @@ if ( ! function_exists( 'aptox_casa_rooms_carousel_cache_key' ) ) {
 	 * @return string
 	 */
 	function aptox_casa_rooms_carousel_cache_key() {
-		return 'aptox_casa_rooms_carousel_v5';
+		return 'aptox_casa_rooms_carousel_v6';
 	}
 }
 
@@ -1000,6 +1000,10 @@ if ( ! function_exists( 'aptox_render_loja_thumbnail' ) ) {
 				'alt'      => $image_alt,
 			)
 		);
+
+		if ( empty( $args['sizes'] ) ) {
+			$args['sizes'] = aptox_get_thumbnail_sizes_attr( $size );
+		}
 
 		return get_the_post_thumbnail( $post_id, $size, $args );
 	}
@@ -1275,6 +1279,36 @@ if ( ! function_exists( 'aptox_theme_image_meta' ) ) {
 	}
 }
 
+if ( ! function_exists( 'aptox_get_thumbnail_sizes_attr' ) ) {
+	/**
+	 * Responsive sizes hint for theme thumbnail contexts.
+	 *
+	 * @param string|int[] $size Registered image size.
+	 * @return string
+	 */
+	function aptox_get_thumbnail_sizes_attr( $size = 'aptox-card' ) {
+		if ( is_array( $size ) ) {
+			return '(max-width: 768px) 100vw, 600px';
+		}
+
+		switch ( $size ) {
+			case 'aptox-feature':
+				return '(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 600px';
+			case 'aptox-hero':
+				return '(max-width: 768px) 100vw, (max-width: 1400px) 90vw, 1400px';
+			case 'medium_large':
+				return '(max-width: 768px) 100vw, 600px';
+			case 'medium':
+				return '(max-width: 768px) 50vw, 300px';
+			case 'thumbnail':
+				return '150px';
+			case 'aptox-card':
+			default:
+				return '(max-width: 600px) 100vw, (max-width: 1024px) 33vw, 300px';
+		}
+	}
+}
+
 if ( ! function_exists( 'aptox_render_post_thumbnail' ) ) {
 	/**
 	 * Render a post thumbnail with theme defaults.
@@ -1300,7 +1334,13 @@ if ( ! function_exists( 'aptox_render_post_thumbnail' ) ) {
 			'decoding' => 'async',
 		);
 
-		return get_the_post_thumbnail( $post_id, $size, wp_parse_args( $attrs, $defaults ) );
+		$attrs = wp_parse_args( $attrs, $defaults );
+
+		if ( empty( $attrs['sizes'] ) ) {
+			$attrs['sizes'] = aptox_get_thumbnail_sizes_attr( $size );
+		}
+
+		return get_the_post_thumbnail( $post_id, $size, $attrs );
 	}
 }
 

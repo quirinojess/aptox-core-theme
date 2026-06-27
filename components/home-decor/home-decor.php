@@ -92,7 +92,15 @@ if ( is_wp_error( $terms ) ) {
 
             <?php if ( has_post_thumbnail() ) : ?>
               <figure class="decoracao-image">
-                <?php the_post_thumbnail( 'large' ); ?>
+                <?php
+                echo aptox_render_post_thumbnail(
+                  null,
+                  'aptox-card',
+                  array(
+                    'sizes' => '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px',
+                  )
+                );
+                ?>
               </figure>
             <?php endif; ?>
 
