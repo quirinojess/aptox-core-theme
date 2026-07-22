@@ -32,23 +32,85 @@ class SeoService {
 		add_action( 'wp_head', array( $this, 'render_structured_data' ), 1 );
 		add_action( 'wp_head', array( $this, 'render_pagination_links' ), 2 );
 		add_action( 'wp_head', array( $this, 'render_meta_tags' ), 3 );
+		add_action( 'init', array( $this, 'remove_feed_discovery_links' ) );
+		add_action( 'send_headers', array( $this, 'send_feed_robots_header' ) );
 		add_filter( 'document_title_parts', array( $this, 'filter_document_title_parts' ), 20 );
 		add_filter( 'wp_robots', array( $this, 'filter_robots' ) );
+		add_filter( 'robots_txt', array( $this, 'filter_robots_txt' ), 20, 2 );
 	}
 
 	/**
-	 * Prevent thin search result pages from being indexed.
+	 * Stop advertising RSS/Atom alternate links in HTML head.
+	 *
+	 * @return void
+	 */
+	public function remove_feed_discovery_links() {
+		remove_action( 'wp_head', 'feed_links', 2 );
+		remove_action( 'wp_head', 'feed_links_extra', 3 );
+	}
+
+	/**
+	 * Ask crawlers not to index feed responses (feeds have no HTML meta robots).
+	 *
+	 * @return void
+	 */
+	public function send_feed_robots_header() {
+		if ( ! is_feed() ) {
+			return;
+		}
+
+		header( 'X-Robots-Tag: noindex, follow', true );
+	}
+
+	/**
+	 * Prevent thin / non-content URLs from being indexed.
 	 *
 	 * @param array<string, bool|string> $robots Robots directives.
 	 * @return array<string, bool|string>
 	 */
 	public function filter_robots( $robots ) {
-		if ( is_search() ) {
+		if ( is_search() || is_feed() || is_trackback() ) {
 			$robots['noindex'] = true;
 			$robots['follow']  = true;
 		}
 
 		return $robots;
+	}
+
+	/**
+	 * Keep crawlers away from static theme assets that should not be indexed.
+	 *
+	 * Feeds stay crawlable so Google can see the X-Robots-Tag noindex and drop them.
+	 *
+	 * @param string $output    robots.txt body.
+	 * @param bool   $is_public Whether the site is public.
+	 * @return string
+	 */
+	public function filter_robots_txt( $output, $is_public ) {
+		if ( ! $is_public ) {
+			return $output;
+		}
+
+		if ( false !== strpos( $output, '# Aptox: block non-indexable theme assets' ) ) {
+			return $output;
+		}
+
+		$theme_path = wp_parse_url( get_template_directory_uri(), PHP_URL_PATH );
+		$theme_path = is_string( $theme_path ) ? untrailingslashit( $theme_path ) : '';
+
+		if ( '' === $theme_path ) {
+			return $output;
+		}
+
+		$rules = array(
+			'Disallow: ' . $theme_path . '/components/',
+			'Disallow: ' . $theme_path . '/*.js$',
+			'Disallow: ' . $theme_path . '/*.css$',
+		);
+
+		$block = "\n# Aptox: block non-indexable theme assets\n" . implode( "\n", $rules ) . "\n";
+
+		return rtrim( (string) $output ) . $block;
 	}
 
 	/**
