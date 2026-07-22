@@ -948,7 +948,7 @@ if ( ! function_exists( 'aptox_casa_rooms_carousel_cache_key' ) ) {
 	 * @return string
 	 */
 	function aptox_casa_rooms_carousel_cache_key() {
-		return 'aptox_casa_rooms_carousel_v6';
+		return 'aptox_casa_rooms_carousel_v7';
 	}
 }
 

@@ -150,24 +150,42 @@
   }
 
   .casa-rooms-carousel__carousel.recipe-tags-carousel {
-    width: var(--viewport-width);
-    margin-left: calc(50% - var(--viewport-half));
-    margin-right: calc(50% - var(--viewport-half));
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .casa-rooms-carousel__carousel .recipe-tags-carousel__viewport {
+    overflow: visible;
   }
 
   .casa-rooms-carousel__carousel .tag-item-wrapper {
     flex: 0 0 auto;
-    min-width: auto;
+    min-width: calc(var(--casa-room-image-size) + 12px);
+    width: calc(var(--casa-room-image-size) + 12px);
   }
 
   .casa-rooms-carousel__carousel .tag-item {
-    width: calc(var(--casa-room-image-size) + 12px);
+    width: 100%;
+    max-width: none;
   }
 
   .casa-rooms-carousel__carousel .tags-track {
     justify-content: flex-start;
-    padding-inline: var(--container-padding);
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0;
     gap: var(--space-md);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .casa-rooms-carousel__carousel .tag-image {
+    width: var(--casa-room-image-size);
+    height: var(--casa-room-image-size);
+    flex-shrink: 0;
   }
 
   .casa-rooms-carousel__carousel .tag-label {
