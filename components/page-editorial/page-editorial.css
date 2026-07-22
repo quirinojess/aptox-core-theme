@@ -81,9 +81,13 @@
 }
 
 .page-editorial-title-hand {
-  font: inherit;
-  font-weight: 400;
+  font-family: var(--font-hand);
+  font-size: var(--font-size-hand-lg);
+  line-height: 1;
+  font-weight: var(--font-hand-weight, 400);
+  font-synthesis: none;
   white-space: nowrap;
+  padding-left: 5px;
 }
 
 .page-editorial-hero-content .page-editorial-prose + .page-editorial-quote,
@@ -795,6 +799,10 @@
 
   .page-editorial-title {
     font-size: calc(var(--font-size-h5) + 6px);
+  }
+
+  .page-editorial-title-hand {
+    font-size: var(--font-size-hand-lg);
   }
 
   .page-editorial-section {

@@ -87,7 +87,7 @@ $render_section_heading = static function ( $icon, $title, $id = '', $modifier =
 			<?php endif; ?>
 
 			<div class="page-editorial-hero-content">
-				<h1 id="page-editorial-title" class="page-editorial-title"><?php esc_html_e( 'Editorial de', 'aptox' ); ?> <span class="page-editorial-title-hand"><?php echo esc_html( $season_label ); ?></span></h1>
+				<h1 id="page-editorial-title" class="page-editorial-title"><?php esc_html_e( 'Editorial de', 'aptox' ); ?> <span class="page-editorial-title-hand"><?php echo esc_html( aptox_hand_text( $season_label ) ); ?></span></h1>
 
 				<div class="page-editorial-prose">
 					<p>
